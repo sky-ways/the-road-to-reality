@@ -19,7 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "sb.cao.SbMod"
+      "com.github.cao.awa.eper.EperMod"
+    ],
+    "client": [
+      "com.github.cao.awa.eper.EperClient"
     ]
   },
   "mixins": [

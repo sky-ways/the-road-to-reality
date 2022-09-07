@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "eper:block/photovoltaic_panels_side"
+    }
+}

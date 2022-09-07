@@ -1,0 +1,7 @@
+{
+    "replace": false,
+    "values": [
+        "eper:photovoltaic_panels",
+        "eper:burner"
+    ]
+}

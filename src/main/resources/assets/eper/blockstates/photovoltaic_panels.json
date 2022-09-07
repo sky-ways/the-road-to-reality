@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "eper:block/photovoltaic_panels"
+        }
+    }
+}
