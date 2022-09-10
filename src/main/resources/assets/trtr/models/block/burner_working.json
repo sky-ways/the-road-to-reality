@@ -1,0 +1,8 @@
+{
+    "parent": "trtr:block/burner",
+    "texture_size": [64, 64],
+    "textures": {
+        "particle": "block/hopper_outside",
+        "0": "trtr:block/models/burner_working"
+    }
+}

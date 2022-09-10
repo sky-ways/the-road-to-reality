@@ -1,0 +1,9 @@
+{
+    "item.trtr.battery": "电池",
+    "item.trtr.hand_hold_thermometer": "手持温度计",
+    "block.trtr.photovoltaic_panels": "光伏发电板",
+    "block.trtr.burner": "燃烧炉",
+    "block.trtr.bauxite": "铝土矿",
+    "block.trtr.deepslate_bauxite": "深层铝土矿",
+    "death.attack.trtr.burner.hot": "%s 试图站在极高温的燃烧炉上"
+}

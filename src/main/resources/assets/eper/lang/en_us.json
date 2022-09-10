@@ -1,6 +1,0 @@
-{
-    "item.eper.battery": "电池",
-    "block.eper.photovoltaic_panels": "光伏发电板",
-    "block.eper.burner": "燃烧炉",
-    "death.attack.eper.burner.hot": "%s 试图站在极高温的燃烧炉上"
-}

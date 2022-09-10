@@ -2,6 +2,8 @@
     "replace": false,
     "values": [
         "eper:photovoltaic_panels",
-        "eper:burner"
+        "eper:burner",
+        "trtr:bauxite",
+        "trtr:deepslate_bauxite"
     ]
 }

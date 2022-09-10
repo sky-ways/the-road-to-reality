@@ -1,3 +1,3 @@
 Using Xmind to open this file.
 
-Last updata time：22.9.10
+Last update time：22.9.10

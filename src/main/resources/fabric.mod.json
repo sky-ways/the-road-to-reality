@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "trtr",
   "version": "${version}",
 
   "name": "Example Mod",
@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.cao.awa.eper.EperMod"
+        "com.github.cao.awa.trtr.TrtrMod"
     ],
     "client": [
-      "com.github.cao.awa.eper.EperClient"
+      "com.github.cao.awa.trtr.TrtrClient"
     ]
   },
   "mixins": [
