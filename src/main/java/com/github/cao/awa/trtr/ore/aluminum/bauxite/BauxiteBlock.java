@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.ore.bauxite;
+package com.github.cao.awa.trtr.ore.aluminum.bauxite;
 
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.block.*;
@@ -14,9 +14,9 @@ public class BauxiteBlock extends TrtrOreBlock {
 
     public static Block register() {
         Settings settings = Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool();
-        BauxiteBlock burner = new BauxiteBlock(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, burner);
-        BauxiteBlockItem.register(burner);
-        return burner;
+        BauxiteBlock bauxite = new BauxiteBlock(settings);
+        Registry.register(Registry.BLOCK, IDENTIFIER, bauxite);
+        BauxiteBlockItem.register(bauxite);
+        return bauxite;
     }
 }

@@ -1,7 +1,8 @@
 package com.github.cao.awa.trtr.type;
 
+import com.github.cao.awa.trtr.ore.aluminum.bauxite.*;
+import com.github.cao.awa.trtr.ore.aluminum.bauxite.deepslate.*;
 import com.github.cao.awa.trtr.ore.bauxite.*;
-import com.github.cao.awa.trtr.ore.bauxite.deepslate.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
 import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import net.minecraft.block.*;

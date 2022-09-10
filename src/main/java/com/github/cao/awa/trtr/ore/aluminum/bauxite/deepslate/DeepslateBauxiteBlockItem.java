@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.ore.bauxite.deepslate;
+package com.github.cao.awa.trtr.ore.aluminum.bauxite.deepslate;
 
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -11,7 +11,7 @@ public class DeepslateBauxiteBlockItem extends BlockItem {
 
     public static void register(Block block) {
         Settings settings = new Settings();
-        DeepslateBauxiteBlockItem panels = new DeepslateBauxiteBlockItem(block, settings);
-        Registry.register(Registry.ITEM, DeepslateBauxiteBlock.IDENTIFIER, panels);
+        DeepslateBauxiteBlockItem bauxite = new DeepslateBauxiteBlockItem(block, settings);
+        Registry.register(Registry.ITEM, DeepslateBauxiteBlock.IDENTIFIER, bauxite);
     }
 }

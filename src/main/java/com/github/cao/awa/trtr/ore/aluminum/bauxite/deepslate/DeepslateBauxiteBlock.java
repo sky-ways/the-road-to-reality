@@ -1,6 +1,5 @@
-package com.github.cao.awa.trtr.ore.bauxite.deepslate;
+package com.github.cao.awa.trtr.ore.aluminum.bauxite.deepslate;
 
-import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
@@ -15,9 +14,9 @@ public class DeepslateBauxiteBlock extends TrtrOreBlock {
 
     public static Block register() {
         Settings settings = Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool();
-        DeepslateBauxiteBlock burner = new DeepslateBauxiteBlock(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, burner);
-        DeepslateBauxiteBlockItem.register(burner);
-        return burner;
+        DeepslateBauxiteBlock bauxite = new DeepslateBauxiteBlock(settings);
+        Registry.register(Registry.BLOCK, IDENTIFIER, bauxite);
+        DeepslateBauxiteBlockItem.register(bauxite);
+        return bauxite;
     }
 }
