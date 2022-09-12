@@ -220,8 +220,8 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
         BlockPos sourcePos = pos;
         pos = pos.up();
         BlockState targetState = world.getBlockState(pos);
-        if (! state.getMaterial().isBurnable()) {
-            if (state.isAir()) {
+        if (! targetState.getMaterial().isBurnable()) {
+            if (targetState.isAir()) {
                 clearFire(world, pos, state);
             }
             return;
@@ -236,9 +236,9 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
                 if (doFire) {
                     if (random.nextInt(300) == 299) {
                         if (world.canSetBlock(offset)) {
-                            world.setBlockState(offset, AbstractFireBlock.getState(world, offset));
+                            world.setBlockState(offset, AbstractFireBlock.getState(world, offset), 3);
+                            doFire = false;
                         }
-                        doFire = false;
                     }
                 }
                 continue;

@@ -1,9 +1,17 @@
 {
     "item.trtr.battery": "battery",
     "item.trtr.hand_hold_thermometer": "Hand hold thermometer",
+    "item.trtr.iron_hammer": "Iron hammer",
+    "item.trtr.stone_hammer": "Stone hammer",
+    "item.trtr.wooden_hammer": "Wooden hammer",
+
     "block.trtr.photovoltaic_panels": "Photovoltaic panels",
     "block.trtr.burner": "Burner",
     "block.trtr.bauxite": "Bauxite",
     "block.trtr.deepslate_bauxite": "Deepslate bauxite",
-    "death.attack.trtr.burner.hot": "%s try stand on high temperature burner"
+    "block.trtr.alunite": "Alunite",
+
+    "death.attack.trtr.burner.hot": "%s try stand on high temperature burner",
+
+    "attribute.name.trtr.thump_efficiency": "Thump efficiency"
 }

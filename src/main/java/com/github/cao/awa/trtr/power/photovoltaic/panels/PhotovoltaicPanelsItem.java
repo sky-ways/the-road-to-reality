@@ -1,10 +1,11 @@
 package com.github.cao.awa.trtr.power.photovoltaic.panels;
 
+import com.github.cao.awa.trtr.ref.item.trtr.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.registry.*;
 
-public class PhotovoltaicPanelsItem extends BlockItem {
+public class PhotovoltaicPanelsItem extends TrtrBlockItem {
     public PhotovoltaicPanelsItem(Block block, Settings settings) {
         super(block, settings);
     }

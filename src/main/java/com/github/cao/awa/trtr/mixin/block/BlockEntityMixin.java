@@ -9,11 +9,4 @@ import org.spongepowered.asm.mixin.*;
 
 @Mixin(BlockEntity.class)
 public abstract class BlockEntityMixin {
-    @Shadow @Nullable public abstract World getWorld();
-
-    @Shadow @Final protected BlockPos pos;
-
-    @Shadow @Nullable protected World world;
-
-    @Shadow private BlockState cachedState;
 }

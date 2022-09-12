@@ -7,7 +7,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public abstract class TrtrBlockWithEntity<T extends BlockEntity> extends BlockWithEntity {
+public abstract class TrtrBlockWithEntity<T extends BlockEntity> extends TrtrBasedBlock {
     protected TrtrBlockWithEntity(Settings settings) {
         super(settings);
     }

@@ -6,7 +6,9 @@
     "mixins": [
         "block.AbstractBlockInterface",
         "block.BlockEntityMixin",
-        "block.BlocksMixin"
+        "block.BlocksMixin",
+        "block.ItemsMixin",
+        "item.ItemStackMixin"
     ],
     "client": [
     ],

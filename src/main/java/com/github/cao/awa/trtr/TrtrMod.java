@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr;
 
+import com.github.cao.awa.trtr.ref.place.*;
 import com.github.cao.awa.trtr.type.*;
 import net.fabricmc.api.*;
 
@@ -10,5 +11,6 @@ public class TrtrMod implements ModInitializer {
         TrtrBlocks.pre();
         TrtrBlockEntityType.pre();
         TrtrScreenHandlerType.pre();
+        TrtrPlacedFeatures.pre();
     }
 }

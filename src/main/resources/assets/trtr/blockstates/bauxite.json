@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "trtr:block/ore/bauxite"
+            "model": "trtr:block/ore/aluminum/bauxite/bauxite"
         }
     }
 }

@@ -46,7 +46,7 @@ public class BurnerBlock extends TrtrBlockWithEntity<BurnerBlockEntity> {
     }
 
     public static Block register() {
-        Settings settings = Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool();
+        Settings settings = Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool().luminance(state -> state.get(BURNING) ? 13 : 0);
         BurnerBlock burner = new BurnerBlock(settings);
         Registry.register(Registry.BLOCK, IDENTIFIER, burner);
         BurnerBlockItem.register(burner);

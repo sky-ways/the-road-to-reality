@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "trtr:block/ore/deepslate_bauxite"
+            "model": "trtr:block/ore/aluminum/bauxite/deepslate_bauxite"
         }
     }
 }
