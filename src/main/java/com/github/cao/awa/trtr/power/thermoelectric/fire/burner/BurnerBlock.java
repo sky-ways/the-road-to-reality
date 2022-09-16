@@ -19,15 +19,16 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+
 public class BurnerBlock extends TrtrBlockWithEntity<BurnerBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:burner");
     public static final BooleanProperty BURNING = BooleanProperty.of("burning");
     public static final DirectionProperty FACING = Properties.FACING;
-    public static final IntProperty TEMPERATURE = HeatConductionBlock.TEMPERATURE;
 
     public BurnerBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(BURNING, false).with(TEMPERATURE, 1).with(FACING, Direction.NORTH));
+        setDefaultState(getStateManager().getDefaultState().with(BURNING, false).with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -82,10 +83,8 @@ public class BurnerBlock extends TrtrBlockWithEntity<BurnerBlockEntity> {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
-        stateManager.add(BURNING, TEMPERATURE, FACING);
+        stateManager.add(BURNING, FACING);
     }
-
-
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (! state.isOf(newState.getBlock())) {

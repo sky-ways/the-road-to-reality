@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.ref.item.trtr;
 
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
+import com.github.cao.awa.trtr.type.*;
 import net.minecraft.client.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.json.*;

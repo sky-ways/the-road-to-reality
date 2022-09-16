@@ -3,7 +3,6 @@ package com.github.cao.awa.trtr.ref.block.trtr;
 import com.github.cao.awa.trtr.heat.conductor.*;
 import com.github.cao.awa.trtr.ref.block.*;
 import com.github.cao.awa.trtr.tool.hammer.*;
-import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
@@ -14,7 +13,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public abstract class TrtrBasedBlock extends BlockWithEntity implements HeatConductive, ElectricConductive {
+public abstract class TrtrBasedBlock extends BlockWithEntity implements HeatConductiveBlock, ElectricConductive, BlockEntityProvider {
     public TrtrBasedBlock(Settings settings) {
         super(settings);
     }
@@ -29,10 +28,9 @@ public abstract class TrtrBasedBlock extends BlockWithEntity implements HeatCond
         return 0;
     }
 
-    @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+    public void setConductor(HeatConductor conductor) {
+
     }
 
     @Override
@@ -54,6 +52,12 @@ public abstract class TrtrBasedBlock extends BlockWithEntity implements HeatCond
 
     public void thump(World world, BlockPos pos, BlockState state, ItemStack tool, PlayerEntity player) {
 
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return null;
     }
 
     @Override

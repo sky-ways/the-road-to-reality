@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.ref.block;
 import com.github.cao.awa.trtr.heat.conductor.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.client.world.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
@@ -11,33 +12,62 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEntity<T>> extends BlockEntity implements BlockEntityTicker<T>, HeatConductive {
-    protected final MetalBlockHeatConductor conductor;
+import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
 
-    public MetalBlockHeatConductor getConductor() {
-        return conductor;
-    }
+public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEntity<T>> extends BlockEntity implements HeatConductiveBlockEntity {
+    public NbtCompound nbtOpt = null;
 
     public HeatConductionBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.conductor = new MetalBlockHeatConductor(0);
     }
+
+    public MetalBlockHeatConductor getConductor() {
+        return heatHandler.getConductor(world, pos) instanceof MetalBlockHeatConductor conductor ? conductor : null;
+    }
+
+    public abstract int thermalConductivity();
 
     public void tick(World world, BlockPos pos, BlockState state, T blockEntity) {
-        conductor.endothermic(world, pos, state);
+        prepare(world, pos);
+        if (nbtOpt == null) {
+            return;
+        }
+        heatHandler.prepare(world, pos, () -> {
+            HeatConductor conductor = heatHandler.getConductor(world, pos);
+            if (conductor == null) {
+                return;
+            }
+            conductor.readNbt(nbtOpt);
+            nbtOpt = null;
+        });
         markDirty();
+//        if (heatHandler.isUnloaded(world)) {
+//            return;
+//        }
+//        world.removeBlockEntity(pos);
     }
 
-    public void writeNbt(NbtCompound nbt) {
-        conductor.writeNbt(nbt);
+    public void prepare(World world, BlockPos pos) {
+        heatHandler.getOrReplace(world, pos, () -> new MetalBlockHeatConductor(this));
+        heatHandler.requireTick(world, pos);
+    }
+
+    @Override
+    public void init(World world) {
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        conductor.readNbt(nbt);
+        nbtOpt = nbt;
     }
 
-    public abstract int thermalConductivity();
+    @Override
+    public void writeNbt(NbtCompound nbt) {
+        HeatConductor conductor = heatHandler.getConductor(world, pos);
+        if (conductor != null) {
+            conductor.writeNbt(nbt);
+        }
+    }
 
     @Nullable
     @Override
@@ -48,5 +78,10 @@ public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEnt
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
+    }
+
+    @Override
+    public boolean participateUnload() {
+        return true;
     }
 }

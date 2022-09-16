@@ -2,37 +2,48 @@ package com.github.cao.awa.trtr.heat.conductor;
 
 import com.github.cao.awa.trtr.ref.block.*;
 import it.unimi.dsi.fastutil.objects.*;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
+import java.util.*;
 import java.util.function.*;
 
+import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+
 public abstract class HeatConductor {
-    public static final Function<Double, Double> HEAT_FIX_COEFFICIENT = (s) -> 0.001;
+    public static final BiFunction<Double, HeatConductor, Double> HEAT_FIX_COEFFICIENT = (h, c) -> 0.001;
     public static final Supplier<Double> NORMAL_TEMPERATURE = () -> 30D;
     private final ObjectArrayList<HeatConductor> heating = new ObjectArrayList<>();
-    private int temperature;
+    private final HeatConductiveBlockEntity conductive;
+    private double temperature;
+    private int unloadCost = 6;
 
-    public HeatConductor() {
+    public HeatConductor(HeatConductiveBlockEntity conductive) {
         this.temperature = 0;
+        this.conductive = conductive;
     }
 
-    public HeatConductor(int temperature) {
+    public HeatConductor(HeatConductiveBlockEntity conductive, int temperature) {
         this.temperature = temperature;
+        this.conductive = conductive;
+    }
+
+    public HeatConductiveBlockEntity getConductive() {
+        return conductive;
     }
 
     public ObjectArrayList<HeatConductor> getHeating() {
         return heating;
     }
 
-    public abstract void endothermic(World world, BlockPos pos, BlockState state);
+    public abstract void endothermic(World world, BlockPos pos);
+
+    public abstract void adaptive(World world);
 
     public void heat(ImmutableConductor heatModel) {
         collect(heatModel);
-        endothermic();
+        endothermic(null);
     }
 
     /**
@@ -50,53 +61,87 @@ public abstract class HeatConductor {
      * <p>
      * T(x) is temperature of a point time <br>
      */
-    public void endothermic() {
-        double cons = 0;
-        for (HeatConductor bl : heating) {
-            if (bl.temperature > temperature) {
-                double t = (bl.temperature - temperature);
-                double v = Math.ceil((t * HEAT_FIX_COEFFICIENT.apply(t)));
-                cons += v;
-                bl.temperature -= v;
+    public void endothermic(World world) {
+        unloadCost = heating.size();
+        if (unloadCost == 0) {
+            return;
+        }
+        heating.removeIf(Objects::isNull);
+        double total = 0;
+        for (HeatConductor conductor : heating) {
+            if (conductor.temperature > NORMAL_TEMPERATURE.get() && conductor.temperature > this.temperature) {
+                double t = (conductor.temperature - this.temperature);
+                double v = (t * conductor.fixCoefficient(t, this));
+                total += v;
+                conductor.temperature -= v;
+            } else {
+                prepareUnload(world, getConductive().getPos());
             }
         }
 
-        this.temperature += cons;
+        this.temperature += total;
 
         heating.clear();
     }
+
+    public boolean shouldUnload(World world) {
+//        boolean cannotUnload = false;
+//        for (Direction direction : Direction.values()) {
+//            HeatConductor conductor = heatHandler.getConductor(world, getConductive().getPos().offset(direction));
+//            if (conductor == null) {
+//                continue;
+//            }
+//            if (conductor.getTemperature() > temperature && conductor.temperature > NORMAL_TEMPERATURE.get()) {
+//                cannotUnload = true;
+//            }
+//            if (cannotUnload) {
+//                return null;
+//            }
+//        }
+//        return getConductive();
+        return true;
+    }
+
+    public abstract double fixCoefficient(double heat, HeatConductor conductor);
 
     public void collect(HeatConductor bl) {
         this.heating.add(bl);
     }
 
-    public boolean prepare(World world, BlockPos pos, BlockState state) {
-        BlockEntity targetEntity = world.getBlockEntity(pos);
-        if (state.getOrEmpty(HeatConductionBlock.TEMPERATURE).isPresent()) {
-            if (targetEntity == null) {
-                world.setBlockState(pos, state.with(HeatConductionBlock.TEMPERATURE, 2), 3);
-            }
-            return true;
+    public void prepare(World world, BlockPos pos) {
+        if (heatHandler.isTicking(world, pos)) {
+            return;
         }
-        return false;
+        heatHandler.prepare(world, pos, () -> {
+            if (world.getBlockEntity(pos) instanceof HeatConductiveBlockEntity entity) {
+                entity.prepare(world, pos);
+            }
+        });
+    }
+
+    public void prepareUnload(World world, BlockPos pos) {
+        unloadCost --;
+        if (unloadCost == 0) {
+            heatHandler.requireUnload(world, pos);
+        }
     }
 
     public void readNbt(NbtCompound compound) {
         NbtCompound nbt = compound.getCompound("temperatureConductor");
-        this.setTemperature(nbt.getInt("temperature"));
+        this.setTemperature(nbt.getDouble("temperature"));
     }
 
     public void writeNbt(NbtCompound compound) {
         NbtCompound nbt = new NbtCompound();
-        nbt.putInt("temperature", getTemperature());
+        nbt.putDouble("temperature", getTemperature());
         compound.put("temperatureConductor", nbt);
     }
 
-    public int getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 }

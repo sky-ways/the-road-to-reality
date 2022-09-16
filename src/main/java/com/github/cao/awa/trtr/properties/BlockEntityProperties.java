@@ -6,18 +6,38 @@ import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.nbt.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.*;
 
 public class BlockEntityProperties<T> {
-    private final Object2ObjectOpenHashMap<String, Object> map = new Object2ObjectOpenHashMap<>();
+    public static final Map<Class<?>, String> TYPE_S = EntrustParser.operation(new ConcurrentHashMap<>(), map -> {
+        map.put(Integer.class, "(I");
+        map.put(Double.class, "(D");
+        map.put(Float.class, "(F");
+        map.put(Short.class, "(S");
+        map.put(Byte.class, "(Byt");
+        map.put(Character.class, "(C");
+        //        map.put(NbtCompound.class,"[N:Cpd");
+        map.put(String.class, "[STR");
+    });
+    public static final Map<String, Function<String, Object>> TYPE_D = EntrustParser.operation(new ConcurrentHashMap<>(), map -> {
+        map.put("(I", Integer::parseInt);
+        map.put("(D", Double::parseDouble);
+        map.put("(F", Float::parseFloat);
+        map.put("(S", Short::parseShort);
+        map.put("(Byt", Byte::parseByte);
+        map.put("(C", s -> (char) Integer.parseInt(s));
+        map.put("[STR", s -> s);
+    });
+    private final Map<String, Object> map = new ConcurrentHashMap<>();
     private final T instance;
-
-    public T getInstance() {
-        return instance;
-    }
 
     public BlockEntityProperties(T instance) {
         this.instance = instance;
+    }
+
+    public T getInstance() {
+        return instance;
     }
 
     public int calculateInt(String key, Function<Integer, Integer> function) {
@@ -28,7 +48,10 @@ public class BlockEntityProperties<T> {
         if (! map.containsKey(key)) {
             return defaultValue;
         }
-        return EntrustParser.trying(() -> (int) map.get(key), () -> defaultValue);
+        return EntrustParser.trying(() -> (int) map.get(key), e -> {
+            e.printStackTrace();
+            return defaultValue;
+        });
     }
 
     public int calculateInt(String key, Function<Integer, Boolean> predicate, Function<Integer, Integer> function, int defaultValue) {
@@ -92,10 +115,6 @@ public class BlockEntityProperties<T> {
         map.put(key, value);
     }
 
-    public void put(String key, Object value) {
-        map.put(key, value);
-    }
-
     public void writeNbt(NbtCompound compound) {
         NbtCompound nbt = new NbtCompound();
         map.forEach((k, v) -> {
@@ -114,28 +133,12 @@ public class BlockEntityProperties<T> {
         NbtCompound nbt = compound.getCompound("properties");
         for (String key : nbt.getKeys()) {
             NbtCompound element = nbt.getCompound(key);
-            put(key, TYPE_D.get(key).apply(element.getString(key)));
+            String des = element.getString("type");
+            put(key, TYPE_D.get(des).apply(element.getString(key)));
         }
     }
 
-    public static final Map<Class<?>, String> TYPE_S = EntrustParser.operation(new Object2ObjectOpenHashMap<>(), map -> {
-        map.put(Integer.class, "(I");
-        map.put(Double.class, "(D");
-        map.put(Float.class, "(F");
-        map.put(Short.class, "(S");
-        map.put(Byte.class, "(Byt");
-        map.put(Character.class, "(C");
-//        map.put(NbtCompound.class,"[N:Cpd");
-        map.put(String.class, "[STR");
-    });
-
-    public static final Map<String, Function<String, Object>> TYPE_D = EntrustParser.operation(new Object2ObjectOpenHashMap<>(), map -> {
-        map.put("(I", Integer::parseInt);
-        map.put( "(D", Double::parseDouble);
-        map.put("(F", Float::parseFloat);
-        map.put("(S", Short::parseShort);
-        map.put("(Byt", Byte::parseByte);
-        map.put("(C", s -> (char)Integer.parseInt(s));
-        map.put( "[STR", s -> s);
-    });
+    public void put(String key, Object value) {
+        map.put(key, value);
+    }
 }

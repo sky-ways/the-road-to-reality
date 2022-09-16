@@ -1,10 +1,13 @@
 package com.github.cao.awa.trtr.ref.block.iron;
 
+import com.github.cao.awa.trtr.heat.conductor.*;
 import com.github.cao.awa.trtr.ref.block.*;
 import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+
+import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
 
 public class IronBlockEntity extends HeatConductionBlockEntity<IronBlockEntity> {
     public IronBlockEntity(BlockPos pos, BlockState state) {
@@ -12,8 +15,10 @@ public class IronBlockEntity extends HeatConductionBlockEntity<IronBlockEntity> 
     }
 
     @Override
-    public void tick(World world, BlockPos pos, BlockState state, IronBlockEntity blockEntity) {
-        super.tick(world, pos, state, blockEntity);
+    public void setConductor(HeatConductor conductor) {
+        if (conductor instanceof MetalBlockHeatConductor heatConductor) {
+            heatHandler.getOrReplace(world, pos, () -> heatConductor);
+        }
     }
 
     @Override

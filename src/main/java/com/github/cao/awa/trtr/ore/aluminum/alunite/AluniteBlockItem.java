@@ -14,5 +14,6 @@ public class AluniteBlockItem extends TrtrBlockItem {
         Settings settings = new Settings();
         AluniteBlockItem alunite = new AluniteBlockItem(block, settings);
         Registry.register(Registry.ITEM, AluniteBlock.IDENTIFIER, alunite);
+        Item.BLOCK_ITEMS.put(block, alunite);
     }
 }

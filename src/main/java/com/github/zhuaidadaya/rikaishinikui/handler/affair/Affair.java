@@ -13,6 +13,10 @@ public class Affair {
         return new Affair().participate(action);
     }
 
+    public static Affair empty() {
+        return new Affair();
+    }
+
     public Affair participate(Runnable action) {
         actions.add(new AffairTask(() -> true, action));
         return this;

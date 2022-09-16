@@ -6,9 +6,14 @@
     "mixins": [
         "block.AbstractBlockInterface",
         "block.BlockEntityMixin",
+        "block.BlockMixin",
         "block.BlocksMixin",
-        "block.ItemsMixin",
-        "item.ItemStackMixin"
+        "item.ItemsMixin",
+        "item.ItemStackMixin",
+        "server.MinecraftServerMixin",
+        "server.ServerWorldMixin",
+        "world.chunk.WorldChunkMixin",
+        "world.manager.ServerChunkManagerInterface"
     ],
     "client": [
     ],

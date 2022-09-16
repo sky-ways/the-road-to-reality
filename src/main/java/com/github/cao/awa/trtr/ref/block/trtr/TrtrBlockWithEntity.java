@@ -14,7 +14,8 @@ public abstract class TrtrBlockWithEntity<T extends BlockEntity> extends TrtrBas
 
     @Nullable
     public <E extends BlockEntity> BlockEntityTicker<E> getTicker(World world, BlockState state, BlockEntityType<E> type) {
-        return checkType(type, blockEntityType(), (world1, pos, state1, blockEntity) -> Affair.of(
+        return checkType(type, blockEntityType(), (world1, pos, state1, blockEntity) -> Affair.empty().participateIf(
+                        () -> !world.isClient,
                         () -> tick(world1, pos, state1, blockEntity) // Do tick
                 ).participateIf(
                         () -> world.isClient, // If is client, participate to affair

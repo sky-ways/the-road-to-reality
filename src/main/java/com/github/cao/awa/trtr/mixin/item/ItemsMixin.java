@@ -1,5 +1,6 @@
-package com.github.cao.awa.trtr.mixin.block;
+package com.github.cao.awa.trtr.mixin.item;
 
+import com.github.cao.awa.trtr.ref.item.bowl.*;
 import com.github.cao.awa.trtr.ref.item.trtr.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -1983,7 +1984,8 @@ public abstract class ItemsMixin {
         NETHERITE_AXE = register("netherite_axe", new AxeItem(ToolMaterials.NETHERITE, 5.0F, -3.0F, (new Item.Settings()).group(ItemGroup.TOOLS).fireproof()));
         NETHERITE_HOE = register("netherite_hoe", new TrtrHoeItem(ToolMaterials.NETHERITE, -4, 0.0F, (new Item.Settings()).group(ItemGroup.TOOLS).fireproof()));
         STICK = register("stick", new TrtrItem((new Item.Settings()).group(ItemGroup.MATERIALS)));
-        BOWL = register("bowl", new TrtrItem((new Item.Settings()).group(ItemGroup.MATERIALS)));
+//        BOWL = register("bowl", new TrtrItem((new Item.Settings()).group(ItemGroup.MATERIALS)));
+        BOWL = BowlItem.register();
         MUSHROOM_STEW = register("mushroom_stew", new StewItem((new Item.Settings()).maxCount(1).group(ItemGroup.FOOD).food(FoodComponents.MUSHROOM_STEW)));
         STRING = register("string", new AliasedBlockItem(Blocks.TRIPWIRE, (new Item.Settings()).group(ItemGroup.MISC)));
         FEATHER = register("feather", new TrtrItem((new Item.Settings()).group(ItemGroup.MATERIALS)));

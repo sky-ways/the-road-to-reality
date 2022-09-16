@@ -1,7 +1,10 @@
 package com.github.cao.awa.trtr.ref.block.trtr.slab;
 
+import com.github.cao.awa.trtr.ref.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.client.render.*;
+import net.minecraft.client.util.math.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -15,7 +18,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public abstract class TrtrSlabBlockEntity extends BlockEntity {
+public abstract class TrtrSlabBlockEntity extends BlockEntity implements BlockRenderer<TrtrConventionalSlabEntity> {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private long cooling = 0;
 
@@ -56,11 +59,25 @@ public abstract class TrtrSlabBlockEntity extends BlockEntity {
 
     public abstract void thump(World world, BlockPos pos, BlockState state, ItemStack tool, PlayerEntity player);
 
+    public void take(World world, BlockPos pos, BlockState state, PlayerEntity entity) {
+
+    }
+
     public long getCooling() {
         return cooling;
     }
 
     public void setCooling(long cooling) {
         this.cooling = cooling;
+    }
+
+    @Override
+    public void render(BlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+
+    }
+
+    @Override
+    public void instanceRender(TrtrConventionalSlabEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        BlockRenderer.super.instanceRender(blockEntity, tickDelta, matrices, vertexConsumers, light, overlay);
     }
 }

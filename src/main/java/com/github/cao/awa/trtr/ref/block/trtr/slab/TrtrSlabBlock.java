@@ -2,13 +2,11 @@ package com.github.cao.awa.trtr.ref.block.trtr.slab;
 
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.tool.hammer.*;
-import com.github.cao.awa.trtr.type.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.block.enums.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
@@ -62,29 +60,10 @@ public class TrtrSlabBlock extends TrtrBasedBlock implements Waterloggable {
     }
 
     public boolean take(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        TrtrSlabBlockEntity slabBlockEntity = checkEntity(null, world, pos);
-        if (slabBlockEntity == null) {
-            return true;
-        }
-        if (cooling(slabBlockEntity)) {
-            return false;
-        }
-        take(slabBlockEntity, world, pos, state, player);
+        TrtrSlabBlockEntity slabBlockEntity = getSlabEntity(world, pos);
+        slabBlockEntity.take(world, pos, state, player);
         cooling(slabBlockEntity);
         return true;
-    }
-
-    public void take(TrtrSlabBlockEntity slabBlockEntity, World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if ((slabBlockEntity = checkEntity(slabBlockEntity, world, pos)) == null) {
-            return;
-        }
-
-        world.setBlockState(pos, state.with(PLACED_ITEM, false), 3);
-        ItemStack result = slabBlockEntity.getItem();
-        slabBlockEntity.setItemStack(ItemStack.EMPTY);
-
-        ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), result);
-        world.spawnEntity(entity);
     }
 
     public boolean cooling(TrtrSlabBlockEntity slabBlockEntity) {
@@ -96,14 +75,8 @@ public class TrtrSlabBlock extends TrtrBasedBlock implements Waterloggable {
         return true;
     }
 
-    public TrtrSlabBlockEntity checkEntity(TrtrSlabBlockEntity source, World world, BlockPos pos) {
-        if (source != null) {
-            return source;
-        }
+    public TrtrSlabBlockEntity getSlabEntity(World world, BlockPos pos) {
         BlockEntity entity = world.getBlockEntity(pos);
-        if (entity == null) {
-            return null;
-        }
         return entity instanceof TrtrSlabBlockEntity slab ? slab : null;
     }
 
@@ -263,36 +236,24 @@ public class TrtrSlabBlock extends TrtrBasedBlock implements Waterloggable {
                 return ActionResult.PASS;
             }
             world.setBlockState(pos, state.with(PLACED_ITEM, true), 3);
-            place(checkEntity(null, world, pos), world, pos, state, stack, player);
+            place(getSlabEntity(world, pos), world, pos, state, stack, player);
         }
         return ActionResult.SUCCESS;
     }
 
     public void thump(World world, BlockPos pos, BlockState state, ItemStack tool, PlayerEntity player) {
-        TrtrSlabBlockEntity slabBlockEntity = checkEntity(null, world, pos);
-        if (slabBlockEntity == null) {
-            world.setBlockState(pos, state.with(PLACED_ITEM, true), 3);
-            slabBlockEntity = checkEntity(null, world, pos);
-        }
+        TrtrSlabBlockEntity slabBlockEntity = getSlabEntity(world, pos);
         if (cooling(slabBlockEntity)) {
             return;
         }
         thump(slabBlockEntity, world, pos, state, tool, player);
         cooling(slabBlockEntity);
-
     }
 
     public void thump(TrtrSlabBlockEntity slabBlockEntity, World world, BlockPos pos, BlockState state, ItemStack tool, PlayerEntity player) {
-        if ((slabBlockEntity = checkEntity(slabBlockEntity, world, pos)) == null) {
-            return;
-        }
-        ItemStack stack = player.getMainHandStack();
         if (! state.get(PLACED_ITEM)) {
+            place(slabBlockEntity, world, pos, state, player.getMainHandStack(), player);
             world.setBlockState(pos, state.with(PLACED_ITEM, true), 3);
-            ItemStack place = stack.copy();
-            stack.setCount(stack.getCount() - 1);
-            place.setCount(1);
-            slabBlockEntity.setItemStack(place);
         }
         slabBlockEntity.thump(world, pos, state, tool, player);
     }

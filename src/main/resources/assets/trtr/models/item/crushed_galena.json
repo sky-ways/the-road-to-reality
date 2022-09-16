@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "trtr:item/ore/lead/galena/crushed/crushed_galena"
+    }
+}

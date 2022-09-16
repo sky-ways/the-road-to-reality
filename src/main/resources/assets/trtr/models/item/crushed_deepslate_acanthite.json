@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "trtr:item/ore/sliver/acanthite/crushed/crushed_deepslate_acanthite"
+    }
+}

@@ -31,19 +31,20 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class BurnerBlockEntity extends LootableContainerBlockEntity implements BlockEntityTicker<BurnerBlockEntity>, HeatConductive {
+import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+
+public class BurnerBlockEntity extends LootableContainerBlockEntity implements BlockEntityTicker<BurnerBlockEntity>, HeatConductiveBlockEntity {
     private final static Map<Item, Integer> FUEL_TIME = AbstractFurnaceBlockEntity.createFuelTimeMap();
     private final static Map<Item, Integer> HEAT = createFuelHeatMap();
     private final BlockEntityProperties<BurnerBlockEntity> properties = new BlockEntityProperties<>(this);
     private final Random random = new Random();
     private Identifier lastBurning;
     private DefaultedList<ItemStack> inventory;
-    private final BurnerBlockHeatConductor conductor;
+    private NbtCompound nbtOpt = null;
 
     public BurnerBlockEntity(BlockPos pos, BlockState state) {
         super(TrtrBlockEntityType.BURNER, pos, state);
         this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
-        this.conductor = new BurnerBlockHeatConductor();
     }
 
     public static Map<Item, Integer> createFuelHeatMap() {
@@ -146,19 +147,19 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        properties.putFloat("burned", nbt.getInt("burned"));
-        properties.putInt("burningTime", nbt.getInt("burningTime"));
+        properties.readNbt(nbt);
         this.lastBurning = new Identifier(nbt.getString("burningBlock"));
-        this.conductor.readNbt(nbt);
+        nbtOpt = nbt;
         Inventories.readNbt(nbt, inventory);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        nbt.putDouble("burned", properties.getDoubleOrDefault("burned", 0));
-        nbt.putLong("burningTime", properties.getIntOrDefault("burningTime", 0));
-        nbt.putFloat("seal", properties.getFloatOrDefault("seal", 1));
-        this.conductor.writeNbt(nbt);
+        properties.writeNbt(nbt);
+        HeatConductor conductor = heatHandler.getConductor(world, pos);
+        if (conductor != null) {
+            conductor.writeNbt(nbt);
+        }
         if (lastBurning != null) {
             nbt.putString("burningBlock", lastBurning.toString());
         }
@@ -176,13 +177,39 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
     }
 
     @Override
+    public void prepare(World world, BlockPos pos) {
+        heatHandler.getOrReplace(world, pos, () -> new BurnerBlockHeatConductor(this));
+        heatHandler.requireTick(world, pos);
+    }
+
+    @Override
+    public void init(World world) {
+        prepare(world, pos);
+    }
+
+    @Override
     public void tick(World world, BlockPos pos, BlockState state, BurnerBlockEntity blockEntity) {
         if (burn()) {
+            if (nbtOpt != null) {
+                prepare(world, pos);
+                heatHandler.prepare(world, pos, () -> {
+                    HeatConductor conductor = heatHandler.getConductor(world, pos);
+                    if (conductor == null) {
+                        return;
+                    }
+                    conductor.readNbt(nbtOpt);
+                    nbtOpt = null;
+                });
+            }
             if (! state.get(BurnerBlock.BURNING)) {
                 world.setBlockState(pos, state.with(BurnerBlock.BURNING, true), 2);
             }
-            conductor.heat(new ImmutableConductor(properties.getIntOrDefault("heat", 0)));
-            conductor.endothermic(world, pos, state);
+            HeatConductor conductor = heatHandler.getConductor(world, pos);
+            if (conductor != null) {
+                conductor.collect(new ImmutableConductor(null, properties.getIntOrDefault("heat", 0)));
+                conductor.endothermic(world);
+            }
+            heatHandler.requireTick(world, pos);
             tickBurning(world, pos, state);
         } else {
             if (state.get(BurnerBlock.BURNING)) {
@@ -198,7 +225,11 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
         tickFire(world, pos, state);
         if (targetState.getMaterial().isBurnable()) {
             properties.updateDouble("burned", source -> {
-                int heat = conductor.getTemperature();
+                HeatConductor conductor = heatHandler.getConductor(world, pos);
+                if (conductor == null) {
+                    return 0D;
+                }
+                double heat = conductor.getTemperature();
                 return source + properties.getFloatOrDefault("seal", 1) * (heat / 750);
             });
             Identifier last = Registry.BLOCK.getId(targetState.getBlock());
@@ -361,7 +392,14 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
 
     @Override
     public HeatConductor getConductor() {
-        return conductor;
+        return heatHandler.getConductor(world, pos);
+    }
+
+    @Override
+    public void setConductor(HeatConductor conductor) {
+        if (conductor instanceof BurnerBlockHeatConductor heatConductor) {
+            heatHandler.replace(world, pos, () -> heatConductor);
+        }
     }
 
     @Override

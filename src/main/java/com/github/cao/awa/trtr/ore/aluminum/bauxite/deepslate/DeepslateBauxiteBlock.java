@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.ore.aluminum.bauxite.deepslate;
 
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.block.*;
+import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.registry.*;
 
