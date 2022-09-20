@@ -12,7 +12,6 @@ import net.minecraft.util.*;
 
 public class BurnerScreen extends HandledScreen<BurnerScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("trtr:textures/gui/container/burner.png");
-    //    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/dispenser.png");
 
     public static void register() {
         HandledScreens.register(TrtrScreenHandlerType.BURNER, BurnerScreen::new);
@@ -25,7 +24,6 @@ public class BurnerScreen extends HandledScreen<BurnerScreenHandler> {
     @Override
     protected void init() {
         super.init();
-        // 将标题居中
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
     }
 

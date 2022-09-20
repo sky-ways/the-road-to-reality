@@ -8,15 +8,8 @@ import net.minecraft.util.registry.*;
 public class DeepslateAcanthiteBlock extends TrtrOreBlock {
     public static final Identifier IDENTIFIER = new Identifier("trtr:deepslate_acanthite");
 
-    public DeepslateAcanthiteBlock(Settings settings) {
-        super(settings);
-    }
-
-    public static Block register() {
-        Settings settings = Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool();
-        DeepslateAcanthiteBlock bauxite = new DeepslateAcanthiteBlock(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, bauxite);
-        DeepslateAcanthiteBlockItem.register(bauxite);
-        return bauxite;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 }

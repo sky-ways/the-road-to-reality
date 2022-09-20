@@ -98,10 +98,7 @@ public class WorldHeatHandler {
             BlockEntity entity = world.getBlockEntity(pos);
 
             if (entity != null) {
-                if (shouldUnload(world, pos)) {
-                    return;
-                }
-                if (conductor.getConductive().isOf(entity)) {
+                if (shouldUnload(world, pos) || conductor.getConductive().isOf(entity)) {
                     return;
                 } else if (conductor.getConductive().participateUnload()) {
                     unload(pos);

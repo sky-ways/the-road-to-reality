@@ -9,6 +9,9 @@ import java.lang.annotation.*;
  * <p>Use in class</p>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target({
+        ElementType.TYPE,
+        ElementType.METHOD
+})
 public @interface Auto {
 }

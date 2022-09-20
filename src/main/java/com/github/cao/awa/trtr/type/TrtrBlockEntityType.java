@@ -1,9 +1,11 @@
 package com.github.cao.awa.trtr.type;
 
+import com.github.cao.awa.trtr.air.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
 import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import com.github.cao.awa.trtr.ref.block.iron.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
+import com.github.cao.awa.trtr.transmission.gearwheel.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import com.google.common.collect.*;
 import com.mojang.datafixers.types.*;
@@ -25,7 +27,9 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
     private final BlockEntityType.BlockEntityFactory<? extends T> factory;
     private final Set<Block> blocks;
     public static final BlockEntityType<PhotovoltaicPanelsBlockEntity> PHOTOVOLTAIC_PANELS = create("trtr:photovoltaic_panels", Builder.create(PhotovoltaicPanelsBlockEntity::new, TrtrBlocks.PHOTOVOLTAIC_PANELS));
+    public static final BlockEntityType<WaterVaporBlockEntity> WATER_VAPOR = create("trtr:water_vapor", Builder.create(WaterVaporBlockEntity::new, TrtrBlocks.WATER_VAPOR));
     public static final BlockEntityType<BurnerBlockEntity> BURNER = create("trtr:burner", Builder.create(BurnerBlockEntity::new, TrtrBlocks.BURNER));
+    public static final BlockEntityType<GearWheelBlockEntity> GEAR_WHEEL = create("trtr:gear_wheel", Builder.create(GearWheelBlockEntity::new, TrtrBlocks.GEAR_WHEEL));
     public static final BlockEntityType<TrtrConventionalSlabEntity> SLAB_ENTITY = create("trtr:slab", Builder.create(TrtrConventionalSlabEntity::new, EntrustParser.operation(new Block[TrtrSlabBlock.SLABS.size()], array -> {
         for (int i = 0; i < array.length; i++) {
             array[i] = TrtrSlabBlock.SLABS.get(i);

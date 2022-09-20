@@ -8,15 +8,8 @@ import net.minecraft.util.registry.*;
 public class GalenaBlock extends TrtrOreBlock {
     public static final Identifier IDENTIFIER = new Identifier("trtr:galena");
 
-    public GalenaBlock(Settings settings) {
-        super(settings);
-    }
-
-    public static Block register() {
-        Settings settings = Settings.of(Material.METAL, MapColor.GRAY).hardness(4F).requiresTool();
-        GalenaBlock bauxite = new GalenaBlock(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, bauxite);
-        GalenaBlockItem.register(bauxite);
-        return bauxite;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 }

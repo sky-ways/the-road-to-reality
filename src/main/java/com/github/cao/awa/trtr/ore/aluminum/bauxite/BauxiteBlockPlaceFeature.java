@@ -31,13 +31,13 @@ public class BauxiteBlockPlaceFeature extends TrtrOrePlacedFeatures {
                 Feature.ORE,
                 new OreFeatureConfig(
                         targets,
-                        16
+                        64
                 )
         );
         PlacedFeature feature = new PlacedFeature(
                 RegistryEntry.of(config),
                 Arrays.asList(
-                        CountPlacementModifier.of(5),
+                        CountPlacementModifier.of(1),
                         SquarePlacementModifier.of(),
                         HeightRangePlacementModifier.uniform(
                                 YOffset.fixed(50),

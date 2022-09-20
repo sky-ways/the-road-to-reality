@@ -1,0 +1,6 @@
+{
+    "parent": "block/glass",
+    "textures": {
+        "all": "trtr:block/air/water_vapor_dev"
+    }
+}
