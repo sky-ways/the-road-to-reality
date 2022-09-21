@@ -21,7 +21,7 @@ public class WoodenBucket extends BucketItem {
     public static final Identifier WATER_IDENTIFIER = new Identifier("trtr:water_wooden_bucket");
     private final Fluid fluid;
 
-    public WoodenBucket(Fluid fluid, Settings settings) {
+    private WoodenBucket(Fluid fluid, Settings settings) {
         super(fluid, settings);
         this.fluid = fluid;
     }

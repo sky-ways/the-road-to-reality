@@ -17,6 +17,10 @@ public abstract class Hammer extends TrtrToolItem {
     private final float attackDamage;
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
+    public Hammer(ToolMaterial material, int attackDamage, float attackSpeed) {
+        this(material, attackDamage, attackSpeed, new Settings());
+    }
+
     public Hammer(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
         super(settings.maxDamage(material.getDurability()));
         registered.add(this);
@@ -25,14 +29,6 @@ public abstract class Hammer extends TrtrToolItem {
         builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", this.attackDamage, EntityAttributeModifier.Operation.ADDITION));
         builder.put(TrtrEntityAttributes.THUMP_EFFICIENCY, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
-    }
-
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (state.getHardness(world, pos) != 0.0F) {
-            stack.damage(2, miner, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-        }
-
-        return true;
     }
 
     public static Settings defaultSettings() {
@@ -45,16 +41,24 @@ public abstract class Hammer extends TrtrToolItem {
         return true;
     }
 
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (state.getHardness(world, pos) != 0.0F) {
+            stack.damage(2, miner, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+        }
+
+        return true;
+    }
+
+    @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
+    }
+
     public TypedActionResult<ItemStack> thump(World world, PlayerEntity user, Hand hand) {
         for (Hammer hammer : registered) {
             user.getItemCooldownManager().set(hammer, 20);
         }
         user.swingHand(hand, true);
         return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
-    }
-
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
     }
 }

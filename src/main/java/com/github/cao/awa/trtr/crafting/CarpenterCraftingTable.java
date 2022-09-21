@@ -13,4 +13,9 @@ public class CarpenterCraftingTable extends TrtrBasedBlock {
     public CarpenterCraftingTable(Settings settings) {
         super(settings);
     }
+
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
+    }
 }

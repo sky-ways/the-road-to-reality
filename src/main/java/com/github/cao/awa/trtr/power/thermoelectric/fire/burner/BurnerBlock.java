@@ -26,9 +26,14 @@ public class BurnerBlock extends TrtrBlockWithEntity<BurnerBlockEntity> {
     public static final BooleanProperty BURNING = BooleanProperty.of("burning");
     public static final DirectionProperty FACING = Properties.FACING;
 
-    public BurnerBlock(Settings settings) {
-        super(settings);
+    public BurnerBlock() {
+        super(Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool().luminance(state -> state.get(BURNING) ? 13 : 0));
         setDefaultState(getStateManager().getDefaultState().with(BURNING, false).with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override
@@ -44,14 +49,6 @@ public class BurnerBlock extends TrtrBlockWithEntity<BurnerBlockEntity> {
     @Override
     public BlockEntityType<BurnerBlockEntity> blockEntityType() {
         return TrtrBlockEntityType.BURNER;
-    }
-
-    public static Block register() {
-        Settings settings = Settings.of(Material.METAL, MapColor.WHITE).hardness(4F).requiresTool().luminance(state -> state.get(BURNING) ? 13 : 0);
-        BurnerBlock burner = new BurnerBlock(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, burner);
-        BurnerBlockItem.register(burner);
-        return burner;
     }
 
     @Override

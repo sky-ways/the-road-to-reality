@@ -15,15 +15,9 @@ import java.util.*;
 public class CrushedDeepslateAcanthite extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_deepslate_acanthite");
 
-    public CrushedDeepslateAcanthite(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedDeepslateAcanthite acanthite = new CrushedDeepslateAcanthite(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, acanthite);
-        return acanthite;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

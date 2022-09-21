@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.power.storage.battery;
 
+import com.github.cao.awa.trtr.ref.item.trtr.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
@@ -8,18 +9,12 @@ import net.minecraft.util.*;
 import net.minecraft.util.registry.*;
 import net.minecraft.world.*;
 
-public class Battery extends Item {
+public class Battery extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:battery");
 
-    public Battery(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        Battery battery = new Battery(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, battery);
-        return battery;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

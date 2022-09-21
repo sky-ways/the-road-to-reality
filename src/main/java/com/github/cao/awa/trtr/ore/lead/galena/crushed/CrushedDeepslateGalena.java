@@ -14,15 +14,9 @@ import java.util.*;
 public class CrushedDeepslateGalena extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_deepslate_galena");
 
-    public CrushedDeepslateGalena(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedDeepslateGalena galena = new CrushedDeepslateGalena(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, galena);
-        return galena;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

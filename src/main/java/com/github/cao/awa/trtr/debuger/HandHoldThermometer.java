@@ -1,8 +1,7 @@
 package com.github.cao.awa.trtr.debuger;
 
 import com.github.cao.awa.trtr.heat.conductor.*;
-import com.github.cao.awa.trtr.ref.block.*;
-import net.minecraft.block.entity.*;
+import com.github.cao.awa.trtr.ref.item.trtr.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.text.*;
@@ -13,18 +12,16 @@ import net.minecraft.world.*;
 
 import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
 
-public class HandHoldThermometer extends Item {
+public class HandHoldThermometer extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:hand_hold_thermometer");
 
-    public HandHoldThermometer(Settings settings) {
-        super(settings);
+    public HandHoldThermometer() {
+        super(new Settings().maxCount(1));
     }
 
-    public static Item register() {
-        Settings settings = new Settings().maxCount(1);
-        HandHoldThermometer thermometer = new HandHoldThermometer(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, thermometer);
-        return thermometer;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

@@ -12,11 +12,13 @@ public class TrtrItemStacks {
         stacks.add(TrtrBlocks.DEEPSLATE_BAUXITE_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.GALENA_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.DEEPSLATE_GALENA_BLOCK.asItem().getDefaultStack());
-        stacks.add(TrtrBlocks.ORTHOCLASE.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.ORTHOCLASE_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.ALBITE_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.ALUNITE_BLOCK.asItem().getDefaultStack());
-        stacks.add(TrtrBlocks.CHALCOPYRITE.asItem().getDefaultStack());
-        stacks.add(TrtrBlocks.CUPRITE.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.CHALCOPYRITE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.CUPRITE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.DEEPSLATE_CHALCOPYRITE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.DEEPSLATE_CUPRITE_BLOCk.asItem().getDefaultStack());
     });
 
     public static final ObjectArrayList<ItemStack> CRUSHED_ORES = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
@@ -26,12 +28,17 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.CRUSHED_COAL.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_BAUXITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_HEMATITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_CHALCOPYRITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_CUPRITE.getDefaultStack());
+
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_COAL.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_BAUXITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_GALENA.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_ACANTHITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_HEMATITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_DEEPSLATE_CHALCOPYRITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_DEEPSLATE_CUPRITE.getDefaultStack());
     });
 
     public static final ObjectArrayList<ItemStack> ORE_POWDERS = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
@@ -42,6 +49,8 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.GALENA_POWDER.getDefaultStack());
         stacks.add(TrtrItems.HEMATITE_POWDER.getDefaultStack());
         stacks.add(TrtrItems.COAL_POWDER.getDefaultStack());
+        stacks.add(TrtrItems.CHALCOPYRITE_POWDER.getDefaultStack());
+        stacks.add(TrtrItems.CUPRITE_POWDER.getDefaultStack());
     });
 
     public static final ObjectArrayList<ItemStack> TOOLS = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {

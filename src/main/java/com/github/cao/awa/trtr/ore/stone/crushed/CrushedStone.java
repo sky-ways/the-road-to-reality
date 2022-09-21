@@ -15,15 +15,9 @@ import java.util.*;
 public class CrushedStone extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_stone");
 
-    public CrushedStone(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedStone stone = new CrushedStone(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, stone);
-        return stone;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

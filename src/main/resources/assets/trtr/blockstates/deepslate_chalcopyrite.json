@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "trtr:block/ore/copper/chalcopyrite/deepslate_chalcopyrite"
+        }
+    }
+}

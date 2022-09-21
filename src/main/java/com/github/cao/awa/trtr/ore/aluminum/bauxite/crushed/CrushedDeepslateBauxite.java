@@ -14,15 +14,9 @@ import java.util.*;
 public class CrushedDeepslateBauxite extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_deepslate_bauxite");
 
-    public CrushedDeepslateBauxite(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedDeepslateBauxite bauxite = new CrushedDeepslateBauxite(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, bauxite);
-        return bauxite;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

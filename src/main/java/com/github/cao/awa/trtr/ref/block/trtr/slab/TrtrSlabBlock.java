@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.ref.block.trtr.slab;
 
 import com.github.cao.awa.trtr.ref.block.trtr.*;
+import com.github.cao.awa.trtr.register.*;
 import com.github.cao.awa.trtr.tool.hammer.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
 import it.unimi.dsi.fastutil.objects.*;
@@ -30,7 +31,7 @@ public class TrtrSlabBlock extends TrtrBasedBlock implements Waterloggable {
     protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
     public TrtrSlabBlock(Settings settings) {
-        super(settings);
+        super(settings, new TrtrBlockRegister());
         this.setDefaultState(this.getDefaultState().with(TYPE, SlabType.BOTTOM).with(WATERLOGGED, false).with(PLACED_ITEM, false));
         SLABS.add(this);
     }
@@ -266,5 +267,10 @@ public class TrtrSlabBlock extends TrtrBasedBlock implements Waterloggable {
         stack.setCount(stack.getCount() - 1);
         place.setCount(1);
         slabBlockEntity.setItemStack(place);
+    }
+
+    @Override
+    public Identifier identifier() {
+        return null;
     }
 }

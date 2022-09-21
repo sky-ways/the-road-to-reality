@@ -8,8 +8,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class PhotovoltaicPanelsBlockEntity extends BlockEntity implements BlockEntityTicker<PhotovoltaicPanelsBlockEntity> {
-    private int ticked = 0;
-
     public PhotovoltaicPanelsBlockEntity(BlockPos pos, BlockState state) {
         super(TrtrBlockEntityType.PHOTOVOLTAIC_PANELS, pos, state);
     }
@@ -23,15 +21,7 @@ public class PhotovoltaicPanelsBlockEntity extends BlockEntity implements BlockE
         super.readNbt(nbt);
     }
 
-    public int getTicked() {
-        return ticked;
-    }
-
     @Override
     public void tick(World world, BlockPos pos, BlockState state, PhotovoltaicPanelsBlockEntity blockEntity) {
-        ticked++;
-        if ((ticked % 20) == 0) {
-            markDirty();
-        }
     }
 }

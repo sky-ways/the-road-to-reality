@@ -29,7 +29,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class TrtrBlockItem extends TrtrItem {
+public abstract class TrtrBlockItem extends TrtrItem {
     public static final String BLOCK_STATE_TAG_KEY = "BlockStateTag";
     private static final String BLOCK_ENTITY_TAG_KEY = "BlockEntityTag";
     /**
@@ -37,8 +37,9 @@ public class TrtrBlockItem extends TrtrItem {
      */
     @Deprecated
     private final Block block;
+
     public TrtrBlockItem(Block block, Settings settings) {
-        super(settings);
+        super(settings, true);
         this.block = block;
     }
 

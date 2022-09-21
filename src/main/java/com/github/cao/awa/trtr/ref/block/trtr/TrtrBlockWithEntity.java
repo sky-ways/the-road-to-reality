@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.ref.block.trtr;
 
+import com.github.cao.awa.trtr.register.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.affair.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -8,12 +9,16 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public abstract class TrtrBlockWithEntity<T extends BlockEntity> extends TrtrBasedBlock {
-    protected TrtrBlockWithEntity(Settings settings) {
+    public TrtrBlockWithEntity(Settings settings) {
         super(settings);
     }
 
     public TrtrBlockWithEntity() {
         super(Settings.of(Material.AIR));
+    }
+
+    public TrtrBlockWithEntity(Settings settings, TrtrBlockRegister register) {
+        super(settings, register);
     }
 
     @Nullable

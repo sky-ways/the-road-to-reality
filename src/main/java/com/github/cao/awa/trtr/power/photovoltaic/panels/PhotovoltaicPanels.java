@@ -14,27 +14,17 @@ import net.minecraft.util.registry.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-// TODO waiting for Si
+// TODO waiting
 public class PhotovoltaicPanels extends TrtrBlockWithEntity<PhotovoltaicPanelsBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:photovoltaic_panels");
 
-    public PhotovoltaicPanels(Settings settings) {
-        super(settings);
-    }
-
-    public static Block register() {
-        Settings settings = Settings.of(Material.METAL, MapColor.BLUE).hardness(4F).requiresTool();
-        PhotovoltaicPanels panels = new PhotovoltaicPanels(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, panels);
-        PhotovoltaicPanelsItem.register(panels);
-        return panels;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.getBlockEntity(pos) instanceof PhotovoltaicPanelsBlockEntity blockEntity) {
-            player.sendMessage(Text.of("Ticked: " + blockEntity.getTicked()));
-        }
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
@@ -46,9 +36,9 @@ public class PhotovoltaicPanels extends TrtrBlockWithEntity<PhotovoltaicPanelsBl
     @Override
     public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
         super.afterBreak(world, player, pos, state, blockEntity, stack);
-        if (blockEntity instanceof PhotovoltaicPanelsBlockEntity panelsBlock) {
-            System.out.println(panelsBlock.getTicked());
-        }
+//        if (blockEntity instanceof PhotovoltaicPanelsBlockEntity panelsBlock) {
+//            System.out.println(panelsBlock.getTicked());
+//        }
     }
 
     @Nullable

@@ -1,7 +1,6 @@
 package com.github.cao.awa.trtr.ref.block.trtr;
 
 import com.github.cao.awa.trtr.ore.generic.*;
-import com.github.cao.awa.trtr.ref.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.item.*;
@@ -11,12 +10,11 @@ import net.minecraft.util.math.intprovider.*;
 import net.minecraft.util.registry.*;
 import org.jetbrains.annotations.*;
 
-public abstract class TrtrOreBlock extends TrtrBasedBlock implements OreRegister {
+public abstract class TrtrOreBlock extends TrtrBasedBlock {
     private final IntProvider experienceDropped;
 
     public TrtrOreBlock(Settings settings) {
         this(settings, ConstantIntProvider.create(0));
-        register();
     }
 
     public TrtrOreBlock() {
@@ -30,7 +28,7 @@ public abstract class TrtrOreBlock extends TrtrBasedBlock implements OreRegister
 
     public void register() {
         Registry.register(Registry.BLOCK, identifier(), this);
-        new TrtrOreBlockItem(this).register();
+        new TrtrGenBlockItem(this);
     }
 
     public static Settings defaultSettings() {

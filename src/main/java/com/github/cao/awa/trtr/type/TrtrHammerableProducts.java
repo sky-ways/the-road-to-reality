@@ -28,6 +28,8 @@ public class TrtrHammerableProducts {
     public static final RageTable<Item, NumberRage<Item>> ACANTHITE_POWDER = RageTable.of(NumberRage.absolute(TrtrItems.ACANTHITE_POWDER, 5));
     public static final RageTable<Item, NumberRage<Item>> STONE_POWDER = RageTable.of(NumberRage.absolute(TrtrItems.STONE_POWDER, 5));
     public static final RageTable<Item, NumberRage<Item>> DEEPSLATE_POWDER = RageTable.of(NumberRage.absolute(TrtrItems.DEEPSLATE_POWDER, 5));
+    public static final RageTable<Item, NumberRage<Item>> CHALCOPYRITE_POWDER = RageTable.of(NumberRage.absolute(TrtrItems.CHALCOPYRITE_POWDER, 5));
+    public static final RageTable<Item, NumberRage<Item>> CUPRITE_POWDER = RageTable.of(NumberRage.absolute(TrtrItems.CUPRITE_POWDER, 5));
 
     public static void pre() {
         register(TrtrItems.CRUSHED_BAUXITE, CRUSHED_BAUXITE);
@@ -51,6 +53,8 @@ public class TrtrHammerableProducts {
         register(TrtrItems.ACANTHITE_POWDER, ACANTHITE_POWDER);
         register(TrtrItems.STONE_POWDER, STONE_POWDER);
         register(TrtrItems.DEEPSLATE_POWDER, DEEPSLATE_POWDER);
+        register(TrtrItems.CHALCOPYRITE_POWDER, CHALCOPYRITE_POWDER);
+        register(TrtrItems.CUPRITE_POWDER, CUPRITE_POWDER);
     }
 
     public static void register(Item item, RageTable<Item, NumberRage<Item>> table) {

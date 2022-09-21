@@ -14,15 +14,9 @@ import java.util.*;
 public class CrushedCoal extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_coal");
 
-    public CrushedCoal(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedCoal coal = new CrushedCoal(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, coal);
-        return coal;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

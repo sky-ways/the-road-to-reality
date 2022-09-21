@@ -16,15 +16,9 @@ import org.jetbrains.annotations.*;
 public class WaterVapor extends TrtrBlockWithEntity<WaterVaporBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:water_vapor");
 
-    protected WaterVapor(Settings settings) {
-        super(settings);
-    }
-
-    public static Block register() {
-        Settings settings = Settings.of(Material.AIR, MapColor.WHITE);
-        WaterVapor vapor = new WaterVapor(settings);
-        Registry.register(Registry.BLOCK, IDENTIFIER, vapor);
-        return vapor;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

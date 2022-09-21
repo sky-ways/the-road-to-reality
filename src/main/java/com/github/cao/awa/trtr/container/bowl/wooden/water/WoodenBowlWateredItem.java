@@ -22,14 +22,17 @@ import net.minecraft.world.event.*;
 public class WoodenBowlWateredItem extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:water_wooden_bowl");
 
-    public WoodenBowlWateredItem(Settings settings) {
-        super(settings);
+    public WoodenBowlWateredItem() {
+        super(new Settings().maxCount(1));
     }
 
-    public static Item register() {
-        Settings settings = new Settings().maxCount(1);
-        WoodenBowlWateredItem bowl = new WoodenBowlWateredItem(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, bowl);
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
+    }
+
+    public void register() {
+        super.register();
         CauldronBehavior behavior = (state, world, pos, player, hand, stack) -> {
             if (state.get(LeveledCauldronBlock.LEVEL) != 3) {
                 if (! world.isClient) {
@@ -46,9 +49,8 @@ public class WoodenBowlWateredItem extends TrtrItem {
                 return ActionResult.PASS;
             }
         };
-        CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(bowl, behavior);
-        CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.put(bowl, behavior);
-        return bowl;
+        CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(this, behavior);
+        CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.put(this, behavior);
     }
 
     public ActionResult useOnBlock(ItemUsageContext context) {

@@ -9,14 +9,8 @@ import net.minecraft.util.registry.*;
 public class CoalPowder extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:coal_powder");
 
-    public CoalPowder(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CoalPowder coalPowder = new CoalPowder(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, coalPowder);
-        return coalPowder;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 }

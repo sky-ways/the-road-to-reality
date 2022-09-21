@@ -20,15 +20,14 @@ import net.minecraft.world.event.*;
 public class BowlItem extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("minecraft:bowl");
 
-    public BowlItem(Settings settings) {
-        super(settings);
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
-    public static Item register() {
-        Settings settings = new Settings().group(ItemGroup.MATERIALS);
-        BowlItem bowl = new BowlItem(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, bowl);
-        CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(bowl, (state, world, pos, player, hand, stack) -> {
+    public void register() {
+        super.register();
+        CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(this, (state, world, pos, player, hand, stack) -> {
             if (!world.isClient) {
                 Item item = stack.getItem();
                 player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(TrtrItems.WOODEN_BOWL_WATERED)));
@@ -40,7 +39,6 @@ public class BowlItem extends TrtrItem {
             }
             return ActionResult.success(world.isClient);
         });
-        return bowl;
     }
 
     @Override

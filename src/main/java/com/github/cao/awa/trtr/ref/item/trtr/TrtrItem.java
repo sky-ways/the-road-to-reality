@@ -1,17 +1,39 @@
 package com.github.cao.awa.trtr.ref.item.trtr;
 
+import com.github.cao.awa.trtr.ore.copper.chalcopyrite.crushed.*;
+import com.github.cao.awa.trtr.ref.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
-import com.github.cao.awa.trtr.type.*;
 import net.minecraft.client.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.util.registry.*;
 
-public class TrtrItem extends Item {
+public abstract class TrtrItem extends Item implements RefRegister {
     public TrtrItem(Settings settings) {
+        this(settings, false);
+    }
+
+    public TrtrItem(Settings settings, boolean doNotRegister) {
         super(settings);
+        if (!doNotRegister) {
+            register();
+        }
+    }
+
+    public TrtrItem() {
+        this(new Settings());
+    }
+
+    @Override
+    public abstract Identifier identifier();
+
+    @Override
+    public void register() {
+        Registry.register(Registry.ITEM, identifier(), this);
     }
 
     public static void slabRender(TrtrConventionalSlabEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {

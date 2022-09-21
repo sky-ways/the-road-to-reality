@@ -1,25 +1,22 @@
 package com.github.cao.awa.trtr.ref.block;
 
-import com.github.cao.awa.trtr.heat.conductor.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
-import com.github.cao.awa.trtr.ref.block.iron.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.affair.*;
-import it.unimi.dsi.fastutil.objects.*;
+import com.github.cao.awa.trtr.register.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.state.*;
-import net.minecraft.state.property.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
-
 public abstract class HeatConductionBlock<T extends HeatConductionBlockEntity<T>> extends TrtrBlockWithEntity<T> {
     private BlockEntityTicker<? super T> ticker = this::tick;
 
-    protected HeatConductionBlock(Settings settings) {
+    public HeatConductionBlock(Settings settings) {
         super(settings);
+    }
+
+    public HeatConductionBlock(Settings settings, TrtrBlockRegister register) {
+        super(settings, register);
     }
 
     @Override

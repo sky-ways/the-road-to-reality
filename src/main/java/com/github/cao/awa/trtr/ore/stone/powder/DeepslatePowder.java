@@ -8,14 +8,8 @@ import net.minecraft.util.registry.*;
 public class DeepslatePowder extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:deepslate_powder");
 
-    public DeepslatePowder(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        DeepslatePowder deepslatePowder = new DeepslatePowder(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, deepslatePowder);
-        return deepslatePowder;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 }

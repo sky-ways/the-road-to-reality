@@ -14,15 +14,9 @@ import java.util.*;
 public class CrushedDeepslateHematite extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_deepslate_hematite");
 
-    public CrushedDeepslateHematite(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedDeepslateHematite hematite = new CrushedDeepslateHematite(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, hematite);
-        return hematite;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

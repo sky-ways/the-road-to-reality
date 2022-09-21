@@ -15,15 +15,9 @@ import java.util.*;
 public class CrushedDeepslate extends TrtrItem implements Hammerable {
     public static final Identifier IDENTIFIER = new Identifier("trtr:crushed_deepslate");
 
-    public CrushedDeepslate(Settings settings) {
-        super(settings);
-    }
-
-    public static Item register() {
-        Settings settings = new Settings();
-        CrushedDeepslate deepslate = new CrushedDeepslate(settings);
-        Registry.register(Registry.ITEM, IDENTIFIER, deepslate);
-        return deepslate;
+    @Override
+    public Identifier identifier() {
+        return IDENTIFIER;
     }
 
     @Override

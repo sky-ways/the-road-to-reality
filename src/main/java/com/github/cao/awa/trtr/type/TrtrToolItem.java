@@ -3,7 +3,7 @@ package com.github.cao.awa.trtr.type;
 import com.github.cao.awa.trtr.ref.item.trtr.*;
 import net.minecraft.item.*;
 
-public class TrtrToolItem extends TrtrItem {
+public abstract class TrtrToolItem extends TrtrItem {
     public TrtrToolItem(Settings settings) {
         super(settings);
     }
