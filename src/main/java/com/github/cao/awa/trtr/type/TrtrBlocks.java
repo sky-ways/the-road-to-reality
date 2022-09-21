@@ -8,6 +8,7 @@ import com.github.cao.awa.trtr.ore.copper.chalcopyrite.*;
 import com.github.cao.awa.trtr.ore.copper.chalcopyrite.deepslate.*;
 import com.github.cao.awa.trtr.ore.copper.cuprite.*;
 import com.github.cao.awa.trtr.ore.copper.cuprite.deepslate.*;
+import com.github.cao.awa.trtr.ore.copper.malachite.*;
 import com.github.cao.awa.trtr.ore.feldspar.albite.*;
 import com.github.cao.awa.trtr.ore.feldspar.orthoclase.*;
 import com.github.cao.awa.trtr.ore.lead.galena.*;
@@ -42,6 +43,8 @@ public class TrtrBlocks {
     public static final Block CUPRITE_BLOCK = new Cuprite();
     public static final Block DEEPSLATE_CHALCOPYRITE_BLOCK = new DeepslateChalcopyrite();
     public static final Block DEEPSLATE_CUPRITE_BLOCk = new DeepslateCuprite();
+
+    public static final Block MALACHITE_BLOCK = new Malachite();
 
     public static final Block WATER_VAPOR = new WaterVapor();
 
