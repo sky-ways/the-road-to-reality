@@ -68,7 +68,7 @@ public class HeatHandler {
         return handler.get(world).getConductor(pos);
     }
 
-    public <T extends HeatConductor> T getOrReplace(World world, BlockPos pos, Supplier<T> creator) {
+    public HeatConductor getOrReplace(World world, BlockPos pos, Supplier<HeatConductor> creator) {
         ensureWorld(world);
         return handler.get(world).getOrReplace(pos, creator);
     }

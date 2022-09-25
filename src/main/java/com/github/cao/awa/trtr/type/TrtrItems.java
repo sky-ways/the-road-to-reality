@@ -17,6 +17,8 @@ import com.github.cao.awa.trtr.ore.copper.malachite.crushed.*;
 import com.github.cao.awa.trtr.ore.copper.malachite.powder.*;
 import com.github.cao.awa.trtr.ore.feldspar.albite.crushed.*;
 import com.github.cao.awa.trtr.ore.feldspar.albite.powder.*;
+import com.github.cao.awa.trtr.ore.feldspar.anorthite.crushed.*;
+import com.github.cao.awa.trtr.ore.feldspar.anorthite.powder.*;
 import com.github.cao.awa.trtr.ore.feldspar.orthoclase.crushed.*;
 import com.github.cao.awa.trtr.ore.feldspar.orthoclase.powder.*;
 import com.github.cao.awa.trtr.ore.iron.hematite.crushed.*;
@@ -52,12 +54,13 @@ public class TrtrItems {
     public static final Item PLANT_FIBER = new PlantFibre();
 
     public static final Item MALACHITE_POWDER = new MalachitePowder();
-    public static final Item ALUNITE_POWDER = new AlunitePowder();
     public static final Item ALBITE_POWDER = new AlbitePowder();
     public static final Item ORTHOCLASE_POWDER = new OrthoclasePowder();
+    public static final Item ANORTHITE_POWDER = new AnorthitePowder();
 
     public static final Item BAUXITE_POWDER = new BauxitePowder();
     public static final Item ACANTHITE_POWDER = new AcanthitePowder();
+    public static final Item ALUNITE_POWDER = new AlunitePowder();
     public static final Item GALENA_POWDER = new GalenaPowder();
     public static final Item COAL_POWDER = new CoalPowder();
     public static final Item HEMATITE_POWDER = new HematitePowder();
@@ -70,6 +73,7 @@ public class TrtrItems {
     public static final Item CRUSHED_ALUNITE = new CrushedAlunite();
     public static final Item CRUSHED_ALBITE = new CrushedAlbite();
     public static final Item CRUSHED_ORTHOCLASE = new CrushedOrthoclase();
+    public static final Item CRUSHED_ANORTHITE = new CrushedAnorthite();
 
     public static final Item CRUSHED_BAUXITE = new CrushedBauxite();
     public static final Item CRUSHED_ACANTHITE = new CrushedAcanthite();

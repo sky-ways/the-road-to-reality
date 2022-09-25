@@ -21,8 +21,7 @@ import static com.github.cao.awa.trtr.TrtrMod.timeTracker;
 
 public class WorldHeatHandler {
     private static final Method UNLOAD_CHECKER = EntrustParser.trying(() -> {
-        Class<ServerChunkManager> manager = ServerChunkManager.class;
-        Method method = manager.getDeclaredMethod("getChunkHolder", long.class);
+        Method method = ServerChunkManager.class.getDeclaredMethod("getChunkHolder", long.class);
         method.setAccessible(true);
         return method;
     });
@@ -66,13 +65,13 @@ public class WorldHeatHandler {
         return conductors.get(pos);
     }
 
-    public <T extends HeatConductor> T getOrReplace(BlockPos pos, Supplier<T> creator) {
+    public HeatConductor getOrReplace(BlockPos pos, Supplier<HeatConductor> creator) {
         HeatConductor conductor = conductors.get(pos);
-        T created = creator.get();
+        HeatConductor created = creator.get();
         if (conductor == null) {
             register(pos, created);
         } else if (conductor.getConductive().isOf(created.getConductive())) {
-            return (T) conductor;
+            return conductor;
         } else {
             register(pos, created);
         }

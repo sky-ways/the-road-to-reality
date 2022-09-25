@@ -1,39 +1,46 @@
 package com.github.cao.awa.trtr.properties;
 
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
-import com.mojang.datafixers.types.*;
-import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.nbt.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.*;
 
-public class BlockEntityProperties<T> {
-    public static final Map<Class<?>, String> TYPE_S = EntrustParser.operation(new ConcurrentHashMap<>(), map -> {
-        map.put(Integer.class, "(I");
-        map.put(Double.class, "(D");
-        map.put(Float.class, "(F");
-        map.put(Short.class, "(S");
-        map.put(Byte.class, "(Byt");
-        map.put(Character.class, "(C");
-        //        map.put(NbtCompound.class,"[N:Cpd");
-        map.put(String.class, "[STR");
-    });
-    public static final Map<String, Function<String, Object>> TYPE_D = EntrustParser.operation(new ConcurrentHashMap<>(), map -> {
-        map.put("(I", Integer::parseInt);
-        map.put("(D", Double::parseDouble);
-        map.put("(F", Float::parseFloat);
-        map.put("(S", Short::parseShort);
-        map.put("(Byt", Byte::parseByte);
-        map.put("(C", s -> (char) Integer.parseInt(s));
-        map.put("[STR", s -> s);
-    });
+public class InstanceProperties<T> {
+    private static final Map<Class<?>, Function<Object, String>> SERIALIZERS = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, String> TYPE_S = new ConcurrentHashMap<>();
+    private static final Map<String, Function<String, Object>> TYPE_D = new ConcurrentHashMap<>();
+
+    static {
+        addHandler(Integer.class, "(I", Integer::parseInt);
+        addHandler(Double.class, "(D", Double::parseDouble);
+        addHandler(Float.class, "(F", Float::parseFloat);
+        addHandler(Short.class, "(S", Short::parseShort);
+        addHandler(Byte.class, "(Byt", Byte::parseByte);
+        addHandler(Boolean.class, "(I", Boolean::parseBoolean);
+        addHandler(Character.class, "(C", s -> (char) Integer.parseInt(s));
+        addHandler(String.class, "[STR", s -> s);
+    }
+
     private final Map<String, Object> map = new ConcurrentHashMap<>();
     private final T instance;
 
-    public BlockEntityProperties(T instance) {
+    public InstanceProperties(T instance) {
         this.instance = instance;
+    }
+
+    public static void addHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer) {
+        addHandler(target, serial, deserializer, null);
+    }
+
+    public static void addHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer, @Nullable Function<Object, String> serializer) {
+        TYPE_S.put(target, serial);
+        TYPE_D.put(serial, deserializer);
+        if (serializer != null) {
+            SERIALIZERS.put(target, serializer);
+        }
     }
 
     public T getInstance() {
@@ -48,10 +55,7 @@ public class BlockEntityProperties<T> {
         if (! map.containsKey(key)) {
             return defaultValue;
         }
-        return EntrustParser.trying(() -> (int) map.get(key), e -> {
-            e.printStackTrace();
-            return defaultValue;
-        });
+        return EntrustParser.trying(() -> (int) map.get(key), e -> defaultValue);
     }
 
     public int calculateInt(String key, Function<Integer, Boolean> predicate, Function<Integer, Integer> function, int defaultValue) {
@@ -122,7 +126,7 @@ public class BlockEntityProperties<T> {
                 String type = TYPE_S.get(v.getClass());
                 NbtCompound element = new NbtCompound();
                 element.putString("type", type);
-                element.putString(k, v.toString());
+                element.putString(k, SERIALIZERS.containsKey(v.getClass()) ? SERIALIZERS.get(v.getClass()).apply(v) : v.toString());
                 nbt.put(k, element);
             }
         });

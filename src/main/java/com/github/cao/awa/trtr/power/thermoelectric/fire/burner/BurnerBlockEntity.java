@@ -36,7 +36,7 @@ import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
 public class BurnerBlockEntity extends LootableContainerBlockEntity implements BlockEntityTicker<BurnerBlockEntity>, HeatConductiveBlockEntity {
     private final static Map<Item, Integer> FUEL_TIME = AbstractFurnaceBlockEntity.createFuelTimeMap();
     private final static Map<Item, Integer> HEAT = createFuelHeatMap();
-    private final BlockEntityProperties<BurnerBlockEntity> properties = new BlockEntityProperties<>(this);
+    private final InstanceProperties<BurnerBlockEntity> properties = new InstanceProperties<>(this);
     private final Random random = new Random();
     private Identifier lastBurning;
     private DefaultedList<ItemStack> inventory;
@@ -350,7 +350,7 @@ public class BurnerBlockEntity extends LootableContainerBlockEntity implements B
             if (willFire) {
                 entity.setOnFireFor(1);
             }
-            entity.damage(new DamageSource("eper.burner.hot"), properties.calculateFloat("heat",
+            entity.damage(new DamageSource("trtr.burner.hot"), properties.calculateFloat("heat",
                     heat -> heat > 0F, // Is heat higher than zero
                     heat -> heat * (0.005F - offset.get()), // Calculate damage
                     0 // Else no damage

@@ -29,27 +29,18 @@ public class TrtrConventionalSlabEntity extends TrtrSlabBlockEntity {
             hammer.thump(world, player, Hand.MAIN_HAND);
 
             ItemStack stack = getItem();
-            RageTable<Item, NumberRage<Item>> products;
-            if (stack.getItem() instanceof Hammerable type) {
-                products = type.products();
-            } else {
-                products = TrtrHammerables.hammerables.get(stack.getItem());
-            }
+            RageTable<Item, NumberRage<Item>> products = stack.getItem() instanceof Hammerable hammerable ? hammerable.products() : TrtrHammerables.hammerables.get(stack.getItem());
             if (products != null) {
                 NbtCompound nbt = stack.getOrCreateNbt();
-                int crushed = nbt.getInt("crushed") + 1;
-                nbt.putInt("crushed", crushed);
+                double crushed = nbt.getDouble("crushed") + hammer.getThumpEfficiency();
+                nbt.putDouble("crushed", crushed);
 
-                if (products.size() == 1) {
-                    products.approve(crushed, item -> {
-                        setItemStack(item.getDefaultStack());
-                    });
-                } else {
-                    products.approve(crushed, item -> {
-                        setItemStack(item.getDefaultStack());
+                products.approve(crushed, item -> {
+                    setItemStack(item.getDefaultStack());
+                    if (products.size() == 1) {
                         take(world, pos, state, player);
-                    });
-                }
+                    }
+                });
             }
         }
         markDirty();

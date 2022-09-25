@@ -21,7 +21,7 @@ public class MetalBlockHeatConductor extends HeatConductor {
         return super.getTemperature();
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(double temperature) {
         super.setTemperature(temperature);
     }
 

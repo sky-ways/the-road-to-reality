@@ -17,6 +17,7 @@
     "item.trtr.albite_powder": "明矾石粉",
     "item.trtr.orthoclase_powder": "钾长石粉",
     "item.trtr.alunite_powder": "钠长石粉",
+    "item.trtr.anorthite_powder": "碎钙长石粉",
     "item.trtr.crushed_bauxite": "碎铝土矿石",
     "item.trtr.crushed_acanthite": "碎螺状硫银矿石",
     "item.trtr.crushed_galena": "碎方铅矿石",
@@ -35,10 +36,10 @@
     "item.trtr.crushed_cuprite": "碎赤铜矿石",
     "item.trtr.crushed_deepslate_cuprite": "碎深层赤铜矿石",
     "item.trtr.crushed_malachite": "碎孔雀石",
+    "item.trtr.crushed_anorthite": "碎钙长石",
     "item.trtr.crushed_deepslate": "碎深板岩",
     "item.trtr.crushed_stone": "碎石",
     "item.trtr.plant_fiber": "植物纤维",
-
     "block.trtr.photovoltaic_panels": "光伏发电板",
     "block.trtr.burner": "燃烧炉",
     "block.trtr.bauxite": "铝土矿石",
@@ -55,13 +56,12 @@
     "block.trtr.albite": "钠长石",
     "block.trtr.orthoclase": "钾长石",
     "block.trtr.malachite": "孔雀石",
-
+    "block.trtr.anorthite": "钙长石",
     "death.attack.trtr.burner.hot": "%s 试图站在极高温的燃烧炉上",
-
+    "death.attack.trtr.nuclear.disease": "核症状",
     "attribute.name.trtr.thump_efficiency": "捶打效率",
-
     "itemGroup.trtr.all": "所有",
-    "itemGroup.trtr.ore": "矿物",
+    "itemGroup.trtr.ore": "矿石",
     "itemGroup.trtr.crushed_ore": "碎矿",
     "itemGroup.trtr.ore_powder": "矿粉",
     "itemGroup.trtr.tool": "工具"

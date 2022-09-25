@@ -9,7 +9,7 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public abstract class HeatConductionBlock<T extends HeatConductionBlockEntity<T>> extends TrtrBlockWithEntity<T> {
-    private BlockEntityTicker<? super T> ticker = this::tick;
+    private final BlockEntityTicker<? super T> ticker = this::tick;
 
     public HeatConductionBlock(Settings settings) {
         super(settings);

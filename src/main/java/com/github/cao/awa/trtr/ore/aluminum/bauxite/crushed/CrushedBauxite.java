@@ -26,6 +26,6 @@ public class CrushedBauxite extends TrtrItem implements Hammerable {
 
     @Override
     public Set<Item> prototypes() {
-        return Set.of(TrtrBlocks.BAUXITE_BLOCK.asItem(), Items.GRASS_BLOCK);
+        return Set.of(TrtrBlocks.BAUXITE_BLOCK.asItem());
     }
 }

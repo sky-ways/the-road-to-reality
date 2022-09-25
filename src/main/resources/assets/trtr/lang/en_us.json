@@ -17,6 +17,7 @@
     "item.trtr.albite_powder": "Albite powder",
     "item.trtr.orthoclase_powder": "Orthoclase powder",
     "item.trtr.alunite_powder": "Alunite powder",
+    "item.trtr.anorthite_powder": "Anorthite powder",
     "item.trtr.crushed_bauxite": "Crushed bauxite",
     "item.trtr.crushed_acanthite": "Crushed acanthite",
     "item.trtr.crushed_galena": "Crushed galena",
@@ -35,6 +36,7 @@
     "item.trtr.crushed_cuprite": "Crushed cuprite",
     "item.trtr.crushed_deepslate_cuprite": "Crushed deepslate cuprite",
     "item.trtr.crushed_malachite": "Crushed malachite",
+    "item.trtr.crushed_anorthite": "Crushed anorthite",
     "item.trtr.crushed_deepslate": "Crushed deepslate",
     "item.trtr.crushed_stone": "Crushed stone",
     "item.trtr.plant_fiber": "Plant fiber",
@@ -55,8 +57,10 @@
     "block.trtr.deepslate_chalcopyrite": "Deepslate chalcopyrite",
     "block.trtr.cuprite": "Cuprite",
     "block.trtr.deepslate_cuprite": "Deepslate cuprite",
+    "block.trtr.anorthite": "Anorthite",
 
     "death.attack.trtr.burner.hot": "%s try stand on high temperature burner",
+    "death.attack.trtr.nuclear.disease": "%s dead in nuclear disease",
 
     "attribute.name.trtr.thump_efficiency": "Thump efficiency",
 

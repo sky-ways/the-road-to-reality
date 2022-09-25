@@ -12,22 +12,26 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
+import java.util.*;
+
 public abstract class Hammer extends TrtrToolItem {
+    public static final UUID THUMP_EFFICIENCY = UUID.fromString("2508d652-eafd-4e03-86a0-507a4f4975e5");
     private static final ObjectArrayList<Hammer> registered = new ObjectArrayList<>();
-    private final float attackDamage;
+    private final float thumpEfficiency;
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public Hammer(ToolMaterial material, int attackDamage, float attackSpeed) {
-        this(material, attackDamage, attackSpeed, new Settings());
+    public Hammer(ToolMaterial material, int attackDamage, float attackSpeed, float thumpEfficiency) {
+        this(material, attackDamage, attackSpeed, thumpEfficiency, new Settings());
     }
 
-    public Hammer(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
+    public Hammer(ToolMaterial material, int attackDamage, float attackSpeed, float thumpEfficiency, Settings settings) {
         super(settings.maxDamage(material.getDurability()));
         registered.add(this);
-        this.attackDamage = attackDamage + material.getAttackDamage();
+        this.thumpEfficiency = thumpEfficiency;
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", this.attackDamage, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(TrtrEntityAttributes.THUMP_EFFICIENCY, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", attackDamage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(TrtrEntityAttributes.THUMP_EFFICIENCY, new EntityAttributeModifier(THUMP_EFFICIENCY, "Tool modifier", thumpEfficiency, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
 
@@ -52,6 +56,10 @@ public abstract class Hammer extends TrtrToolItem {
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
         return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
+    }
+
+    public float getThumpEfficiency() {
+        return thumpEfficiency;
     }
 
     public TypedActionResult<ItemStack> thump(World world, PlayerEntity user, Hand hand) {

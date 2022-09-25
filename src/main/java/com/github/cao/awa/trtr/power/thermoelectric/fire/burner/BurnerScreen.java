@@ -46,7 +46,7 @@ public class BurnerScreen extends HandledScreen<BurnerScreenHandler> {
         int j = this.y;
         this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
 
-        BlockEntityProperties<BurnerBlockEntity> properties = this.handler.getProperties();
+        InstanceProperties<BurnerBlockEntity> properties = this.handler.getProperties();
 
         int k;
         int burningTime = properties.getIntOrDefault("burningTime", 0);

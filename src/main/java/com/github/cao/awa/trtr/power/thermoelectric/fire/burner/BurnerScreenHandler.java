@@ -10,7 +10,7 @@ import net.minecraft.screen.slot.*;
 
 public class BurnerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
-    private static BlockEntityProperties<BurnerBlockEntity> properties;
+    private static InstanceProperties<BurnerBlockEntity> properties;
 
     public BurnerScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, new SimpleInventory(1),null);
@@ -20,11 +20,11 @@ public class BurnerScreenHandler extends ScreenHandler {
         return inventory;
     }
 
-    public BlockEntityProperties<BurnerBlockEntity> getProperties() {
+    public InstanceProperties<BurnerBlockEntity> getProperties() {
         return properties;
     }
 
-    public BurnerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, BlockEntityProperties<BurnerBlockEntity> properties) {
+    public BurnerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, InstanceProperties<BurnerBlockEntity> properties) {
         super(TrtrScreenHandlerType.BURNER, syncId);
         checkSize(inventory, 1);
         this.inventory = inventory;

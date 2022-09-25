@@ -47,26 +47,42 @@ public abstract class HeatConductor {
     }
 
     /**
+     * definition ΣX<sub>i</sub> looks like:
      * <blockquote><pre>
-     * V = [t * f(t)]
-     *      ∀t, V∈[0, T(A)]
-     * T(A) -> +V
-     * T(B) -> -V
-     * </pre></blockquote>
-     * <p>
-     * t is temperature difference of blocks A and B <br>
-     * the t is always higher than 0 <br>
+     *    n
+     *    Σ X<sub>i</sub>
+     *   i=0
+     * </pre>
+     * </blockquote>
      *
+     * n means list size of X <br>
+     * then
+     *
+     * <blockquote><pre>
+     * t = B<sub>i</sub> - T
+     * V<sub>i</sub> = t * f(t)
+     *
+     * T -> ΣV<sub>i</sub>
+     * B<sub>i</sub> -> -V<sub>i</sub>
+     * </pre></blockquote>
+     *
+     *  <p>
+     * T is self temperature <br>
+     * t is temperature difference of T with B<sub>i</sub> <br>
+     * the t is always higher than 0 <br>
+     * <br>
+     * and V<sub>i</sub> is temperature conduction speed for B<sub>i</sub> <br>
+     * </p>
      * <br>
      * <p>
-     * T(x) is temperature of a point time <br>
+     * block T and ΣB<sub>i</sub> will be thermal equilibrium
+     *
      */
     public void endothermic(World world) {
         unloadCost = heating.size();
         if (unloadCost == 0) {
             return;
         }
-        heating.removeIf(Objects::isNull);
         double total = 0;
         for (HeatConductor conductor : heating) {
             if (conductor.temperature > NORMAL_TEMPERATURE.get() && conductor.temperature > this.temperature) {

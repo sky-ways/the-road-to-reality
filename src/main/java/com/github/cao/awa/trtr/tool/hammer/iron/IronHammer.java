@@ -16,7 +16,7 @@ public class IronHammer extends Hammer {
     public static final Identifier IDENTIFIER = new Identifier("trtr:iron_hammer");
 
     public IronHammer() {
-        super(ToolMaterials.IRON, 4, - 3.1F);
+        super(ToolMaterials.IRON, 4, - 3.1F, 0.9F);
     }
 
     @Override

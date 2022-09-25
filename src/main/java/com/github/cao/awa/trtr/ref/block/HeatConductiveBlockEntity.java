@@ -9,7 +9,7 @@ public interface HeatConductiveBlockEntity extends HeatConductive {
     void prepare(World world, BlockPos pos);
     void init(World world);
     default boolean isOf(HeatConductiveBlockEntity entity) {
-        return entity instanceof HeatConductiveBlockEntity;
+        return entity != null;
     }
     default boolean isOf(BlockEntity entity) {
         return entity instanceof HeatConductionBlockEntity<?>;

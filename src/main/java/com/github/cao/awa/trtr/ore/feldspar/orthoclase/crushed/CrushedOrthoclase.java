@@ -20,11 +20,11 @@ public class CrushedOrthoclase extends TrtrItem implements Hammerable {
 
     @Override
     public RageTable<Item, NumberRage<Item>> products() {
-        return TrtrHammerableProducts.ALBITE_POWDER;
+        return TrtrHammerableProducts.ORTHOCLASE_POWDER;
     }
 
     @Override
     public Set<Item> prototypes() {
-        return Set.of(TrtrBlocks.ALBITE_BLOCK.asItem());
+        return Set.of(TrtrBlocks.ORTHOCLASE_BLOCK.asItem());
     }
 }

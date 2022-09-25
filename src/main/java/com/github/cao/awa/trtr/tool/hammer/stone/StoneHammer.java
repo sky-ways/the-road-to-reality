@@ -9,7 +9,7 @@ public class StoneHammer extends Hammer {
     public static final Identifier IDENTIFIER = new Identifier("trtr:stone_hammer");
 
     public StoneHammer() {
-        super(ToolMaterials.STONE, 3, - 3.2F);
+        super(ToolMaterials.STONE, 3, - 3.2F, 0.8F);
     }
 
     @Override

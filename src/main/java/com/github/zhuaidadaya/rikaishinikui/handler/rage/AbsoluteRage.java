@@ -4,9 +4,9 @@ import java.util.*;
 
 public class AbsoluteRage<P> extends NumberRage<P> {
     private final P product;
-    private final Integer value;
+    private final Number value;
 
-    public AbsoluteRage(P product, Integer value) {
+    public AbsoluteRage(P product, Number value) {
         this.product = product;
         this.value = value;
     }

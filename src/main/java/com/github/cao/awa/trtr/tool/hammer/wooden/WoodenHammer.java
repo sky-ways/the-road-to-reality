@@ -11,7 +11,7 @@ public class WoodenHammer extends Hammer {
     public static final Identifier IDENTIFIER = new Identifier("trtr:wooden_hammer");
 
     public WoodenHammer() {
-        super(ToolMaterials.WOOD, 2, - 3.3F);
+        super(ToolMaterials.WOOD, 2, - 3.3F, 0.6F);
     }
 
     @Override
