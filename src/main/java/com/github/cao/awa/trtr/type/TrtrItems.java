@@ -25,6 +25,12 @@ import com.github.cao.awa.trtr.ore.iron.hematite.crushed.*;
 import com.github.cao.awa.trtr.ore.iron.hematite.powder.*;
 import com.github.cao.awa.trtr.ore.lead.galena.crushed.*;
 import com.github.cao.awa.trtr.ore.lead.galena.powder.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.autunite.powder.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.carnotite.powder.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.carnotite.crushed.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.autunite.crushed.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.crushed.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.powder.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.crushed.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.powder.*;
 import com.github.cao.awa.trtr.ore.stone.crushed.*;
@@ -68,6 +74,9 @@ public class TrtrItems {
     public static final Item STONE_POWDER = new StonePowder();
     public static final Item CHALCOPYRITE_POWDER = new ChalcopyritePowder();
     public static final Item CUPRITE_POWDER = new CupritePowder();
+    public static final Item PITCHBLENDE_POWDER = new PitchblendePowder();
+    public static final Item CARNOTITE_POWDER = new CarnotitePowder();
+    public static final Item AUTUNITE_POWDER = new AutunitePowder();
 
     public static final Item CRUSHED_MALACHITE = new CrushedMalachite();
     public static final Item CRUSHED_ALUNITE = new CrushedAlunite();
@@ -82,6 +91,12 @@ public class TrtrItems {
     public static final Item CRUSHED_HEMATITE = new CrushedHematite();
     public static final Item CRUSHED_CHALCOPYRITE = new CrushedChalcopyrite();
     public static final Item CRUSHED_CUPRITE = new CrushedCuprite();
+    public static final Item CRUSHED_PITCHBLENDE = new CrushedPitchblende();
+    public static final Item CRUSHED_DEEPSLATE_PITCHBLENDE = new CrushedDeepslatePitchblende();
+    public static final Item CRUSHED_CARNOTITE = new CrushedCarnotite();
+    public static final Item CRUSHED_DEEPSLATE_CARNOTITE = new CrushedDeepslateCarnotite();
+    public static final Item CRUSHED_AUTUNITE = new CrushedAutunite();
+    public static final Item CRUSHED_DEEPSLATE_AUTUNITE = new CrushedDeepslateAutunite();
 
     public static final Item CRUSHED_DEEPSLATE_BAUXITE = new CrushedDeepslateBauxite();
     public static final Item CRUSHED_DEEPSLATE_ACANTHITE = new CrushedDeepslateAcanthite();

@@ -1,20 +1,20 @@
-package com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende;
+package com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.deepslate;
 
 import com.github.cao.awa.trtr.ore.nuclear.uranium.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public class PitchblendeBlock extends TrtrBlockWithEntity<UraniumBlockEntity> {
-    public static final Identifier IDENTIFIER = new Identifier("trtr:pitchblende");
+public class DeepslatePitchblendeBlock extends TrtrBlockWithEntity<UraniumBlockEntity> {
+    public static final Identifier IDENTIFIER = new Identifier("trtr:deepslate_pitchblende");
 
-    public PitchblendeBlock() {
+    public DeepslatePitchblendeBlock() {
         super(Settings.of(Material.METAL));
     }
 

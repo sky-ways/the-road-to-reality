@@ -51,11 +51,6 @@ public class BurnerBlock extends TrtrBlockWithEntity<BurnerBlockEntity> {
         return TrtrBlockEntityType.BURNER;
     }
 
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {

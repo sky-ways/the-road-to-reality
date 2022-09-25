@@ -62,6 +62,9 @@ public class TrtrSlabBlock extends TrtrBasedBlock implements Waterloggable {
 
     public boolean take(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         TrtrSlabBlockEntity slabBlockEntity = getSlabEntity(world, pos);
+        if (slabBlockEntity == null) {
+            return false;
+        }
         slabBlockEntity.take(world, pos, state, player);
         cooling(slabBlockEntity);
         return true;

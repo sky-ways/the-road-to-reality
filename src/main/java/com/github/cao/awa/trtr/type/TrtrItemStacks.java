@@ -19,6 +19,11 @@ public class TrtrItemStacks {
         stacks.add(TrtrBlocks.DEEPSLATE_CUPRITE_BLOCk.asItem().getDefaultStack());
 
         stacks.add(TrtrBlocks.PITCHBLENDE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.DEEPSLATE_PITCHBLENDE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.CARNOTITE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.DEEPSLATE_CARNOTITE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.AUTUNITE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.DEEPSLATE_AUTUNITE_BLOCK.asItem().getDefaultStack());
 
         stacks.add(TrtrBlocks.MALACHITE_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.ALUNITE_BLOCK.asItem().getDefaultStack());
@@ -36,6 +41,10 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.CRUSHED_HEMATITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_CHALCOPYRITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_CUPRITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_PITCHBLENDE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_PITCHBLENDE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_CARNOTITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_AUTUNITE.getDefaultStack());
 
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_COAL.getDefaultStack());
@@ -45,6 +54,10 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_HEMATITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_CHALCOPYRITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_DEEPSLATE_CUPRITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_DEEPSLATE_PITCHBLENDE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_DEEPSLATE_PITCHBLENDE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_DEEPSLATE_CARNOTITE.getDefaultStack());
+        stacks.add(TrtrItems.CRUSHED_DEEPSLATE_AUTUNITE.getDefaultStack());
 
         stacks.add(TrtrItems.CRUSHED_MALACHITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_ALUNITE.getDefaultStack());
@@ -63,6 +76,9 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.COAL_POWDER.getDefaultStack());
         stacks.add(TrtrItems.CHALCOPYRITE_POWDER.getDefaultStack());
         stacks.add(TrtrItems.CUPRITE_POWDER.getDefaultStack());
+        stacks.add(TrtrItems.PITCHBLENDE_POWDER.getDefaultStack());
+        stacks.add(TrtrItems.CARNOTITE_POWDER.getDefaultStack());
+        stacks.add(TrtrItems.AUTUNITE_POWDER.getDefaultStack());
 
         stacks.add(TrtrItems.MALACHITE_POWDER.getDefaultStack());
         stacks.add(TrtrItems.ALUNITE_POWDER.getDefaultStack());

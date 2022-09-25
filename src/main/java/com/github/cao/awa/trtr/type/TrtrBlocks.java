@@ -14,7 +14,12 @@ import com.github.cao.awa.trtr.ore.feldspar.anorthite.*;
 import com.github.cao.awa.trtr.ore.feldspar.orthoclase.*;
 import com.github.cao.awa.trtr.ore.lead.galena.*;
 import com.github.cao.awa.trtr.ore.lead.galena.deepslate.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.autunite.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.autunite.deepslate.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.carnotite.deepslate.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.carnotite.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.*;
+import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.deepslate.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.deepslate.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
@@ -24,7 +29,7 @@ import net.minecraft.block.*;
 
 public class TrtrBlocks {
     public static final Block PHOTOVOLTAIC_PANELS = new PhotovoltaicPanels();
-    public static final Block BURNER = new BurnerBlock();
+    public static final Block BURNER_BLOCK = new BurnerBlock();
 
     public static final Block BAUXITE_BLOCK = new BauxiteBlock();
     public static final Block DEEPSLATE_BAUXITE_BLOCK = new DeepslateBauxiteBlock();
@@ -36,6 +41,11 @@ public class TrtrBlocks {
     public static final Block DEEPSLATE_GALENA_BLOCK = new DeepslateGalenaBlock();
 
     public static final Block PITCHBLENDE_BLOCK = new PitchblendeBlock();
+    public static final Block DEEPSLATE_PITCHBLENDE_BLOCK = new DeepslatePitchblendeBlock();
+    public static final Block CARNOTITE_BLOCK = new CarnotiteBlock();
+    public static final Block DEEPSLATE_CARNOTITE_BLOCK = new DeepslateCarnotiteBlock();
+    public static final Block AUTUNITE_BLOCK = new AutuniteBlock();
+    public static final Block DEEPSLATE_AUTUNITE_BLOCK = new DeepslateAutuniteBlock();
 
     public static final Block MALACHITE_BLOCK = new Malachite();
     public static final Block ALUNITE_BLOCK = new AluniteBlock();
@@ -48,9 +58,9 @@ public class TrtrBlocks {
     public static final Block DEEPSLATE_CHALCOPYRITE_BLOCK = new DeepslateChalcopyrite();
     public static final Block DEEPSLATE_CUPRITE_BLOCk = new DeepslateCuprite();
 
-    public static final Block WATER_VAPOR = new WaterVapor();
+    public static final Block WATER_VAPOR_BLOCk = new WaterVapor();
 
-    public static final Block GEAR_WHEEL = new GearWheel();
+    public static final Block GEAR_WHEEL_BLOCK = new GearWheel();
 
     public static void pre() {
 

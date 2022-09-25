@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende;
+package com.github.cao.awa.trtr.ore.nuclear.uranium.carnotite;
 
 import com.github.cao.awa.trtr.ore.nuclear.uranium.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
@@ -7,14 +7,13 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public class PitchblendeBlock extends TrtrBlockWithEntity<UraniumBlockEntity> {
-    public static final Identifier IDENTIFIER = new Identifier("trtr:pitchblende");
+public class CarnotiteBlock extends TrtrBlockWithEntity<UraniumBlockEntity> {
+    public static final Identifier IDENTIFIER = new Identifier("trtr:carnotite");
 
-    public PitchblendeBlock() {
+    public CarnotiteBlock() {
         super(Settings.of(Material.METAL));
     }
 
