@@ -16,6 +16,7 @@
         "world.manager.ServerChunkManagerInterface"
     ],
     "client": [
+        "resource.DefaultResourcePackMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -14,7 +14,7 @@ public class AutuniteBlock extends TrtrBlockWithEntity<UraniumBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:autunite");
 
     public AutuniteBlock() {
-        super(Settings.of(Material.METAL));
+        super(Settings.of(Material.METAL).hardness(4).strength(6));
     }
 
     @Override
