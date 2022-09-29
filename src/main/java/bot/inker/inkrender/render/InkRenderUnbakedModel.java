@@ -30,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.*;
 
 public class InkRenderUnbakedModel implements UnbakedModel {
     public static final SpriteIdentifier DEFAULT_SPRITE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, null);
@@ -47,12 +48,12 @@ public class InkRenderUnbakedModel implements UnbakedModel {
         this.mtls = mtls;
         this.transform = transform == null ? ModelTransformation.NONE : transform;
 
-        Mtl mtl = mtls.get("sprite");
         if (mtls.size() == 0) {
             this.sprite = DEFAULT_SPRITE;
         } else {
-            Mtl spriteMtl = (mtl == null ? mtls.values().iterator().next() : mtl);
-            this.sprite = spriteMtl.getMapKd() != null ? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(spriteMtl.getMapKd())) : DEFAULT_SPRITE;
+            Mtl mtl = mtls.get("sprite");
+            String mapKd = (mtl == null ? mtls.values().iterator().next() : mtl).getMapKd();
+            this.sprite = mapKd == null ? DEFAULT_SPRITE : new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(mapKd));
         }
 
         this.resourceIdentifier = new HashMap<>();
@@ -72,7 +73,7 @@ public class InkRenderUnbakedModel implements UnbakedModel {
 
     @Override
     public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> unbakedModelGetter, Set<Pair<String, String>> unresolvedTextureReferences) {
-        return resourceIdentifier.values().stream().map(it -> new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, it)).toList();
+        return resourceIdentifier.values().stream().map(identifier -> new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, identifier)).toList();
     }
 
     @Override

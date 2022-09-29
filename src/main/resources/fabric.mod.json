@@ -33,6 +33,10 @@
     "mixins": [
         "modid.mixins.json"
     ],
+    "breaks": {
+        "tic_tacs": "*",
+        "optifabric": "*"
+    },
     "depends": {
         "fabricloader": ">=0.14.9",
         "fabric-api": "*",

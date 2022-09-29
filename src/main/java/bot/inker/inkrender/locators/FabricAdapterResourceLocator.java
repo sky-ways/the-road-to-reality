@@ -16,26 +16,18 @@ public class FabricAdapterResourceLocator implements InkResourceLocator {
     @Override
     public Optional<InkResourceLoader> findModel(String name) {
         Identifier identifier = Identifier.tryParse(name);
-        if (identifier == null) {
-            return Optional.empty();
-        }
-        if (resourceManager().getResource(Identifier.of(identifier.getNamespace(), "models/" + identifier.getPath())).isEmpty()) {
+        if (identifier == null || getResourceManager().getResource(Identifier.of(identifier.getNamespace(), "models/" + identifier.getPath())).isEmpty()) {
             return Optional.empty();
         }
         int lastSplitIndex = identifier.getPath().lastIndexOf('/');
         return Optional.of(new AdapterResourceLoader(identifier.getNamespace(), identifier.getPath().substring(0, lastSplitIndex + 1), identifier.getPath().substring(lastSplitIndex + 1)));
     }
 
-    private ResourceManager resourceManager() {
-        if (resourceManager != null) {
-            return resourceManager;
+    private ResourceManager getResourceManager() {
+        if (resourceManager == null) {
+            resourceManager = MinecraftClient.getInstance().getResourceManager();
         }
-        synchronized (this) {
-            if (resourceManager == null) {
-                resourceManager = MinecraftClient.getInstance().getResourceManager();
-            }
-            return resourceManager;
-        }
+        return resourceManager;
     }
 
     private class AdapterResourceLoader implements InkResourceLoader {
@@ -51,22 +43,22 @@ public class FabricAdapterResourceLocator implements InkResourceLocator {
 
         @Override
         public InputStream openTexture(String name) {
-            return UncheckUtil.uncheck(() -> resourceManager().open(Identifier.of(namespace, "textures/" + path + name)));
+            return UncheckUtil.uncheck(() -> getResourceManager().open(Identifier.of(namespace, "textures/" + path + name)));
         }
 
         @Override
         public InputStream openMtl(String name) {
-            return UncheckUtil.uncheck(() -> resourceManager().open(Identifier.of(namespace, "models/" + path + name)));
+            return UncheckUtil.uncheck(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + name)));
         }
 
         @Override
         public InputStream openObj() {
-            return UncheckUtil.uncheck(() -> resourceManager().open(Identifier.of(namespace, "models/" + path + objName)));
+            return UncheckUtil.uncheck(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + objName)));
         }
 
         @Override
         public String toString() {
-            return "FabricAdapterResourceLoader{" + "namespace='" + namespace + '\'' + ", path='" + path + '\'' + ", objName='" + objName + '\'' + '}';
+            return "FabricAdapterResourceLoader{namespace='" + namespace + "', path='" + path + "', objName='" + objName + "'}";
         }
     }
 }
