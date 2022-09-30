@@ -93,4 +93,11 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.IRON_HAMMER.getDefaultStack());
         stacks.add(TrtrItems.THERMOMETER.getDefaultStack());
     });
+
+    public static final ObjectArrayList<ItemStack> ASSEMBLY_BLOCK = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+        stacks.add(TrtrBlocks.LARGE_GEAR_WHEEL_BLOCK.asItem().getDefaultStack());
+    });
+
+    public static final ObjectArrayList<ItemStack> ASSEMBLY= EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    });
 }

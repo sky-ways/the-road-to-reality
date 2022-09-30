@@ -25,6 +25,7 @@ import com.github.cao.awa.trtr.ore.silver.acanthite.deepslate.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
 import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.*;
+import com.github.cao.awa.trtr.transmission.gearwheel.large.*;
 import net.minecraft.block.*;
 
 public class TrtrBlocks {
@@ -61,6 +62,8 @@ public class TrtrBlocks {
     public static final Block WATER_VAPOR_BLOCk = new WaterVapor();
 
     public static final Block GEAR_WHEEL_BLOCK = new GearWheel();
+
+    public static final Block LARGE_GEAR_WHEEL_BLOCK = new LargeGearWheel();
 
     public static void pre() {
 

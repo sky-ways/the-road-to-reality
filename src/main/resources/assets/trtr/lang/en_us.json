@@ -83,5 +83,7 @@
     "itemGroup.trtr.ore": "Ores",
     "itemGroup.trtr.crushed_ore": "Crushed ores",
     "itemGroup.trtr.ore_powder": "Ore powders",
-    "itemGroup.trtr.tool": "Tools"
+    "itemGroup.trtr.tool": "Tools",
+    "itemGroup.trtr.assembly": "Assembly",
+    "itemGroup.trtr.assembly_block": "Block assembly"
 }

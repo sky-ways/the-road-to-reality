@@ -13,6 +13,10 @@ public class TrtrItemGroup {
         stacks.addAll(TrtrItemStacks.ORE_POWDERS);
 
         stacks.addAll(TrtrItemStacks.TOOLS);
+
+        stacks.addAll(TrtrItemStacks.ASSEMBLY);
+
+        stacks.addAll(TrtrItemStacks.ASSEMBLY_BLOCK);
     }).build();
 
     public static final ItemGroup ORE_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:ore")).icon(() -> TrtrBlocks.ACANTHITE_BLOCK.asItem().getDefaultStack()).appendItems(stacks -> {
@@ -29,6 +33,14 @@ public class TrtrItemGroup {
 
     public static final ItemGroup TOOL_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:tool")).icon(TrtrItems.IRON_HAMMER::getDefaultStack).appendItems(stacks -> {
         stacks.addAll(TrtrItemStacks.TOOLS);
+    }).build();
+
+    public static final ItemGroup ASSEMBLY_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:assembly")).icon(TrtrItems.IRON_HAMMER::getDefaultStack).appendItems(stacks -> {
+        stacks.addAll(TrtrItemStacks.ASSEMBLY);
+    }).build();
+
+    public static final ItemGroup ASSEMBLY_BLOCK_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:assembly_block")).icon(TrtrItems.IRON_HAMMER::getDefaultStack).appendItems(stacks -> {
+        stacks.addAll(TrtrItemStacks.ASSEMBLY_BLOCK);
     }).build();
 
     public static void pre() {

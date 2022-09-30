@@ -82,5 +82,7 @@
     "itemGroup.trtr.ore": "矿石",
     "itemGroup.trtr.crushed_ore": "碎矿",
     "itemGroup.trtr.ore_powder": "矿粉",
-    "itemGroup.trtr.tool": "工具"
+    "itemGroup.trtr.tool": "工具",
+    "itemGroup.trtr.assembly": "组件",
+    "itemGroup.trtr.assembly_block": "方块组件"
 }

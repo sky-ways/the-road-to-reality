@@ -38,29 +38,17 @@ public class InstanceProperties<T> {
     public static void addHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer, @Nullable Function<Object, String> serializer) {
         TYPE_S.put(target, serial);
         TYPE_D.put(serial, deserializer);
-        if (serializer != null) {
-            SERIALIZERS.put(target, serializer);
-        }
+        SERIALIZERS.put(target, serializer == null ? Object::toString : serializer);
     }
 
     public T getInstance() {
         return instance;
     }
-
-    public int calculateInt(String key, Function<Integer, Integer> function) {
-        return function.apply(getIntOrDefault(key, 0));
-    }
-
     public int getIntOrDefault(String key, int defaultValue) {
         if (! map.containsKey(key)) {
             return defaultValue;
         }
         return EntrustParser.trying(() -> (int) map.get(key), e -> defaultValue);
-    }
-
-    public int calculateInt(String key, Function<Integer, Boolean> predicate, Function<Integer, Integer> function, int defaultValue) {
-        Integer integer = getIntOrDefault(key, 0);
-        return predicate.apply(integer) ? function.apply(integer) : defaultValue;
     }
 
     public void updateInt(String key, Function<Integer, Integer> function) {
@@ -71,20 +59,11 @@ public class InstanceProperties<T> {
         map.put(key, value);
     }
 
-    public double calculateDouble(String key, Function<Double, Double> function) {
-        return function.apply(getDoubleOrDefault(key, 0D));
-    }
-
     public double getDoubleOrDefault(String key, double defaultValue) {
         if (! map.containsKey(key)) {
             return defaultValue;
         }
         return EntrustParser.trying(() -> (double) map.get(key), () -> defaultValue);
-    }
-
-    public double calculateDouble(String key, Function<Double, Boolean> predicate, Function<Double, Double> function, double defaultValue) {
-        Double integer = getDoubleOrDefault(key, 0);
-        return predicate.apply(integer) ? function.apply(integer) : defaultValue;
     }
 
     public void updateDouble(String key, Function<Double, Double> function) {
@@ -126,7 +105,7 @@ public class InstanceProperties<T> {
                 String type = TYPE_S.get(v.getClass());
                 NbtCompound element = new NbtCompound();
                 element.putString("type", type);
-                element.putString(k, SERIALIZERS.containsKey(v.getClass()) ? SERIALIZERS.get(v.getClass()).apply(v) : v.toString());
+                element.putString(k, SERIALIZERS.get(v.getClass()).apply(v));
                 nbt.put(k, element);
             }
         });
