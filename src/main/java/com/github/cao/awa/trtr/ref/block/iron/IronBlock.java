@@ -1,6 +1,4 @@
 package com.github.cao.awa.trtr.ref.block.iron;
-
-import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import com.github.cao.awa.trtr.ref.block.*;
 import com.github.cao.awa.trtr.register.*;
 import com.github.cao.awa.trtr.type.*;

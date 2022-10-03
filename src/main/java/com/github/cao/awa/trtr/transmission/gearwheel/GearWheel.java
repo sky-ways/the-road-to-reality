@@ -41,6 +41,6 @@ public class GearWheel extends TrtrBlockWithEntity<GearWheelBlockEntity> {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new GearWheelBlockEntity(pos, state);
+        return new GearWheelBlockEntity(pos, state, -1);
     }
 }

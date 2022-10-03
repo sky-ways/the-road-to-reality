@@ -3,7 +3,6 @@ package com.github.cao.awa.trtr.type;
 import com.github.cao.awa.trtr.air.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
-import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import com.github.cao.awa.trtr.ref.block.iron.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.*;
@@ -31,7 +30,6 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
     private final Set<Block> blocks;
     public static final BlockEntityType<PhotovoltaicPanelsBlockEntity> PHOTOVOLTAIC_PANELS = create("trtr:photovoltaic_panels", Builder.create(PhotovoltaicPanelsBlockEntity::new, TrtrBlocks.PHOTOVOLTAIC_PANELS));
     public static final BlockEntityType<WaterVaporBlockEntity> WATER_VAPOR = create("trtr:water_vapor", Builder.create(WaterVaporBlockEntity::new, WATER_VAPOR_BLOCk));
-    public static final BlockEntityType<BurnerBlockEntity> BURNER = create("trtr:burner", Builder.create(BurnerBlockEntity::new, BURNER_BLOCK));
     public static final BlockEntityType<GearWheelBlockEntity> GEAR_WHEEL = create("trtr:gear_wheel", Builder.create(GearWheelBlockEntity::new, GEAR_WHEEL_BLOCK));
     public static final BlockEntityType<UraniumBlockEntity> URANIUM = create("trtr:pitchblende", Builder.create(UraniumBlockEntity::new, PITCHBLENDE_BLOCK, DEEPSLATE_PITCHBLENDE_BLOCK, CARNOTITE_BLOCK, DEEPSLATE_CARNOTITE_BLOCK, AUTUNITE_BLOCK, DEEPSLATE_AUTUNITE_BLOCK));
     public static final BlockEntityType<TrtrConventionalSlabEntity> SLAB_ENTITY = create("trtr:slab", Builder.create(TrtrConventionalSlabEntity::new, EntrustParser.operation(new Block[TrtrSlabBlock.SLABS.size()], array -> {

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "trtr:block/transmission/gearwheel/medium/medium_gear"
+        }
+    }
+}

@@ -17,12 +17,22 @@ public class UraniumBlockEntity extends BlockEntity implements NuclearDiffusible
     }
 
     public void tick(World world, BlockPos pos, BlockState state) {
-        Set<Entity> entities = simple(world, pos);
+        Set<Entity> entities = track(world, pos);
 
-        for (Entity entity : entities) {
-            if (entity instanceof LivingEntity item) {
-                entity.damage(new DamageSource("trtr.nuclear.disease"), 0.2F);
-            }
-        }
+//        for (Entity entity : entities) {
+//            if (entity instanceof LivingEntity item) {
+//                entity.damage(new DamageSource("trtr.nuclear.disease"), 0.2F);
+//            }
+//        }
+    }
+
+    @Override
+    public double radiation() {
+        return 0;
+    }
+
+    @Override
+    public double radioactivity() {
+        return 0;
     }
 }

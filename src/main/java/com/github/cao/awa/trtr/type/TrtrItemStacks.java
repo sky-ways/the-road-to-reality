@@ -96,8 +96,9 @@ public class TrtrItemStacks {
 
     public static final ObjectArrayList<ItemStack> ASSEMBLY_BLOCK = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrBlocks.LARGE_GEAR_WHEEL_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.MEDIUM_GEAR_WHEEL_BLOCK.asItem().getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> ASSEMBLY= EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> ASSEMBLY = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
     });
 }

@@ -14,28 +14,35 @@ public class InstanceProperties<T> {
     private static final Map<String, Function<String, Object>> TYPE_D = new ConcurrentHashMap<>();
 
     static {
-        addHandler(Integer.class, "(I", Integer::parseInt);
-        addHandler(Double.class, "(D", Double::parseDouble);
-        addHandler(Float.class, "(F", Float::parseFloat);
-        addHandler(Short.class, "(S", Short::parseShort);
-        addHandler(Byte.class, "(Byt", Byte::parseByte);
-        addHandler(Boolean.class, "(I", Boolean::parseBoolean);
-        addHandler(Character.class, "(C", s -> (char) Integer.parseInt(s));
-        addHandler(String.class, "[STR", s -> s);
+        setHandler(Integer.class, "(I", Integer::parseInt);
+        setHandler(Double.class, "(D", Double::parseDouble);
+        setHandler(Float.class, "(F", Float::parseFloat);
+        setHandler(Short.class, "(S", Short::parseShort);
+        setHandler(Byte.class, "(Byt", Byte::parseByte);
+        setHandler(Boolean.class, "(I", Boolean::parseBoolean);
+        setHandler(Character.class, "(C", s -> (char) Integer.parseInt(s));
+        setHandler(String.class, "[STR", s -> s);
     }
 
     private final Map<String, Object> map = new ConcurrentHashMap<>();
     private final T instance;
+    private final boolean safe;
 
     public InstanceProperties(T instance) {
         this.instance = instance;
+        this.safe = false;
     }
 
-    public static void addHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer) {
-        addHandler(target, serial, deserializer, null);
+    public InstanceProperties(T instance, boolean isSafe) {
+        this.instance = instance;
+        this.safe = isSafe;
     }
 
-    public static void addHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer, @Nullable Function<Object, String> serializer) {
+    public static void setHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer) {
+        setHandler(target, serial, deserializer, null);
+    }
+
+    public static void setHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer, @Nullable Function<Object, String> serializer) {
         TYPE_S.put(target, serial);
         TYPE_D.put(serial, deserializer);
         SERIALIZERS.put(target, serializer == null ? Object::toString : serializer);
@@ -44,58 +51,31 @@ public class InstanceProperties<T> {
     public T getInstance() {
         return instance;
     }
-    public int getIntOrDefault(String key, int defaultValue) {
-        if (! map.containsKey(key)) {
-            return defaultValue;
-        }
-        return EntrustParser.trying(() -> (int) map.get(key), e -> defaultValue);
+
+    public <X> void update(String key, Function<X, X> function) {
+        put(key, function.apply(get(key)));
     }
 
-    public void updateInt(String key, Function<Integer, Integer> function) {
-        putInt(key, function.apply(getIntOrDefault(key, 0)));
+    public <X> void update(String key, Function<X, X> function, X defaultValue) {
+        put(key, function.apply(getOrDefault(key, defaultValue)));
     }
 
-    public void putInt(String key, int value) {
-        map.put(key, value);
+    public <X> X calculate(String key, Function<X, Boolean> predicate, Function<X, X> function, X defaultValue) {
+        X target = getOrDefault(key, defaultValue);
+        return predicate.apply(target) ? function.apply(target) : defaultValue;
     }
 
-    public double getDoubleOrDefault(String key, double defaultValue) {
-        if (! map.containsKey(key)) {
-            return defaultValue;
-        }
-        return EntrustParser.trying(() -> (double) map.get(key), () -> defaultValue);
+    public <X> X getOrDefault(String key, X defaultValue) {
+        X x = get(key);
+        return x == null ? defaultValue : x;
     }
 
-    public void updateDouble(String key, Function<Double, Double> function) {
-        putDouble(key, function.apply(getDoubleOrDefault(key, 0D)));
+    public <X> X get(String key) {
+        return safe ? safeGet(key) : (X) map.get(key);
     }
 
-    public void putDouble(String key, double value) {
-        map.put(key, value);
-    }
-
-    public float calculateFloat(String key, Function<Float, Float> function) {
-        return function.apply(getFloatOrDefault(key, 0F));
-    }
-
-    public float getFloatOrDefault(String key, float defaultValue) {
-        if (! map.containsKey(key)) {
-            return defaultValue;
-        }
-        return EntrustParser.trying(() -> Float.parseFloat(String.valueOf(map.get(key))), () -> defaultValue);
-    }
-
-    public float calculateFloat(String key, Function<Float, Boolean> predicate, Function<Float, Float> function, float defaultValue) {
-        Float integer = getFloatOrDefault(key, 0);
-        return predicate.apply(integer) ? function.apply(integer) : defaultValue;
-    }
-
-    public void updateFloat(String key, Function<Float, Float> function) {
-        putFloat(key, function.apply(getFloatOrDefault(key, 0F)));
-    }
-
-    public void putFloat(String key, float value) {
-        map.put(key, value);
+    private <X> X safeGet(String key) {
+        return EntrustParser.trying(() -> (X) map.get(key));
     }
 
     public void writeNbt(NbtCompound compound) {

@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.transmission.gearwheel.large;
+package com.github.cao.awa.trtr.transmission.gearwheel.medium;
 
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.*;
@@ -10,10 +10,10 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-public class LargeGearWheel extends TrtrBlockWithEntity<GearWheelBlockEntity> {
-    public static final Identifier IDENTIFIER = new Identifier("trtr:large_gearwheel");
+public class MediumGearWheel extends TrtrBlockWithEntity<GearWheelBlockEntity> {
+    public static final Identifier IDENTIFIER = new Identifier("trtr:medium_gearwheel");
 
-    public LargeGearWheel() {
+    public MediumGearWheel() {
         super(Settings.of(Material.WOOD));
     }
 
@@ -44,6 +44,6 @@ public class LargeGearWheel extends TrtrBlockWithEntity<GearWheelBlockEntity> {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new GearWheelBlockEntity(pos, state, 2);
+        return new GearWheelBlockEntity(pos, state, 1);
     }
 }

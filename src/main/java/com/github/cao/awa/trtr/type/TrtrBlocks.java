@@ -23,14 +23,13 @@ import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.deepslate.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.deepslate.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
-import com.github.cao.awa.trtr.power.thermoelectric.fire.burner.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.large.*;
+import com.github.cao.awa.trtr.transmission.gearwheel.medium.*;
 import net.minecraft.block.*;
 
 public class TrtrBlocks {
     public static final Block PHOTOVOLTAIC_PANELS = new PhotovoltaicPanels();
-    public static final Block BURNER_BLOCK = new BurnerBlock();
 
     public static final Block BAUXITE_BLOCK = new BauxiteBlock();
     public static final Block DEEPSLATE_BAUXITE_BLOCK = new DeepslateBauxiteBlock();
@@ -64,6 +63,7 @@ public class TrtrBlocks {
     public static final Block GEAR_WHEEL_BLOCK = new GearWheel();
 
     public static final Block LARGE_GEAR_WHEEL_BLOCK = new LargeGearWheel();
+    public static final Block MEDIUM_GEAR_WHEEL_BLOCK = new MediumGearWheel();
 
     public static void pre() {
 
