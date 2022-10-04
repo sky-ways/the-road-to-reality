@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.type;
 
 import com.github.cao.awa.trtr.container.bowl.wooden.water.*;
 import com.github.cao.awa.trtr.container.bucket.wooden.*;
+import com.github.cao.awa.trtr.cooking.chocolate.cocoa.powder.*;
 import com.github.cao.awa.trtr.debuger.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.crushed.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.powder.*;
@@ -59,6 +60,7 @@ public class TrtrItems {
 
     public static final Item PLANT_FIBER = new PlantFibre();
 
+    // Ore powders
     public static final Item MALACHITE_POWDER = new MalachitePowder();
     public static final Item ALBITE_POWDER = new AlbitePowder();
     public static final Item ORTHOCLASE_POWDER = new OrthoclasePowder();
@@ -78,6 +80,7 @@ public class TrtrItems {
     public static final Item CARNOTITE_POWDER = new CarnotitePowder();
     public static final Item AUTUNITE_POWDER = new AutunitePowder();
 
+    // Crushed ores
     public static final Item CRUSHED_MALACHITE = new CrushedMalachite();
     public static final Item CRUSHED_ALUNITE = new CrushedAlunite();
     public static final Item CRUSHED_ALBITE = new CrushedAlbite();
@@ -108,6 +111,9 @@ public class TrtrItems {
 
     public static final Item CRUSHED_DEEPSLATE = new CrushedDeepslate();
     public static final Item CRUSHED_STONE = new CrushedStone();
+
+    // Food materials
+    public static final Item COCOA_POWDER = new CocoaPowder();
 
     public static void pre() {
     }

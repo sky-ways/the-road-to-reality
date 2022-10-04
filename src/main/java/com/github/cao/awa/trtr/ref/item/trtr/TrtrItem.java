@@ -43,7 +43,15 @@ public abstract class TrtrItem extends Item implements RefRegister {
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
 
         int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos());
-        MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getItem(), ModelTransformation.Mode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(
+                blockEntity.getItem(),
+                ModelTransformation.Mode.GROUND,
+                lightAbove,
+                OverlayTexture.DEFAULT_UV,
+                matrices,
+                vertexConsumers,
+                0
+        );
 
         matrices.pop();
     }

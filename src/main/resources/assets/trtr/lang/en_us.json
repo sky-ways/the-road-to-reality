@@ -85,5 +85,7 @@
     "itemGroup.trtr.ore_powder": "Ore powders",
     "itemGroup.trtr.tool": "Tools",
     "itemGroup.trtr.assembly": "Assembly",
-    "itemGroup.trtr.assembly_block": "Block assembly"
+    "itemGroup.trtr.assembly_block": "Block assembly",
+    "itemGroup.trtr.food_materials": "Food materials",
+    "itemGroup.trtr.cooking_tools": "Cooking tools"
 }

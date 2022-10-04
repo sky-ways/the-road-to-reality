@@ -46,6 +46,9 @@ public class TrtrHammerableProducts {
     public static final RageTable<Item, NumberRage<Item>> ORTHOCLASE_POWDER = RageTable.of(NumberRage.over(TrtrItems.ORTHOCLASE_POWDER, 5));
     public static final RageTable<Item, NumberRage<Item>> ANORTHITE_POWDER = RageTable.of(NumberRage.over(TrtrItems.ANORTHITE_POWDER, 5));
 
+    // Food
+    public static final RageTable<Item, NumberRage<Item>> COCOA_POWDER = RageTable.of(NumberRage.over(TrtrItems.COCOA_POWDER, 3));
+
     public static void pre() {
         register(TrtrItems.CRUSHED_STONE, CRUSHED_STONE);
         register(TrtrItems.CRUSHED_BAUXITE, CRUSHED_BAUXITE);
@@ -86,6 +89,8 @@ public class TrtrHammerableProducts {
         register(TrtrItems.ALBITE_POWDER, ALBITE_POWDER);
         register(TrtrItems.ORTHOCLASE_POWDER, ORTHOCLASE_POWDER);
         register(TrtrItems.ANORTHITE_POWDER, ANORTHITE_POWDER);
+
+        register(TrtrItems.COCOA_POWDER, COCOA_POWDER);
     }
 
     public static void register(Item item, RageTable<Item, NumberRage<Item>> table) {

@@ -84,5 +84,7 @@
     "itemGroup.trtr.ore_powder": "矿粉",
     "itemGroup.trtr.tool": "工具",
     "itemGroup.trtr.assembly": "组件",
-    "itemGroup.trtr.assembly_block": "方块组件"
+    "itemGroup.trtr.assembly_block": "方块组件",
+    "itemGroup.trtr.food_materials": "食物原材料",
+    "itemGroup.trtr.cooking_tools": "厨具"
 }

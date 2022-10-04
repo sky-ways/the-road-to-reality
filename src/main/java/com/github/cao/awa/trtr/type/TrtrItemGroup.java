@@ -17,6 +17,8 @@ public class TrtrItemGroup {
         stacks.addAll(TrtrItemStacks.ASSEMBLY);
 
         stacks.addAll(TrtrItemStacks.ASSEMBLY_BLOCK);
+
+        stacks.addAll(TrtrItemStacks.FOOD_MATERIALS);
     }).build();
 
     public static final ItemGroup ORE_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:ore")).icon(() -> TrtrBlocks.ACANTHITE_BLOCK.asItem().getDefaultStack()).appendItems(stacks -> {
@@ -41,6 +43,14 @@ public class TrtrItemGroup {
 
     public static final ItemGroup ASSEMBLY_BLOCK_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:assembly_block")).icon(TrtrItems.IRON_HAMMER::getDefaultStack).appendItems(stacks -> {
         stacks.addAll(TrtrItemStacks.ASSEMBLY_BLOCK);
+    }).build();
+
+    public static final ItemGroup FOOD_MATERIALS_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:food_materials")).icon(TrtrItems.IRON_HAMMER::getDefaultStack).appendItems(stacks -> {
+        stacks.addAll(TrtrItemStacks.FOOD_MATERIALS);
+    }).build();
+
+    public static final ItemGroup COOKING_TOOL_GROUP = FabricItemGroupBuilder.create(new Identifier("trtr:cooking_tools")).icon(TrtrBlocks.POT.asItem()::getDefaultStack).appendItems(stacks -> {
+        stacks.addAll(TrtrItemStacks.COOKING_TOOL);
     }).build();
 
     public static void pre() {

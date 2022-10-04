@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.type;
 
 import com.github.cao.awa.trtr.air.*;
+import com.github.cao.awa.trtr.cooking.container.pot.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.*;
 import com.github.cao.awa.trtr.ore.aluminum.bauxite.*;
 import com.github.cao.awa.trtr.ore.aluminum.bauxite.deepslate.*;
@@ -64,6 +65,9 @@ public class TrtrBlocks {
 
     public static final Block LARGE_GEAR_WHEEL_BLOCK = new LargeGearWheel();
     public static final Block MEDIUM_GEAR_WHEEL_BLOCK = new MediumGearWheel();
+
+    // Cooking
+    public static final Block POT = new PotBlock();
 
     public static void pre() {
 

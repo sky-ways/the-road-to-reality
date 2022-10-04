@@ -101,4 +101,12 @@ public class TrtrItemStacks {
 
     public static final ObjectArrayList<ItemStack> ASSEMBLY = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
     });
+
+    public static final ObjectArrayList<ItemStack> FOOD_MATERIALS = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+        stacks.add(TrtrItems.COCOA_POWDER.getDefaultStack());
+    });
+
+    public static final ObjectArrayList<ItemStack> COOKING_TOOL = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+        stacks.add(TrtrBlocks.POT.asItem().getDefaultStack());
+    });
 }
