@@ -1,5 +1,7 @@
 package com.github.cao.awa.trtr.properties;
 
+import com.github.cao.awa.trtr.math.*;
+import com.github.cao.awa.trtr.properties.type.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import net.minecraft.nbt.*;
 import org.jetbrains.annotations.*;
@@ -9,19 +11,39 @@ import java.util.concurrent.*;
 import java.util.function.*;
 
 public class InstanceProperties<T> {
-    private static final Map<Class<?>, Function<Object, String>> SERIALIZERS = new ConcurrentHashMap<>();
-    private static final Map<Class<?>, String> TYPE_S = new ConcurrentHashMap<>();
-    private static final Map<String, Function<String, Object>> TYPE_D = new ConcurrentHashMap<>();
+    public static final Map<Class<?>, Function<Object, String>> SERIALIZERS = new ConcurrentHashMap<>();
+    public static final Map<Class<?>, String> TYPE_S = new ConcurrentHashMap<>();
+    public static final Map<String, Function<String, Object>> TYPE_D = new ConcurrentHashMap<>();
 
     static {
-        setHandler(Integer.class, "(I", Integer::parseInt);
-        setHandler(Double.class, "(D", Double::parseDouble);
-        setHandler(Float.class, "(F", Float::parseFloat);
-        setHandler(Short.class, "(S", Short::parseShort);
-        setHandler(Byte.class, "(Byt", Byte::parseByte);
+        setHandler(Integer.class, "(I", Numerical::parseInt);
+        setHandler(Double.class, "(D", Numerical::parseDouble);
+        setHandler(Float.class, "(F", Numerical::parseFloat);
+        setHandler(Short.class, "(S", Numerical::parseShort);
+        setHandler(Byte.class, "(Byt", Numerical::parseByte);
+        setHandler(Long.class, "(Byt", Numerical::parseLong);
         setHandler(Boolean.class, "(I", Boolean::parseBoolean);
-        setHandler(Character.class, "(C", s -> (char) Integer.parseInt(s));
+        setHandler(Character.class, "(C", s -> (char) Numerical.parseInt(s));
         setHandler(String.class, "[STR", s -> s);
+        setHandler(AppointedPropertiesStack.class, "*L", AppointedPropertiesStack::parse);
+        setHandler(NbtCompound.class, "[Nbt[C", s -> new NbtCompoundSerializer(s).deserialize(), x -> {
+            if (x instanceof NbtCompound nbt) {
+                return new NbtCompoundSerializer(nbt).serialize();
+            }
+            return "{}";
+        });
+        setHandler(NbtString.class, "[Nbt[S", NbtString::of, x -> {
+            if (x instanceof NbtString string) {
+                return string.asString();
+            }
+            return "";
+        });
+        setHandler(NbtInt.class, "[Nbt(I", value -> NbtInt.of(Numerical.parseInt(value)));
+        setHandler(NbtDouble.class, "[Nbt(D", value -> NbtDouble.of(Numerical.parseDouble(value)));
+        setHandler(NbtFloat.class, "[Nbt(F", value -> NbtFloat.of(Numerical.parseFloat(value)));
+        setHandler(NbtShort.class, "[Nbt(S", value -> NbtShort.of(Numerical.parseShort(value)));
+        setHandler(NbtByte.class, "[Nbt(B", value -> NbtByte.of(Numerical.parseByte(value)));
+        setHandler(NbtLong.class, "[Nbt(L", value -> NbtLong.of(Numerical.parseLong(value)));
     }
 
     private final Map<String, Object> map = new ConcurrentHashMap<>();
@@ -85,7 +107,7 @@ public class InstanceProperties<T> {
                 String type = TYPE_S.get(v.getClass());
                 NbtCompound element = new NbtCompound();
                 element.putString("type", type);
-                element.putString(k, SERIALIZERS.get(v.getClass()).apply(v));
+                element.putString("info", SERIALIZERS.get(v.getClass()).apply(v));
                 nbt.put(k, element);
             }
         });
@@ -96,12 +118,29 @@ public class InstanceProperties<T> {
         NbtCompound nbt = compound.getCompound("properties");
         for (String key : nbt.getKeys()) {
             NbtCompound element = nbt.getCompound(key);
-            String des = element.getString("type");
-            put(key, TYPE_D.get(des).apply(element.getString(key)));
+            String type = element.getString("type");
+            put(key, TYPE_D.get(type).apply(element.getString("info")));
         }
     }
 
     public void put(String key, Object value) {
         map.put(key, value);
+    }
+
+    public <X> void stack(String key, X x) {
+        AppointedPropertiesStack<X> list = safeGet(key);
+        if (list == null) {
+            put(key, new AppointedPropertiesStack<>());
+            list = safeGet(key);
+        }
+        list.stack(x);
+    }
+
+    public <X> X pop(String key) {
+        AppointedPropertiesStack<X> list = safeGet(key);
+        if (list == null) {
+            return null;
+        }
+        return list.pop();
     }
 }

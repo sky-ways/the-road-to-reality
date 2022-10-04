@@ -10,6 +10,7 @@
         "block.BlocksMixin",
         "item.ItemsMixin",
         "item.ItemStackMixin",
+        "nbt.NbtCompoundInterface",
         "server.MinecraftServerMixin",
         "server.ServerWorldMixin",
         "world.chunk.WorldChunkMixin",
