@@ -11,26 +11,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.Function;
 
-@Disposable
-public final class NbtCompoundSerializer implements Serializable<NbtCompound> {
-    private final NbtCompound nbt;
-    private final String deserialize;
-
-    public NbtCompoundSerializer(NbtCompound nbt, String deserialize) {
-        this.nbt = nbt;
-        this.deserialize = deserialize;
-    }
-
-    public NbtCompoundSerializer(String deserialize) {
-        this(null, deserialize);
-    }
-
-    public NbtCompoundSerializer(NbtCompound nbt) {
-        this(nbt, null);
-    }
-
-    @Override
-    public String serialize() {
+public final class NbtCompoundSerializer {
+    public static String serialize(NbtCompound nbt) {
         JSONObject json = new JSONObject();
         Map<String, NbtElement> map = EntrustParser.trying(() -> {
             Method method = nbt.getClass().getDeclaredMethod("toMap");
@@ -49,7 +31,7 @@ public final class NbtCompoundSerializer implements Serializable<NbtCompound> {
         return json.toString();
     }
 
-    public NbtCompound deserialize() {
+    public static NbtCompound deserialize(String deserialize) {
         if ("{}".equals(deserialize)) {
             return new NbtCompound();
         }
@@ -68,17 +50,5 @@ public final class NbtCompoundSerializer implements Serializable<NbtCompound> {
             constructor.setAccessible(true);
             return constructor.newInstance(map);
         });
-    }
-
-    public NbtCompound getNbt() {
-        return nbt;
-    }
-
-    public String getDeserialize() {
-        return deserialize;
-    }
-
-    public NbtCompound nbt() {
-        return nbt;
     }
 }

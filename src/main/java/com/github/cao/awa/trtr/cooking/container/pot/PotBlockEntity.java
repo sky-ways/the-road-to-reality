@@ -7,7 +7,6 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.server.network.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
@@ -32,7 +31,11 @@ public class PotBlockEntity extends BlockEntity {
 
     }
 
-    public void put(World world, BlockPos pos, PlayerEntity player, ItemStack stack) {
-//        properties.
+    public void stack(World world, BlockPos pos, PlayerEntity player, ItemStack stack) {
+        properties.stack("items", stack);
+    }
+
+    public ItemStack pop(World world, BlockPos pos, PlayerEntity player) {
+        return properties.pop("items");
     }
 }

@@ -1,8 +1,10 @@
 package com.github.cao.awa.trtr.properties;
 
 import com.github.cao.awa.trtr.math.*;
+import com.github.cao.awa.trtr.properties.stack.*;
 import com.github.cao.awa.trtr.properties.type.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
+import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import org.jetbrains.annotations.*;
 
@@ -25,25 +27,21 @@ public class InstanceProperties<T> {
         setHandler(Boolean.class, "(I", Boolean::parseBoolean);
         setHandler(Character.class, "(C", s -> (char) Numerical.parseInt(s));
         setHandler(String.class, "[STR", s -> s);
-        setHandler(AppointedPropertiesStack.class, "*L", AppointedPropertiesStack::parse);
-        setHandler(NbtCompound.class, "[Nbt[C", s -> new NbtCompoundSerializer(s).deserialize(), x -> {
-            if (x instanceof NbtCompound nbt) {
-                return new NbtCompoundSerializer(nbt).serialize();
-            }
-            return "{}";
-        });
-        setHandler(NbtString.class, "[Nbt[S", NbtString::of, x -> {
-            if (x instanceof NbtString string) {
-                return string.asString();
-            }
-            return "";
-        });
+        setHandler(AppointedPropertiesStack.class, "*L", AppointedPropertiesStack::deserialize, AppointedPropertiesStack::serialize);
+        setHandler(NbtCompound.class, "[Nbt[C", NbtCompoundSerializer::deserialize, NbtCompoundSerializer::serialize);
+        setHandler(NbtString.class, "[Nbt[S", NbtString::of, NbtString::asString);
         setHandler(NbtInt.class, "[Nbt(I", value -> NbtInt.of(Numerical.parseInt(value)));
         setHandler(NbtDouble.class, "[Nbt(D", value -> NbtDouble.of(Numerical.parseDouble(value)));
         setHandler(NbtFloat.class, "[Nbt(F", value -> NbtFloat.of(Numerical.parseFloat(value)));
         setHandler(NbtShort.class, "[Nbt(S", value -> NbtShort.of(Numerical.parseShort(value)));
         setHandler(NbtByte.class, "[Nbt(B", value -> NbtByte.of(Numerical.parseByte(value)));
         setHandler(NbtLong.class, "[Nbt(L", value -> NbtLong.of(Numerical.parseLong(value)));
+
+        setHandler(ItemStack.class, "[Item[Sta", value -> ItemStack.fromNbt(NbtCompoundSerializer.deserialize(value)), stack -> {
+            NbtCompound compound = new NbtCompound();
+            stack.writeNbt(compound);
+            return compound.asString();
+        });
     }
 
     private final Map<String, Object> map = new ConcurrentHashMap<>();
@@ -60,14 +58,14 @@ public class InstanceProperties<T> {
         this.safe = isSafe;
     }
 
-    public static void setHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer) {
+    public static <T> void setHandler(@NotNull Class<T> target, @NotNull String serial, @NotNull Function<String, T> deserializer) {
         setHandler(target, serial, deserializer, null);
     }
 
-    public static void setHandler(@NotNull Class<?> target, @NotNull String serial, @NotNull Function<String, Object> deserializer, @Nullable Function<Object, String> serializer) {
+    public static <T> void setHandler(@NotNull Class<T> target, @NotNull String serial, @NotNull Function<String, T> deserializer, @Nullable Function<T, String> serializer) {
         TYPE_S.put(target, serial);
-        TYPE_D.put(serial, deserializer);
-        SERIALIZERS.put(target, serializer == null ? Object::toString : serializer);
+        TYPE_D.put(serial, (Function<String, Object>) deserializer);
+        SERIALIZERS.put(target, serializer == null ? Object::toString : (Function<Object, String>) serializer);
     }
 
     public T getInstance() {
@@ -78,13 +76,20 @@ public class InstanceProperties<T> {
         put(key, function.apply(get(key)));
     }
 
-    public <X> void update(String key, Function<X, X> function, X defaultValue) {
-        put(key, function.apply(getOrDefault(key, defaultValue)));
+    public <X> X get(String key) {
+        return safe ? safeGet(key) : (X) map.get(key);
     }
 
-    public <X> X calculate(String key, Function<X, Boolean> predicate, Function<X, X> function, X defaultValue) {
-        X target = getOrDefault(key, defaultValue);
-        return predicate.apply(target) ? function.apply(target) : defaultValue;
+    private <X> X safeGet(String key) {
+        return EntrustParser.trying(() -> (X) map.get(key));
+    }
+
+    public void put(String key, Object value) {
+        map.put(key, value);
+    }
+
+    public <X> void update(String key, Function<X, X> function, X defaultValue) {
+        put(key, function.apply(getOrDefault(key, defaultValue)));
     }
 
     public <X> X getOrDefault(String key, X defaultValue) {
@@ -92,12 +97,9 @@ public class InstanceProperties<T> {
         return x == null ? defaultValue : x;
     }
 
-    public <X> X get(String key) {
-        return safe ? safeGet(key) : (X) map.get(key);
-    }
-
-    private <X> X safeGet(String key) {
-        return EntrustParser.trying(() -> (X) map.get(key));
+    public <X> X calculate(String key, Function<X, Boolean> predicate, Function<X, X> function, X defaultValue) {
+        X target = getOrDefault(key, defaultValue);
+        return predicate.apply(target) ? function.apply(target) : defaultValue;
     }
 
     public void writeNbt(NbtCompound compound) {
@@ -123,10 +125,12 @@ public class InstanceProperties<T> {
         }
     }
 
-    public void put(String key, Object value) {
-        map.put(key, value);
-    }
-
+    /**
+     * Operation(stack in) to a properties stack
+     * <p>
+     * target must be an AppointedPropertiesStack or not present
+     * if not satisfy requires, will fail operation
+     */
     public <X> void stack(String key, X x) {
         AppointedPropertiesStack<X> list = safeGet(key);
         if (list == null) {
@@ -136,11 +140,31 @@ public class InstanceProperties<T> {
         list.stack(x);
     }
 
+    /**
+     * Operation(pop out) to a properties stack
+     * <p>
+     * target must be an AppointedPropertiesStack or not present
+     * if not satisfy requires, will fail operation
+     */
     public <X> X pop(String key) {
         AppointedPropertiesStack<X> list = safeGet(key);
         if (list == null) {
             return null;
         }
         return list.pop();
+    }
+
+    /**
+     * Operation(pop out all) to a properties stack
+     * <p>
+     * target must be an AppointedPropertiesStack or not present
+     * if not satisfy requires, will fail operation
+     */
+    public <X> List<X> pops(String key) {
+        AppointedPropertiesStack<X> list = safeGet(key);
+        if (list == null) {
+            return null;
+        }
+        return list.pops();
     }
 }

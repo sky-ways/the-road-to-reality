@@ -10,6 +10,8 @@
         "block.BlocksMixin",
         "item.ItemsMixin",
         "item.ItemStackMixin",
+        "screen.hud.debug.DebugHudMixin",
+        "screen.title.TitleScreenMixin",
         "server.MinecraftServerMixin",
         "server.ServerWorldMixin",
         "world.chunk.WorldChunkMixin",

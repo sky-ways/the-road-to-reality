@@ -5,13 +5,13 @@ import com.github.cao.awa.trtr.type.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+import org.jetbrains.annotations.*;
 
 public class PotBlock extends TrtrBlockWithEntity<PotBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:pot");
@@ -31,6 +31,11 @@ public class PotBlock extends TrtrBlockWithEntity<PotBlockEntity> {
     }
 
     @Override
+    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new PotBlockEntity(pos, state);
+    }
+
+    @Override
     public Identifier identifier() {
         return IDENTIFIER;
     }
@@ -39,11 +44,14 @@ public class PotBlock extends TrtrBlockWithEntity<PotBlockEntity> {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity entity = world.getBlockEntity(pos);
         ItemStack stack = player.getMainHandStack();
-        if (entity == null || stack.isEmpty()) {
+        if (entity == null) {
             return ActionResult.PASS;
         }
         if (entity instanceof PotBlockEntity pot) {
-            pot.put(world, pos, player, stack);
+            if (stack.isEmpty()) {
+                return pot.pop(world, pos, player) == null ? ActionResult.SUCCESS : ActionResult.PASS;
+            }
+            pot.stack(world, pos, player, stack);
         }
 
         return super.onUse(state, world, pos, player, hand, hit);
