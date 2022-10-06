@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.debuger.performance.tracker;
 
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
-import it.unimi.dsi.fastutil.objects.*;
+import de.javagl.obj.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -9,6 +9,18 @@ import java.util.concurrent.*;
 public class SubmitTimeTracker {
     private final Map<Object, Long> times =  new ConcurrentHashMap<>();
     private final Map<Object, Long> counts = new ConcurrentHashMap<>();
+
+    public int counting() {
+        return counts.size();
+    }
+
+    public int waiting() {
+        return times.size();
+    }
+
+    public long getCount(Object obj) {
+        return counts.getOrDefault(obj, 0L);
+    }
 
     public void count(Object obj) {
         counts.put(obj, counts.getOrDefault(obj, 0L) + 1L);

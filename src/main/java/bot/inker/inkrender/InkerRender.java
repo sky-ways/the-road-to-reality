@@ -12,8 +12,7 @@ import net.minecraft.util.registry.*;
 
 public class InkerRender implements ModInitializer, ClientModInitializer {
     private static final ResourceService resourceService = new ResourceService();
-
-    public static Block TEST_BLOCK;
+    public static final String VERSION = "1.0.2";
 
     public static ResourceService resourceService() {
         return resourceService;
@@ -21,10 +20,6 @@ public class InkerRender implements ModInitializer, ClientModInitializer {
 
     @Override
     public void onInitialize() {
-        TEST_BLOCK = new Block(FabricBlockSettings.of(Material.STONE).hardness(1.0f).nonOpaque());
-
-        Registry.register(Registry.BLOCK, new Identifier("irender", "test"), TEST_BLOCK);
-        Registry.register(Registry.ITEM, new Identifier("irender", "test"), new BlockItem(TEST_BLOCK, new Item.Settings().group(ItemGroup.REDSTONE)));
     }
 
     @Override

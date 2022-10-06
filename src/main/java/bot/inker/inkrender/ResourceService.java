@@ -24,6 +24,10 @@ public class ResourceService implements InkResourceService {
         locators.add(locator);
     }
 
+    public int registered() {
+        return locators.size();
+    }
+
     @Override
     public Optional<InkResourceLoader> findModel(String name) {
         logger.debug("Find model {}", name);

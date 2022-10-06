@@ -1,7 +1,7 @@
 package bot.inker.inkrender;
 
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
+import com.github.zhuaidadaya.rikaishinikui.handler.option.*;
+import it.unimi.dsi.fastutil.longs.*;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.metadata.ResourceMetadataReader;
@@ -13,23 +13,59 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class MemoryResourcePack implements ResourcePack {
     public static final String NAMESPACE = "inker_render_memory";
-    public static final MemoryResourcePack INSTANCE = new MemoryResourcePack();
+    public static final MemoryResourcePack INSTANCE = MemoryResourcePack.arbitrary();
     private static final Logger LOGGER = LogManager.getLogger();
     private final AtomicLong idAlloc = new AtomicLong();
-    private final Long2ObjectMap<Supplier<InputStream>> registers = new Long2ObjectRBTreeMap<>();
+    private final Map<Long, Supplier<InputStream>> registers;
+    private final BiOption<Boolean> async;
+
+    private static MemoryResourcePack async() {
+        return new MemoryResourcePack(BiOption.of(true, false));
+    }
+
+    private static MemoryResourcePack sync() {
+        return new MemoryResourcePack(BiOption.of(false, true));
+    }
+
+    private static MemoryResourcePack arbitrary() {
+        return new MemoryResourcePack(BiOption.of(false, false));
+    }
+
+    private MemoryResourcePack(BiOption<Boolean> async) {
+        registers = async.t1() ? new ConcurrentHashMap<>() : new Long2ObjectOpenHashMap<>();
+        this.async = async;
+    }
 
     public Identifier put(Supplier<InputStream> supplier) {
+        if (async.t2()) {
+            synchronized (this) {
+                return putting(supplier);
+            }
+        }
+        return putting(supplier);
+    }
+
+    private Identifier putting(Supplier<InputStream> supplier) {
         long id = idAlloc.getAndIncrement();
         registers.put(id, supplier);
         Identifier identifier = Identifier.of(NAMESPACE, String.valueOf(id));
         LOGGER.debug("put() = {}", identifier);
         return identifier;
+    }
+
+    public int allocated() {
+        return idAlloc.intValue();
+    }
+
+    public BiOption<Boolean> asyncOption() {
+        return async;
     }
 
     @Nullable
@@ -39,7 +75,16 @@ public class MemoryResourcePack implements ResourcePack {
     }
 
     @Override
-    public InputStream open(ResourceType type, Identifier id) throws IOException {
+    public InputStream open(ResourceType type, Identifier identifier) throws IOException {
+        if (async.t2()) {
+            synchronized (this) {
+                return opening(type, identifier);
+            }
+        }
+        return opening(type, identifier);
+    }
+
+    public InputStream opening(ResourceType type, Identifier id) throws IOException {
         LOGGER.debug("open({},{})", type, id);
         Supplier<InputStream> supplier = registers.get(getIdFromIdentifier(id));
         if (supplier == null) {
@@ -84,6 +129,11 @@ public class MemoryResourcePack implements ResourcePack {
     @Override
     public boolean contains(ResourceType type, Identifier id) {
         LOGGER.debug("contains({},{})", type, id);
+        if (async.t2()) {
+            synchronized (this) {
+                return registers.containsKey(getIdFromIdentifier(id));
+            }
+        }
         return registers.containsKey(getIdFromIdentifier(id));
     }
 
