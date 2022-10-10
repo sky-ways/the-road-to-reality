@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.cooking.chocolate.cocoa.powder;
+package com.github.cao.awa.trtr.food.chocolate.cocoa.powder;
 
 import com.github.cao.awa.trtr.ref.item.*;
 import com.github.cao.awa.trtr.ref.item.trtr.*;

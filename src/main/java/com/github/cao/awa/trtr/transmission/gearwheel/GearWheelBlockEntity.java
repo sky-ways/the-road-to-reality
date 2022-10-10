@@ -8,6 +8,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
+// todo delete
 public class GearWheelBlockEntity extends BlockEntity {
     private final InstanceProperties<GearWheelBlockEntity> properties = new InstanceProperties<>(this, true);
 
@@ -34,10 +35,10 @@ public class GearWheelBlockEntity extends BlockEntity {
 
     public void tick(World world, BlockPos pos, BlockState state) {
 //        GearWheelBlockEntity gear = world.getBlockEntity();
-        GearWheelBlockEntity gear = null;
-        if (gear != null) {
-            double rad = gear.properties.get("rad");
-            double ome = gear.properties.get("ome");
-        }
+//        GearWheelBlockEntity gear = null;
+//        if (gear != null) {
+//            double rad = gear.properties.get("rad");
+//            double ome = gear.properties.get("ome");
+//        }
     }
 }

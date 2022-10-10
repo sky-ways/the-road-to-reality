@@ -102,6 +102,10 @@ public class InstanceProperties<T> {
         return predicate.apply(target) ? function.apply(target) : defaultValue;
     }
 
+    public void remove(String key) {
+        map.remove(key);
+    }
+
     public void writeNbt(NbtCompound compound) {
         NbtCompound nbt = new NbtCompound();
         map.forEach((k, v) -> {
@@ -166,5 +170,11 @@ public class InstanceProperties<T> {
             return null;
         }
         return list.pops();
+    }
+
+    public <X> X destroy(String key) {
+        X x = safeGet(key);
+        remove(key);
+        return x;
     }
 }

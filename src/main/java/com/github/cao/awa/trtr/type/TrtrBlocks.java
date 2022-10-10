@@ -1,7 +1,10 @@
 package com.github.cao.awa.trtr.type;
 
 import com.github.cao.awa.trtr.air.*;
+import com.github.cao.awa.trtr.cooking.container.pan.*;
 import com.github.cao.awa.trtr.cooking.container.pot.*;
+import com.github.cao.awa.trtr.mud.pipe.*;
+import com.github.cao.awa.trtr.mud.stove.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.*;
 import com.github.cao.awa.trtr.ore.aluminum.bauxite.*;
 import com.github.cao.awa.trtr.ore.aluminum.bauxite.deepslate.*;
@@ -68,6 +71,11 @@ public class TrtrBlocks {
 
     // Cooking
     public static final Block POT = new PotBlock();
+    public static final Block PAN = new PanBlock();
+
+
+    public static final Block MUD_PIPE = new MudPipeBlock();
+    public static final Block MUD_STOVE = new MudStoveBlock();
 
     public static void pre() {
 

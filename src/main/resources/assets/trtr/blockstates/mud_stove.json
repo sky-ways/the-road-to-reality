@@ -1,0 +1,131 @@
+{
+    "multipart": [
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "north"
+                    },
+                    {
+                        "pipe_connected": "true"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 0
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "east"
+                    },
+                    {
+                        "pipe_connected": "true"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "south"
+                    },
+                    {
+                        "pipe_connected": "true"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "west"
+                    },
+                    {
+                        "pipe_connected": "true"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "north"
+                    },
+                    {
+                        "pipe_connected": "false"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove"
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "east"
+                    },
+                    {
+                        "pipe_connected": "false"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "south"
+                    },
+                    {
+                        "pipe_connected": "false"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "AND": [
+                    {
+                        "facing": "west"
+                    },
+                    {
+                        "pipe_connected": "false"
+                    }
+                ]
+            },
+            "apply": {
+                "model": "trtr:block/mud/stove/mud_stove",
+                "y": 270
+            }
+        }
+    ]
+}
