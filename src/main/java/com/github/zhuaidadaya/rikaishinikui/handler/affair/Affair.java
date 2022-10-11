@@ -3,11 +3,12 @@ package com.github.zhuaidadaya.rikaishinikui.handler.affair;
 import com.github.cao.awa.modmdo.annotations.*;
 import it.unimi.dsi.fastutil.objects.*;
 
+import java.util.*;
 import java.util.function.*;
 
 @Disposable
 public class Affair {
-    private final ObjectLinkedOpenHashSet<AffairTask> actions = new ObjectLinkedOpenHashSet<>();
+    private final Set<AffairTask> actions = new ObjectLinkedOpenHashSet<>();
 
     public static Affair of(Runnable action) {
         return new Affair().participate(action);
@@ -34,10 +35,13 @@ public class Affair {
         return this;
     }
 
+    public Affair add(Runnable action) {
+        actions.add(new AffairTask(() -> true, action));
+        return this;
+    }
+
     public void done() {
-        for (AffairTask runnable : actions) {
-            runnable.run();
-        }
+        actions.forEach(AffairTask::run);
     }
 
     public record AffairTask(Supplier<Boolean> predicate, Runnable action) {

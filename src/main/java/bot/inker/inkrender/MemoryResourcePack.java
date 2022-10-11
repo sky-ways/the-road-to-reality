@@ -39,12 +39,12 @@ public class MemoryResourcePack implements ResourcePack {
     }
 
     private MemoryResourcePack(BiOption<Boolean> async) {
-        registers = async.t1() ? new ConcurrentHashMap<>() : new Long2ObjectOpenHashMap<>();
+        registers = async.first() ? new ConcurrentHashMap<>() : new Long2ObjectOpenHashMap<>();
         this.async = async;
     }
 
     public Identifier put(Supplier<InputStream> supplier) {
-        if (async.t2()) {
+        if (async.second()) {
             synchronized (this) {
                 return putting(supplier);
             }
@@ -76,7 +76,7 @@ public class MemoryResourcePack implements ResourcePack {
 
     @Override
     public InputStream open(ResourceType type, Identifier identifier) throws IOException {
-        if (async.t2()) {
+        if (async.second()) {
             synchronized (this) {
                 return opening(type, identifier);
             }
@@ -129,7 +129,7 @@ public class MemoryResourcePack implements ResourcePack {
     @Override
     public boolean contains(ResourceType type, Identifier id) {
         LOGGER.debug("contains({},{})", type, id);
-        if (async.t2()) {
+        if (async.second()) {
             synchronized (this) {
                 return registers.containsKey(getIdFromIdentifier(id));
             }

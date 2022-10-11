@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.transmission.gearwheel;
 
-import com.github.cao.awa.trtr.properties.*;
+import com.github.cao.awa.trtr.database.properties.*;
 import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;

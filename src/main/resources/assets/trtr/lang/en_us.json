@@ -21,6 +21,7 @@
     "item.trtr.pitchblende_powder": "Pitchblende powder",
     "item.trtr.carnotite_powder": "Carnotite powder",
     "item.trtr.autunite_powder": "Autunite powder",
+    "item.trtr.niter_powder": "Niter powder",
     "item.trtr.crushed_bauxite": "Crushed bauxite",
     "item.trtr.crushed_acanthite": "Crushed acanthite",
     "item.trtr.crushed_galena": "Crushed galena",
@@ -48,6 +49,7 @@
     "item.trtr.crushed_deepslate_autunite": "Crushed deepslate autunite",
     "item.trtr.crushed_deepslate": "Crushed deepslate",
     "item.trtr.crushed_stone": "Crushed stone",
+    "item.trtr.crushed_niter": "Crushed niter",
     "item.trtr.plant_fiber": "Plant fiber",
 
     "block.trtr.photovoltaic_panels": "Photovoltaic panels",
@@ -73,6 +75,7 @@
     "block.trtr.deepslate_carnotite": "Deepslate carnotite",
     "block.trtr.autunite": "Autunite",
     "block.trtr.deepslate_autunite": "Deepslate autunite",
+    "block.trtr.niter": "Niter",
 
     "death.attack.trtr.burner.hot": "%s try stand on high temperature burner",
     "death.attack.trtr.nuclear.disease": "%s dead in nuclear disease",
@@ -87,5 +90,8 @@
     "itemGroup.trtr.assembly": "Assembly",
     "itemGroup.trtr.assembly_block": "Block assembly",
     "itemGroup.trtr.food_materials": "Food materials",
-    "itemGroup.trtr.cooking_tools": "Cooking tools"
+    "itemGroup.trtr.cooking_tools": "Cooking tools",
+
+    "advancements.nitrate.title": "Nitrate",
+    "advancements.nitrate.description": "Nitrate"
 }

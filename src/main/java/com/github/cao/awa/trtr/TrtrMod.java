@@ -1,17 +1,14 @@
 package com.github.cao.awa.trtr;
 
+import com.github.cao.awa.modmdo.annotations.platform.*;
 import com.github.cao.awa.trtr.debuger.performance.tracker.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.heat.handler.*;
 import com.github.cao.awa.trtr.type.*;
 import net.fabricmc.api.*;
-import net.fabricmc.fabric.api.loot.v2.*;
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
-import net.minecraft.item.*;
-import net.minecraft.loot.*;
-import net.minecraft.loot.entry.*;
 import org.apache.logging.log4j.*;
 
+@Server
 public class TrtrMod implements ModInitializer {
     public static HeatHandler heatHandler = new HeatHandler();
     public static final String VERSION = "1.0.0";
@@ -28,5 +25,6 @@ public class TrtrMod implements ModInitializer {
         TrtrHammerableProducts.pre();
         TrtrItemGroup.pre();
         TrtrEntityType.pre();
+        CombinationReactions.pre();
     }
 }

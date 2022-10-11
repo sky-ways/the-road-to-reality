@@ -16,7 +16,7 @@ public class HandHoldThermometer extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:hand_hold_thermometer");
 
     public HandHoldThermometer() {
-        super(new Settings().maxCount(1));
+        super(new Settings());
     }
 
     @Override
@@ -29,9 +29,14 @@ public class HandHoldThermometer extends TrtrItem {
         BlockHitResult hitResult = raycast(world, user, RaycastContext.FluidHandling.ANY);
         HeatConductor conductor = heatHandler.getConductor(world, hitResult.getBlockPos());
         if (conductor != null) {
-            user.sendMessage(Text.of("Temperature of block " + hitResult.getBlockPos() + " is: " + conductor.getTemperature()), true);
+            user.sendMessage(
+                    Text.of("Temperature of block " + hitResult.getBlockPos() + " is: " + conductor.getTemperature()),
+                    true
+            );
         } else {
-            user.sendMessage(Text.of("The block " + hitResult.getBlockPos() + " is haven not a temperature register"), true);
+            user.sendMessage(Text.of("The block " + hitResult.getBlockPos() + " is haven not a temperature register"),
+                             true
+            );
         }
         return super.use(world, user, hand);
     }

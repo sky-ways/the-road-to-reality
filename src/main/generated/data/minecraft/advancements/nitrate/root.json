@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "inventory_changed": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:crafting_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png",
+    "description": {
+      "translate": "advancements.nitrate.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "trtr:niter"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.nitrate.title"
+    }
+  },
+  "requirements": [
+    [
+      "inventory_changed"
+    ]
+  ]
+}

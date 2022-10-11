@@ -18,17 +18,18 @@ public class MudStoveBlock extends TrtrBlockWithEntity<MudStoveBlockEntity> {
     public static final BooleanProperty PIPE_CONNECTED = BooleanProperty.of("pipe_connected");
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return PixelVoxelShapes.union(
-                PixelVoxelShapes.cuboid(1, 0 ,1, 15, 16,15)
-//                PixelVoxelShapes.cuboid(0, 0 ,4, 16, 16,14)
-        );
-    }
-
     public MudStoveBlock() {
         super(Settings.of(Material.SOIL));
-        this.setDefaultState(this.stateManager.getDefaultState().with(PIPE_CONNECTED, false).with(FACING, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState()
+                                              .with(PIPE_CONNECTED, false)
+                                              .with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return PixelVoxelShapes.union(PixelVoxelShapes.cuboid(1, 0, 1, 15, 16, 15)
+                //                PixelVoxelShapes.cuboid(0, 0 ,4, 16, 16,14)
+        );
     }
 
     @Override
@@ -41,12 +42,12 @@ public class MudStoveBlock extends TrtrBlockWithEntity<MudStoveBlockEntity> {
         return TrtrBlockEntityType.MUD_STOVE;
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(PIPE_CONNECTED, FACING);
-    }
-
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+    }
+
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(PIPE_CONNECTED, FACING);
     }
 
     @Override

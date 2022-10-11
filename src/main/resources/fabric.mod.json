@@ -28,6 +28,9 @@
         "client": [
             "com.github.cao.awa.trtr.TrtrClient",
             "bot.inker.inkrender.InkerRender"
+        ],
+        "fabric-datagen": [
+            "com.github.cao.awa.trtr.TrtrDatagen"
         ]
     },
     "mixins": [

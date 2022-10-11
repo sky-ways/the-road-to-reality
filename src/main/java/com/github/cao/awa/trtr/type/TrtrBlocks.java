@@ -18,6 +18,7 @@ import com.github.cao.awa.trtr.ore.feldspar.anorthite.*;
 import com.github.cao.awa.trtr.ore.feldspar.orthoclase.*;
 import com.github.cao.awa.trtr.ore.lead.galena.*;
 import com.github.cao.awa.trtr.ore.lead.galena.deepslate.*;
+import com.github.cao.awa.trtr.ore.niter.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.autunite.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.autunite.deepslate.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.carnotite.deepslate.*;
@@ -61,6 +62,8 @@ public class TrtrBlocks {
     public static final Block CUPRITE_BLOCK = new Cuprite();
     public static final Block DEEPSLATE_CHALCOPYRITE_BLOCK = new DeepslateChalcopyrite();
     public static final Block DEEPSLATE_CUPRITE_BLOCk = new DeepslateCuprite();
+
+    public static final Block NITER_BLOCK = new NiterBlock();
 
     public static final Block WATER_VAPOR_BLOCk = new WaterVapor();
 

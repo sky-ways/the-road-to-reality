@@ -15,6 +15,8 @@ public class TrtrHammerableProducts {
     public static final RageTable<Item, NumberRage<Item>> CRUSHED_CHALCOPYRITE = RageTable.of(NumberRage.over(TrtrItems.CRUSHED_CHALCOPYRITE, 5));
     public static final RageTable<Item, NumberRage<Item>> CRUSHED_CUPRITE = RageTable.of(NumberRage.over(TrtrItems.CRUSHED_CUPRITE, 5));
 
+    public static final RageTable<Item, NumberRage<Item>> CRUSHED_NITER = RageTable.of(NumberRage.over(TrtrItems.CRUSHED_NITER, 5));
+
     public static final RageTable<Item, NumberRage<Item>> CRUSHED_DEEPSLATE = RageTable.of(NumberRage.over(TrtrItems.CRUSHED_DEEPSLATE, 5));
     public static final RageTable<Item, NumberRage<Item>> CRUSHED_DEEPSLATE_BAUXITE = RageTable.of(NumberRage.over(TrtrItems.CRUSHED_DEEPSLATE_BAUXITE, 5));
     public static final RageTable<Item, NumberRage<Item>> CRUSHED_DEEPSLATE_COAL = RageTable.of(NumberRage.over(TrtrItems.CRUSHED_DEEPSLATE_COAL, 5));
@@ -46,6 +48,8 @@ public class TrtrHammerableProducts {
     public static final RageTable<Item, NumberRage<Item>> ORTHOCLASE_POWDER = RageTable.of(NumberRage.over(TrtrItems.ORTHOCLASE_POWDER, 5));
     public static final RageTable<Item, NumberRage<Item>> ANORTHITE_POWDER = RageTable.of(NumberRage.over(TrtrItems.ANORTHITE_POWDER, 5));
 
+    public static final RageTable<Item, NumberRage<Item>> NITER_POWDER = RageTable.of(NumberRage.over(TrtrItems.NITER_POWDER, 5));
+
     // Food
     public static final RageTable<Item, NumberRage<Item>> COCOA_POWDER = RageTable.of(NumberRage.over(TrtrItems.COCOA_POWDER, 3));
 
@@ -73,6 +77,7 @@ public class TrtrHammerableProducts {
         register(TrtrItems.CRUSHED_ALBITE, CRUSHED_ALBITE);
         register(TrtrItems.CRUSHED_ORTHOCLASE, CRUSHED_ORTHOCLASE);
         register(TrtrItems.CRUSHED_ANORTHITE, CRUSHED_ANORTHITE);
+        register(TrtrItems.CRUSHED_NITER, CRUSHED_NITER);
 
         register(TrtrItems.BAUXITE_POWDER, BAUXITE_POWDER);
         register(TrtrItems.COAL_POWDER, COAL_POWDER);
@@ -89,6 +94,7 @@ public class TrtrHammerableProducts {
         register(TrtrItems.ALBITE_POWDER, ALBITE_POWDER);
         register(TrtrItems.ORTHOCLASE_POWDER, ORTHOCLASE_POWDER);
         register(TrtrItems.ANORTHITE_POWDER, ANORTHITE_POWDER);
+        register(TrtrItems.NITER_POWDER, NITER_POWDER);
 
         register(TrtrItems.COCOA_POWDER, COCOA_POWDER);
     }

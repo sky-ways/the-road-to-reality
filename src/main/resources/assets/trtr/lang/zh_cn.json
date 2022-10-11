@@ -21,7 +21,8 @@
     "item.trtr.pitchblende_powder": "沥青铀矿粉",
     "item.trtr.carnotite_powder": "钒酸钾铀矿粉",
     "item.trtr.autunite_powder": "钙铀云母粉",
-    "item.trtr.crushed_bauxite": "碎铝土矿石",
+    "item.trtr.niter_powder": "硝石粉",
+    "item.trtr.crushed_bauxite": "碎铝矾土矿石",
     "item.trtr.crushed_acanthite": "碎螺状硫银矿石",
     "item.trtr.crushed_galena": "碎方铅矿石",
     "item.trtr.crushed_hematite": "碎赤铁矿石",
@@ -29,7 +30,7 @@
     "item.trtr.crushed_albite": "碎明矾石",
     "item.trtr.crushed_orthoclase": "碎钾长石",
     "item.trtr.crushed_alunite": "碎钠长石",
-    "item.trtr.crushed_deepslate_bauxite": "碎深层铝土矿石",
+    "item.trtr.crushed_deepslate_bauxite": "碎深层铝矾土矿石",
     "item.trtr.crushed_deepslate_acanthite": "碎深层螺状硫银矿石",
     "item.trtr.crushed_deepslate_galena": "碎深层方铅矿石",
     "item.trtr.crushed_deepslate_hematite": "碎深层赤铁矿石",
@@ -48,12 +49,13 @@
     "item.trtr.crushed_deepslate_autunite": "碎深层钙铀云母",
     "item.trtr.crushed_deepslate": "碎深板岩",
     "item.trtr.crushed_stone": "碎石",
+    "item.trtr.crushed_niter": "碎硝石",
     "item.trtr.plant_fiber": "植物纤维",
 
     "block.trtr.photovoltaic_panels": "光伏发电板",
     "block.trtr.burner": "燃烧炉",
-    "block.trtr.bauxite": "铝土矿石",
-    "block.trtr.deepslate_bauxite": "深层铝土矿石",
+    "block.trtr.bauxite": "铝矾土矿石",
+    "block.trtr.deepslate_bauxite": "深层铝矾土矿石",
     "block.trtr.galena": "方铅矿石",
     "block.trtr.deepslate_galena": "深层方铅矿石",
     "block.trtr.acanthite": "螺状硫银矿石",
@@ -73,6 +75,7 @@
     "block.trtr.deepslate_carnotite": "深层钒酸钾铀矿石",
     "block.trtr.autunite": "钙铀云母",
     "block.trtr.deepslate_autunite": "深层钙铀云母",
+    "block.trtr.niter": "硝石",
 
     "death.attack.trtr.burner.hot": "%s 试图站在极高温的燃烧炉上",
     "death.attack.trtr.nuclear.disease": "核症状",
@@ -86,5 +89,8 @@
     "itemGroup.trtr.assembly": "组件",
     "itemGroup.trtr.assembly_block": "方块组件",
     "itemGroup.trtr.food_materials": "食物原材料",
-    "itemGroup.trtr.cooking_tools": "厨具"
+    "itemGroup.trtr.cooking_tools": "厨具",
+
+    "advancements.nitrate.title": "硝化",
+    "advancements.nitrate.description": "硝化"
 }

@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.ore.copper.cuprite;
 
+import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.block.*;
 import net.minecraft.util.*;

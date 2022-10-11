@@ -4,6 +4,8 @@ import com.github.cao.awa.trtr.container.bowl.wooden.water.*;
 import com.github.cao.awa.trtr.container.bucket.wooden.*;
 import com.github.cao.awa.trtr.debuger.*;
 import com.github.cao.awa.trtr.food.chocolate.cocoa.powder.*;
+import com.github.cao.awa.trtr.ore.niter.powder.*;
+import com.github.cao.awa.trtr.ore.niter.crushed.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.crushed.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.powder.*;
 import com.github.cao.awa.trtr.ore.aluminum.bauxite.crushed.*;
@@ -80,12 +82,16 @@ public class TrtrItems {
     public static final Item CARNOTITE_POWDER = new CarnotitePowder();
     public static final Item AUTUNITE_POWDER = new AutunitePowder();
 
+    public static final Item NITER_POWDER = new NiterPowder();
+
     // Crushed ores
     public static final Item CRUSHED_MALACHITE = new CrushedMalachite();
     public static final Item CRUSHED_ALUNITE = new CrushedAlunite();
     public static final Item CRUSHED_ALBITE = new CrushedAlbite();
     public static final Item CRUSHED_ORTHOCLASE = new CrushedOrthoclase();
     public static final Item CRUSHED_ANORTHITE = new CrushedAnorthite();
+
+    public static final Item CRUSHED_NITER = new CrushedNiter();
 
     public static final Item CRUSHED_BAUXITE = new CrushedBauxite();
     public static final Item CRUSHED_ACANTHITE = new CrushedAcanthite();
