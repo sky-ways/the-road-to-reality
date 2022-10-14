@@ -3,12 +3,13 @@ package com.github.zhuaidadaya.rikaishinikui.handler.universal.runnable;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function.*;
 import it.unimi.dsi.fastutil.objects.*;
 
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.*;
 
 public class FutureTaskOrder {
-    private final ObjectLinkedOpenHashSet<FutureTask> tasks = new ObjectLinkedOpenHashSet<>();
-    private final ObjectLinkedOpenHashSet<FutureTask> parallelTasks = new ObjectLinkedOpenHashSet<>();
+    private final List<FutureTask> tasks = new ObjectArrayList<>();
+    private final List<FutureTask> parallelTasks = new ObjectArrayList<>();
 
     public void submit(Temporary action, int waitTicks) {
         submit(action, waitTicks, false);
@@ -40,12 +41,10 @@ public class FutureTaskOrder {
 
     public void tick() {
         if (tasks.size() > 0) {
-            Stream<FutureTask> remove = tasks.stream().filter(FutureTask::tick);
-            remove.forEach(tasks::remove);
+            tasks.removeAll(tasks.stream().filter(FutureTask::tick).toList());
         }
         if (parallelTasks.size() > 0) {
-            Stream<FutureTask> remove = parallelTasks.parallelStream().filter(FutureTask::tick);
-            remove.forEach(parallelTasks::remove);
+            tasks.removeAll(parallelTasks.parallelStream().filter(FutureTask::tick).toList());
         }
     }
 
@@ -59,11 +58,41 @@ public class FutureTaskOrder {
         }
 
         public boolean tick() {
-            if (tick-- == 0) {
+            if (--tick == 0) {
                 action.apply();
                 return true;
             }
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        FutureTaskOrder order = new FutureTaskOrder();
+        order.submit(() -> {
+            System.out.println("???");
+        }, 1);
+
+        order.submit(() -> {
+            System.out.println("???");
+        }, 1);
+
+        order.submit(() -> {
+            order.submit(() -> {
+                System.out.println("???");
+            }, 1);
+        }, 1);
+
+        order.submit(() -> {
+            order.submit(() -> {
+                System.out.println("???");
+            }, 1);
+        }, 1);
+
+        order.tick();
+        order.tick();
+        order.tick();
+
+        System.out.println(order.tasks);
+
     }
 }

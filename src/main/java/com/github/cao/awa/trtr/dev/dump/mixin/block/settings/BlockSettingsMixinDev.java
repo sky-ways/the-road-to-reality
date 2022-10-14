@@ -5,6 +5,6 @@ import net.minecraft.block.*;
 
 public class BlockSettingsMixinDev {
     public static float appendResistance(AbstractBlock.Settings settings) {
-        return ((AbstractBlockSettingsAccessor)settings).getMaterial() == Material.TNT ? 0 : 8;
+        return ((AbstractBlockSettingsAccessor)settings).getMaterial() == Material.TNT ? 0 : 12;
     }
 }

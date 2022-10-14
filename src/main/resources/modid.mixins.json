@@ -25,6 +25,7 @@
         "world.chunk.WorldChunkMixin",
         "world.chunk.selection.ChunkSelectionInterface",
         "world.chunk.selection.ChunkSelectionMixin",
+        "world.explosion.ExplosionBehaviorMixin",
         "world.explosion.ExplosionMixin",
         "world.manager.ServerChunkManagerInterface"
     ],

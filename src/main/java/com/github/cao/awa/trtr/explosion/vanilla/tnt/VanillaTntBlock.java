@@ -64,7 +64,7 @@ public class VanillaTntBlock extends Block {
     public static void explode(World world, BlockPos pos, LivingEntity igniter) {
         VanillaTntEntity tntEntity = new VanillaTntEntity(world, pos.getX() + 0.5D,
                                                           pos.getY(), pos.getZ() + 0.5D, igniter);
-        world.spawnEntity(tntEntity);
+        tntEntity.tick();
     }
 
     private static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter) {

@@ -45,19 +45,7 @@ public class OnenessStorage extends DatabaseStorage {
     }
 
     public void entrustPacking(String pack, String key, Supplier<String> action) throws IOException {
-        write(key, action.get());
-        System.out.println(pack);
-        File zip = new File(getPath() + "/" + pack + ".dump");
-        File file = new File(getPath() + "/" + key + ".prp");
-        if (zip.isFile()) {
-            FileUtil.expandZip(
-                    zip,
-                    List.of(file)
-            );
-        } else {
-            FileUtil.zipFile(file, zip);
-        }
-        file.delete();
+
     }
 
     @Override

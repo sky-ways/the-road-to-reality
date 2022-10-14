@@ -27,6 +27,7 @@ public class MinecraftServerMixin {
 
     @Redirect(method = "tickWorlds", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;tick(Ljava/util/function/BooleanSupplier;)V"))
     public void tickWorlds(ServerWorld instance, BooleanSupplier shouldKeepTicking) {
+        delayTasks.tick();
         heatManager.tick(instance);
         instance.tick(shouldKeepTicking);
         airManager.tick(instance);

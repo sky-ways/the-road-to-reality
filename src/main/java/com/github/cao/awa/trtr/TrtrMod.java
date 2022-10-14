@@ -6,7 +6,9 @@ import com.github.cao.awa.trtr.database.*;
 import com.github.cao.awa.trtr.debuger.performance.tracker.*;
 import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.heat.handler.*;
+import com.github.cao.awa.trtr.ref.item.fire.*;
 import com.github.cao.awa.trtr.type.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.runnable.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.*;
 import net.minecraft.block.*;
@@ -20,6 +22,7 @@ public class TrtrMod implements ModInitializer {
     public static AirManager airManager = new AirManager();
     public static SubmitTimeTracker timeTracker = new SubmitTimeTracker();
     public static Counter counter = new Counter();
+    public static FutureTaskOrder delayTasks = new FutureTaskOrder();
 
     public static InstancePropertiesDatabase propertiesDatabase = null;
 
@@ -34,5 +37,6 @@ public class TrtrMod implements ModInitializer {
         TrtrItemGroup.pre();
         TrtrEntityType.pre();
         CombinationReactions.pre();
+        FireReacts.pre();
     }
 }

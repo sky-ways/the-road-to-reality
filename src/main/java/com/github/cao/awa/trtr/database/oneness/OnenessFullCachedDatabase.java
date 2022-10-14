@@ -42,14 +42,11 @@ public class OnenessFullCachedDatabase extends InstancePropertiesDatabase {
                     properties
             );
         try {
-            if (properties.get("p" ) != null) {
-                ((OnenessStorage) getStorage()).entrustPacking(
-                        properties.get("p"),
-                        key,
-                        () -> properties.toJSONObject()
-                                        .toString()
-                );
-            }
+            getStorage().entrustWrite(
+                    key,
+                    () -> properties.toJSONObject()
+                                    .toString()
+            );
         } catch (Exception e) {
 
         }

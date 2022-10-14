@@ -6,6 +6,8 @@ import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function.*
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
+import net.minecraft.util.math.*;
+import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 
@@ -14,7 +16,7 @@ import java.util.function.*;
 
 @Mixin(ItemEntity.class)
 public class ItemEntityMixin {
-    private static final Map<String, Consumer<ItemEntity>> actions = EntrustParser.operation(
+    private static final Map<String, ThreeConsumer<World, BlockPos, ItemEntity>> actions = EntrustParser.operation(
             new Object2ObjectOpenHashMap<>(),
             map -> {
                 map.put(
@@ -35,8 +37,8 @@ public class ItemEntityMixin {
     @Redirect(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ItemEntity;isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z"))
     public boolean firing(ItemEntity instance, DamageSource source) {
         if (actions.containsKey(source.getName())) {
-            actions.get(source.getName()).accept(instance);
-            return false;
+            actions.get(source.getName()).accept(instance.world, instance.getBlockPos() , instance);
+            return true;
         }
         return instance.isInvulnerableTo(source);
     }
