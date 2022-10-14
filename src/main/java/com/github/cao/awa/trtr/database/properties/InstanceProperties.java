@@ -1,75 +1,169 @@
 package com.github.cao.awa.trtr.database.properties;
 
+import com.github.cao.awa.modmdo.security.*;
+import com.github.cao.awa.trtr.database.properties.pool.*;
 import com.github.cao.awa.trtr.database.properties.stack.*;
 import com.github.cao.awa.trtr.database.properties.type.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
 import com.github.cao.awa.trtr.math.*;
-import com.github.cao.awa.trtr.mixin.server.*;
-import com.github.cao.awa.trtr.util.*;
+import com.github.cao.awa.trtr.util.uuid.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 import org.json.*;
 
-import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
+
+import static com.github.cao.awa.trtr.TrtrMod.propertiesDatabase;
 
 public class InstanceProperties<T> {
     public static final Map<Class<?>, Function<Object, String>> SERIALIZERS = new ConcurrentHashMap<>();
+    public static final Map<Class<?>, Function<Object, JSONObject>> JSON_SERIALIZERS = new ConcurrentHashMap<>();
     public static final Map<Class<?>, String> TYPE_S = new ConcurrentHashMap<>();
     public static final Map<String, Function<String, Object>> TYPE_D = new ConcurrentHashMap<>();
 
     static {
-        setHandler(Integer.class, "(I", Numerical::parseInt);
-        setHandler(Double.class, "(D", Numerical::parseDouble);
-        setHandler(Float.class, "(F", Numerical::parseFloat);
-        setHandler(Short.class, "(S", Numerical::parseShort);
-        setHandler(Byte.class, "(Byt", Numerical::parseByte);
-        setHandler(Long.class, "(Byt", Numerical::parseLong);
-        setHandler(Boolean.class, "(I", Boolean::parseBoolean);
-        setHandler(Character.class, "(C", s -> (char) Numerical.parseInt(s));
-        setHandler(String.class, "[STR", s -> s);
-        setHandler(ChemicalElementProperties.class,
-                   "*CE",
-                   ChemicalElementProperties::deserialize,
-                   ChemicalElementProperties::serialize
+        setHandler(
+                Integer.class,
+                "(I",
+                Numerical::parseInt
         );
-        setHandler(AppointedPropertiesStack.class,
-                   "*L",
-                   AppointedPropertiesStack::deserialize,
-                   AppointedPropertiesStack::serialize
+        setHandler(
+                Double.class,
+                "(D",
+                Numerical::parseDouble
         );
-        setHandler(NbtCompound.class, "[Nbt[C", NbtCompoundSerializer::deserialize, NbtCompoundSerializer::serialize);
-        setHandler(NbtString.class, "[Nbt[S", NbtString::of, NbtString::asString);
-        setHandler(NbtInt.class, "[Nbt(I", value -> NbtInt.of(Numerical.parseInt(value)));
-        setHandler(NbtDouble.class, "[Nbt(D", value -> NbtDouble.of(Numerical.parseDouble(value)));
-        setHandler(NbtFloat.class, "[Nbt(F", value -> NbtFloat.of(Numerical.parseFloat(value)));
-        setHandler(NbtShort.class, "[Nbt(S", value -> NbtShort.of(Numerical.parseShort(value)));
-        setHandler(NbtByte.class, "[Nbt(B", value -> NbtByte.of(Numerical.parseByte(value)));
-        setHandler(NbtLong.class, "[Nbt(L", value -> NbtLong.of(Numerical.parseLong(value)));
+        setHandler(
+                Float.class,
+                "(F",
+                Numerical::parseFloat
+        );
+        setHandler(
+                Short.class,
+                "(S",
+                Numerical::parseShort
+        );
+        setHandler(
+                Byte.class,
+                "(Byt",
+                Numerical::parseByte
+        );
+        setHandler(
+                Long.class,
+                "(Byt",
+                Numerical::parseLong
+        );
+        setHandler(
+                Boolean.class,
+                "(I",
+                Boolean::parseBoolean
+        );
+        setHandler(
+                Character.class,
+                "(C",
+                s -> (char) Numerical.parseInt(s)
+        );
+        setHandler(
+                String.class,
+                "[STR",
+                s -> s
+        );
 
-        setHandler(ItemStack.class,
-                   "[Item[Sta",
-                   value -> ItemStack.fromNbt(NbtCompoundSerializer.deserialize(value)),
-                   stack -> {
-                       NbtCompound compound = new NbtCompound();
-                       stack.writeNbt(compound);
-                       return compound.asString();
-                   }
+        // ChemicalElementProperties
+        setHandler(
+                ChemicalElementProperties.class,
+                "*CE",
+                ChemicalElementProperties::deserialize,
+                properties -> properties.serialize()
+                                        .toString()
+        );
+
+        setJSONObjectHandler(
+                ChemicalElementProperties.class,
+                ChemicalElementProperties::serialize
+        );
+
+        setHandler(
+                AppointedPropertiesStack.class,
+                "*STACK",
+                AppointedPropertiesStack::deserialize,
+                AppointedPropertiesStack::serialize
+        );
+        setHandler(
+                NbtCompound.class,
+                "[Nbt[C",
+                NbtCompoundSerializer::deserialize,
+                NbtCompoundSerializer::serialize
+        );
+        setHandler(
+                NbtString.class,
+                "[Nbt[S",
+                NbtString::of,
+                NbtString::asString
+        );
+        setHandler(
+                NbtInt.class,
+                "[Nbt(I",
+                value -> NbtInt.of(Numerical.parseInt(value))
+        );
+        setHandler(
+                NbtDouble.class,
+                "[Nbt(D",
+                value -> NbtDouble.of(Numerical.parseDouble(value))
+        );
+        setHandler(
+                NbtFloat.class,
+                "[Nbt(F",
+                value -> NbtFloat.of(Numerical.parseFloat(value))
+        );
+        setHandler(
+                NbtShort.class,
+                "[Nbt(S",
+                value -> NbtShort.of(Numerical.parseShort(value))
+        );
+        setHandler(
+                NbtByte.class,
+                "[Nbt(B",
+                value -> NbtByte.of(Numerical.parseByte(value))
+        );
+        setHandler(
+                NbtLong.class,
+                "[Nbt(L",
+                value -> NbtLong.of(Numerical.parseLong(value))
+        );
+        setHandler(
+                PropertiesList.class,
+                "*LIST",
+                PropertiesList::deserialize,
+                PropertiesList::serialize
+        );
+
+        setHandler(
+                ItemStack.class,
+                "[Item[Sta",
+                value -> ItemStack.fromNbt(NbtCompoundSerializer.deserialize(value)),
+                stack -> {
+                    NbtCompound compound = new NbtCompound();
+                    stack.writeNbt(compound);
+                    return compound.asString();
+                }
         );
     }
 
     private final Map<String, Object> map = new ConcurrentHashMap<>();
     private final T instance;
     private final boolean safe;
+    private String access = null;
+    private AtomicLong validOperations = new AtomicLong();
+    private long accessSnapOperations = 0;
 
     public InstanceProperties(T instance) {
         this.instance = instance;
-        this.safe = false;
+        this.safe = true;
     }
 
     public InstanceProperties(T instance, boolean isSafe) {
@@ -78,13 +172,37 @@ public class InstanceProperties<T> {
     }
 
     public static <T> void setHandler(@NotNull Class<T> target, @NotNull String serial, @NotNull Function<String, T> deserializer) {
-        setHandler(target, serial, deserializer, null);
+        setHandler(
+                target,
+                serial,
+                deserializer,
+                null
+        );
     }
 
-    public static <T> void setHandler(@NotNull Class<T> target, @NotNull String serial, @NotNull Function<String, T> deserializer, @Nullable Function<T, String> serializer) {
-        TYPE_S.put(target, serial);
-        TYPE_D.put(serial, (Function<String, Object>) deserializer);
-        SERIALIZERS.put(target, serializer == null ? Object::toString : (Function<Object, String>) serializer);
+    public static <T> void setHandler(@NotNull Class<T> target, @NotNull String serial, @NotNull Function<String, T> deserializer, @Nullable Function<T, Object> serializer) {
+        TYPE_S.put(
+                target,
+                serial
+        );
+        TYPE_D.put(
+                serial,
+                (Function<String, Object>) deserializer
+        );
+        SERIALIZERS.put(
+                target,
+                serializer == null ?
+                Object::toString :
+                s -> serializer.apply((T) s)
+                               .toString()
+        );
+    }
+
+    public static <T> void setJSONObjectHandler(@NotNull Class<T> target, @Nullable Function<T, JSONObject> serializer) {
+        JSON_SERIALIZERS.put(
+                target,
+                (Function<Object, JSONObject>) serializer
+        );
     }
 
     public T getInstance() {
@@ -92,7 +210,10 @@ public class InstanceProperties<T> {
     }
 
     public <X> void update(String key, Function<X, X> function) {
-        put(key, function.apply(get(key)));
+        put(
+                key,
+                function.apply(get(key))
+        );
     }
 
     /**
@@ -132,12 +253,22 @@ public class InstanceProperties<T> {
      *         target value
      */
     public void put(String key, Object value) {
-        map.put(key, value);
+        map.put(
+                key,
+                value
+        );
+        validOperations.addAndGet(1);
     }
 
     @Deprecated
     public <X> void update(String key, Function<X, X> function, X defaultValue) {
-        put(key, function.apply(getOrDefault(key, defaultValue)));
+        put(
+                key,
+                function.apply(getOrDefault(
+                        key,
+                        defaultValue
+                ))
+        );
     }
 
     /**
@@ -172,29 +303,85 @@ public class InstanceProperties<T> {
      * @return calculate result
      */
     public <X> X calculate(String key, Function<X, Boolean> predicate, Function<X, X> function, X defaultValue) {
-        X target = getOrDefault(key, defaultValue);
+        X target = getOrDefault(
+                key,
+                defaultValue
+        );
+        validOperations.addAndGet(1);
         return predicate.apply(target) ? function.apply(target) : defaultValue;
     }
 
     /**
-     * Write data to NbtCompound
+     * Write access token to NbtCompound
+     *
+     * @param key
+     *         short uuid key
+     */
+    public void access(String key) {
+        InstanceProperties<?> properties = propertiesDatabase.get(key);
+        this.access = key;
+
+        if (properties == null) {
+            return;
+        }
+
+        this.map.clear();
+
+        this.map.putAll(properties.map);
+
+        validOperations.addAndGet(1);
+    }
+
+    public NbtCompound getAccessNbtCompound() {
+        NbtCompound nbt = new NbtCompound();
+        if (access != null) {
+            nbt.putString(
+                    "acs",
+                    access
+            );
+            return nbt;
+        }
+        return nbt;
+    }
+
+    /**
+     * Write access token to NbtCompound
      *
      * @param compound
      *         NbtCompound instance
      */
-    public void writeNbt(NbtCompound compound) {
-        NbtCompound nbt = new NbtCompound();
-        map.forEach((k, v) -> {
-            String type = TYPE_S.get(v.getClass());
-            if (type == null) {
-                return;
-            }
-            NbtCompound element = new NbtCompound();
-            element.putString("type", type);
-            element.putString("info", SERIALIZERS.get(v.getClass()).apply(v));
-            nbt.put(k, element);
-        });
-        compound.put("properties", nbt);
+    public void createAccess(NbtCompound compound) {
+        String id = access == null ? RandomIdentifier.randomIdentifier(16, true) : access;
+        compound.putString(
+                "acs",
+                id
+        );
+
+        if (accessSnapOperations == validOperations.get()) {
+            return;
+        }
+        propertiesDatabase.put(
+                id,
+                this
+        );
+    }
+
+    /**
+     * Write access token to JSONObject
+     *
+     * @param json
+     *         JSOBObject instance
+     */
+    public void createAccess(JSONObject json) {
+        String id = access == null ? ShortUuidUtil.randomShortUuid() : access;
+        json.put(
+                "acs",
+                id
+        );
+        propertiesDatabase.put(
+                id,
+                this
+        );
     }
 
     /**
@@ -208,28 +395,14 @@ public class InstanceProperties<T> {
         for (String key : nbt.getKeys()) {
             NbtCompound element = nbt.getCompound(key);
             String type = element.getString("type");
-            put(key, TYPE_D.get(type).apply(element.getString("info")));
-        }
-    }
+            put(
+                    key,
+                    TYPE_D.get(type)
+                          .apply(element.getString("info"))
+            );
 
-    /**
-     * Write data to JSONObject
-     *
-     * @param json
-     *         JSONObject instance
-     */
-    public void writeJSONObject(JSONObject json) {
-        JSONObject nbt = new JSONObject();
-        map.forEach((k, v) -> {
-            if (TYPE_S.containsKey(v.getClass())) {
-                String type = TYPE_S.get(v.getClass());
-                JSONObject element = new JSONObject();
-                element.put("type", type);
-                element.put("info", SERIALIZERS.get(v.getClass()).apply(v));
-                nbt.put(k, element);
-            }
-        });
-        json.put("properties", nbt);
+        }
+        validOperations.addAndGet(1);
     }
 
     /**
@@ -243,8 +416,25 @@ public class InstanceProperties<T> {
         for (String key : nbt.keySet()) {
             JSONObject element = nbt.getJSONObject(key);
             String type = element.getString("type");
-            put(key, TYPE_D.get(type).apply(element.getString("info")));
+            EntrustExecution.tryTemporary(
+                    () -> {
+                        put(
+                                key,
+                                TYPE_D.get(type)
+                                      .apply(element.getString("info"))
+                        );
+                    },
+                    () -> {
+                        put(
+                                key,
+                                TYPE_D.get(type)
+                                      .apply(element.getJSONObject("info")
+                                                    .toString())
+                        );
+                    }
+            );
         }
+        validOperations.addAndGet(1);
     }
 
     /**
@@ -257,9 +447,13 @@ public class InstanceProperties<T> {
         AppointedPropertiesStack<X> list = safeGet(key);
         if (list == null) {
             list = new AppointedPropertiesStack<>();
-            put(key, list);
+            put(
+                    key,
+                    list
+            );
         }
         list.stack(x);
+        validOperations.addAndGet(1);
     }
 
     /**
@@ -267,13 +461,40 @@ public class InstanceProperties<T> {
      * <p>
      * target must be an AppointedPropertiesStack or not present
      * if not satisfy requires, will fail operation
+     *
+     * @param key
+     *         target
+     * @return popped target
      */
     public <X> X pop(String key) {
         AppointedPropertiesStack<X> list = safeGet(key);
         if (list == null) {
             return null;
         }
+        validOperations.addAndGet(1);
         return list.pop();
+    }
+
+    /**
+     * Operation(pop out) to a properties stack
+     * <p>
+     * target must be an AppointedPropertiesStack or not present
+     * if not satisfy requires, will fail operation
+     *
+     * @param key
+     *         target
+     * @return value
+     */
+    public <X> PropertiesList<X> list(String key) {
+        PropertiesList<X> list = safeGet(key);
+        if (list == null) {
+            list = new PropertiesList<>();
+            put(
+                    key,
+                    list
+            );
+        }
+        return list;
     }
 
     /**
@@ -287,6 +508,7 @@ public class InstanceProperties<T> {
         if (list == null) {
             return null;
         }
+        validOperations.addAndGet(1);
         return list.pops();
     }
 
@@ -313,5 +535,100 @@ public class InstanceProperties<T> {
      */
     public void remove(String key) {
         map.remove(key);
+        validOperations.addAndGet(1);
+    }
+
+    public NbtCompound toNbtCompound() {
+        NbtCompound nbt = new NbtCompound();
+        writeNbt(nbt);
+        return nbt;
+    }
+
+    /**
+     * Write data to NbtCompound
+     *
+     * @param compound
+     *         NbtCompound instance
+     */
+    public void writeNbt(NbtCompound compound) {
+        NbtCompound nbt = new NbtCompound();
+        map.forEach((k, v) -> {
+            Class<?> clazz = v.getClass();
+            String type = TYPE_S.get(clazz);
+            if (type == null) {
+                return;
+            }
+            NbtCompound element = new NbtCompound();
+            element.putString(
+                    "type",
+                    type
+            );
+
+            element.putString(
+                    "info",
+                    SERIALIZERS.get(clazz)
+                               .apply(v)
+            );
+            nbt.put(
+                    k,
+                    element
+            );
+        });
+        compound.put(
+                "properties",
+                nbt
+        );
+    }
+
+    public JSONObject toJSONObject() {
+        JSONObject nbt = new JSONObject();
+        writeJSONObject(nbt);
+        return nbt;
+    }
+
+    /**
+     * Write data to JSONObject
+     *
+     * @param json
+     *         JSONObject instance
+     */
+    public void writeJSONObject(JSONObject json) {
+        JSONObject nbt = new JSONObject();
+        map.forEach((k, v) -> {
+            Class<?> clazz = v.getClass();
+            if (TYPE_S.containsKey(clazz)) {
+                String type = TYPE_S.get(clazz);
+                JSONObject element = new JSONObject();
+                element.put(
+                        "type",
+                        type
+                );
+                if (JSON_SERIALIZERS.containsKey(clazz)) {
+                    element.put(
+                            "info",
+                            JSON_SERIALIZERS.get(clazz)
+                                            .apply(v)
+                    );
+                } else {
+                    element.put(
+                            "info",
+                            SERIALIZERS.get(clazz)
+                                       .apply(v)
+                    );
+                }
+                nbt.put(
+                        k,
+                        element
+                );
+            }
+        });
+        json.put(
+                "properties",
+                nbt
+        );
+    }
+
+    public long getValidOperations() {
+        return validOperations.get();
     }
 }

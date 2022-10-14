@@ -6,10 +6,9 @@ import net.minecraft.nbt.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
-import java.util.*;
 import java.util.function.*;
 
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+import static com.github.cao.awa.trtr.TrtrMod.heatManager;
 
 public abstract class HeatConductor {
     public static final BiFunction<Double, HeatConductor, Double> HEAT_FIX_COEFFICIENT = (h, c) -> 0.001;
@@ -125,10 +124,10 @@ public abstract class HeatConductor {
     }
 
     public void prepare(World world, BlockPos pos) {
-        if (heatHandler.isTicking(world, pos)) {
+        if (heatManager.isTicking(world, pos)) {
             return;
         }
-        heatHandler.prepare(world, pos, () -> {
+        heatManager.prepare(world, pos, () -> {
             if (world.getBlockEntity(pos) instanceof HeatConductiveBlockEntity entity) {
                 entity.prepare(world, pos);
             }
@@ -138,7 +137,7 @@ public abstract class HeatConductor {
     public void prepareUnload(World world, BlockPos pos) {
         unloadCost --;
         if (unloadCost == 0) {
-            heatHandler.requireUnload(world, pos);
+            heatManager.requireUnload(world, pos);
         }
     }
 

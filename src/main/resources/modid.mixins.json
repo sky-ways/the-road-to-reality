@@ -8,7 +8,9 @@
         "block.BlockEntityMixin",
         "block.BlockMixin",
         "block.BlocksMixin",
+        "block.settings.BlockSettingsMixin",
         "block.state.variant.ModelVariantMapMixin",
+        "command.data.DataCommandMixin",
         "item.ItemsMixin",
         "item.ItemStackMixin",
         "item.entity.ItemEntityMixin",
@@ -18,7 +20,12 @@
         "server.MinecraftServerInterface",
         "server.MinecraftServerMixin",
         "server.ServerWorldMixin",
+        "world.ServerWorldMixin",
+        "world.WorldMixin",
         "world.chunk.WorldChunkMixin",
+        "world.chunk.selection.ChunkSelectionInterface",
+        "world.chunk.selection.ChunkSelectionMixin",
+        "world.explosion.ExplosionMixin",
         "world.manager.ServerChunkManagerInterface"
     ],
     "client": [

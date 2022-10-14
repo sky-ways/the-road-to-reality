@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.element.chemical.properties;
 import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.content.*;
 import it.unimi.dsi.fastutil.objects.*;
+import net.minecraft.nbt.*;
 import org.json.*;
 
 import java.util.*;
@@ -46,11 +47,9 @@ public class ChemicalElementProperties {
         return contents.get(element);
     }
 
-    public String serialize() {
+    public JSONObject serialize() {
         JSONObject json = new JSONObject();
-        contents.forEach(((element, content) -> {
-            json.put(element.getName(), content.serialize());
-        }));
-        return json.toString();
+        contents.forEach(((element, content) -> json.put(element.getName(), content.serialize())));
+        return json;
     }
 }

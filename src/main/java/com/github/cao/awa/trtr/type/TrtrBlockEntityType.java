@@ -6,6 +6,7 @@ import com.github.cao.awa.trtr.cooking.container.pot.*;
 import com.github.cao.awa.trtr.mud.stove.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
+import com.github.cao.awa.trtr.ref.block.air.vanilla.*;
 import com.github.cao.awa.trtr.ref.block.iron.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
@@ -38,6 +39,7 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
     public static final BlockEntityType<UraniumBlockEntity> URANIUM = create("trtr:pitchblende", Builder.create(UraniumBlockEntity::new, PITCHBLENDE_BLOCK, DEEPSLATE_PITCHBLENDE_BLOCK, CARNOTITE_BLOCK, DEEPSLATE_CARNOTITE_BLOCK, AUTUNITE_BLOCK, DEEPSLATE_AUTUNITE_BLOCK));
     public static final BlockEntityType<PotBlockEntity> POT = create("trtr:pot", Builder.create(PotBlockEntity::new, TrtrBlocks.POT));
     public static final BlockEntityType<PanBlockEntity> PAN = create("trtr:pan", Builder.create(PanBlockEntity::new, TrtrBlocks.PAN));
+    public static final BlockEntityType<AirBlockEntity> AIR = create("trtr:air", Builder.create(AirBlockEntity::new, TrtrBlocks.AIR, DUMP_AIR));
     public static final BlockEntityType<TrtrOreBlockEntity> ORE = create("trtr:ore", Builder.create(TrtrOreBlockEntity::new, EntrustParser.operation(new Block[TrtrOreBlock.ORES.size()], array -> {
         for (int i = 0; i < array.length; i++) {
             array[i] = TrtrOreBlock.ORES.get(i);

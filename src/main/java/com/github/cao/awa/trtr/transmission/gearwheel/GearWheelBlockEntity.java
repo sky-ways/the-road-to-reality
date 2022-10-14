@@ -10,7 +10,7 @@ import net.minecraft.world.*;
 
 // todo delete
 public class GearWheelBlockEntity extends BlockEntity {
-    private final InstanceProperties<GearWheelBlockEntity> properties = new InstanceProperties<>(this, true);
+    private final InstanceProperties<GearWheelBlockEntity> properties = new InstanceProperties<>(this);
 
     public GearWheelBlockEntity(BlockPos pos, BlockState state, double rad) {
         super(TrtrBlockEntityType.GEAR_WHEEL, pos, state);

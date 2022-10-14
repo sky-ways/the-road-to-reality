@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.ref.block.trtr;
 
 import com.github.cao.awa.trtr.database.properties.*;
+import com.github.cao.awa.trtr.element.generator.*;
 import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -11,14 +12,13 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public class TrtrOreBlockEntity extends BlockEntity {
+public class TrtrOreBlockEntity extends BlockEntity implements ChemicalElementGenerator {
     private final InstanceProperties<TrtrOreBlockEntity> properties = new InstanceProperties<>(this);
     private final TrtrOreBlock ore;
 
     public TrtrOreBlockEntity(BlockPos pos, BlockState state, TrtrOreBlock ore) {
         super(TrtrBlockEntityType.ORE, pos, state);
         this.ore = ore;
-        ore.generateElements(world, pos, properties);
     }
 
     public TrtrOreBlockEntity(BlockPos pos, BlockState state) {
@@ -40,5 +40,13 @@ public class TrtrOreBlockEntity extends BlockEntity {
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public void generateElements() {
+        if (ore == null) {
+            return;
+        }
+        ore.generateElements(world, pos, properties);
     }
 }

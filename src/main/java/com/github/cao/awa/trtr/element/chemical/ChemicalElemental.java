@@ -7,12 +7,12 @@ import net.minecraft.world.*;
 
 public interface ChemicalElemental<T> {
     default void generateElements(World world, BlockPos pos, InstanceProperties<T> properties) {
-        ChemicalElementProperties elementProperties = properties.get("chemical_elements");
+        ChemicalElementProperties elementProperties = properties.get("elements");
         if (elementProperties == null) {
             elementProperties = new ChemicalElementProperties();
-            properties.put("chemical_elements", elementProperties);
         }
         generateElements(world, pos, elementProperties);
+        properties.put("elements", elementProperties);
     }
 
     void generateElements(World world, BlockPos pos, ChemicalElementProperties properties);

@@ -1,7 +1,9 @@
 package com.github.cao.awa.trtr.mixin.block;
 
+import com.github.cao.awa.trtr.explosion.vanilla.tnt.VanillaTntBlock;
 import com.github.cao.awa.trtr.ref.block.iron.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
+import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.cauldron.*;
 import net.minecraft.block.entity.*;
@@ -1016,7 +1018,7 @@ public abstract class BlocksMixin {
 
     @Inject(method = "<clinit>", at = @At("HEAD"), cancellable = true)
     private static void cl(CallbackInfo ci) {
-        AIR = register("air", new AirBlock(AbstractBlock.Settings.of(Material.AIR).noCollision().dropsNothing().air()));
+        AIR = TrtrBlocks.AIR;
         STONE = register("stone", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F)));
         GRANITE = register("granite", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.DIRT_BROWN).requiresTool().strength(1.5F, 6.0F)));
         POLISHED_GRANITE = register("polished_granite", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.DIRT_BROWN).requiresTool().strength(1.5F, 6.0F)));
@@ -1170,7 +1172,7 @@ public abstract class BlocksMixin {
         GOLD_BLOCK = register("gold_block", new Block(AbstractBlock.Settings.of(Material.METAL, MapColor.GOLD).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL)));
         IRON_BLOCK = new IronBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.IRON_GRAY).requiresTool().strength(5.0F, 6.0F).sounds(BlockSoundGroup.METAL));
         BRICKS = register("bricks", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.RED).requiresTool().strength(2.0F, 6.0F)));
-        TNT = register("tnt", new TntBlock(AbstractBlock.Settings.of(Material.TNT).breakInstantly().sounds(BlockSoundGroup.GRASS)));
+        TNT = register("tnt", new VanillaTntBlock());
         BOOKSHELF = register("bookshelf", new Block(AbstractBlock.Settings.of(Material.WOOD).strength(1.5F).sounds(BlockSoundGroup.WOOD)));
         MOSSY_COBBLESTONE = register("mossy_cobblestone", new Block(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(2.0F, 6.0F)));
         OBSIDIAN = register("obsidian", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(50.0F, 1200.0F)));

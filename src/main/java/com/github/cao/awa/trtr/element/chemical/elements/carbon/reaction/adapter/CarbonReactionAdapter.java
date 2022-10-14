@@ -7,7 +7,7 @@ import com.github.cao.awa.trtr.element.chemical.reaction.type.*;
 
 public class CarbonReactionAdapter extends ReactionAdapter {
     public CarbonReactionAdapter() {
-        super(ChemicalElements.CARBON);
+        super(ChemicalElements.ELEMENT_CARBON);
     }
 
     @Override

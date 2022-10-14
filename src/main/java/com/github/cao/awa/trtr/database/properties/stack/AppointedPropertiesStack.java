@@ -23,7 +23,7 @@ public class AppointedPropertiesStack<T> extends PropertiesStack<T> {
         return new AppointedPropertiesStack<>(list);
     }
 
-    public String serialize() {
+    public JSONObject serialize() {
         JSONArray array = new JSONArray();
         T sample = null;
         for (T t : list) {
@@ -31,13 +31,13 @@ public class AppointedPropertiesStack<T> extends PropertiesStack<T> {
             sample = t;
         }
         if (sample == null) {
-            return "{}";
+            return new JSONObject();
         }
         JSONObject info = new JSONObject();
         if (array.length() > 0) {
             info.put("type", InstanceProperties.TYPE_S.get(sample.getClass()));
             info.put("list", array);
         }
-        return info.toString();
+        return info;
     }
 }

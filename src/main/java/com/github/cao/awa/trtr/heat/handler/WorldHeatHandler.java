@@ -1,9 +1,7 @@
 package com.github.cao.awa.trtr.heat.handler;
 
 import com.github.cao.awa.trtr.heat.conductor.*;
-import com.github.cao.awa.trtr.mixin.world.manager.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -16,7 +14,6 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.*;
 
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
 import static com.github.cao.awa.trtr.TrtrMod.timeTracker;
 
 public class WorldHeatHandler {
@@ -87,11 +84,7 @@ public class WorldHeatHandler {
     }
 
     public void tick(World world) {
-        timeTracker.start(this);
-        ticking.values().parallelStream().forEach(conductor -> {
-            conductor.adaptive(world);
-            timeTracker.count(this);
-        });
+        ticking.values().parallelStream().forEach(conductor -> conductor.adaptive(world));
 
         ticking.forEach((pos, conductor) -> {
             BlockEntity entity = world.getBlockEntity(pos);
@@ -108,8 +101,6 @@ public class WorldHeatHandler {
 
         prepare.forEach((t, runnable) -> runnable.run());
         prepare.clear();
-
-        timeTracker.done(this);
     }
 
     public boolean shouldUnload(World world, BlockPos pos) {

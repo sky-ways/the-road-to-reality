@@ -2,7 +2,6 @@
     "replace": false,
     "values": [
         "trtr:photovoltaic_panels",
-        "trtr:burner",
         "trtr:bauxite",
         "trtr:deepslate_bauxite"
     ]

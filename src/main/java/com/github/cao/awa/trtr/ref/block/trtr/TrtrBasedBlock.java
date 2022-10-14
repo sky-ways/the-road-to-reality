@@ -17,8 +17,11 @@ import net.minecraft.util.registry.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+import java.util.*;
+
 public abstract class TrtrBasedBlock extends BlockWithEntity implements HeatConductiveBlock, ElectricConductive, BlockEntityProvider, RefRegister {
     private TrtrBlockRegister register;
+    public final Random random = new Random();
 
     public TrtrBasedBlock(Settings settings) {
         super(settings);

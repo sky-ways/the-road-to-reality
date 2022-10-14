@@ -28,12 +28,17 @@ import com.github.cao.awa.trtr.ore.nuclear.uranium.pitchblende.deepslate.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.deepslate.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
+import com.github.cao.awa.trtr.ref.block.air.*;
+import com.github.cao.awa.trtr.ref.block.air.vanilla.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.large.*;
 import com.github.cao.awa.trtr.transmission.gearwheel.medium.*;
 import net.minecraft.block.*;
 
 public class TrtrBlocks {
+    public static final Block DUMP_AIR = new TrtrDumpAirBlock(AbstractBlock.Settings.of(Material.AIR).noCollision().dropsNothing());
+    public static final Block AIR = new RefVanillaAirBlock(AbstractBlock.Settings.of(Material.AIR).noCollision().dropsNothing().air());
+
     public static final Block PHOTOVOLTAIC_PANELS = new PhotovoltaicPanels();
 
     public static final Block BAUXITE_BLOCK = new BauxiteBlock();

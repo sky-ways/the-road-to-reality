@@ -7,10 +7,9 @@ import net.minecraft.item.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
-import net.minecraft.util.registry.*;
 import net.minecraft.world.*;
 
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+import static com.github.cao.awa.trtr.TrtrMod.heatManager;
 
 public class HandHoldThermometer extends TrtrItem {
     public static final Identifier IDENTIFIER = new Identifier("trtr:hand_hold_thermometer");
@@ -27,7 +26,7 @@ public class HandHoldThermometer extends TrtrItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         BlockHitResult hitResult = raycast(world, user, RaycastContext.FluidHandling.ANY);
-        HeatConductor conductor = heatHandler.getConductor(world, hitResult.getBlockPos());
+        HeatConductor conductor = heatManager.getConductor(world, hitResult.getBlockPos());
         if (conductor != null) {
             user.sendMessage(
                     Text.of("Temperature of block " + hitResult.getBlockPos() + " is: " + conductor.getTemperature()),

@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.element.chemical.content;
 
 import com.github.cao.awa.trtr.element.chemical.*;
+import net.minecraft.nbt.*;
 import org.json.*;
 
 public class ChemicalContent {
@@ -35,7 +36,7 @@ public class ChemicalContent {
     public JSONObject serialize() {
         JSONObject json = new JSONObject();
         json.put("value", value);
-        json.put("content_percentage", contentPercentage);
+        json.put("percent", contentPercentage);
         return json;
     }
 
@@ -45,7 +46,7 @@ public class ChemicalContent {
 
     public ChemicalContent deserialize(JSONObject json) {
         this.value = json.getInt("value");
-        this.contentPercentage = json.getDouble("content_percentage");
+        this.contentPercentage = json.getDouble("percent");
         return this;
     }
 }

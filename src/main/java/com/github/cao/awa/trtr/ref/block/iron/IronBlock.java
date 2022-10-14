@@ -7,11 +7,8 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.registry.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
-
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
 
 public class IronBlock extends HeatConductionBlock<IronBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("minecraft:iron_block");

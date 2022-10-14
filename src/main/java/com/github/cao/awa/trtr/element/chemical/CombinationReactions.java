@@ -10,6 +10,6 @@ public class CombinationReactions {
     public static Map<ChemicalElement, CombinationReaction> reactions = new Object2ObjectOpenHashMap<>();
 
     public static void pre() {
-        reactions.put(ChemicalElements.CARBON, new CarbonCombinationReaction());
+        reactions.put(ChemicalElements.ELEMENT_CARBON, new CarbonCombinationReaction());
     }
 }

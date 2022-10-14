@@ -3,7 +3,6 @@ package com.github.cao.awa.trtr.ref.block;
 import com.github.cao.awa.trtr.heat.conductor.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.world.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
@@ -12,7 +11,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+import static com.github.cao.awa.trtr.TrtrMod.heatManager;
 
 public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEntity<T>> extends BlockEntity implements HeatConductiveBlockEntity {
     public NbtCompound nbtOpt = null;
@@ -22,7 +21,7 @@ public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEnt
     }
 
     public MetalBlockHeatConductor getConductor() {
-        return heatHandler.getConductor(world, pos) instanceof MetalBlockHeatConductor conductor ? conductor : null;
+        return heatManager.getConductor(world, pos) instanceof MetalBlockHeatConductor conductor ? conductor : null;
     }
 
     public abstract int thermalConductivity();
@@ -32,8 +31,8 @@ public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEnt
         if (nbtOpt == null) {
             return;
         }
-        heatHandler.prepare(world, pos, () -> {
-            HeatConductor conductor = heatHandler.getConductor(world, pos);
+        heatManager.prepare(world, pos, () -> {
+            HeatConductor conductor = heatManager.getConductor(world, pos);
             if (conductor == null) {
                 return;
             }
@@ -48,8 +47,8 @@ public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEnt
     }
 
     public void prepare(World world, BlockPos pos) {
-        heatHandler.getOrReplace(world, pos, () -> new MetalBlockHeatConductor(this));
-        heatHandler.requireTick(world, pos);
+        heatManager.getOrReplace(world, pos, () -> new MetalBlockHeatConductor(this));
+        heatManager.requireTick(world, pos);
     }
 
     @Override
@@ -63,7 +62,7 @@ public abstract class HeatConductionBlockEntity<T extends HeatConductionBlockEnt
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        HeatConductor conductor = heatHandler.getConductor(world, pos);
+        HeatConductor conductor = heatManager.getConductor(world, pos);
         if (conductor != null) {
             conductor.writeNbt(nbt);
         }

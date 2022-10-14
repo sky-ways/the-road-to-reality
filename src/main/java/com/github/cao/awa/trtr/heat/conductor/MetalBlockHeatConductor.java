@@ -1,12 +1,10 @@
 package com.github.cao.awa.trtr.heat.conductor;
 
 import com.github.cao.awa.trtr.ref.block.*;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
-import static com.github.cao.awa.trtr.TrtrMod.heatHandler;
+import static com.github.cao.awa.trtr.TrtrMod.heatManager;
 
 public class MetalBlockHeatConductor extends HeatConductor {
     public MetalBlockHeatConductor(HeatConductiveBlockEntity conductive) {
@@ -28,7 +26,7 @@ public class MetalBlockHeatConductor extends HeatConductor {
     public void endothermic(World world, BlockPos pos) {
         for (Direction direction : Direction.values()) {
             BlockPos targetPos = pos.offset(direction);
-            HeatConductor conductor = heatHandler.getConductor(world, targetPos);
+            HeatConductor conductor = heatManager.getConductor(world, targetPos);
             if (conductor == null) {
                 if (this.getTemperature() > NORMAL_TEMPERATURE.get()) {
                     prepare(world, targetPos);

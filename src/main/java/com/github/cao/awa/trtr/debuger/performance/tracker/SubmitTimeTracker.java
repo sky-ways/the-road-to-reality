@@ -31,12 +31,13 @@ public class SubmitTimeTracker {
     }
 
     public void done(Object obj) {
-        submit(obj, TimeUtil.processNano(times.getOrDefault(obj, 0L)), counts.getOrDefault(obj, 0L));
+        long nano = times.getOrDefault(obj, 0L);
+        submit(obj, TimeUtil.processNano(nano), counts.getOrDefault(obj, 0L));
         times.remove(obj);
         counts.remove(obj);
     }
 
     public void submit(Object where, long nanos, long counts) {
-//        System.out.println(where + " used " + nanos + "ns(" + ((nanos / 1000000) + "ms")+ ") for done, counted " + counts + " tasks");
+        System.out.println(where + " used " + nanos + "ns(" + ((nanos / 1000000) + "ms")+ ") for done, counted " + counts + " tasks");
     }
 }

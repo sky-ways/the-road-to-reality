@@ -10,54 +10,54 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.function.*;
 
-public class HeatHandler {
-    private final Map<World, WorldHeatHandler> handler = new Object2ObjectOpenHashMap<>();
+public class HeatManager {
+    private final Map<World, WorldHeatHandler> handlers = new Object2ObjectOpenHashMap<>();
 
     public void ensureWorld(World world) {
-        if (handler.containsKey(world)) {
+        if (handlers.containsKey(world)) {
             return;
         }
-        handler.put(world, new WorldHeatHandler());
+        handlers.put(world, new WorldHeatHandler());
     }
 
     public boolean isTicking(World world, BlockPos pos) {
         ensureWorld(world);
-        return handler.get(world).isTicking(pos);
+        return handlers.get(world).isTicking(pos);
     }
 
     public void prepare(World world, BlockPos pos, Runnable action) {
         ensureWorld(world);
-        handler.get(world).prepare(pos, action);
+        handlers.get(world).prepare(pos, action);
     }
 
     public void requireTick(World world, BlockPos pos) {
         ensureWorld(world);
-        handler.get(world).requireTick(pos);
+        handlers.get(world).requireTick(pos);
     }
 
     public void requireUnload(World world, BlockPos pos) {
         ensureWorld(world);
-        handler.get(world).requireUnload(pos);
+        handlers.get(world).requireUnload(pos);
     }
 
     public void unregister(World world, BlockPos pos) {
         ensureWorld(world);
-        handler.get(world).unregister(pos);
+        handlers.get(world).unregister(pos);
     }
 
     public void unregister(World world, BlockPos pos, HeatConductor conductor) {
         ensureWorld(world);
-        handler.get(world).unregister(pos, conductor);
+        handlers.get(world).unregister(pos, conductor);
     }
 
     public boolean hasRegistered(World world, BlockPos pos) {
         ensureWorld(world);
-        return handler.get(world).hasRegistered(pos);
+        return handlers.get(world).hasRegistered(pos);
     }
 
     public boolean isRegistered(World world, HeatConductor conductor) {
         ensureWorld(world);
-        return handler.get(world).isRegistered(conductor);
+        return handlers.get(world).isRegistered(conductor);
     }
 
     public @Nullable HeatConductor getConductor(World world, BlockPos pos) {
@@ -65,41 +65,41 @@ public class HeatHandler {
         if (world instanceof ClientWorld) {
             return null;
         }
-        return handler.get(world).getConductor(pos);
+        return handlers.get(world).getConductor(pos);
     }
 
     public HeatConductor getOrReplace(World world, BlockPos pos, Supplier<HeatConductor> creator) {
         ensureWorld(world);
-        return handler.get(world).getOrReplace(pos, creator);
+        return handlers.get(world).getOrReplace(pos, creator);
     }
 
     public <T extends HeatConductor> void replace(World world, BlockPos pos, Supplier<T> creator) {
         ensureWorld(world);
-        handler.get(world).replace(pos, creator);
+        handlers.get(world).replace(pos, creator);
     }
 
     public void register(World world, BlockPos pos, @NotNull HeatConductor conductor) {
         ensureWorld(world);
-        handler.get(world).register(pos, conductor);
+        handlers.get(world).register(pos, conductor);
     }
 
     public void tick(World world) {
         ensureWorld(world);
-        handler.get(world).tick(world);
+        handlers.get(world).tick(world);
     }
 
     public void unloadHandler(World world) {
         ensureWorld(world);
-        handler.get(world).unloadHandler(world);
+        handlers.get(world).unloadHandler(world);
     }
 
     public boolean isUnloaded(World world) {
         ensureWorld(world);
-        return handler.get(world).isUnloaded();
+        return handlers.get(world).isUnloaded();
     }
 
     public void unload(World world, BlockPos pos) {
         ensureWorld(world);
-        handler.get(world).unload(pos);
+        handlers.get(world).unload(pos);
     }
 }
