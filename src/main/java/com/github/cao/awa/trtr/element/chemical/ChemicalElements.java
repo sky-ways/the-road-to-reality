@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.element.chemical;
 
 import com.github.cao.awa.trtr.element.chemical.elements.aluminum.*;
+import com.github.cao.awa.trtr.element.chemical.elements.calcium.carbonate.*;
 import com.github.cao.awa.trtr.element.chemical.elements.carbon.*;
 import com.github.cao.awa.trtr.element.chemical.elements.flerovium.*;
 import com.github.cao.awa.trtr.element.chemical.elements.iron.*;
@@ -22,6 +23,8 @@ public class ChemicalElements {
 
     public static final Oxygen OXYGEN = register(new Oxygen());
     public static final Nitrogen NITROGEN = register(new Nitrogen());
+
+    public static final CalciumCarbonate CALCIUM_CARBONATE = register(new CalciumCarbonate());
 
     public static ChemicalElement get(String name) {
         return NAME_TO_ELEMENTS.get(name);

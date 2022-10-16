@@ -1,46 +1,63 @@
 package com.github.cao.awa.modmdo.security;
 
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
 
-import java.security.*;
+import java.nio.charset.*;
+import java.util.concurrent.*;
 
 public class RandomIdentifier {
-    private static final char[] CHARS = {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            '_', '[', ']', '{', '}', ',', ';', '\'', '!', '@', '#', '(', ')', '&', '^', '$', '-', '=', '+', '`',
-    };
-    private static final SecureRandom RANDOM = new SecureRandom();
+    private static final byte[] BYTES = EntrustParser.operation(new byte[253], chars -> {
+        for (int i = 0;i < chars.length;i++) {
+            if (((char)i == '\n') || ((char)i) == '\r') {
+                continue;
+            }
+            chars[i] = (byte) i;
+        }
+    });
+    private static final byte[] BYTES_LR = EntrustParser.operation(new byte[255], chars -> {
+        for (int i = 0;i < chars.length;i++) {
+            chars[i] = (byte) i;
+        }
+    });
+    private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
     public static String randomIdentifier() {
-        return randomIdentifier(256, false);
+        return hasLrIdentifier(256);
     }
 
-    public static String randomIdentifier(int size, boolean noNano) {
-        StringBuilder builder = new StringBuilder();
-        StringBuilder nano = new StringBuilder(String.valueOf(TimeUtil.nano()));
+    public static String noLrIdentifier(int size) {
+        byte[] bytes = new byte[size];
         for (int i = 0; i < size; i++) {
-            if (noNano) {
-                builder.append(CHARS[RANDOM.nextInt(CHARS.length)]);
-            } else {
-                if (i % (size / nano.length()) == 0 && i > 1) {
-                    builder.append('-');
-                    EntrustExecution.tryTemporary(() -> {
-                        builder.insert(RANDOM.nextInt(builder.length()), nano.charAt(0));
-                        nano.delete(0, 1);
-                    });
-                } else {
-                    builder.append(CHARS[RANDOM.nextInt(CHARS.length)]);
-                }
-            }
+            bytes[i] = (BYTES[RANDOM.nextInt(253)]);
         }
 
-        if (!noNano) {
-            builder.append(nano);
+        return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    public static String hasLrIdentifier(int size) {
+        byte[] bytes = new byte[size];
+        for (int i = 0; i < size; i++) {
+            bytes[i] = (BYTES_LR[RANDOM.nextInt(255)]);
         }
 
-        return builder.toString();
+        return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    public static byte[] noLrIdentifierBytes(int size) {
+        byte[] bytes = new byte[size];
+        for (int i = 0; i < size; i++) {
+            bytes[i] = (BYTES[RANDOM.nextInt(253)]);
+        }
+
+        return bytes;
+    }
+
+    public static byte[] hasLrIdentifierBytes(int size) {
+        byte[] bytes = new byte[size];
+        for (int i = 0; i < size; i++) {
+            bytes[i] = (BYTES_LR[RANDOM.nextInt(255)]);
+        }
+
+        return bytes;
     }
 }

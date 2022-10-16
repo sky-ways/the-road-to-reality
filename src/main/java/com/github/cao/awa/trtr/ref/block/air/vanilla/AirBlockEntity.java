@@ -40,7 +40,7 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
     protected void writeNbt(NbtCompound nbt) {
 //        ChunkPos chunkPos = new ChunkPos(pos);
 //        properties.put("p", chunkPos.x + "." + chunkPos.z);
-//        properties.createAccess(nbt);
+        properties.createAccess(nbt);
     }
 
     @Nullable

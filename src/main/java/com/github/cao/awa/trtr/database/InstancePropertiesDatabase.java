@@ -8,21 +8,10 @@ import net.minecraft.server.*;
 import java.util.*;
 
 public abstract class InstancePropertiesDatabase {
-    private final Map<String, InstanceProperties<?>> properties;
     private final DatabaseStorage storage;
-
-    public InstancePropertiesDatabase(DatabaseStorage storage, MinecraftServer server, Map<String, InstanceProperties<?>> properties) {
-        this.storage = storage;
-        this.properties = properties;
-        load();
-    }
-
-    public abstract void load();
 
     public InstancePropertiesDatabase(DatabaseStorage storage) {
         this.storage = storage;
-        this.properties = new Object2ObjectOpenHashMap<>();
-        load();
     }
 
     public abstract void export();
@@ -32,10 +21,6 @@ public abstract class InstancePropertiesDatabase {
     public abstract void shutdown();
 
     public abstract InstanceProperties<?> get(String key);
-
-    public Map<String, InstanceProperties<?>> getProperties() {
-        return properties;
-    }
 
     public DatabaseStorage getStorage() {
         return storage;

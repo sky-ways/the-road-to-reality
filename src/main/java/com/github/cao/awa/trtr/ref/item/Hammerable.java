@@ -1,12 +1,12 @@
 package com.github.cao.awa.trtr.ref.item;
 
-import com.github.zhuaidadaya.rikaishinikui.handler.rage.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.rage.table.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.range.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.range.table.*;
 import net.minecraft.item.*;
 
 import java.util.*;
 
 public interface Hammerable {
-    RageTable<Item, NumberRage<Item>> products();
+    RangeTable<Item, NumberRange<Item>> products();
     Set<Item> prototypes();
 }

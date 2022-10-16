@@ -3,11 +3,10 @@ package com.github.cao.awa.trtr.ore.lead.galena.crushed;
 import com.github.cao.awa.trtr.ref.item.*;
 import com.github.cao.awa.trtr.ref.item.trtr.*;
 import com.github.cao.awa.trtr.type.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.rage.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.rage.table.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.range.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.range.table.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
-import net.minecraft.util.registry.*;
 
 import java.util.*;
 
@@ -20,7 +19,7 @@ public class CrushedDeepslateGalena extends TrtrItem implements Hammerable {
     }
 
     @Override
-    public RageTable<Item, NumberRage<Item>> products() {
+    public RangeTable<Item, NumberRange<Item>> products() {
         return TrtrHammerableProducts.GALENA_POWDER;
     }
 

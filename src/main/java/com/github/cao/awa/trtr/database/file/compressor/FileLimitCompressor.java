@@ -1,25 +1,26 @@
 package com.github.cao.awa.trtr.database.file.compressor;
 
-import com.github.cao.awa.trtr.util.*;
+import com.github.cao.awa.trtr.util.compressor.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 
 public class FileLimitCompressor extends FileCompressor {
-    public final long activeFrom;
+    private final long activeFrom;
+    private final InformationCompressor compressor;
 
-    public FileLimitCompressor(long activeFrom) {
+    public FileLimitCompressor(long activeFrom, InformationCompressor compressor) {
         this.activeFrom = activeFrom;
+        this.compressor = compressor;
     }
 
     @Override
-    public String compress(String source) {
-        return source.length() > activeFrom ? FileUtil.compress(
-                source,
-                - 1
+    public byte[] compress(byte[] source) {
+        return source.length > activeFrom ? compressor.compress(
+                source
         ) : source;
     }
 
     @Override
-    public String decompress(String compressed) {
-        return EntrustParser.trying(() -> FileUtil.decompress(compressed));
+    public byte[] decompress(byte[] compressed) {
+        return EntrustParser.trying(() -> compressor.decompress(compressed));
     }
 }

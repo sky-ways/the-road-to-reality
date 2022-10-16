@@ -45,73 +45,73 @@ public class OverworldAirHandler extends PersistentState implements WorldAirHand
 
     @Override
     public void tick() {
-//        List<ServerPlayerEntity> players = world.getPlayers();
-//        for (ServerPlayerEntity player : players) {
-//            int posY = player.getBlockPos()
-//                             .getY();
-//
-//            int expectY = posY + 16 * 2;
-//            int expectStartY = posY - 16 * 2;
-//
-//            int chunkX = ChunkSectionPos.getSectionCoord(player.getBlockPos()
-//                                                               .getX());
-//            int chunkZ = ChunkSectionPos.getSectionCoord(player.getBlockPos()
-//                                                               .getZ());
-//
-////            timeTracker.start(this);
-////            counter.start(this);
-//            for (ChunkSection chunkSection : world.getChunk(
-//                                                          chunkX,
-//                                                          chunkZ
-//                                                  )
-//                                                  .getSectionArray()) {
-//                                    if (expectStartY > chunkSection.getYOffset()) {
-//                                        continue;
-//                                    }
-//                                    if (expectY < chunkSection.getYOffset()) {
-//                                        break;
-//                                    }
-//                //                    PropertiesList<ChunkSection> list = properties.list("exclude");
-//                //                    if (list.contains(chunkSection)) {
-//                //                        continue;
-//                //                    }
-//                //                    list.add(chunkSection);
-//                for (int x = 0; x < 16; x++) {
-//                    for (int y = 0; y < 16; y++) {
-//                        for (int z = 0; z < 16; z++) {
-//                            BlockPos pos = new BlockPos(
-//                                    chunkX * 16 + x,
-//                                    chunkSection.getYOffset() + y,
-//                                    chunkZ * 16 + z
-//                            );
-//                            if (chunkSection.getBlockState(
-//                                                    x,
-//                                                    y,
-//                                                    z
-//                                            )
-//                                            .isAir()) {
-//                                world.setBlockState(
-//                                        pos,
-//                                        TrtrBlocks.DUMP_AIR.getDefaultState(),
-//                                        3
+        List<ServerPlayerEntity> players = world.getPlayers();
+        for (ServerPlayerEntity player : players) {
+            int posY = player.getBlockPos()
+                             .getY();
+
+            int expectY = posY + 16 * 2;
+            int expectStartY = posY - 16 * 2;
+
+            int chunkX = ChunkSectionPos.getSectionCoord(player.getBlockPos()
+                                                               .getX());
+            int chunkZ = ChunkSectionPos.getSectionCoord(player.getBlockPos()
+                                                               .getZ());
+
+//            timeTracker.start(this);
+//            counter.start(this);
+            for (ChunkSection chunkSection : world.getChunk(
+                                                          chunkX,
+                                                          chunkZ
+                                                  )
+                                                  .getSectionArray()) {
+                                    if (expectStartY > chunkSection.getYOffset()) {
+                                        continue;
+                                    }
+                                    if (expectY < chunkSection.getYOffset()) {
+                                        break;
+                                    }
+                //                    PropertiesList<ChunkSection> list = properties.list("exclude");
+                //                    if (list.contains(chunkSection)) {
+                //                        continue;
+                //                    }
+                //                    list.add(chunkSection);
+                for (int x = 0; x < 16; x++) {
+                    for (int y = 0; y < 16; y++) {
+                        for (int z = 0; z < 16; z++) {
+                            BlockPos pos = new BlockPos(
+                                    chunkX * 16 + x,
+                                    chunkSection.getYOffset() + y,
+                                    chunkZ * 16 + z
+                            );
+                            if (chunkSection.getBlockState(
+                                                    x,
+                                                    y,
+                                                    z
+                                            )
+                                            .isAir()) {
+                                world.setBlockState(
+                                        pos,
+                                        TrtrBlocks.DUMP_AIR.getDefaultState(),
+                                        3
+                                );
+                            }
+//                            InstanceProperties<?> properties = world.getBlockEntity(pos) instanceof PropertiesAccessible accessible ?
+//                                                               accessible.properties() :
+//                                                               null;
+//                            if (properties != null) {
+//                                counter.count(this,
+//                                              properties.getAccessNbtCompound()
+//                                                        .toString()
+//                                                        .length()
 //                                );
 //                            }
-////                            InstanceProperties<?> properties = world.getBlockEntity(pos) instanceof PropertiesAccessible accessible ?
-////                                                               accessible.properties() :
-////                                                               null;
-////                            if (properties != null) {
-////                                counter.count(this,
-////                                              properties.getAccessNbtCompound()
-////                                                        .toString()
-////                                                        .length()
-////                                );
-////                            }
-//                        }
-//                    }
-//                }
-//            }
-////            counter.done(this);
-////            timeTracker.done(this);
-//        }
+                        }
+                    }
+                }
+            }
+//            counter.done(this);
+//            timeTracker.done(this);
+        }
     }
 }

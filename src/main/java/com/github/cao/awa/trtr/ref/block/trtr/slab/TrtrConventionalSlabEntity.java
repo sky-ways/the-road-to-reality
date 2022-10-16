@@ -3,8 +3,8 @@ package com.github.cao.awa.trtr.ref.block.trtr.slab;
 import com.github.cao.awa.trtr.ref.item.*;
 import com.github.cao.awa.trtr.tool.hammer.*;
 import com.github.cao.awa.trtr.type.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.rage.*;
-import com.github.zhuaidadaya.rikaishinikui.handler.rage.table.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.range.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.range.table.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -29,7 +29,7 @@ public class TrtrConventionalSlabEntity extends TrtrSlabBlockEntity {
             hammer.thump(world, player, Hand.MAIN_HAND);
 
             ItemStack stack = getItem();
-            RageTable<Item, NumberRage<Item>> products = stack.getItem() instanceof Hammerable hammerable ? hammerable.products() : TrtrHammerables.hammerables.get(stack.getItem());
+            RangeTable<Item, NumberRange<Item>> products = stack.getItem() instanceof Hammerable hammerable ? hammerable.products() : TrtrHammerables.hammerables.get(stack.getItem());
             if (products != null) {
                 NbtCompound nbt = stack.getOrCreateNbt();
                 double crushed = nbt.getDouble("crushed") + hammer.getThumpEfficiency();

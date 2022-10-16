@@ -24,14 +24,14 @@ public class LeisurelyStorage extends DatabaseStorage {
     private boolean shutdown;
 
     public LeisurelyStorage(DatabaseStorage storage, boolean preventSudden) {
-        super(null);
+        super(storage.getPath());
         this.storage = storage;
         this.dump = new IndependentStorage(storage.getPath() + "/leisurely_dump", "dump", 128);
         this.preventSudden = preventSudden;
     }
 
     public LeisurelyStorage(DatabaseStorage storage) {
-        super(null);
+        super(storage.getPath());
         this.storage = storage;
         this.dump = new IndependentStorage(storage.getPath() + "/leisurely_dump", "dump", 128);
         this.preventSudden = true;
@@ -55,12 +55,31 @@ public class LeisurelyStorage extends DatabaseStorage {
     }
 
     @Override
-    public void entrustWrite(String key, Supplier<String> action) throws IOException {
-        processor.entrust(() -> new LeisurelyStorageInformation(key, action.get(), preventSudden));
+    public void entrustWrite(String key, Supplier<String> action) {
+        try {
+            if (shutdown) {
+                storage.write(
+                        key,
+                        action.get()
+                );
+                return;
+            }
+            processor.entrust(() -> new LeisurelyStorageInformation(
+                    key,
+                    action.get(),
+                    preventSudden
+            ));
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
     public void write(String key, String information) throws IOException {
+        if (shutdown) {
+            storage.write(key, information);
+            return;
+        }
         processor.submit(new LeisurelyStorageInformation(
                 key,
                 information,
@@ -71,26 +90,20 @@ public class LeisurelyStorage extends DatabaseStorage {
     @Override
     public String read(String key) throws IOException {
         String information;
-        if (lockingDump.contains(key)) {
-            lockingStorage.add(key);
-            information = storage.read(key);
-            lockingStorage.remove(key);
+        if (preventSudden) {
+            if (lockingDump.contains(key)) {
+                lockingStorage.add(key);
+                information = storage.read(key);
+                lockingStorage.remove(key);
+            } else {
+                lockingDump.add(key);
+                information = dump.read(key);
+                lockingDump.remove(key);
+            }
         } else {
-            lockingDump.add(key);
-            information = dump.read(key);
-            lockingDump.remove(key);
+            information = storage.read(key);
         }
         return information;
-    }
-
-    @Override
-    public Map<String, String> readEach() throws IOException {
-        return storage.readEach();
-    }
-
-    @Override
-    public void operationEach(BiConsumer<String, String> information) throws IOException {
-        storage.operationEach(information);
     }
 
     public boolean isShutdown() {
@@ -123,11 +136,13 @@ public class LeisurelyStorage extends DatabaseStorage {
                 try {
                     while (! storage.isShutdown()) {
                         synchronized (this.waiting) {
-                            if (entrusts.size() > 0) {
-                                this.stage = LeisurelyStorageTaskStage.RESOLVING;
-                                for (Supplier<LeisurelyStorageInformation> entrust : entrusts) {
-                                    waiting.add(entrust.get());
-                                    entrusts.remove(entrust);
+                            synchronized (this.waiting) {
+                                if (entrusts.size() > 0) {
+                                    this.stage = LeisurelyStorageTaskStage.RESOLVING;
+                                    for (Supplier<LeisurelyStorageInformation> entrust : entrusts) {
+                                        waiting.add(entrust.get());
+                                        entrusts.remove(entrust);
+                                    }
                                 }
                             }
                             if (waiting.size() > 0) {

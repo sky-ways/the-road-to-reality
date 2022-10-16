@@ -1,8 +1,7 @@
 package com.github.cao.awa.trtr.mixin.server;
 
 import com.github.cao.awa.trtr.air.manager.*;
-import com.github.cao.awa.trtr.database.memory.*;
-import com.github.cao.awa.trtr.database.oneness.*;
+import com.github.cao.awa.trtr.database.file.external.redis.*;
 import com.github.cao.awa.trtr.debuger.performance.tracker.*;
 import com.github.cao.awa.trtr.heat.handler.*;
 import com.github.cao.awa.trtr.util.*;
@@ -46,7 +45,8 @@ public class MinecraftServerMixin {
         heatManager = new HeatManager();
         timeTracker = new SubmitTimeTracker();
         airManager = new AirManager();
-//        propertiesDatabase = new MemoryFullCachedDatabase(LevelUtil.getServerLevelPath((MinecraftServer)(Object)this) + "/database/airy");
-        propertiesDatabase = new OnenessFullCachedDatabase(LevelUtil.getServerLevelPath((MinecraftServer)(Object)this) + "/database/airy");
+        //        propertiesDatabase = new MemoryFullCachedDatabase(LevelUtil.getServerLevelPath((MinecraftServer)(Object)this) + "/database/airy");
+        //        propertiesDatabase = new OnenessFullCachedDatabase(LevelUtil.getServerLevelPath((MinecraftServer)(Object)this) + "/database/airy");
+        propertiesDatabase = new RedisCachedDatabase("127.0.0.1", 6379);
     }
 }

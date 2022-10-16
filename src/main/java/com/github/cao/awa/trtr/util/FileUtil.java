@@ -1,59 +1,17 @@
 package com.github.cao.awa.trtr.util;
 
 import it.unimi.dsi.fastutil.io.*;
+import net.jpountz.lz4.*;
 import org.apache.commons.io.*;
 
 import java.io.*;
+import java.nio.*;
+import java.nio.channels.*;
 import java.nio.charset.*;
 import java.util.*;
 import java.util.zip.*;
 
 public class FileUtil {
-    private static final int BUFFER_SIZE = 16 * 1024;
-
-    public static String compress(String str, int strategy) {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-        if (strategy == - 1) {
-            strategy = Deflater.DEFAULT_STRATEGY;
-        }
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
-            deflater.setStrategy(strategy);
-            DeflaterOutputStream gzip = new DeflaterOutputStream(
-                    out,
-                    deflater
-            );
-            gzip.write(str.getBytes(StandardCharsets.UTF_8));
-            gzip.close();
-            return out.toString(StandardCharsets.ISO_8859_1);
-        } catch (Exception e) {
-            return str;
-        }
-    }
-
-    public static String decompress(String str) {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            InflaterInputStream gunzip = new InflaterInputStream(new ByteArrayInputStream(str.getBytes(StandardCharsets.ISO_8859_1)));
-            byte[] buf = new byte[4096];
-            int size;
-            while ((size = gunzip.read(buf)) > - 1) {
-                out.write(
-                        buf,
-                        0,
-                        size
-                );
-            }
-            return out.toString(StandardCharsets.UTF_8);
-        } catch (Exception ex) {
-            return str;
-        }
-    }
-
     public static void unzip(String zip, String path) throws RuntimeException {
         ZipFile zipFile = null;
         try {
@@ -228,5 +186,81 @@ public class FileUtil {
         }
         out.close();
         tempFile.delete();
+    }
+}
+
+class Lz4Util {
+
+
+    /**
+     * @param srcByte
+     * @param blockSize 一次压缩的大小 取值范围 64 字节-32M之间
+     * @return
+     * @throws IOException
+     */
+    public static byte[] lz4Compress(byte[] srcByte, int blockSize) throws IOException {
+        LZ4Factory factory = LZ4Factory.fastestInstance();
+        ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+        LZ4Compressor compressor = factory.fastCompressor();
+        LZ4BlockOutputStream compressedOutput = new LZ4BlockOutputStream(byteOutput, blockSize, compressor);
+        compressedOutput.write(srcByte);
+        compressedOutput.close();
+        return byteOutput.toByteArray();
+    }
+
+    /**
+     * @param compressorByte
+     * @param blockSize      一次压缩的大小 取值范围 64 字节-32M之间
+     * @return
+     * @throws IOException
+     */
+    public static byte[] lz4Decompress(byte[] compressorByte, int blockSize) throws IOException {
+        LZ4Factory factory = LZ4Factory.fastestInstance();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(blockSize);
+        LZ4FastDecompressor decompresser = factory.fastDecompressor();
+        LZ4BlockInputStream lzis = new LZ4BlockInputStream(new ByteArrayInputStream(compressorByte), decompresser);
+        int count;
+        byte[] buffer = new byte[blockSize];
+        while ((count = lzis.read(buffer)) != -1) {
+            baos.write(buffer, 0, count);
+        }
+        lzis.close();
+        return baos.toByteArray();
+    }
+
+    /**
+     * File  to byte[]
+     *
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
+    public static byte[] returnFileByte(String filePath) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+        FileChannel channel = fileInputStream.getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate((int) channel.size());
+        channel.read(byteBuffer);
+        return byteBuffer.array();
+    }
+
+    /**
+     * createFile
+     *
+     * @param fileByte
+     * @param filePath
+     */
+    public static void createFile(byte[] fileByte, String filePath) {
+        BufferedOutputStream bufferedOutputStream;
+        FileOutputStream fileOutputStream;
+        File file = new File(filePath);
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+            bufferedOutputStream.write(fileByte);
+            fileOutputStream.close();
+            bufferedOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -23,8 +23,8 @@
         "world.ServerWorldMixin",
         "world.WorldMixin",
         "world.chunk.WorldChunkMixin",
-        "world.chunk.selection.ChunkSelectionInterface",
-        "world.chunk.selection.ChunkSelectionMixin",
+        "world.chunk.selection.ChunkSectionInterface",
+        "world.chunk.selection.ChunkSectionMixin",
         "world.explosion.ExplosionBehaviorMixin",
         "world.explosion.ExplosionMixin",
         "world.manager.ServerChunkManagerInterface"

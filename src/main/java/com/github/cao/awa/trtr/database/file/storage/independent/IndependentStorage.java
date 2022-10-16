@@ -4,6 +4,7 @@ import com.github.cao.awa.trtr.database.file.compressor.*;
 import com.github.cao.awa.trtr.database.file.storage.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
 import it.unimi.dsi.fastutil.objects.*;
+import org.apache.commons.codec.binary.*;
 import org.apache.commons.io.*;
 
 import java.io.*;
@@ -49,11 +50,15 @@ public class IndependentStorage extends DatabaseStorage {
     }
 
     @Override
-    public void entrustWrite(String key, Supplier<String> action) throws IOException {
-        write(
-                key,
-                action.get()
-        );
+    public void entrustWrite(String key, Supplier<String> action) {
+        try {
+            write(
+                    key,
+                    action.get()
+            );
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -62,10 +67,9 @@ public class IndependentStorage extends DatabaseStorage {
                 ".",
                 ""
         ));
-        FileUtils.write(
+        FileUtils.writeByteArrayToFile(
                 file,
-                getCompressor().compress(information),
-                StandardCharsets.UTF_8
+                getCompressor().compress(information.getBytes(StandardCharsets.UTF_8))
         );
     }
 
@@ -76,65 +80,11 @@ public class IndependentStorage extends DatabaseStorage {
                 ""
         ));
         if (file.isFile()) {
-            return getCompressor().decompress(FileUtils.readFileToString(
-                    file,
-                    StandardCharsets.UTF_8
-            ));
+            return StringUtils.newStringUtf8(getCompressor().decompress(FileUtils.readFileToByteArray(
+                    file
+            )));
         }
         return "";
-    }
-
-    @Override
-    public Map<String, String> readEach() throws IOException {
-        Map<String, String> list = new Object2ObjectOpenHashMap<>();
-        File file = new File(getPath() + "/");
-
-        File[] files = file.listFiles();
-        if (files == null) {
-            return list;
-        }
-
-        for (File prp : files) {
-            if (prp.isFile()) {
-                String name = prp.getName()
-                                 .substring(
-                                         0,
-                                         prp.getName()
-                                            .length() - 4
-                                 );
-                list.put(
-                        name,
-                        read(name)
-                );
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public void operationEach(BiConsumer<String, String> key) throws IOException {
-        File file = new File(getPath() + "/");
-
-        File[] files = file.listFiles();
-        if (files == null) {
-            return;
-        }
-
-        for (File prp : files) {
-            if (prp.isFile()) {
-                String name = prp.getName()
-                                 .substring(
-                                         0,
-                                         prp.getName()
-                                            .length() - 4
-                                 );
-                key.accept(
-                        name,
-                        read(name)
-                );
-            }
-        }
     }
 
     @Override

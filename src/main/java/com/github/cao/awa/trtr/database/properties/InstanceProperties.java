@@ -158,8 +158,6 @@ public class InstanceProperties<T> {
     private final T instance;
     private final boolean safe;
     private String access = null;
-    private AtomicLong validOperations = new AtomicLong();
-    private long accessSnapOperations = 0;
 
     public InstanceProperties(T instance) {
         this.instance = instance;
@@ -257,7 +255,6 @@ public class InstanceProperties<T> {
                 key,
                 value
         );
-        validOperations.addAndGet(1);
     }
 
     @Deprecated
@@ -307,7 +304,6 @@ public class InstanceProperties<T> {
                 key,
                 defaultValue
         );
-        validOperations.addAndGet(1);
         return predicate.apply(target) ? function.apply(target) : defaultValue;
     }
 
@@ -328,8 +324,6 @@ public class InstanceProperties<T> {
         this.map.clear();
 
         this.map.putAll(properties.map);
-
-        validOperations.addAndGet(1);
     }
 
     public NbtCompound getAccessNbtCompound() {
@@ -351,15 +345,12 @@ public class InstanceProperties<T> {
      *         NbtCompound instance
      */
     public void createAccess(NbtCompound compound) {
-        String id = access == null ? RandomIdentifier.randomIdentifier(16, true) : access;
+        String id = access == null ? RandomIdentifier.noLrIdentifier(16) : access;
         compound.putString(
                 "acs",
                 id
         );
 
-        if (accessSnapOperations == validOperations.get()) {
-            return;
-        }
         propertiesDatabase.put(
                 id,
                 this
@@ -402,7 +393,6 @@ public class InstanceProperties<T> {
             );
 
         }
-        validOperations.addAndGet(1);
     }
 
     /**
@@ -434,7 +424,6 @@ public class InstanceProperties<T> {
                     }
             );
         }
-        validOperations.addAndGet(1);
     }
 
     /**
@@ -453,7 +442,6 @@ public class InstanceProperties<T> {
             );
         }
         list.stack(x);
-        validOperations.addAndGet(1);
     }
 
     /**
@@ -471,7 +459,6 @@ public class InstanceProperties<T> {
         if (list == null) {
             return null;
         }
-        validOperations.addAndGet(1);
         return list.pop();
     }
 
@@ -508,7 +495,6 @@ public class InstanceProperties<T> {
         if (list == null) {
             return null;
         }
-        validOperations.addAndGet(1);
         return list.pops();
     }
 
@@ -535,7 +521,6 @@ public class InstanceProperties<T> {
      */
     public void remove(String key) {
         map.remove(key);
-        validOperations.addAndGet(1);
     }
 
     public NbtCompound toNbtCompound() {
@@ -626,9 +611,5 @@ public class InstanceProperties<T> {
                 "properties",
                 nbt
         );
-    }
-
-    public long getValidOperations() {
-        return validOperations.get();
     }
 }

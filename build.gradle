@@ -41,6 +41,8 @@ dependencies {
     modImplementation 'com.fasterxml.uuid:java-uuid-generator:4.0.1'
     modImplementation 'commons-io:commons-io:2.11.0'
     modImplementation 'com.h2database:h2:2.1.214'
+    modImplementation 'redis.clients:jedis:4.3.0'
+    modImplementation 'org.lz4:lz4-java:1.8.0'
 }
 
 processResources {
