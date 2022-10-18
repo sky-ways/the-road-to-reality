@@ -9,25 +9,7 @@ import java.util.function.*;
 
 public class EntrustParser {
     public static <T> T getNotNull(T target, @NotNull T defaultValue) {
-        if (target == null) {
-            return defaultValue;
-        }
-        return target;
-    }
-
-    public static <T> T nullRequires(T target, Supplier<T> action) {
-        if (target == null) {
-            return action.get();
-        }
-        return null;
-    }
-
-    public static <T> T build(Supplier<T> obj) {
-        return obj.get();
-    }
-
-    public static <T> T create(Supplier<T> action) {
-        return action.get();
+        return target == null ? defaultValue : target;
     }
 
     public static <T> T tryCreate(ExceptingSupplier<T> action, T defaultValue) {
@@ -96,21 +78,5 @@ public class EntrustParser {
         T result = array.get(random.nextInt(array.size()));
         array.remove(result);
         return result;
-    }
-
-    public static <T> Thread thread(Temporary action) {
-        return new Thread(action::apply);
-    }
-
-    public static <T> Collection<Thread> threads(Temporary... actions) {
-        Collection<Thread> threads = Sets.newHashSet();
-        for (Temporary temporary : actions) {
-            threads.add(new Thread(temporary::apply));
-        }
-        return threads;
-    }
-
-    public static <T> T ifNull(T target, T other) {
-        return target == null ? other : target;
     }
 }

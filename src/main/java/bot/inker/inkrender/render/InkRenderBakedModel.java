@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
+    private static final Vec3f VEC3F = new Vec3f();
     private final Mesh mesh;
     private final ModelTransformation transformation;
     private final Sprite sprite;
@@ -84,18 +85,27 @@ public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
         context.pushTransform(quad -> {
             // var rad = Math.toRadians(supplier.get().nextInt(360));
             Matrix4f mat = Matrix4Util.identityMatrix();
-            mat.multiply(Matrix4Util.translate(0.5f, 0.5f, 0.5f));
-            mat.multiply(Matrix4Util.rotateY(MathHelper.PI / 4f));
+            mat.multiply(Matrix4Util.HALF_OF_XYZ_TRANSLATE);
+            mat.multiply(Matrix4Util.ROTATE_Y_OF_QUARTER_PI);
             // mat.multiply(Matrix4Util.translate(-0.5f,-0.5f, -0.5f));
             // mat.multiply(Matrix4Util.translate(0.5f,0f, 0.5f));
             for (int i = 0; i < 4; i++) {
-                Vec3f v = new Vec3f();
-                quad.copyPos(i, v);
-                quad.pos(i, Matrix4Util.transform(mat, v));
+                quad.copyPos(
+                        i,
+                        VEC3F
+                );
+                quad.pos(
+                        i,
+                        Matrix4Util.transform(
+                                mat,
+                                VEC3F
+                        )
+                );
             }
             return true;
         });
-        context.meshConsumer().accept(mesh);
+        context.meshConsumer()
+               .accept(mesh);
         context.popTransform();
     }
 
@@ -104,6 +114,7 @@ public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
         if (mesh == null) {
             return;
         }
-        context.meshConsumer().accept(mesh);
+        context.meshConsumer()
+               .accept(mesh);
     }
 }
