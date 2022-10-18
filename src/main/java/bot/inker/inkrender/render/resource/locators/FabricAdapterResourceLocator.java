@@ -1,7 +1,6 @@
-package bot.inker.inkrender.locators;
+package bot.inker.inkrender.render.resource.locators;
 
-import bot.inker.inkrender.api.InkResourceLoader;
-import bot.inker.inkrender.api.InkResourceLocator;
+import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
 import bot.inker.inkrender.util.UncheckUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceManager;
@@ -11,7 +10,7 @@ import java.io.InputStream;
 import java.util.Optional;
 
 public class FabricAdapterResourceLocator implements InkResourceLocator {
-    private ResourceManager resourceManager;
+    private static ResourceManager resourceManager;
 
     @Override
     public Optional<InkResourceLoader> findModel(String name) {
@@ -19,8 +18,8 @@ public class FabricAdapterResourceLocator implements InkResourceLocator {
         if (identifier == null || getResourceManager().getResource(Identifier.of(identifier.getNamespace(), "models/" + identifier.getPath())).isEmpty()) {
             return Optional.empty();
         }
-        int lastSplitIndex = identifier.getPath().lastIndexOf('/');
-        return Optional.of(new AdapterResourceLoader(identifier.getNamespace(), identifier.getPath().substring(0, lastSplitIndex + 1), identifier.getPath().substring(lastSplitIndex + 1)));
+        int lastSplitIndex = identifier.getPath().lastIndexOf('/') + 1;
+        return Optional.of(new AdapterResourceLoader(identifier.getNamespace(), identifier.getPath().substring(0, lastSplitIndex), identifier.getPath().substring(lastSplitIndex)));
     }
 
     private ResourceManager getResourceManager() {

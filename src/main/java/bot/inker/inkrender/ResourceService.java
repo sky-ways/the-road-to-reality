@@ -1,9 +1,9 @@
 package bot.inker.inkrender;
 
-import bot.inker.inkrender.api.InkResourceLoader;
-import bot.inker.inkrender.api.InkResourceLocator;
+import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
+import bot.inker.inkrender.render.resource.locators.InkResourceLocator;
 import bot.inker.inkrender.api.InkResourceService;
-import bot.inker.inkrender.locators.FabricAdapterResourceLocator;
+import bot.inker.inkrender.render.resource.locators.FabricAdapterResourceLocator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

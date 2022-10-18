@@ -5,6 +5,8 @@ import net.minecraft.util.math.*;
 import java.math.*;
 
 public class Mathematics extends MathHelper {
+    public static final float QUARTER_PI = 0.7853981633974483F;
+
     public static int absHash(Object key) {
         return key.hashCode() & Integer.MAX_VALUE;
     }
