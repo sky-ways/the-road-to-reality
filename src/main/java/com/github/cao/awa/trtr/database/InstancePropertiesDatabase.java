@@ -2,10 +2,6 @@ package com.github.cao.awa.trtr.database;
 
 import com.github.cao.awa.trtr.database.file.storage.*;
 import com.github.cao.awa.trtr.database.properties.*;
-import it.unimi.dsi.fastutil.objects.*;
-import net.minecraft.server.*;
-
-import java.util.*;
 
 public abstract class InstancePropertiesDatabase {
     private final DatabaseStorage storage;
@@ -16,11 +12,11 @@ public abstract class InstancePropertiesDatabase {
 
     public abstract void export();
 
-    public abstract void put(String key, InstanceProperties<?> properties);
+    public abstract void put(String key, InstanceProperties properties);
 
     public abstract void shutdown();
 
-    public abstract InstanceProperties<?> get(String key);
+    public abstract InstanceProperties get(String key);
 
     public DatabaseStorage getStorage() {
         return storage;

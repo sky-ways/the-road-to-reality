@@ -113,22 +113,6 @@ public class FileUtil {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 16384; i++) {
-            File testFile = new File("C:\\normal\\Codes\\Code-Java\\the-road-to-reality\\test\\ii" + i + ".txt");
-            testFile.createNewFile();
-            FileUtils.write(
-                    testFile,
-                    "WDNMD" + i
-            );
-            expandZip(
-                    new File("C:\\normal\\Codes\\Code-Java\\the-road-to-reality\\test\\test.zip"),
-                    List.of(testFile)
-            );
-            testFile.delete();
-        }
-    }
-
     public static void expandZip(File zipFile, List<File> files) throws IOException {
         File tempFile = File.createTempFile(
                 zipFile.getName(),
@@ -187,54 +171,86 @@ public class FileUtil {
         out.close();
         tempFile.delete();
     }
+
+    public static void write(Writer writer, Reader reader) {
+        try {
+            char[] chars = new char[4096];
+            int length;
+            while ((length = reader.read(chars)) != - 1) {
+                writer.write(
+                        chars,
+                        0,
+                        length
+                );
+            }
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static String read(Reader reader) {
+        try {
+            char[] chars = new char[4096];
+            int length;
+            StringBuilder builder = new StringBuilder();
+            while ((length = reader.read(chars)) != - 1) {
+                builder.append(chars, 0, length);
+            }
+            reader.close();
+            return builder.toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static void write(Writer writer, String information) {
+        try {
+            writer.write(information.toCharArray());
+            writer.close();
+        } catch (Exception e) {
+
+        }
+    }
 }
 
 class Lz4Util {
-
-
-    /**
-     * @param srcByte
-     * @param blockSize 一次压缩的大小 取值范围 64 字节-32M之间
-     * @return
-     * @throws IOException
-     */
     public static byte[] lz4Compress(byte[] srcByte, int blockSize) throws IOException {
         LZ4Factory factory = LZ4Factory.fastestInstance();
         ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
         LZ4Compressor compressor = factory.fastCompressor();
-        LZ4BlockOutputStream compressedOutput = new LZ4BlockOutputStream(byteOutput, blockSize, compressor);
+        LZ4BlockOutputStream compressedOutput = new LZ4BlockOutputStream(
+                byteOutput,
+                blockSize,
+                compressor
+        );
         compressedOutput.write(srcByte);
         compressedOutput.close();
         return byteOutput.toByteArray();
     }
 
-    /**
-     * @param compressorByte
-     * @param blockSize      一次压缩的大小 取值范围 64 字节-32M之间
-     * @return
-     * @throws IOException
-     */
     public static byte[] lz4Decompress(byte[] compressorByte, int blockSize) throws IOException {
         LZ4Factory factory = LZ4Factory.fastestInstance();
         ByteArrayOutputStream baos = new ByteArrayOutputStream(blockSize);
         LZ4FastDecompressor decompresser = factory.fastDecompressor();
-        LZ4BlockInputStream lzis = new LZ4BlockInputStream(new ByteArrayInputStream(compressorByte), decompresser);
+        LZ4BlockInputStream lzis = new LZ4BlockInputStream(
+                new ByteArrayInputStream(compressorByte),
+                decompresser
+        );
         int count;
         byte[] buffer = new byte[blockSize];
-        while ((count = lzis.read(buffer)) != -1) {
-            baos.write(buffer, 0, count);
+        while ((count = lzis.read(buffer)) != - 1) {
+            baos.write(
+                    buffer,
+                    0,
+                    count
+            );
         }
         lzis.close();
         return baos.toByteArray();
     }
 
-    /**
-     * File  to byte[]
-     *
-     * @param filePath
-     * @return
-     * @throws IOException
-     */
     public static byte[] returnFileByte(String filePath) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(new File(filePath));
         FileChannel channel = fileInputStream.getChannel();
@@ -243,12 +259,6 @@ class Lz4Util {
         return byteBuffer.array();
     }
 
-    /**
-     * createFile
-     *
-     * @param fileByte
-     * @param filePath
-     */
     public static void createFile(byte[] fileByte, String filePath) {
         BufferedOutputStream bufferedOutputStream;
         FileOutputStream fileOutputStream;

@@ -1,0 +1,120 @@
+{
+    "variants": {
+        "pebble_type=0": {
+            "model": "trtr:block/pebble/loose_pebble0"
+        },
+
+        "pebble_type=1,pebble_sub_type=0": {
+            "model": "trtr:block/pebble/loose_pebble1"
+        },
+        "pebble_type=1,pebble_sub_type=1": {
+            "model": "trtr:block/pebble/loose_pebble1_2_1"
+        },
+        "pebble_type=1,pebble_sub_type=2": {
+            "model": "trtr:block/pebble/loose_pebble1_2_2"
+        },
+        "pebble_type=1,pebble_sub_type=3": {
+            "model": "trtr:block/pebble/loose_pebble1_2_3"
+        },
+        "pebble_type=1,pebble_sub_type=4": {
+            "model": "trtr:block/pebble/loose_pebble1_1_1"
+        },
+        "pebble_type=1,pebble_sub_type=5": {
+            "model": "trtr:block/pebble/loose_pebble1_1_2"
+        },
+        "pebble_type=1,pebble_sub_type=6": {
+            "model": "trtr:block/pebble/loose_pebble1_1_3"
+        },
+
+        "pebble_type=1,pebble_sub_type=0,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1",
+            "y": 180
+        },
+        "pebble_type=1,pebble_sub_type=1,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1_2_1",
+            "y": 180
+        },
+        "pebble_type=1,pebble_sub_type=2,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1_2_2",
+            "y": 180
+        },
+        "pebble_type=1,pebble_sub_type=3,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1_2_3",
+            "y": 180
+        },
+        "pebble_type=1,pebble_sub_type=4,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1_1_1",
+            "y": 180
+        },
+        "pebble_type=1,pebble_sub_type=5,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1_1_2",
+            "y": 180
+        },
+        "pebble_type=1,pebble_sub_type=6,facing=south": {
+            "model": "trtr:block/pebble/loose_pebble1_1_3",
+            "y": 180
+        },
+
+        "pebble_type=1,pebble_sub_type=0,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1",
+            "y": 90
+        },
+        "pebble_type=1,pebble_sub_type=1,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1_2_1",
+            "y": 90
+        },
+        "pebble_type=1,pebble_sub_type=2,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1_2_2",
+            "y": 90
+        },
+        "pebble_type=1,pebble_sub_type=3,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1_2_3",
+            "y": 90
+        },
+        "pebble_type=1,pebble_sub_type=4,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1_1_1",
+            "y": 90
+        },
+        "pebble_type=1,pebble_sub_type=5,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1_1_2",
+            "y": 90
+        },
+        "pebble_type=1,pebble_sub_type=6,facing=east": {
+            "model": "trtr:block/pebble/loose_pebble1_1_3",
+            "y": 90
+        },
+
+        "pebble_type=1,pebble_sub_type=0,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1",
+            "y": 270
+        },
+        "pebble_type=1,pebble_sub_type=1,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1_2_1",
+            "y": 270
+        },
+        "pebble_type=1,pebble_sub_type=2,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1_2_2",
+            "y": 270
+        },
+        "pebble_type=1,pebble_sub_type=3,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1_2_3",
+            "y": 270
+        },
+        "pebble_type=1,pebble_sub_type=4,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1_1_1",
+            "y": 270
+        },
+        "pebble_type=1,pebble_sub_type=5,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1_1_2",
+            "y": 270
+        },
+        "pebble_type=1,pebble_sub_type=6,facing=west": {
+            "model": "trtr:block/pebble/loose_pebble1_1_3",
+            "y": 270
+        },
+
+        "pebble_type=2": {
+            "model": "trtr:block/pebble/loose_pebble2"
+        }
+    }
+}

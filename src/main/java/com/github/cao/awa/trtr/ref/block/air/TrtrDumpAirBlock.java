@@ -6,7 +6,6 @@ import com.github.cao.awa.trtr.element.chemical.content.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
 import com.github.cao.awa.trtr.pressure.*;
 import com.github.cao.awa.trtr.ref.block.air.vanilla.*;
-import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.register.*;
 import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
@@ -16,8 +15,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
-
-import java.util.*;
 
 public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<AirBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:air");
@@ -103,7 +100,7 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
     }
 
     @Override
-    public void generatePressure(World world, BlockPos pos, InstanceProperties<AirBlockEntity> properties) {
+    public void generatePressure(World world, BlockPos pos, InstanceProperties properties) {
         properties.put(
                 "pressure",
                 new PressureKpa(101.3)

@@ -22,12 +22,14 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.github.cao.awa.trtr.TrtrMod",
-            "bot.inker.inkrender.InkerRender"
+            "com.github.cao.awa.trtr.TrtrMod"
         ],
         "client": [
             "com.github.cao.awa.trtr.TrtrClient",
             "bot.inker.inkrender.InkerRender"
+        ],
+        "server": [
+            "com.github.cao.awa.trtr.TrtrServer"
         ],
         "fabric-datagen": [
             "com.github.cao.awa.trtr.TrtrDatagen"

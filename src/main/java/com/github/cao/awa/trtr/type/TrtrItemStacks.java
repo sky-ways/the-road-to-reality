@@ -32,6 +32,11 @@ public class TrtrItemStacks {
         stacks.add(TrtrBlocks.ANORTHITE_BLOCK.asItem().getDefaultStack());
 
         stacks.add(TrtrBlocks.NITER_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.LIMESTONE_BLOCK.asItem().getDefaultStack());
+
+        stacks.add(TrtrBlocks.LOOSE_PEBBLE_BLOCK.asItem().getDefaultStack());
+        stacks.add(TrtrBlocks.TREE_BRANCH.asItem().getDefaultStack());
+        stacks.add(TrtrItems.PEBBLE.asItem().getDefaultStack());
     });
 
     public static final ObjectArrayList<ItemStack> CRUSHED_ORES = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {

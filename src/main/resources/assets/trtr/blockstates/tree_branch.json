@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "branch_type=0": {
+            "model": "trtr:block/branch/tree/tree_branch0"
+        },
+        "branch_type=1": {
+            "model": "trtr:block/branch/tree/tree_branch1"
+        },
+        "branch_type=2": {
+            "model": "trtr:block/branch/tree/tree_branch2"
+        }
+    }
+}

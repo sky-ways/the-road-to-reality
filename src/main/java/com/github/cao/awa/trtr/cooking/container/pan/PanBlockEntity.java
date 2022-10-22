@@ -11,7 +11,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class PanBlockEntity extends BlockEntity {
-    private final InstanceProperties<PanBlockEntity> properties = new InstanceProperties<>(this);
+    private final InstanceProperties properties = new InstanceProperties();
 
     public PanBlockEntity(BlockPos pos, BlockState state) {
         super(TrtrBlockEntityType.POT, pos, state);

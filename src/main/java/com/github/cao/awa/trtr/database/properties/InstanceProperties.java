@@ -15,12 +15,11 @@ import org.json.*;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import static com.github.cao.awa.trtr.TrtrMod.propertiesDatabase;
 
-public class InstanceProperties<T> {
+public class InstanceProperties {
     public static final Map<Class<?>, Function<Object, String>> SERIALIZERS = new ConcurrentHashMap<>();
     public static final Map<Class<?>, Function<Object, JSONObject>> JSON_SERIALIZERS = new ConcurrentHashMap<>();
     public static final Map<Class<?>, String> TYPE_S = new ConcurrentHashMap<>();
@@ -155,17 +154,14 @@ public class InstanceProperties<T> {
     }
 
     private final Map<String, Object> map = new ConcurrentHashMap<>();
-    private final T instance;
     private final boolean safe;
     private String access = null;
 
-    public InstanceProperties(T instance) {
-        this.instance = instance;
+    public InstanceProperties() {
         this.safe = true;
     }
 
-    public InstanceProperties(T instance, boolean isSafe) {
-        this.instance = instance;
+    public InstanceProperties(boolean isSafe) {
         this.safe = isSafe;
     }
 
@@ -201,10 +197,6 @@ public class InstanceProperties<T> {
                 target,
                 (Function<Object, JSONObject>) serializer
         );
-    }
-
-    public T getInstance() {
-        return instance;
     }
 
     public <X> void update(String key, Function<X, X> function) {
@@ -314,7 +306,7 @@ public class InstanceProperties<T> {
      *         short uuid key
      */
     public void access(String key) {
-        InstanceProperties<?> properties = propertiesDatabase.get(key);
+        InstanceProperties properties = propertiesDatabase.get(key);
         this.access = key;
 
         if (properties == null) {
@@ -345,15 +337,15 @@ public class InstanceProperties<T> {
      *         NbtCompound instance
      */
     public void createAccess(NbtCompound compound) {
-        String id = access == null ? RandomIdentifier.noLrIdentifier(16) : access;
+        if (propertiesDatabase == null) {
+            return;
+        }
+        access = access == null || access.equals("") ? RandomIdentifier.noLrIdentifier(16) : access;
+        propertiesDatabase.put(access, this);
+
         compound.putString(
                 "acs",
-                id
-        );
-
-        propertiesDatabase.put(
-                id,
-                this
+                access
         );
     }
 
@@ -381,7 +373,7 @@ public class InstanceProperties<T> {
      * @param compound
      *         NbtCompound instance
      */
-    public void readNbt(NbtCompound compound) {
+    public void readNbt(@NotNull NbtCompound compound) {
         NbtCompound nbt = compound.getCompound("properties");
         for (String key : nbt.getKeys()) {
             NbtCompound element = nbt.getCompound(key);
@@ -401,7 +393,7 @@ public class InstanceProperties<T> {
      * @param json
      *         JSONObject instance
      */
-    public void readJSONObject(JSONObject json) {
+    public void readJSONObject(@NotNull JSONObject json) {
         JSONObject nbt = json.getJSONObject("properties");
         for (String key : nbt.keySet()) {
             JSONObject element = nbt.getJSONObject(key);
@@ -611,5 +603,15 @@ public class InstanceProperties<T> {
                 "properties",
                 nbt
         );
+    }
+
+    public void readProperties(InstanceProperties properties) {
+        this.access = properties.access;
+        this.map.clear();
+        this.map.putAll(properties.map);
+    }
+
+    public boolean contains(String key) {
+        return map.containsKey(key);
     }
 }

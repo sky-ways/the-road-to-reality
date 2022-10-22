@@ -18,8 +18,8 @@ public class DataCommandMixin {
     private static void getProperties(ServerCommandSource source, DataCommandObject object, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
         NbtCompound nbt = object.getNbt();
         BlockEntity entity = source.getWorld().getBlockEntity(new BlockPos(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z")));
-        if (entity instanceof PropertiesAccessible<?> accessible) {
-            source.sendFeedback(Text.literal("properties: " + accessible.properties().toNbtCompound().toString()), false);
+        if (entity instanceof PropertiesAccessible accessible) {
+            source.sendFeedback(Text.literal("properties: " + accessible.getProperties().toNbtCompound().toString()), false);
         }
     }
 }

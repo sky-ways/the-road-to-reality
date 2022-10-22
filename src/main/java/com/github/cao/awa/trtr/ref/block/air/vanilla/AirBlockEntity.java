@@ -3,20 +3,17 @@ package com.github.cao.awa.trtr.ref.block.air.vanilla;
 import com.github.cao.awa.trtr.database.properties.*;
 import com.github.cao.awa.trtr.element.generator.*;
 import com.github.cao.awa.trtr.ref.block.air.*;
-import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
-import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
-import org.json.*;
 
-public class AirBlockEntity extends BlockEntity implements ChemicalElementGenerator, PropertiesAccessible<AirBlockEntity> {
-    private final InstanceProperties<AirBlockEntity> properties = new InstanceProperties<>(this);
+public class AirBlockEntity extends BlockEntity implements ChemicalElementGenerator, PropertiesAccessible {
+    private final InstanceProperties properties = new InstanceProperties();
     private final TrtrAirBlock air;
 
     public AirBlockEntity(BlockPos pos, BlockState state, TrtrAirBlock air) {
@@ -38,8 +35,6 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-//        ChunkPos chunkPos = new ChunkPos(pos);
-//        properties.put("p", chunkPos.x + "." + chunkPos.z);
         properties.createAccess(nbt);
     }
 
@@ -58,7 +53,12 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
     }
 
     @Override
-    public InstanceProperties<AirBlockEntity> properties() {
+    public InstanceProperties getProperties() {
         return properties;
+    }
+
+    @Override
+    public void setProperties(InstanceProperties properties) {
+        this.properties.readProperties(properties);
     }
 }

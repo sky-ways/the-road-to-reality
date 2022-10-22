@@ -12,12 +12,12 @@ public class ItemSettingsMixin {
 
     @Inject(method = "maxCount", at = @At("RETURN"), cancellable = true)
     public void maxCount(int maxCount, CallbackInfoReturnable<Item.Settings> cir) {
-        this.maxCount = 1;
+        this.maxCount = maxCount > 7 ? 8 : 1;
         cir.setReturnValue(cir.getReturnValue());
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void cancelOneStack(CallbackInfo ci) {
-        this.maxCount = 1;
+        this.maxCount = 8;
     }
 }

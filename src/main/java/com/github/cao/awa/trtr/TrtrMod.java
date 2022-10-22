@@ -2,16 +2,22 @@ package com.github.cao.awa.trtr;
 
 import com.github.cao.awa.modmdo.annotations.platform.*;
 import com.github.cao.awa.trtr.air.manager.*;
+import com.github.cao.awa.trtr.config.*;
 import com.github.cao.awa.trtr.database.*;
 import com.github.cao.awa.trtr.debuger.performance.tracker.*;
 import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.heat.handler.*;
+import com.github.cao.awa.trtr.loader.resource.*;
 import com.github.cao.awa.trtr.ref.item.fire.*;
 import com.github.cao.awa.trtr.type.*;
+import com.github.cao.awa.trtr.util.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.runnable.*;
 import net.fabricmc.api.*;
 import org.apache.logging.log4j.*;
-import redis.clients.jedis.*;
+
+import java.io.*;
 
 @Server
 public class TrtrMod implements ModInitializer {
@@ -22,11 +28,13 @@ public class TrtrMod implements ModInitializer {
     public static SubmitTimeTracker timeTracker = new SubmitTimeTracker();
     public static Counter counter = new Counter();
     public static FutureTaskOrder delayTasks = new FutureTaskOrder();
+    public static Configure configs = new Configure();
 
     public static InstancePropertiesDatabase propertiesDatabase = null;
 
     @Override
     public void onInitialize() {
+        initConfig();
         TrtrItems.pre();
         TrtrBlocks.pre();
         TrtrBlockEntityType.pre();
@@ -37,5 +45,37 @@ public class TrtrMod implements ModInitializer {
         TrtrEntityType.pre();
         CombinationReactions.pre();
         FireReacts.pre();
+    }
+
+    public static void initConfig() {
+        File config = new File("config/the-road-to-reality/config.conf");
+        final Receptacle<String> configInformation = new Receptacle<>(null);
+        try {
+            if (! config.isFile()) {
+                TrtrMod.LOGGER.info("Config not found, generating default config");
+
+                config.getParentFile()
+                      .mkdirs();
+                configInformation.set(FileUtil.read(new InputStreamReader(Resources.getResource(
+                        "default-config.conf",
+                        Resources.class
+                ))));
+                EntrustExecution.tryTemporary(() -> {
+                    FileUtil.write(
+                            new BufferedWriter(new FileWriter(config)),
+                            configInformation.get()
+                    );
+                });
+            }
+
+            if (configInformation.get() == null) {
+                configInformation.set(FileUtil.read(new BufferedReader(new FileReader(config))));
+            }
+
+            configs = new Configure();
+
+            configs.read(configInformation.get());
+        } catch (Exception e) {
+        }
     }
 }

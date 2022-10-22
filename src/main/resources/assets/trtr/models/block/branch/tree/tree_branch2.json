@@ -1,0 +1,55 @@
+{
+	"textures": {
+		"0": "minecraft:block/oak_log",
+		"particle": "minecraft:block/oak_log"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 7],
+			"to": [14, 2, 9],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 1, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 12], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"south": {"uv": [2, 0, 0, 12], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"up": {"uv": [2, 0, 4, 12], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 12], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 0, 8.85],
+			"to": [7, 2, 11.85],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [6, 1, 9.85]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 2], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 0, 3, 2], "texture": "#0"},
+				"south": {"uv": [2, 0, 0, 2], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 0, 3, 2], "texture": "#0"},
+				"up": {"uv": [0, 3, 2, 6], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 3], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, 0, 5.6],
+			"to": [10, 2, 7.6],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [9, 1, 6.6]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 3], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"south": {"uv": [2, 0, 0, 3], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"up": {"uv": [2, 0, 4, 3], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 3], "rotation": 270, "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

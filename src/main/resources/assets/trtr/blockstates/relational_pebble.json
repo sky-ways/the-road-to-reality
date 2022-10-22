@@ -1,0 +1,22 @@
+{
+    "relational": {
+        "switch": {
+            "key1": {
+                "value1":{
+                    "y": 90
+                } ,
+                "value2": {
+                    "y": 180
+                }
+            },
+            "key2": {
+
+            },
+            "facing": {
+                "south": {
+                    "y": 114
+                }
+            }
+        }
+    }
+}

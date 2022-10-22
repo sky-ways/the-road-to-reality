@@ -38,11 +38,10 @@ dependencies {
     // modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
     modImplementation 'org.json:json:20220924'
-    modImplementation 'com.fasterxml.uuid:java-uuid-generator:4.0.1'
     modImplementation 'commons-io:commons-io:2.11.0'
-    modImplementation 'com.h2database:h2:2.1.214'
-    modImplementation 'redis.clients:jedis:4.3.0'
     modImplementation 'org.lz4:lz4-java:1.8.0'
+    modImplementation 'org.iq80.leveldb:leveldb:0.12'
+    modImplementation 'com.esotericsoftware:kryo:5.3.0'
 }
 
 processResources {

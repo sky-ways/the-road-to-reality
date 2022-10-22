@@ -8,13 +8,19 @@
         "block.BlockEntityMixin",
         "block.BlockMixin",
         "block.BlocksMixin",
+        "block.SpreadableBlockMixin",
+        "block.fire.AbstractFireBlockMixin",
         "block.settings.BlockSettingsMixin",
         "block.state.variant.ModelVariantMapMixin",
         "command.data.DataCommandMixin",
+        "fluid.flowable.FlowableFluidMixin",
         "item.ItemsMixin",
+        "item.ItemStackInterface",
         "item.ItemStackMixin",
+        "item.block.BlockItemMixin",
         "item.entity.ItemEntityMixin",
         "item.settings.ItemSettingsMixin",
+        "player.inventory.PlayerInventoryMixin",
         "screen.hud.debug.DebugHudMixin",
         "screen.title.TitleScreenMixin",
         "server.MinecraftServerInterface",
@@ -30,6 +36,7 @@
         "world.manager.ServerChunkManagerInterface"
     ],
     "client": [
+        "client.render.json.ModelVariantMapDeserializerMixin",
         "resource.DefaultResourcePackMixin"
     ],
     "injectors": {

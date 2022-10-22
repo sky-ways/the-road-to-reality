@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.ref.item.trtr;
 
+import com.github.cao.awa.trtr.database.properties.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
@@ -93,9 +94,7 @@ public abstract class TrtrBlockItem extends TrtrItem {
     }
 
     public ActionResult place(ItemPlacementContext context) {
-        if (! context.canPlace()) {
-            return ActionResult.FAIL;
-        } else {
+        if (context.canPlace()) {
             ItemPlacementContext itemPlacementContext = this.getPlacementContext(context);
             if (itemPlacementContext == null) {
                 return ActionResult.FAIL;
@@ -103,9 +102,10 @@ public abstract class TrtrBlockItem extends TrtrItem {
                 BlockState blockState = this.getPlacementState(itemPlacementContext);
                 if (blockState == null) {
                     return ActionResult.FAIL;
-                } else if (! this.place(itemPlacementContext, blockState)) {
-                    return ActionResult.FAIL;
-                } else {
+                } else if (this.place(
+                        itemPlacementContext,
+                        blockState
+                )) {
                     BlockPos blockPos = itemPlacementContext.getBlockPos();
                     World world = itemPlacementContext.getWorld();
                     PlayerEntity playerEntity = itemPlacementContext.getPlayer();
@@ -116,20 +116,29 @@ public abstract class TrtrBlockItem extends TrtrItem {
                         this.postPlacement(blockPos, world, playerEntity, itemStack, blockState2);
                         blockState2.getBlock().onPlaced(world, blockPos, blockState2, playerEntity, itemStack);
                         if (playerEntity instanceof ServerPlayerEntity) {
-                            Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos, itemStack);
+                            Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity)playerEntity, blockPos, itemStack);
                         }
                     }
 
                     BlockSoundGroup blockSoundGroup = blockState2.getSoundGroup();
                     world.playSound(playerEntity, blockPos, this.getPlaceSound(blockState2), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
                     world.emitGameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Emitter.of(playerEntity, blockState2));
-                    if (playerEntity == null || ! playerEntity.getAbilities().creativeMode) {
+                    if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
                         itemStack.decrement(1);
                     }
 
+                    BlockEntity blockEntity = world.getBlockEntity(blockPos);
+                    if (blockEntity instanceof PropertiesAccessible properties) {
+                        properties.getProperties().access(itemStack.getOrCreateNbt().getString("acs"));
+                    }
+
                     return ActionResult.success(world.isClient);
+                } else {
+                    return ActionResult.FAIL;
                 }
             }
+        } else {
+            return ActionResult.FAIL;
         }
     }
 
@@ -148,9 +157,7 @@ public abstract class TrtrBlockItem extends TrtrItem {
 
     public static boolean writeNbtToBlockEntity(World world, @Nullable PlayerEntity player, BlockPos pos, ItemStack stack) {
         MinecraftServer minecraftServer = world.getServer();
-        if (minecraftServer == null) {
-            return false;
-        } else {
+        if (minecraftServer != null) {
             NbtCompound nbtCompound = getBlockEntityNbt(stack);
             if (nbtCompound != null) {
                 BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -170,8 +177,8 @@ public abstract class TrtrBlockItem extends TrtrItem {
                 }
             }
 
-            return false;
         }
+        return false;
     }
 
     @Nullable

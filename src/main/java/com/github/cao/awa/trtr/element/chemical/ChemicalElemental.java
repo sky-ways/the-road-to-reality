@@ -6,7 +6,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public interface ChemicalElemental<T> {
-    default void generateElements(World world, BlockPos pos, InstanceProperties<T> properties) {
+    default void generateElements(World world, BlockPos pos, InstanceProperties properties) {
         ChemicalElementProperties elementProperties = properties.get("elements");
         if (elementProperties == null) {
             elementProperties = new ChemicalElementProperties();
@@ -16,4 +16,10 @@ public interface ChemicalElemental<T> {
     }
 
     void generateElements(World world, BlockPos pos, ChemicalElementProperties properties);
+
+    default void adapterElements(World world, BlockPos pos, InstanceProperties properties) {
+        if (!properties.contains("elements")) {
+            generateElements(world, pos, properties);
+        }
+    }
 }

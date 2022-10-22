@@ -11,7 +11,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class PotBlockEntity extends BlockEntity {
-    private final InstanceProperties<PotBlockEntity> properties = new InstanceProperties<>(this);
+    private final InstanceProperties properties = new InstanceProperties();
 
     public PotBlockEntity(BlockPos pos, BlockState state) {
         super(TrtrBlockEntityType.POT, pos, state);

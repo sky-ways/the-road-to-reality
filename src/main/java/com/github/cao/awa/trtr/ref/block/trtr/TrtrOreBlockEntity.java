@@ -12,8 +12,8 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public class TrtrOreBlockEntity extends BlockEntity implements ChemicalElementGenerator {
-    private final InstanceProperties<TrtrOreBlockEntity> properties = new InstanceProperties<>(this);
+public class TrtrOreBlockEntity extends BlockEntity implements ChemicalElementGenerator, PropertiesAccessible {
+    private final InstanceProperties properties = new InstanceProperties();
     private final TrtrOreBlock ore;
 
     public TrtrOreBlockEntity(BlockPos pos, BlockState state, TrtrOreBlock ore) {
@@ -28,12 +28,14 @@ public class TrtrOreBlockEntity extends BlockEntity implements ChemicalElementGe
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        properties.readNbt(nbt);
+        if (nbt.contains("acs")) {
+            properties.access(nbt.getString("acs"));
+        }
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        properties.writeNbt(nbt);
+        properties.createAccess(nbt);
     }
 
     @Nullable
@@ -47,6 +49,16 @@ public class TrtrOreBlockEntity extends BlockEntity implements ChemicalElementGe
         if (ore == null) {
             return;
         }
-        ore.generateElements(world, pos, properties);
+        ore.adapterElements(world, pos, properties);
+    }
+
+    @Override
+    public InstanceProperties getProperties() {
+        return properties;
+    }
+
+    @Override
+    public void setProperties(InstanceProperties properties) {
+        this.properties.readProperties(properties);
     }
 }

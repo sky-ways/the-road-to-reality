@@ -1,14 +1,14 @@
 package com.github.cao.awa.trtr.database.properties.pool;
 
 import com.github.cao.awa.trtr.database.properties.*;
-import com.github.cao.awa.trtr.database.properties.stack.*;
 import it.unimi.dsi.fastutil.objects.*;
+import org.jetbrains.annotations.*;
 import org.json.*;
 
 import java.util.*;
 import java.util.function.*;
 
-public class PropertiesList<T> {
+public class PropertiesList<T> implements Iterable<T> {
     private final List<T> elements;
     
     public PropertiesList(List<T> elements) {
@@ -35,7 +35,16 @@ public class PropertiesList<T> {
         return elements.contains(value);
     }
 
-    public void forEach(Consumer<T> action) {
+    public void addAll(List<T> list) {
+        this.elements.addAll(list);
+    }
+
+    public void addAll(PropertiesList<T> list) {
+        list.forEach(elements::add);
+    }
+
+    @Override
+    public void forEach(Consumer<? super T> action) {
         elements.forEach(action);
     }
 
@@ -63,5 +72,11 @@ public class PropertiesList<T> {
             info.put("list", array);
         }
         return info.toString();
+    }
+
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return elements.iterator();
     }
 }

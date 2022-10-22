@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.mixin.block;
 
 import com.github.cao.awa.trtr.explosion.vanilla.tnt.VanillaTntBlock;
+import com.github.cao.awa.trtr.ref.block.fire.FireBlock;
 import com.github.cao.awa.trtr.ref.block.iron.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
 import com.github.cao.awa.trtr.type.*;
@@ -1018,7 +1019,7 @@ public abstract class BlocksMixin {
 
     @Inject(method = "<clinit>", at = @At("HEAD"), cancellable = true)
     private static void cl(CallbackInfo ci) {
-        AIR = TrtrBlocks.AIR;
+        AIR = register("air", new AirBlock(AbstractBlock.Settings.of(Material.AIR).noCollision().dropsNothing().air()));
         STONE = register("stone", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F)));
         GRANITE = register("granite", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.DIRT_BROWN).requiresTool().strength(1.5F, 6.0F)));
         POLISHED_GRANITE = register("polished_granite", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.DIRT_BROWN).requiresTool().strength(1.5F, 6.0F)));

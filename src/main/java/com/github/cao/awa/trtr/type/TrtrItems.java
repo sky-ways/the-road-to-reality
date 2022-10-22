@@ -38,6 +38,7 @@ import com.github.cao.awa.trtr.ore.silver.acanthite.crushed.*;
 import com.github.cao.awa.trtr.ore.silver.acanthite.powder.*;
 import com.github.cao.awa.trtr.ore.stone.crushed.*;
 import com.github.cao.awa.trtr.ore.stone.powder.*;
+import com.github.cao.awa.trtr.pebble.*;
 import com.github.cao.awa.trtr.plant.fibres.*;
 import com.github.cao.awa.trtr.power.storage.battery.*;
 import com.github.cao.awa.trtr.tool.hammer.iron.*;
@@ -120,6 +121,10 @@ public class TrtrItems {
 
     // Food materials
     public static final Item COCOA_POWDER = new CocoaPowder();
+
+    //
+    public static final Item PEBBLE = new Pebble();
+    public static final Item TREE_BRANCH = PEBBLE;
 
     public static void pre() {
     }

@@ -33,27 +33,13 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
     private static final Logger LOGGER = LogUtils.getLogger();
     private final BlockEntityType.BlockEntityFactory<? extends T> factory;
     private final Set<Block> blocks;
-    public static final BlockEntityType<PhotovoltaicPanelsBlockEntity> PHOTOVOLTAIC_PANELS = create("trtr:photovoltaic_panels", Builder.create(PhotovoltaicPanelsBlockEntity::new, TrtrBlocks.PHOTOVOLTAIC_PANELS));
-    public static final BlockEntityType<WaterVaporBlockEntity> WATER_VAPOR = create("trtr:water_vapor", Builder.create(WaterVaporBlockEntity::new, WATER_VAPOR_BLOCk));
-    public static final BlockEntityType<GearWheelBlockEntity> GEAR_WHEEL = create("trtr:gear_wheel", Builder.create(GearWheelBlockEntity::new, GEAR_WHEEL_BLOCK));
-    public static final BlockEntityType<UraniumBlockEntity> URANIUM = create("trtr:pitchblende", Builder.create(UraniumBlockEntity::new, PITCHBLENDE_BLOCK, DEEPSLATE_PITCHBLENDE_BLOCK, CARNOTITE_BLOCK, DEEPSLATE_CARNOTITE_BLOCK, AUTUNITE_BLOCK, DEEPSLATE_AUTUNITE_BLOCK));
-    public static final BlockEntityType<PotBlockEntity> POT = create("trtr:pot", Builder.create(PotBlockEntity::new, TrtrBlocks.POT));
-    public static final BlockEntityType<PanBlockEntity> PAN = create("trtr:pan", Builder.create(PanBlockEntity::new, TrtrBlocks.PAN));
-    public static final BlockEntityType<AirBlockEntity> AIR = create("trtr:air", Builder.create(AirBlockEntity::new, TrtrBlocks.AIR, DUMP_AIR));
-    public static final BlockEntityType<TrtrOreBlockEntity> ORE = create("trtr:ore", Builder.create(TrtrOreBlockEntity::new, EntrustParser.operation(new Block[TrtrOreBlock.ORES.size()], array -> {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = TrtrOreBlock.ORES.get(i);
-        }
-    })));
-    public static final BlockEntityType<MudStoveBlockEntity> MUD_STOVE = create("trtr:mud_stove", Builder.create(MudStoveBlockEntity::new, TrtrBlocks.MUD_STOVE));
-    public static final BlockEntityType<TrtrConventionalSlabEntity> SLAB_ENTITY = create("trtr:slab", Builder.create(TrtrConventionalSlabEntity::new, EntrustParser.operation(new Block[TrtrSlabBlock.SLABS.size()], array -> {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = TrtrSlabBlock.SLABS.get(i);
-        }
-    })));
 
     public TrtrBlockEntityType(BlockEntityType.BlockEntityFactory<? extends T> factory, Set<Block> blocks, Type<?> type) {
-        super(factory, blocks, type);
+        super(
+                factory,
+                blocks,
+                type
+        );
         this.factory = factory;
         this.blocks = blocks;
     }
@@ -63,18 +49,32 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
     }
 
     private static <T extends BlockEntity> BlockEntityType<T> create(String id, Builder<T> builder) {
-        if (builder.blocks().isEmpty()) {
-            LOGGER.warn("Block entity type {} requires at least one valid block to be defined!", id);
+        if (builder.blocks()
+                   .isEmpty()) {
+            LOGGER.warn(
+                    "Block entity type {} requires at least one valid block to be defined!",
+                    id
+            );
         }
 
-        Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id);
-        return Registry.register(Registry.BLOCK_ENTITY_TYPE, id, builder.build(type));
+        Type<?> type = Util.getChoiceType(
+                TypeReferences.BLOCK_ENTITY,
+                id
+        );
+        return Registry.register(
+                Registry.BLOCK_ENTITY_TYPE,
+                id,
+                builder.build(type)
+        );
     }
 
     @Nullable
     public T instantiate(BlockPos pos, BlockState state) {
-        return this.factory.create(pos, state);
-    }    public static final BlockEntityType<IronBlockEntity> IRON_BLOCK = create("minecraft:iron", Builder.create(IronBlockEntity::new, Blocks.IRON_BLOCK));
+        return this.factory.create(
+                pos,
+                state
+        );
+    }
 
     public boolean supports(BlockState state) {
         return this.blocks.contains(state.getBlock());
@@ -91,14 +91,142 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
         T create(BlockPos pos, BlockState state);
     }
 
-    public record Builder<T extends BlockEntity>(BlockEntityType.BlockEntityFactory<? extends T> factory, Set<Block> blocks) {
+    public record Builder<T extends BlockEntity>(BlockEntityType.BlockEntityFactory<? extends T> factory,
+                                                 Set<Block> blocks) {
         public static <T extends BlockEntity> Builder<T> create(BlockEntityType.BlockEntityFactory<? extends T> factory, Block... blocks) {
-            return new Builder<>(factory, ImmutableSet.copyOf(blocks));
+            return new Builder<>(
+                    factory,
+                    ImmutableSet.copyOf(blocks)
+            );
         }
 
         public BlockEntityType<T> build(Type<?> type) {
-            return new BlockEntityType<>(this.factory, this.blocks, type);
+            return new BlockEntityType<>(
+                    this.factory,
+                    this.blocks,
+                    type
+            );
         }
     }
+
+    public static final BlockEntityType<PhotovoltaicPanelsBlockEntity> PHOTOVOLTAIC_PANELS = create(
+            "trtr:photovoltaic_panels",
+            Builder.create(
+                    PhotovoltaicPanelsBlockEntity::new,
+                    TrtrBlocks.PHOTOVOLTAIC_PANELS
+            )
+    );
+
+
+    public static final BlockEntityType<WaterVaporBlockEntity> WATER_VAPOR = create(
+            "trtr:water_vapor",
+            Builder.create(
+                    WaterVaporBlockEntity::new,
+                    WATER_VAPOR_BLOCk
+            )
+    );
+
+
+    public static final BlockEntityType<GearWheelBlockEntity> GEAR_WHEEL = create(
+            "trtr:gear_wheel",
+            Builder.create(
+                    GearWheelBlockEntity::new,
+                    GEAR_WHEEL_BLOCK
+            )
+    );
+
+
+    public static final BlockEntityType<UraniumBlockEntity> URANIUM = create(
+            "trtr:pitchblende",
+            Builder.create(
+                    UraniumBlockEntity::new,
+                    PITCHBLENDE_BLOCK,
+                    DEEPSLATE_PITCHBLENDE_BLOCK,
+                    CARNOTITE_BLOCK,
+                    DEEPSLATE_CARNOTITE_BLOCK,
+                    AUTUNITE_BLOCK,
+                    DEEPSLATE_AUTUNITE_BLOCK
+            )
+    );
+
+
+    public static final BlockEntityType<PotBlockEntity> POT = create(
+            "trtr:pot",
+            Builder.create(
+                    PotBlockEntity::new,
+                    TrtrBlocks.POT
+            )
+    );
+
+
+    public static final BlockEntityType<PanBlockEntity> PAN = create(
+            "trtr:pan",
+            Builder.create(
+                    PanBlockEntity::new,
+                    TrtrBlocks.PAN
+            )
+    );
+
+
+    public static final BlockEntityType<AirBlockEntity> AIR = create(
+            "trtr:air",
+            Builder.create(
+                    AirBlockEntity::new,
+                    TEST_AIR
+            )
+    );
+
+
+    public static final BlockEntityType<AirBlockEntity> PEBBLE = create(
+            "trtr:pebble",
+            Builder.create(
+                    AirBlockEntity::new,
+                    LOOSE_PEBBLE_BLOCK
+            )
+    );
+    public static final BlockEntityType<TrtrOreBlockEntity> ORE = create(
+            "trtr:ore",
+            Builder.create(
+                    TrtrOreBlockEntity::new,
+                    EntrustParser.operation(
+                            new Block[TrtrOreBlock.ORES.size()],
+                            array -> {
+                                for (int i = 0; i < array.length; i++) {
+                                    array[i] = TrtrOreBlock.ORES.get(i);
+                                }
+                            }
+                    )
+            )
+    );
+    public static final BlockEntityType<MudStoveBlockEntity> MUD_STOVE = create(
+            "trtr:mud_stove",
+            Builder.create(
+                    MudStoveBlockEntity::new,
+                    TrtrBlocks.MUD_STOVE
+            )
+    );
+    public static final BlockEntityType<TrtrConventionalSlabEntity> SLAB_ENTITY = create(
+            "trtr:slab",
+            Builder.create(
+                    TrtrConventionalSlabEntity::new,
+                    EntrustParser.operation(
+                            new Block[TrtrSlabBlock.SLABS.size()],
+                            array -> {
+                                for (int i = 0; i < array.length; i++) {
+                                    array[i] = TrtrSlabBlock.SLABS.get(i);
+                                }
+                            }
+                    )
+            )
+    );
+
+
+    public static final BlockEntityType<IronBlockEntity> IRON_BLOCK = create(
+            "minecraft:iron",
+            Builder.create(
+                    IronBlockEntity::new,
+                    Blocks.IRON_BLOCK
+            )
+    );
 }
 
