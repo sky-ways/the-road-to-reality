@@ -1,0 +1,35 @@
+package com.github.cao.awa.trtr.util.io;
+
+import java.io.*;
+
+public class IOUtil {
+    public static void write(OutputStream output, InputStream input) throws IOException {
+        output.write(input.readAllBytes());
+        output.close();
+        input.close();
+    }
+
+    public static void write(OutputStream output, byte[] input) throws IOException {
+        output.write(input);
+        output.close();
+    }
+
+    public static void write(Writer writer, Reader reader) throws IOException {
+        char[] chars = new char[4096];
+        int length;
+        while ((length = reader.read(chars)) != - 1) {
+            writer.write(
+                    chars,
+                    0,
+                    length
+            );
+        }
+        writer.close();
+        reader.close();
+    }
+
+    public static void write(Writer writer, char[] information) throws IOException {
+        writer.write(information);
+        writer.close();
+    }
+}

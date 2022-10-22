@@ -6,11 +6,13 @@ import com.github.cao.awa.trtr.config.*;
 import com.github.cao.awa.trtr.database.*;
 import com.github.cao.awa.trtr.debuger.performance.tracker.*;
 import com.github.cao.awa.trtr.element.chemical.*;
+import com.github.cao.awa.trtr.factor.*;
 import com.github.cao.awa.trtr.heat.handler.*;
 import com.github.cao.awa.trtr.loader.resource.*;
 import com.github.cao.awa.trtr.ref.item.fire.*;
 import com.github.cao.awa.trtr.type.*;
 import com.github.cao.awa.trtr.util.*;
+import com.github.cao.awa.trtr.util.io.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.runnable.*;
@@ -26,9 +28,8 @@ public class TrtrMod implements ModInitializer {
     public static HeatManager heatManager = new HeatManager();
     public static AirManager airManager = new AirManager();
     public static SubmitTimeTracker timeTracker = new SubmitTimeTracker();
-    public static Counter counter = new Counter();
     public static FutureTaskOrder delayTasks = new FutureTaskOrder();
-    public static Configure configs = new Configure();
+    public static Configure configs = new Configure(SupplierTemplates.emptyString());
 
     public static InstancePropertiesDatabase propertiesDatabase = null;
 
@@ -48,33 +49,38 @@ public class TrtrMod implements ModInitializer {
     }
 
     public static void initConfig() {
-        File config = new File("config/the-road-to-reality/config.conf");
-        final Receptacle<String> configInformation = new Receptacle<>(null);
         try {
-            if (! config.isFile()) {
-                TrtrMod.LOGGER.info("Config not found, generating default config");
+            configs = new Configure(() -> {
+                File config = new File("config/the-road-to-reality/config.conf");
+                final Receptacle<String> configInformation = new Receptacle<>(null);
+                try {
+                    if (! config.isFile()) {
+                        TrtrMod.LOGGER.info("Config not found, generating default config");
 
-                config.getParentFile()
-                      .mkdirs();
-                configInformation.set(FileUtil.read(new InputStreamReader(Resources.getResource(
-                        "default-config.conf",
-                        Resources.class
-                ))));
-                EntrustExecution.tryTemporary(() -> {
-                    FileUtil.write(
-                            new BufferedWriter(new FileWriter(config)),
-                            configInformation.get()
-                    );
-                });
-            }
+                        config.getParentFile()
+                              .mkdirs();
+                        configInformation.set(FileUtil.read(new InputStreamReader(Resources.getResource(
+                                "default-config.conf",
+                                Resources.class
+                        ))));
+                        EntrustExecution.tryTemporary(() -> {
+                            IOUtil.write(
+                                    new BufferedWriter(new FileWriter(config)),
+                                    configInformation.get().toCharArray()
+                            );
+                        });
+                    }
 
-            if (configInformation.get() == null) {
-                configInformation.set(FileUtil.read(new BufferedReader(new FileReader(config))));
-            }
+                    if (configInformation.get() == null) {
+                        configInformation.set(FileUtil.read(new BufferedReader(new FileReader(config))));
+                    }
+                } catch (Exception e) {
 
-            configs = new Configure();
+                }
+                return configInformation.get();
+            });
 
-            configs.read(configInformation.get());
+            configs.load();
         } catch (Exception e) {
         }
     }

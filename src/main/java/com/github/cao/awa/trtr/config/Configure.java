@@ -6,25 +6,20 @@ import org.jetbrains.annotations.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.*;
 
 public class Configure {
     private static final Logger LOGGER = LogManager.getLogger();
     private final Map<String, Map<String, String>> warning = new Object2ObjectOpenHashMap<>();
     private final Map<String, String> configs = new Object2ObjectOpenHashMap<>();
+    private final Supplier<String> loader;
 
-    public static void main(String[] args) {
-        Configure configure = new Configure();
-        configure.warningWhen(
-                "db",
-                "leveldb1",
-                "The pure leveldb is deprecated"
-        );
-        configure.read("""
-                               # a
-                               # b
-                               db=leveldb # Line note
-                               """);
+    public Configure(Supplier<String> loader) {
+        this.loader = loader;
+    }
 
+    public void reload() {
+        load(loader.get());
     }
 
     @NotNull
@@ -51,7 +46,11 @@ public class Configure {
         this.configs.put(key, value);
     }
 
-    public void read(String configInformation) {
+    public void load() {
+        load(loader.get());
+    }
+
+    private void load(String configInformation) {
         BufferedReader reader = new BufferedReader(new StringReader(configInformation));
         String line;
         try {

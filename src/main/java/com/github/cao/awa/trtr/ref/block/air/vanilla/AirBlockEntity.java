@@ -4,6 +4,7 @@ import com.github.cao.awa.trtr.database.properties.*;
 import com.github.cao.awa.trtr.element.generator.*;
 import com.github.cao.awa.trtr.ref.block.air.*;
 import com.github.cao.awa.trtr.type.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.nbt.*;
@@ -12,7 +13,7 @@ import net.minecraft.network.listener.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public class AirBlockEntity extends BlockEntity implements ChemicalElementGenerator, PropertiesAccessible {
+public class AirBlockEntity extends BlockEntity implements ChemicalElementGenerator, GasElementGenerator, PropertiesAccessible {
     private final InstanceProperties properties = new InstanceProperties();
     private final TrtrAirBlock air;
 
@@ -45,11 +46,10 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
     }
 
     @Override
-    public void generateElements() {
-        if (air == null) {
-            return;
-        }
-        air.generateElements(world, pos, properties);
+    public void generateElement() {
+        EntrustExecution.notNull(air, airBlock -> {
+            airBlock.generateElements(world, pos, properties);
+        });
     }
 
     @Override
@@ -60,5 +60,12 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
     @Override
     public void setProperties(InstanceProperties properties) {
         this.properties.readProperties(properties);
+    }
+
+    @Override
+    public void generatePressures() {
+        EntrustExecution.notNull(air, airBlock -> {
+            airBlock.generatePressures(world, pos, properties);
+        });
     }
 }

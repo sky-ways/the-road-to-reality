@@ -100,7 +100,7 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
     }
 
     @Override
-    public void generatePressure(World world, BlockPos pos, InstanceProperties properties) {
+    public void generatePressures(World world, BlockPos pos, InstanceProperties properties) {
         properties.put(
                 "pressure",
                 new PressureKpa(101.3)

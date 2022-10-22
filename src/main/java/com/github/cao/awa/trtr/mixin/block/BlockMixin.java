@@ -1,16 +1,13 @@
 package com.github.cao.awa.trtr.mixin.block;
 
 import com.github.cao.awa.trtr.database.properties.*;
-import com.github.cao.awa.trtr.dev.dump.mixin.player.inventory.*;
 import com.github.cao.awa.trtr.element.generator.*;
-import com.github.cao.awa.trtr.mixin.item.entity.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
-import net.minecraft.stat.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -48,7 +45,7 @@ public abstract class BlockMixin {
         );
         BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof ChemicalElementGenerator elemental) {
-            elemental.generateElements();
+            elemental.generateElement();
         }
     }
 
@@ -58,7 +55,7 @@ public abstract class BlockMixin {
             getDroppedStacks(state,serverWorld, pos, blockEntity, entity, stack).forEach((stackx) -> {
                 dropStack(world, pos, stackx, itemEntity -> {
                     if (blockEntity instanceof ChemicalElementGenerator elementGenerator) {
-                        elementGenerator.generateElements();
+                        elementGenerator.generateElement();
                     }
                     if (itemEntity instanceof PropertiesAccessible accessible) {
                         if (blockEntity instanceof PropertiesAccessible blockAccessible) {

@@ -14,12 +14,12 @@ public class ShortUuidUtil {
     }
 
     private static String shorter(long l) {
-        char[] buf = new char[11];
-        long least = 0x3FL;
-        int length = 11;
+        char[] buf = new char[0B1011];
+        long least = 0B111111L;
+        int length = 0B1010;
         do {
-            buf[--length] = CHARS[(int) (l & least)];
-            l >>>= 6;
+            buf[length--] = CHARS[(int) (l & least)];
+            l >>>= 0B110;
         } while (l > 0);
         return new String(buf);
     }

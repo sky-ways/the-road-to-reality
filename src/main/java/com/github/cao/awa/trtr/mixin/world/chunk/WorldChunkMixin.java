@@ -1,6 +1,5 @@
 package com.github.cao.awa.trtr.mixin.world.chunk;
 
-import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.generator.*;
 import com.github.cao.awa.trtr.ref.block.*;
 import net.minecraft.block.entity.*;
@@ -24,7 +23,7 @@ public abstract class WorldChunkMixin {
             heatConductive.init(world);
         }
         if (blockEntity instanceof ChemicalElementGenerator generator) {
-            generator.generateElements();
+            generator.generateElement();
         }
     }
 }

@@ -11,5 +11,7 @@ public abstract class Pressure {
         this.value = value;
     }
 
-    public abstract PressurePa toPa();
+    public abstract Pressure convert(Pressure pressure);
+
+    public abstract String getName();
 }

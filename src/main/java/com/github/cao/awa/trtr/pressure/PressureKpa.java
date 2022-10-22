@@ -10,8 +10,13 @@ public class PressureKpa extends Pressure {
     }
 
     @Override
-    public PressurePa toPa() {
-        return new PressurePa(get() * 1000);
+    public Pressure convert(Pressure pressure) {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "Kpa";
     }
 
     public double get() {

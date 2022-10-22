@@ -103,7 +103,7 @@ public class MessageDigger {
         }
     }
 
-    public enum MD4 implements Sha {
+    public enum MD4 implements MD {
         MD_4("MD4");
 
         private final String instance;
@@ -118,7 +118,7 @@ public class MessageDigger {
         }
     }
 
-    public enum MD5 implements Sha {
+    public enum MD5 implements MD {
         MD_5("MD5");
 
         private final String instance;
@@ -136,7 +136,7 @@ public class MessageDigger {
     public interface Sha extends DigestAlgorithm {
     }
 
-    public interface Md extends DigestAlgorithm {
+    public interface MD extends DigestAlgorithm {
     }
 }
 

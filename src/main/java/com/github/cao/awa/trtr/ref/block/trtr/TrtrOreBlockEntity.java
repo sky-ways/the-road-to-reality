@@ -45,7 +45,7 @@ public class TrtrOreBlockEntity extends BlockEntity implements ChemicalElementGe
     }
 
     @Override
-    public void generateElements() {
+    public void generateElement() {
         if (ore == null) {
             return;
         }

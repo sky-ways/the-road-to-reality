@@ -1,8 +1,7 @@
 package com.github.cao.awa.trtr.database.file.storage;
 
 import com.github.cao.awa.trtr.database.file.compressor.*;
-import com.github.cao.awa.trtr.util.compressor.deflater.*;
-import com.github.cao.awa.trtr.util.compressor.lz4.*;
+import com.github.cao.awa.trtr.information.compressor.deflater.*;
 
 import java.io.*;
 import java.util.function.*;

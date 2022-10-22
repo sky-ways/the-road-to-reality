@@ -8,7 +8,7 @@ import org.json.*;
 
 public class LevelDbCachedDatabase extends InstancePropertiesDatabase {
     public LevelDbCachedDatabase(String path) {
-        super(new LevelDbStorage(path));
+        super(new LevelDbStorage(path, 0));
     }
 
     @Override
