@@ -41,8 +41,6 @@ public interface NuclearDiffusible {
 
             Box box = new Box(Math.floor(entityPos.getX()), Math.floor(entity.getY()), Math.floor(entityPos.getZ()), Math.floor(entityPos.getX()) + 1.1, entity.getEyeY() + 0.5, Math.floor(entityPos.getZ() + 1.1));
 
-            LOGGER.debug("Track start");
-
             Vec3d last = null;
 
             double radiation = radiation();
@@ -59,14 +57,11 @@ public interface NuclearDiffusible {
                 radiation -= TrtrBlockRadiationResistance.get(world.getBlockState(new BlockPos(current)));
 
                 if (box.contains(current)) {
-                    LOGGER.debug("Nuclear tracked: " + current);
                     break;
                 } else {
-                    LOGGER.debug("Nuclear tracking: " + current + " ? " + box);
                 }
 
                 if (failed-- == 0 || current.equals(last) || radiation < 0) {
-                    LOGGER.debug("Track failed: " + current + " ? " + box);
                     break;
                 }
 

@@ -13,9 +13,15 @@ public class TrtrClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         TrtrScreenType.pre();
-        BlockEntityRendererRegistry.register(TrtrBlockEntityType.SLAB_ENTITY, TrtrSlabBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(
+                TrtrBlockEntityType.SLAB_ENTITY,
+                TrtrSlabBlockEntityRenderer::new
+        );
 
-//        EntityRendererRegistry.register(TrtrEntityType.ELECTRIC_WIRE, ElectricWireRender::new);
-                EntityRendererRegistry.register(TrtrEntityType.GEARWHEEL, GearWheelRender::new);
+        //        EntityRendererRegistry.register(TrtrEntityType.ELECTRIC_WIRE, ElectricWireRender::new);
+        EntityRendererRegistry.register(
+                TrtrEntityType.GEARWHEEL,
+                GearWheelRender::new
+        );
     }
 }

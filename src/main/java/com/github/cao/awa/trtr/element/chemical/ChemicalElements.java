@@ -21,7 +21,7 @@ public class ChemicalElements {
     public static final AluminumElement ELEMENT_ALUMINUM = register(new AluminumElement());
     public static final NitrogenElement ELEMENT_NITROGEN = register(new NitrogenElement());
 
-    public static final Oxygen OXYGEN = register(new Oxygen());
+    public static final Air AIR = register(new Air());
     public static final Nitrogen NITROGEN = register(new Nitrogen());
 
     public static final CalciumCarbonate CALCIUM_CARBONATE = register(new CalciumCarbonate());

@@ -171,20 +171,5 @@ public class FileUtil {
         out.close();
         tempFile.delete();
     }
-
-    public static String read(Reader reader) {
-        try {
-            char[] chars = new char[4096];
-            int length;
-            StringBuilder builder = new StringBuilder();
-            while ((length = reader.read(chars)) != - 1) {
-                builder.append(chars, 0, length);
-            }
-            reader.close();
-            return builder.toString();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
 

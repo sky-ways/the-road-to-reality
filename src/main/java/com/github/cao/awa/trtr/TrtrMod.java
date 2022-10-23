@@ -59,20 +59,20 @@ public class TrtrMod implements ModInitializer {
 
                         config.getParentFile()
                               .mkdirs();
-                        configInformation.set(FileUtil.read(new InputStreamReader(Resources.getResource(
+                        configInformation.set(IOUtil.read(Resources.getResource(
                                 "default-config.conf",
                                 Resources.class
-                        ))));
+                        )));
                         EntrustExecution.tryTemporary(() -> {
                             IOUtil.write(
                                     new BufferedWriter(new FileWriter(config)),
-                                    configInformation.get().toCharArray()
+                                    configInformation.get()
                             );
                         });
                     }
 
                     if (configInformation.get() == null) {
-                        configInformation.set(FileUtil.read(new BufferedReader(new FileReader(config))));
+                        configInformation.set(IOUtil.read(new BufferedReader(new FileReader(config))));
                     }
                 } catch (Exception e) {
 

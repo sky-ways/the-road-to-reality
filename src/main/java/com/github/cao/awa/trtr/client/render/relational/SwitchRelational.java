@@ -7,6 +7,7 @@ import org.json.*;
 
 import java.util.*;
 
+// todo
 public class SwitchRelational {
     public static void main(String[] args) {
         Map<String, WeightedUnbakedModel> map = Maps.newHashMap();

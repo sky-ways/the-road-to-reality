@@ -15,7 +15,15 @@ public class Mathematics extends MathHelper {
         return new BigDecimal(value).divideToIntegralValue(new BigDecimal(truncate));
     }
 
-    static int longSize(long x) {
+    /**
+     * Returns the string representation size for a given long value.
+     *
+     * @param x Long value
+     * @return String size
+     *
+     * @see java.lang.Long#stringSize(long)
+     */
+    static int stringSize(long x) {
         int d = 1;
         if (x > -1) {
             d = 0;

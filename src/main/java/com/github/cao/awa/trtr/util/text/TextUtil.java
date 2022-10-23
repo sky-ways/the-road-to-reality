@@ -2,11 +2,27 @@ package com.github.cao.awa.trtr.util.text;
 
 import it.unimi.dsi.fastutil.chars.*;
 import it.unimi.dsi.fastutil.objects.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
+/**
+ * Processing string.
+ *
+ * @author cao_awa
+ */
 public class TextUtil {
-    public static List<String> partitionToList(String str, int size) {
+    /**
+     * Do partition for abiding size. <br>
+     *
+     * @param str String
+     * @param size Partition size
+     * @return Partitioned strings
+     *
+     * @see #partitionToList(String, int, boolean)
+     */
+    @NotNull
+    public static List<String> partitionToList(@NotNull String str, int size) {
         return partitionToList(
                 str,
                 size,
@@ -14,7 +30,30 @@ public class TextUtil {
         );
     }
 
-    public static List<String> partitionToList(String str, int size, boolean saveUnnecessary) {
+    /**
+     * Do partition for abiding size. <br>
+     * <br>
+     *
+     * <pre>
+     * Sample1:
+     *      Process string "AAABBBCCCDDD" as size 3.
+     *      Result will be ["AAA", "BBB", "CCC", "DDD"].
+     * </pre>
+     *
+     * <pre>
+     * Sample2:
+     *      Process string "AAABBBPPPP" as size 3.
+     *      If save unnecessary data, Result will be ["AAA", "BBB", "PPP", "P"].
+     *      Else then will be ["AAA", "BBB", "PPP"].
+     * </pre>
+     *
+     * @param str String
+     * @param size Partition size
+     * @param saveUnnecessary Save unnecessary or not
+     * @return Partitioned strings
+     */
+    @NotNull
+    public static List<String> partitionToList(@NotNull String str, int size, boolean saveUnnecessary) {
         int capacity = str.length() / size + 1;
         List<String> result = new ObjectArrayList<>(capacity);
         int cursor = 0;
@@ -36,7 +75,17 @@ public class TextUtil {
         return result;
     }
 
-    public static String[] partitionToArray(String str, int size) {
+    /**
+     * Do partition for abiding size. <br>
+     *
+     * @param str String
+     * @param size Partition size
+     * @return Partitioned strings
+     *
+     * @see #partitionToArray(String, int, boolean)
+     */
+    @NotNull
+    public static String[] partitionToArray(@NotNull String str, int size) {
         return partitionToArray(
                 str,
                 size,
@@ -44,7 +93,17 @@ public class TextUtil {
         );
     }
 
-    public static String[] partitionToArray(String str, int size, boolean saveUnnecessary) {
+    /**
+     * Do partition for abiding size. <br>
+     *
+     * @param str String
+     * @param size Partition size
+     * @return Partitioned strings
+     *
+     * @see #partitionToList(String, int, boolean)
+     */
+    @NotNull
+    public static String[] partitionToArray(@NotNull String str, int size, boolean saveUnnecessary) {
         int capacity = str.length() / size + 1;
         String[] strings = new String[capacity];
         int cursor = 0;
@@ -71,7 +130,8 @@ public class TextUtil {
         return strings;
     }
 
-    public static List<String> equivalentRepeated(String str) {
+    @NotNull
+    public static List<String> equivalentRepeated(@NotNull String str) {
         List<String> result = new ObjectArrayList<>();
         StringBuilder builder = new StringBuilder();
         char last = str.charAt(0);

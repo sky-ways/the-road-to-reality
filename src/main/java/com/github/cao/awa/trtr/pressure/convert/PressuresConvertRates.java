@@ -10,14 +10,14 @@ public class PressuresConvertRates {
 
     public static void pre() {
         register(
-                "Kpa",
+                "kPa",
                 "Pa",
                 1.0E-03
         );
 
         register(
                 "Pa",
-                "Kpa",
+                "kPa",
                 1.0E03
         );
     }

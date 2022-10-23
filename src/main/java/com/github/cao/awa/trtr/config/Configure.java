@@ -8,48 +8,41 @@ import java.io.*;
 import java.util.*;
 import java.util.function.*;
 
+/**
+ * Configuration readonly, changes will temporally apply.
+ * Will not rewrite to file.
+ *
+ * @author cao_awa
+ */
 public class Configure {
     private static final Logger LOGGER = LogManager.getLogger();
     private final Map<String, Map<String, String>> warning = new Object2ObjectOpenHashMap<>();
     private final Map<String, String> configs = new Object2ObjectOpenHashMap<>();
     private final Supplier<String> loader;
 
+    /**
+     * Setting basic prepares.
+     *
+     * @param loader
+     *         Support loading config information
+     */
     public Configure(Supplier<String> loader) {
         this.loader = loader;
     }
 
+    /**
+     * Reload configurations
+     */
     public void reload() {
         load(loader.get());
     }
 
-    @NotNull
-    public String get(String key) {
-        return this.configs.getOrDefault(key, "");
-    }
-
-    public void warningWhen(String key, String value, String info) {
-        Map<String, String> map = this.warning.get(key);
-        if (map == null) {
-            map = new Object2ObjectOpenHashMap<>();
-            this.warning.put(
-                    key,
-                    map
-            );
-        }
-        map.put(
-                value,
-                info
-        );
-    }
-
-    public void set(String key, String value) {
-        this.configs.put(key, value);
-    }
-
-    public void load() {
-        load(loader.get());
-    }
-
+    /**
+     * Load config from cold data
+     *
+     * @param configInformation
+     *         Config deltas
+     */
     private void load(String configInformation) {
         BufferedReader reader = new BufferedReader(new StringReader(configInformation));
         String line;
@@ -93,9 +86,12 @@ public class Configure {
 
                     LOGGER.info("Processing config: " + key + " = " + value);
 
-                    set(key, value);
+                    set(
+                            key,
+                            value
+                    );
 
-                    Map<String,String> warning = this.warning.get(key);
+                    Map<String, String> warning = this.warning.get(key);
                     if (warning != null) {
                         String info = warning.get(value);
                         if (info != null) {
@@ -109,11 +105,80 @@ public class Configure {
         }
     }
 
+    /**
+     * Set config.
+     *
+     * @param key
+     *         Config key
+     * @param value
+     *         Config value
+     */
+    public void set(String key, String value) {
+        this.configs.put(
+                key,
+                value
+        );
+    }
+
+    /**
+     * Get config.
+     *
+     * @param key
+     *         Config key
+     * @return Config value
+     */
+    @NotNull
+    public String get(String key) {
+        return this.configs.getOrDefault(
+                key,
+                ""
+        );
+    }
+
+    public void load() {
+        load(loader.get());
+    }
+
+    /**
+     * Prepare warning for readied value match to expect values.
+     *
+     * @param key
+     *         Config key
+     * @param values
+     *         Config values
+     * @param info
+     *         Warning when config match to target
+     */
     public void warningWhen(String key, List<String> values, String info) {
         values.forEach(value -> warningWhen(
                 key,
                 value,
                 info
         ));
+    }
+
+    /**
+     * Prepare warning for readied value match to expect value.
+     *
+     * @param key
+     *         Config key
+     * @param value
+     *         Config value
+     * @param info
+     *         Warning when config match to target
+     */
+    public void warningWhen(String key, String value, String info) {
+        Map<String, String> map = this.warning.get(key);
+        if (map == null) {
+            map = new Object2ObjectOpenHashMap<>();
+            this.warning.put(
+                    key,
+                    map
+            );
+        }
+        map.put(
+                value,
+                info
+        );
     }
 }

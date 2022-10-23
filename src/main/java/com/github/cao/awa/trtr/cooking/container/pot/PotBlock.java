@@ -13,6 +13,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+// todo
 public class PotBlock extends TrtrBlockWithEntity<PotBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:pot");
 

@@ -9,10 +9,9 @@ public class MessageDigger {
         MessageDigest messageDigest = MessageDigest.getInstance(sha.instanceName());
         messageDigest.update(message.getBytes(StandardCharsets.UTF_8));
         StringBuilder result = new StringBuilder();
-        String hexString;
         for (byte b : messageDigest.digest()) {
-            hexString = Integer.toHexString(b & 255);
-            if (hexString.length() < 2) {
+            String hexString = Integer.toHexString(b & 0xFF);
+            if (2 > hexString.length()) {
                 result.append(0);
             }
             result.append(hexString);
@@ -67,10 +66,6 @@ public class MessageDigger {
         }
 
         return result.toString();
-    }
-
-    public interface DigestAlgorithm {
-        String instanceName();
     }
 
     public enum Sha1 implements Sha {
@@ -131,6 +126,10 @@ public class MessageDigger {
         public String instanceName() {
             return instance;
         }
+    }
+
+    public interface DigestAlgorithm {
+        String instanceName();
     }
 
     public interface Sha extends DigestAlgorithm {

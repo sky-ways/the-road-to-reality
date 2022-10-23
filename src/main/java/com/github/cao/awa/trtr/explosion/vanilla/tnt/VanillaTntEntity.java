@@ -14,12 +14,13 @@ import org.jetbrains.annotations.*;
 import static com.github.cao.awa.trtr.TrtrMod.delayTasks;
 
 public class VanillaTntEntity extends Entity {
+    private static final int POWER = 8;
     private static final TrackedData<Integer> FUSE;
     private static final int DEFAULT_FUSE = 0;
 
     static {
         FUSE = DataTracker.registerData(
-                net.minecraft.entity.TntEntity.class,
+                TntEntity.class,
                 TrackedDataHandlerRegistry.INTEGER
         );
     }
@@ -50,7 +51,7 @@ public class VanillaTntEntity extends Entity {
         this.causingEntity = igniter;
     }
 
-    public VanillaTntEntity(EntityType<? extends net.minecraft.entity.TntEntity> entityType, World world) {
+    public VanillaTntEntity(EntityType<? extends TntEntity> entityType, World world) {
         super(
                 entityType,
                 world
@@ -116,10 +117,6 @@ public class VanillaTntEntity extends Entity {
         return MoveEffect.NONE;
     }
 
-    public boolean canHit() {
-        return ! this.isRemoved();
-    }
-
     protected void readCustomDataFromNbt(NbtCompound nbt) {
     }
 
@@ -141,7 +138,7 @@ public class VanillaTntEntity extends Entity {
                         this.getX(),
                         this.getBodyY(0.0625D),
                         this.getZ(),
-                        4,
+                        POWER,
                         Explosion.DestructionType.BREAK
                 ),
                 1

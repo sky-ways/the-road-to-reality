@@ -16,6 +16,7 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+// todo
 public class PanBlock extends TrtrBlockWithEntity<PanBlockEntity> {
     public static final Identifier IDENTIFIER = new Identifier("trtr:pan");
 
