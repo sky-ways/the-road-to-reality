@@ -4,6 +4,7 @@ import com.github.cao.awa.trtr.database.properties.*;
 import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.content.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
+import com.github.cao.awa.trtr.element.chemical.substance.*;
 import com.github.cao.awa.trtr.pressure.*;
 import com.github.cao.awa.trtr.ref.block.air.vanilla.*;
 import com.github.cao.awa.trtr.register.*;
@@ -66,9 +67,9 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
     @Override
     public void generateElements(World world, BlockPos pos, ChemicalElementProperties properties) {
         properties.put(
-                ChemicalElements.AIR,
+                ChemicalSubstances.OXYGEN,
                 new ChemicalContent(
-                        ChemicalElements.AIR,
+                        ChemicalSubstances.OXYGEN,
                         random.nextDouble(
                                 19,
                                 24
@@ -78,9 +79,9 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
         );
 
         properties.put(
-                ChemicalElements.NITROGEN,
+                ChemicalSubstances.NITROGEN,
                 new ChemicalContent(
-                        ChemicalElements.NITROGEN,
+                        ChemicalSubstances.NITROGEN,
                         random.nextDouble(
                                 0,
                                 5
@@ -90,9 +91,9 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
         );
 
         properties.put(
-                ChemicalElements.ELEMENT_CARBON,
+                ChemicalSubstances.CARBON_DIOXIDE,
                 new ChemicalContent(
-                        ChemicalElements.ELEMENT_CARBON,
+                        ChemicalSubstances.CARBON_DIOXIDE,
                         11.4,
                         0
                 )

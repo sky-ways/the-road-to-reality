@@ -1,8 +1,9 @@
 package com.github.cao.awa.trtr.ore.limestone;
 
-import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.content.*;
+import com.github.cao.awa.trtr.element.chemical.elements.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
+import com.github.cao.awa.trtr.element.chemical.substance.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -19,9 +20,9 @@ public class Limestone extends TrtrOreBlock {
     @Override
     public void generateElements(World world, BlockPos pos, ChemicalElementProperties properties) {
         properties.put(
-                ChemicalElements.CALCIUM_CARBONATE,
+                ChemicalSubstances.CALCIUM_CARBONATE,
                 new ChemicalContent(
-                        ChemicalElements.CALCIUM_CARBONATE,
+                        ChemicalSubstances.CALCIUM_CARBONATE,
                         random.nextDouble(70, 85),
                         0
                 )

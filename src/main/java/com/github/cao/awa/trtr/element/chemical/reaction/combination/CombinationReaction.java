@@ -1,9 +1,8 @@
 package com.github.cao.awa.trtr.element.chemical.reaction.combination;
 
-import com.github.cao.awa.trtr.element.chemical.*;
+import com.github.cao.awa.trtr.element.chemical.elements.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.action.*;
-import com.github.cao.awa.trtr.element.chemical.reaction.type.*;
 import it.unimi.dsi.fastutil.objects.*;
 
 import java.util.*;

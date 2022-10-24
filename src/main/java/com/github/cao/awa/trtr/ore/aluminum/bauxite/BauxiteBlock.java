@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.ore.aluminum.bauxite;
 
-import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.content.*;
+import com.github.cao.awa.trtr.element.chemical.elements.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.util.*;
