@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.six.lead;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class LeadElement extends ChemicalElement {
     // todo

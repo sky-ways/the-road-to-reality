@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.six.barium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class BariumElement extends ChemicalElement {
     // todo

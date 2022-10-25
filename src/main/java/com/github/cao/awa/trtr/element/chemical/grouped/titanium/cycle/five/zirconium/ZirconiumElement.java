@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.titanium.cycle.five.zirconium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class ZirconiumElement extends ChemicalElement {
     // todo

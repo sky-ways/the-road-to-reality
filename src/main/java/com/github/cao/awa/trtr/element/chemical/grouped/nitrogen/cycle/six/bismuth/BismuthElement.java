@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.nitrogen.cycle.six.bismuth;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class BismuthElement extends ChemicalElement {
     // todo

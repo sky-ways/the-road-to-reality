@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.scandium.cycle.four.scandium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class ScandiumElement extends ChemicalElement {
     // todo

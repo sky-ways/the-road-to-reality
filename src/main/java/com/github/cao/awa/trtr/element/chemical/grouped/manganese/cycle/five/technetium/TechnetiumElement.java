@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.manganese.cycle.five.technetium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class TechnetiumElement extends ChemicalElement {
     // todo

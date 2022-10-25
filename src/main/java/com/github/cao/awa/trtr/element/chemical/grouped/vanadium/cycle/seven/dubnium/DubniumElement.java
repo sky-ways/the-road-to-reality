@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.vanadium.cycle.seven.dubnium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class DubniumElement extends ChemicalElement {
     // todo

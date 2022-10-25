@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.copper.cycle.seven.roentgenium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class RoentgeniumElement extends ChemicalElement {
     // todo

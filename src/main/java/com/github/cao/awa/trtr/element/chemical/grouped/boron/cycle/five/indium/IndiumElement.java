@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.five.indium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class IndiumElement extends ChemicalElement {
     // todo

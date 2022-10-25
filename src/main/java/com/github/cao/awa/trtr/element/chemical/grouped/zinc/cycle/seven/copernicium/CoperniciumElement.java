@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.zinc.cycle.seven.copernicium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class CoperniciumElement extends ChemicalElement {
     // todo

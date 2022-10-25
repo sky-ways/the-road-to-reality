@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.cobalt.cycle.six.iridium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class IridiumElement extends ChemicalElement {
     // todo

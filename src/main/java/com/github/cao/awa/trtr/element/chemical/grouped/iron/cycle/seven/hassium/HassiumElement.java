@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.seven.hassium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class HassiumElement extends ChemicalElement {
     // todo

@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.nickel.cycle.four.nickel;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class NickelElement extends ChemicalElement {
     // todo

@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.lithium.cycle.seven.francium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class FranciumElement extends ChemicalElement {
     // todo

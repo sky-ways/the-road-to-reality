@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.vanadium.cycle.four.vanadium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class VanadiumElement extends ChemicalElement {
     // todo

@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.four.germanium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class GermaniumElement extends ChemicalElement {
     // todo

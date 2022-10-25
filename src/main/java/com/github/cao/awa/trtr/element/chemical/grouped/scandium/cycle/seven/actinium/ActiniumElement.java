@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.scandium.cycle.seven.actinium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class ActiniumElement extends ChemicalElement {
     // todo

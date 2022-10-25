@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.element.chemical.properties;
 
+import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.content.*;
-import com.github.cao.awa.trtr.element.chemical.elements.*;
 import it.unimi.dsi.fastutil.objects.*;
 import org.json.*;
 

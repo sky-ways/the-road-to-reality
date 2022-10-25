@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.manganese.cycle.four.manganese;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class ManganeseElement extends ChemicalElement {
     // todo

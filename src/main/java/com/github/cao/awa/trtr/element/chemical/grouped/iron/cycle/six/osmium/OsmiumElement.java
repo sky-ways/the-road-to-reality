@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.six.osmium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class OsmiumElement extends ChemicalElement {
     // todo

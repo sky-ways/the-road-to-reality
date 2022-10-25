@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.three.magnesium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class MagnesiumElement extends ChemicalElement {
     // todo

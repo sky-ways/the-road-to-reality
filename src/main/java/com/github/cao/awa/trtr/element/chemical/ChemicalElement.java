@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.element.chemical.elements;
+package com.github.cao.awa.trtr.element.chemical;
 
 import com.github.cao.awa.trtr.element.chemical.adapter.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.type.*;

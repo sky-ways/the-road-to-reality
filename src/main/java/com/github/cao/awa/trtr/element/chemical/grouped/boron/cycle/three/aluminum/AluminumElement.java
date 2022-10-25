@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.three.aluminum;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class AluminumElement extends ChemicalElement {
     // todo

@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.four.iron;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class IronElement extends ChemicalElement {
     // todo

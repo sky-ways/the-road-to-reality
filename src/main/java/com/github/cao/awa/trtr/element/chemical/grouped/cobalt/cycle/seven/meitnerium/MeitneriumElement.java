@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.cobalt.cycle.seven.meitnerium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class MeitneriumElement extends ChemicalElement {
     // todo

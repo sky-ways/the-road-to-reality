@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.helium.cycle.four.krypton;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class KryptonElement extends ChemicalElement {
     // todo

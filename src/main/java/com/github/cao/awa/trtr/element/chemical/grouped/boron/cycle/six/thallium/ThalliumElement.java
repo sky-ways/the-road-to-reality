@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.six.thallium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class ThalliumElement extends ChemicalElement {
     // todo

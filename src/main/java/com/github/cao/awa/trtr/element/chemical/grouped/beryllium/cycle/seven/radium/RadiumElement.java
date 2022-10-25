@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.seven.radium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class RadiumElement extends ChemicalElement {
     // todo

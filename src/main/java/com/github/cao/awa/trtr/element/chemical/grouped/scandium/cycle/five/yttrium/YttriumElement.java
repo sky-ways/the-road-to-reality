@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.scandium.cycle.five.yttrium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class YttriumElement extends ChemicalElement {
     // todo

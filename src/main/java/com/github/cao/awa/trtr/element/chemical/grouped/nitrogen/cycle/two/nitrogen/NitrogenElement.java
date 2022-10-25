@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.nitrogen.cycle.two.nitrogen;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class NitrogenElement extends ChemicalElement {
     // todo

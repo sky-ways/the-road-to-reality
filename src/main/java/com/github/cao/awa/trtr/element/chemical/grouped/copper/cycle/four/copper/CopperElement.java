@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.copper.cycle.four.copper;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class CopperElement extends ChemicalElement {
     // todo

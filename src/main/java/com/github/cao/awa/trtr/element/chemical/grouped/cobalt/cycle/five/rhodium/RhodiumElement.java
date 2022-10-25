@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.cobalt.cycle.five.rhodium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class RhodiumElement extends ChemicalElement {
     // todo

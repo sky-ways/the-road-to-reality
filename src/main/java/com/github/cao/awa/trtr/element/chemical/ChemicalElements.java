@@ -1,5 +1,19 @@
-package com.github.cao.awa.trtr.element.chemical.elements;
+package com.github.cao.awa.trtr.element.chemical;
 
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.americium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.berkelium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.californium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.curium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.einsteinium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.fermium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.lawrencium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.mendelevium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.neptunium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.nobelium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.plutonium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.protactinium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.thorium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.actinium.uranium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.five.strontium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.four.calcium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.seven.radium.*;
@@ -40,6 +54,20 @@ import com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.five.rutheniu
 import com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.four.iron.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.seven.hassium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.iron.cycle.six.osmium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.cerium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.dysprosium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.erbium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.europium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.gadolinium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.holmium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.lutetium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.neodymium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.praseodymium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.promethium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.samarium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.terbium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.thulium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.lanthanum.ytterbium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.lithium.cycle.five.rubidium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.lithium.cycle.four.potassium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.lithium.cycle.one.hydrogen.*;
@@ -206,6 +234,38 @@ public class ChemicalElements {
     public static final XenonElement XENON_ELEMENT = register(new XenonElement());
     public static final RadonElement RADON_ELEMENT = register(new RadonElement());
     public static final OganessonElement OGANESSON_ELEMENT = register(new OganessonElement());
+
+    // Group "Actinium"
+    public static final ThoriumElement THORIUM_ELEMENT = register(new ThoriumElement());
+    public static final ProtactiniumElement PROTACTINIUM_ELEMENT = register(new ProtactiniumElement());
+    public static final UraniumElement URANIUM_ELEMENT = register(new UraniumElement());
+    public static final NeptuniumElement NEPTUNIUM_ELEMENT = register(new NeptuniumElement());
+    public static final PlutoniumElement PLUTONIUM_ELEMENT = register(new PlutoniumElement());
+    public static final AmericiumElement AMERICIUM_ELEMENT = register(new AmericiumElement());
+    public static final CuriumElement CURIUM_ELEMENT = register(new CuriumElement());
+    public static final BerkeliumElement BERKELIUM_ELEMENT = register(new BerkeliumElement());
+    public static final CaliforniumElement CALIFORNIUM_ELEMENT = register(new CaliforniumElement());
+    public static final EinsteiniumElement EINSTEINIUM_ELEMENT = register(new EinsteiniumElement());
+    public static final FermiumElement FERMIUM_ELEMENT = register(new FermiumElement());
+    public static final MendeleviumElement MENDELEVIUM_ELEMENT = register(new MendeleviumElement());
+    public static final NobeliumElement NOBELIUM_ELEMENT = register(new NobeliumElement());
+    public static final LawrenciumElement LAWRENCIUM_ELEMENT = register(new LawrenciumElement());
+
+    // Group "Lanthanum"
+    public static final CeriumElement CERIUM_ELEMENT = register(new CeriumElement());
+    public static final PraseodymiumElement PRASEODYMIUM_ELEMENT = register(new PraseodymiumElement());
+    public static final NeodymiumElement NEODYMIUM_ELEMENT = register(new NeodymiumElement());
+    public static final PromethiumElement PROMETHIUM_ELEMENT = register(new PromethiumElement());
+    public static final SamariumElement SAMARIUM_ELEMENT = register(new SamariumElement());
+    public static final EuropiumElement EUROPIUM_ELEMENT = register(new EuropiumElement());
+    public static final GadoliniumElement GADOLINIUM_ELEMENT = register(new GadoliniumElement());
+    public static final TerbiumElement TERBIUM_ELEMENT = register(new TerbiumElement());
+    public static final DysprosiumElement DYSPROSIUM_ELEMENT = register(new DysprosiumElement());
+    public static final HolmiumElement HOLMIUM_ELEMENT = register(new HolmiumElement());
+    public static final ErbiumElement ERBIUM_ELEMENT = register(new ErbiumElement());
+    public static final ThuliumElement THULIUM_ELEMENT = register(new ThuliumElement());
+    public static final YtterbiumElement YTTERBIUM_ELEMENT = register(new YtterbiumElement());
+    public static final LutetiumElement LUTETIUM_ELEMENT = register(new LutetiumElement());
 
     public static ChemicalElement get(String name) {
         return NAME_TO_ELEMENTS.get(name);

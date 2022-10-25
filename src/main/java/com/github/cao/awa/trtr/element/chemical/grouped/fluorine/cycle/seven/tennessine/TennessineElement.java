@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.fluorine.cycle.seven.tennessine;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class TennessineElement extends ChemicalElement {
     public TennessineElement() {

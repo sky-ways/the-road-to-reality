@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.lithium.cycle.one.hydrogen;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class HydrogenElement extends ChemicalElement {
     // todo

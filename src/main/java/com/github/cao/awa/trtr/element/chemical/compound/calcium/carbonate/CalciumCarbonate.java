@@ -1,6 +1,6 @@
-package com.github.cao.awa.trtr.element.chemical.elements.compound.calcium.carbonate;
+package com.github.cao.awa.trtr.element.chemical.compound.calcium.carbonate;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class CalciumCarbonate extends ChemicalElement {
     // todo

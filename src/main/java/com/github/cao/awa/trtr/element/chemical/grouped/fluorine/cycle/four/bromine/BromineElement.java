@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.fluorine.cycle.four.bromine;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class BromineElement extends ChemicalElement {
     public BromineElement() {

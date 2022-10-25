@@ -1,6 +1,5 @@
 package com.github.cao.awa.trtr.element.chemical;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
 import com.github.cao.awa.trtr.element.chemical.elements.carbon.reaction.combination.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.combination.*;
 import it.unimi.dsi.fastutil.objects.*;

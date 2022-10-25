@@ -1,6 +1,6 @@
-package com.github.cao.awa.trtr.element.chemical.elements.compound.carbon.dioxide;
+package com.github.cao.awa.trtr.element.chemical.compound.carbon.dioxide;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class CarbonDioxide extends ChemicalElement {
     // todo

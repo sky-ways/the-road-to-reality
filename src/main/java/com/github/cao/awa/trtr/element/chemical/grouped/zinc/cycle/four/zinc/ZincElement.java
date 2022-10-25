@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.zinc.cycle.four.zinc;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class ZincElement extends ChemicalElement {
     // todo

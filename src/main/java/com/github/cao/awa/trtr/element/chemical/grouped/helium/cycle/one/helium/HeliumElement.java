@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.helium.cycle.one.helium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class HeliumElement extends ChemicalElement {
     // todo

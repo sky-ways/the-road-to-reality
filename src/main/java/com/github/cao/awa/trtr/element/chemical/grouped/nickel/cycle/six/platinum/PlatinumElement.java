@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.nickel.cycle.six.platinum;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class PlatinumElement extends ChemicalElement {
     // todo

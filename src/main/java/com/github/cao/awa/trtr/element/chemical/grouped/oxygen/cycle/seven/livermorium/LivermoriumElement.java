@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.oxygen.cycle.seven.livermorium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class LivermoriumElement extends ChemicalElement {
     public LivermoriumElement() {

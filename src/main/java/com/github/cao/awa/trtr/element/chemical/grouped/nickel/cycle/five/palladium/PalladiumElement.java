@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.nickel.cycle.five.palladium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class PalladiumElement extends ChemicalElement {
     // todo

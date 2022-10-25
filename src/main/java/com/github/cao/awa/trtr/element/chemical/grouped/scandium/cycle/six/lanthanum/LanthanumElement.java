@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.scandium.cycle.six.lanthanum;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class LanthanumElement extends ChemicalElement {
     // todo

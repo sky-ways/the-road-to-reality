@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.chromium.cycle.seven.seaborgium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class SeaborgiumElement extends ChemicalElement {
     // todo

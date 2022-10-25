@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.ore.aluminum.bauxite;
 
+import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.content.*;
-import com.github.cao.awa.trtr.element.chemical.elements.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.util.*;
@@ -19,18 +19,18 @@ public class BauxiteBlock extends TrtrOreBlock {
     @Override
     public void generateElements(World world, BlockPos pos, ChemicalElementProperties properties) {
         properties.put(
-                ChemicalElements.ELEMENT_ALUMINUM,
+                ChemicalElements.ALUMINUM_ELEMENT,
                 new ChemicalContent(
-                        ChemicalElements.ELEMENT_ALUMINUM,
+                        ChemicalElements.ALUMINUM_ELEMENT,
                         random.nextDouble(70, 85),
                         0
                 )
         );
 
         properties.put(
-                ChemicalElements.ELEMENT_CARBON,
+                ChemicalElements.ALUMINUM_ELEMENT,
                 new ChemicalContent(
-                        ChemicalElements.ELEMENT_CARBON,
+                        ChemicalElements.ALUMINUM_ELEMENT,
                         random.nextDouble(0, 5),
                         0
                 )

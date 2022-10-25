@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.four.gallium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class GalliumElement extends ChemicalElement {
     // todo

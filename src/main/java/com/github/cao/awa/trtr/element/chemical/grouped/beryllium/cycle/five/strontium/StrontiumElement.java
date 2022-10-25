@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.beryllium.cycle.five.strontium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class StrontiumElement extends ChemicalElement {
     // todo

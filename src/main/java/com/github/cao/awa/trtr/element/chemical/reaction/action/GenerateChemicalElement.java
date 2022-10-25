@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.reaction.action;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class GenerateChemicalElement extends ReactionAction {
     private final ChemicalElement element;

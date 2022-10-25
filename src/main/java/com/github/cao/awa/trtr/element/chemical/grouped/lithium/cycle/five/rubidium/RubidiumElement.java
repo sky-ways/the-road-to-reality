@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.lithium.cycle.five.rubidium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class RubidiumElement extends ChemicalElement {
     // todo

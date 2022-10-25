@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.oxygen.cycle.five.tellurium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class TelluriumElement extends ChemicalElement {
     public TelluriumElement() {

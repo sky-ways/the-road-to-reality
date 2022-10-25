@@ -1,11 +1,10 @@
 package com.github.cao.awa.trtr.element.chemical.substance;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
-import com.github.cao.awa.trtr.element.chemical.elements.compound.calcium.carbonate.*;
-import com.github.cao.awa.trtr.element.chemical.elements.compound.carbon.dioxide.*;
+import com.github.cao.awa.trtr.element.chemical.*;
+import com.github.cao.awa.trtr.element.chemical.compound.calcium.carbonate.*;
+import com.github.cao.awa.trtr.element.chemical.compound.carbon.dioxide.*;
 import com.github.cao.awa.trtr.element.chemical.elements.nitrogen.*;
 import com.github.cao.awa.trtr.element.chemical.elements.oxygen.*;
-import com.github.cao.awa.trtr.element.chemical.grouped.oxygen.cycle.two.oxygen.*;
 import it.unimi.dsi.fastutil.objects.*;
 
 import java.util.*;

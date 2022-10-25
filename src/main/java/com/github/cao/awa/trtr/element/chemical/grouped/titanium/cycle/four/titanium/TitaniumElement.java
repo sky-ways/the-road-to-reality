@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.titanium.cycle.four.titanium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class TitaniumElement extends ChemicalElement {
     // todo

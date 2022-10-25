@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.grouped.nickel.cycle.seven.darmstadtium;
 
-import com.github.cao.awa.trtr.element.chemical.elements.*;
+import com.github.cao.awa.trtr.element.chemical.*;
 
 public class DarmstadtiumElement extends ChemicalElement {
     // todo
