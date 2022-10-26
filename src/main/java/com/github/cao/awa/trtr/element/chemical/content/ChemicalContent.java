@@ -1,26 +1,26 @@
 package com.github.cao.awa.trtr.element.chemical.content;
 
-import com.github.cao.awa.trtr.element.chemical.*;
+import com.github.cao.awa.trtr.element.chemical.reaction.*;
 import org.json.*;
 
 public class ChemicalContent {
-    private final ChemicalElement element;
+    private final ChemicalReactive element;
     private int value;
     private double contentPercentage;
 
-    public ChemicalContent(ChemicalElement element, double contentPercentage, int value) {
+    public ChemicalContent(ChemicalReactive element, double contentPercentage, int value) {
         this.element = element;
         this.contentPercentage = contentPercentage;
         this.value = value;
     }
 
-    public ChemicalContent(ChemicalElement element, double contentPercentage) {
+    public ChemicalContent(ChemicalReactive element, double contentPercentage) {
         this.element = element;
         this.contentPercentage = contentPercentage;
         this.value = 0;
     }
 
-    public ChemicalElement getElement() {
+    public ChemicalReactive getElement() {
         return element;
     }
 

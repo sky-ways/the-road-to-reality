@@ -66,29 +66,29 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
 
     @Override
     public void generateElements(World world, BlockPos pos, ChemicalElementProperties properties) {
-        properties.put(
-                ChemicalSubstances.OXYGEN,
-                new ChemicalContent(
-                        ChemicalSubstances.OXYGEN,
-                        random.nextDouble(
-                                19,
-                                24
-                        ),
-                        0
-                )
-        );
+//        properties.put(
+//                ChemicalSubstances.OXYGEN,
+//                new ChemicalContent(
+//                        ChemicalSubstances.OXYGEN,
+//                        random.nextDouble(
+//                                19,
+//                                24
+//                        ),
+//                        0
+//                )
+//        );
 
-        properties.put(
-                ChemicalSubstances.NITROGEN,
-                new ChemicalContent(
-                        ChemicalSubstances.NITROGEN,
-                        random.nextDouble(
-                                0,
-                                5
-                        ),
-                        0
-                )
-        );
+//        properties.put(
+//                ChemicalSubstances.NITROGEN,
+//                new ChemicalContent(
+//                        ChemicalSubstances.NITROGEN,
+//                        random.nextDouble(
+//                                0,
+//                                5
+//                        ),
+//                        0
+//                )
+//        );
 
         properties.put(
                 ChemicalSubstances.CARBON_DIOXIDE,

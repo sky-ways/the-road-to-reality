@@ -21,6 +21,11 @@ repositories {
     }
 }
 
+configurations {
+    create("shadow")
+    implementation.extendsFrom(shadow)
+}
+
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -37,11 +42,11 @@ dependencies {
 
     // modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-    modImplementation 'org.json:json:20220924'
-    modImplementation 'commons-io:commons-io:2.11.0'
-    modImplementation 'org.lz4:lz4-java:1.8.0'
-    modImplementation 'org.iq80.leveldb:leveldb:0.12'
-    modImplementation 'com.esotericsoftware:kryo:5.3.0'
+    shadow 'org.json:json:20220924'
+    shadow 'commons-io:commons-io:2.11.0'
+    shadow 'org.lz4:lz4-java:1.8.0'
+    shadow 'org.iq80.leveldb:leveldb:0.12'
+    shadow 'com.esotericsoftware:kryo:5.3.0'
 }
 
 processResources {
@@ -55,11 +60,6 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
     // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
     it.options.release = 17
-}
-
-configurations {
-    create("shadow")
-    implementation.extendsFrom(shadow)
 }
 
 java {

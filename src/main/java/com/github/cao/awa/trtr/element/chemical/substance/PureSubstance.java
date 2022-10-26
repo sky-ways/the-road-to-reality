@@ -1,4 +1,9 @@
 package com.github.cao.awa.trtr.element.chemical.substance;
 
-public class PureSubstance extends ChemicalSubstance {
+import com.github.cao.awa.trtr.element.chemical.adapter.*;
+
+public abstract class PureSubstance extends ChemicalSubstance {
+    public PureSubstance(ReactionAdapter adapter) {
+        super(adapter);
+    }
 }
