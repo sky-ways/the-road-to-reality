@@ -6,17 +6,17 @@ import org.json.*;
 public class ChemicalContent {
     private final ChemicalReactive element;
     private int value;
-    private double contentPercentage;
+    private double percent;
 
-    public ChemicalContent(ChemicalReactive element, double contentPercentage, int value) {
+    public ChemicalContent(ChemicalReactive element, double percent, int value) {
         this.element = element;
-        this.contentPercentage = contentPercentage;
+        this.percent = percent;
         this.value = value;
     }
 
-    public ChemicalContent(ChemicalReactive element, double contentPercentage) {
+    public ChemicalContent(ChemicalReactive element, double percent) {
         this.element = element;
-        this.contentPercentage = contentPercentage;
+        this.percent = percent;
         this.value = 0;
     }
 
@@ -34,9 +34,19 @@ public class ChemicalContent {
 
     public JSONObject serialize() {
         JSONObject json = new JSONObject();
-        json.put("value", value);
-        json.put("percent", contentPercentage);
+        json.put(
+                "value",
+                value
+        );
+        json.put(
+                "percent",
+                percent
+        );
         return json;
+    }
+
+    public double getPercent() {
+        return percent;
     }
 
     public ChemicalContent deserialize(String str) {
@@ -45,7 +55,7 @@ public class ChemicalContent {
 
     public ChemicalContent deserialize(JSONObject json) {
         this.value = json.getInt("value");
-        this.contentPercentage = json.getDouble("percent");
+        this.percent = json.getDouble("percent");
         return this;
     }
 }

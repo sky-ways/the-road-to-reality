@@ -17,7 +17,7 @@ import net.minecraft.world.*;
 
 public class TreeBranchBlock extends TrtrOreBlock {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final Identifier IDENTIFIER = new Identifier("trtr:tree_branch");
     private static final IntProperty TYPE = IntProperty.of(
             "branch_type",

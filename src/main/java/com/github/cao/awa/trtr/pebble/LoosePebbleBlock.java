@@ -29,7 +29,7 @@ import java.util.*;
 
 public class LoosePebbleBlock extends TrtrOreBlock implements GentleBlock, Waterloggable, FluidAdvective {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final Identifier IDENTIFIER = new Identifier("trtr:loose_pebble");
     private static final IntProperty TYPE = IntProperty.of(
             "pebble_type",

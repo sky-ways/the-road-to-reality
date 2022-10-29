@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.type;
 import com.github.cao.awa.trtr.air.*;
 import com.github.cao.awa.trtr.cooking.container.pan.*;
 import com.github.cao.awa.trtr.cooking.container.pot.*;
+import com.github.cao.awa.trtr.mud.blower.*;
 import com.github.cao.awa.trtr.mud.stove.*;
 import com.github.cao.awa.trtr.ore.nuclear.uranium.*;
 import com.github.cao.awa.trtr.power.photovoltaic.panels.*;
@@ -91,8 +92,7 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
         T create(BlockPos pos, BlockState state);
     }
 
-    public record Builder<T extends BlockEntity>(BlockEntityType.BlockEntityFactory<? extends T> factory,
-                                                 Set<Block> blocks) {
+    public record Builder<T extends BlockEntity>(BlockEntityType.BlockEntityFactory<? extends T> factory, Set<Block> blocks) {
         public static <T extends BlockEntity> Builder<T> create(BlockEntityType.BlockEntityFactory<? extends T> factory, Block... blocks) {
             return new Builder<>(
                     factory,
@@ -205,6 +205,15 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
                     TrtrBlocks.MUD_STOVE
             )
     );
+
+    public static final BlockEntityType<MudBlowerBlockEntity> MUD_BLOWER = create(
+            "trtr:mud_blower",
+            Builder.create(
+                    MudBlowerBlockEntity::new,
+                    TrtrBlocks.MUD_BLOWER
+            )
+    );
+
     public static final BlockEntityType<TrtrConventionalSlabEntity> SLAB_ENTITY = create(
             "trtr:slab",
             Builder.create(
@@ -219,7 +228,6 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
                     )
             )
     );
-
 
     public static final BlockEntityType<IronBlockEntity> IRON_BLOCK = create(
             "minecraft:iron",

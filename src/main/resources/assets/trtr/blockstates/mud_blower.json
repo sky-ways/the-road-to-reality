@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "trtr:block/mud/blower/mud_blower_shell",
+            "y": 0
+        },
+        "facing=south": {
+            "model": "trtr:block/mud/blower/mud_blower_shell",
+            "y": 180
+        },
+
+        "facing=east": {
+            "model": "trtr:block/mud/blower/mud_blower_shell",
+            "y": 90
+        },
+
+        "facing=west": {
+            "model": "trtr:block/mud/blower/mud_blower_shell",
+            "y": 270
+        }
+    }
+}

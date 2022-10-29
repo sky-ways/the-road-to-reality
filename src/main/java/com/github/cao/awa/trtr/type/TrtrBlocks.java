@@ -4,6 +4,7 @@ import com.github.cao.awa.trtr.air.*;
 import com.github.cao.awa.trtr.branche.tree.*;
 import com.github.cao.awa.trtr.cooking.container.pan.*;
 import com.github.cao.awa.trtr.cooking.container.pot.*;
+import com.github.cao.awa.trtr.mud.blower.*;
 import com.github.cao.awa.trtr.mud.pipe.*;
 import com.github.cao.awa.trtr.mud.stove.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.*;
@@ -89,6 +90,7 @@ public class TrtrBlocks {
     //
     public static final Block MUD_PIPE = new MudPipeBlock();
     public static final Block MUD_STOVE = new MudStoveBlock();
+    public static final Block MUD_BLOWER = new MudBlowerBlock();
 
     //
     public static final Block LOOSE_PEBBLE_BLOCK = new LoosePebbleBlock();

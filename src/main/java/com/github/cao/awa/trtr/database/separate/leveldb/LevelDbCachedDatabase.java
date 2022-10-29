@@ -4,16 +4,12 @@ import com.github.cao.awa.trtr.database.*;
 import com.github.cao.awa.trtr.database.file.storage.independent.db.leveldb.cached.*;
 import com.github.cao.awa.trtr.database.properties.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
+import org.jetbrains.annotations.*;
 import org.json.*;
 
 public class LevelDbCachedDatabase extends InstancePropertiesDatabase {
     public LevelDbCachedDatabase(String path) {
         super(new LevelDbStorage(path, 0));
-    }
-
-    @Override
-    public void export() {
-
     }
 
     @Override
@@ -38,7 +34,7 @@ public class LevelDbCachedDatabase extends InstancePropertiesDatabase {
     }
 
     @Override
-    public InstanceProperties get(String key) {
+    public @NotNull InstanceProperties get(String key) {
         InstanceProperties properties = new InstanceProperties();
         try {
             properties.readJSONObject(new JSONObject(getStorage().read(key)));

@@ -20,6 +20,10 @@ public class ChemicalElementProperties {
         this.contents = contents;
     }
 
+    public void forEach(BiConsumer<ChemicalReactive, ChemicalContent> action) {
+        contents.forEach(action);
+    }
+
     public static ChemicalElementProperties deserialize(String deserialize) {
         JSONObject json = new JSONObject(deserialize);
         Map<ChemicalReactive, ChemicalContent> contents = new Object2ObjectOpenHashMap<>();
