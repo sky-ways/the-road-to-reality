@@ -22,7 +22,6 @@ public final class ExcludeSelector<L, R> extends ObjectSelector<L, R> {
         this.exclude = exclude;
     }
 
-    @BecomeDeprecated
     public void select() {
         ensure();
         List<L> keys = new ArrayList<>(getTargets().keySet());

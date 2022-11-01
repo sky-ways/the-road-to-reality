@@ -6,10 +6,8 @@ import it.unimi.dsi.fastutil.objects.*;
 public abstract class ObjectSelector<L, R> {
     private Object2ObjectMap<L, R> targets;
 
-    @BecomeDeprecated
     public abstract void select();
 
-    @BecomeDeprecated
     public void select(Object2ObjectMap<L, R> map) {
         setTargets(map);
         select();

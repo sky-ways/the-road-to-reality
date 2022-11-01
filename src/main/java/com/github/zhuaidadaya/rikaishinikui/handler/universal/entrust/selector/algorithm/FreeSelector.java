@@ -20,7 +20,6 @@ public final class FreeSelector<L, R> extends ObjectSelector<L, R> {
         setTargets(map);
     }
 
-    @BecomeDeprecated
     public void select() {
         ensure();
         L left = EntrustParser.select(new ArrayList<>(getTargets().keySet()), random);

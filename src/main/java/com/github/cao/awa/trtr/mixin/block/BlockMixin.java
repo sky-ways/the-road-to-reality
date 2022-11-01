@@ -22,21 +22,6 @@ import static com.github.cao.awa.trtr.TrtrMod.*;
 
 @Mixin(Block.class)
 public abstract class BlockMixin {
-    private static void dropStack(World world, BlockPos pos, ItemStack stack, Consumer<ItemEntity> action) {
-        float f = EntityType.ITEM.getHeight() / 2.0F;
-        double d = (double)((float)pos.getX() + 0.5F) + MathHelper.nextDouble(world.random, -0.25D, 0.25D);
-        double e = (double)((float)pos.getY() + 0.5F) + MathHelper.nextDouble(world.random, -0.25D, 0.25D) - (double)f;
-        double g = (double)((float)pos.getZ() + 0.5F) + MathHelper.nextDouble(world.random, -0.25D, 0.25D);
-        dropStack(world, () -> {
-            return new ItemEntity(world, d, e, g, stack);
-        }, stack, action);
-    }
-
-    @Shadow
-    public static List<ItemStack> getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack) {
-        return null;
-    }
-
     @Inject(method = "onBreak", at = @At("HEAD"))
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player, CallbackInfo ci) {
         heatManager.unload(
@@ -52,30 +37,86 @@ public abstract class BlockMixin {
     @Redirect(method = "afterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V"))
     public void afterBreak(BlockState state, World world, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack) {
         if (world instanceof ServerWorld serverWorld) {
-            getDroppedStacks(state,serverWorld, pos, blockEntity, entity, stack).forEach((stackx) -> {
-                dropStack(world, pos, stackx, itemEntity -> {
-                    if (blockEntity instanceof ChemicalElementGenerator elementGenerator) {
-                        elementGenerator.generateElement();
-                    }
-                    if (itemEntity instanceof PropertiesAccessible accessible) {
-                        if (blockEntity instanceof PropertiesAccessible blockAccessible) {
-                            accessible.setProperties(blockAccessible.getProperties());
-                            accessible.getProperties().createAccess(itemEntity.getStack().getOrCreateNbt());
+            getDroppedStacks(
+                    state,
+                    serverWorld,
+                    pos,
+                    blockEntity,
+                    entity,
+                    stack
+            ).forEach((stackx) -> {
+                dropStack(
+                        world,
+                        pos,
+                        stackx,
+                        itemEntity -> {
+                            if (blockEntity instanceof ChemicalElementGenerator elementGenerator) {
+                                elementGenerator.generateElement();
+                            }
+                            if (itemEntity instanceof PropertiesAccessible accessible) {
+                                if (blockEntity instanceof PropertiesAccessible blockAccessible) {
+                                    accessible.setProperties(blockAccessible.getProperties());
+                                    accessible.getProperties()
+                                              .createAccess(itemEntity.getStack()
+                                                                      .getOrCreateNbt());
+                                }
+                            }
                         }
-                    }
-                });
+                );
             });
-            state.onStacksDropped(serverWorld, pos, stack, true);
+            state.onStacksDropped(
+                    serverWorld,
+                    pos,
+                    stack,
+                    true
+            );
         }
 
     }
 
+    private static void dropStack(World world, BlockPos pos, ItemStack stack, Consumer<ItemEntity> action) {
+        float f = EntityType.ITEM.getHeight() / 2.0F;
+        double d = (pos.getX() + 0.5F) + MathHelper.nextDouble(
+                world.random,
+                - 0.25D,
+                0.25D
+        );
+        double e = (pos.getY() + 0.5F) + MathHelper.nextDouble(
+                world.random,
+                - 0.25D,
+                0.25D
+        ) - f;
+        double g = (pos.getZ() + 0.5F) + MathHelper.nextDouble(
+                world.random,
+                - 0.25D,
+                0.25D
+        );
+        dropStack(
+                world,
+                () -> new ItemEntity(
+                        world,
+                        d,
+                        e,
+                        g,
+                        stack
+                ),
+                stack,
+                action
+        );
+    }
+
     private static void dropStack(World world, Supplier<ItemEntity> itemEntitySupplier, ItemStack stack, Consumer<ItemEntity> action) {
-        if (!world.isClient && !stack.isEmpty() && world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) {
+        if (! world.isClient && ! stack.isEmpty() && world.getGameRules()
+                                                          .getBoolean(GameRules.DO_TILE_DROPS)) {
             ItemEntity itemEntity = itemEntitySupplier.get();
             action.accept(itemEntity);
             itemEntity.setToDefaultPickupDelay();
             world.spawnEntity(itemEntity);
         }
+    }
+
+    @Shadow
+    public static List<ItemStack> getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack) {
+        return null;
     }
 }
