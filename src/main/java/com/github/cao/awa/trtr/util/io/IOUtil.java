@@ -2,29 +2,94 @@ package com.github.cao.awa.trtr.util.io;
 
 import java.io.*;
 
+/**
+ * Utils for I/O.
+ *
+ * @author cao_awa
+ * @since 1.0.0
+ */
 public class IOUtil {
+    /**
+     * Write input to output.
+     *
+     * @param output
+     *         Output
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public static void write(OutputStream output, InputStream input) throws IOException {
         output.write(input.readAllBytes());
         output.close();
         input.close();
     }
 
+    /**
+     * Write bytes to output.
+     *
+     * @param output
+     *         Output
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public static void write(OutputStream output, byte[] input) throws IOException {
         output.write(input);
         output.close();
     }
 
+    /**
+     * Write string to output.
+     *
+     * @param output
+     *         Output
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public static void write(OutputStream output, String input) throws IOException {
         output.write(input.getBytes());
         output.close();
     }
 
-    public static void write(Writer output, String input) throws IOException {
-        output.write(input);
-        output.close();
+    /**
+     * Write string to output.
+     *
+     * @param writer
+     *         Writer
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static void write(Writer writer, String input) throws IOException {
+        writer.write(input);
+        writer.close();
     }
 
-
+    /**
+     * Write information of reader to writer
+     *
+     * @param writer
+     *         Writer
+     * @param reader
+     *         Reader
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public static void write(Writer writer, Reader reader) throws IOException {
         char[] chars = new char[4096];
         int length;
@@ -39,27 +104,59 @@ public class IOUtil {
         reader.close();
     }
 
-    public static void write(Writer writer, char[] information) throws IOException {
-        writer.write(information);
+    /**
+     * Write chars to output.
+     *
+     * @param writer
+     *         Writer
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static void write(Writer writer, char[] input) throws IOException {
+        writer.write(input);
         writer.close();
     }
 
-    public static String read(InputStream inputStream) {
-        return read(new InputStreamReader(inputStream));
+    /**
+     * Read input.
+     *
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static String read(InputStream input) throws IOException {
+        return read(new InputStreamReader(input));
     }
 
-    public static String read(Reader reader) {
-        try {
-            char[] chars = new char[4096];
-            int length;
-            StringBuilder builder = new StringBuilder();
-            while ((length = reader.read(chars)) != - 1) {
-                builder.append(chars, 0, length);
-            }
-            reader.close();
-            return builder.toString();
-        } catch (Exception e) {
-            return null;
+    /**
+     * Read input.
+     *
+     * @param input
+     *         Input
+     * @throws IOException
+     *         Happened IO error
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static String read(Reader input) throws IOException {
+        char[] chars = new char[4096];
+        int length;
+        StringBuilder builder = new StringBuilder();
+        while ((length = input.read(chars)) != - 1) {
+            builder.append(
+                    chars,
+                    0,
+                    length
+            );
         }
+        input.close();
+        return builder.toString();
     }
 }

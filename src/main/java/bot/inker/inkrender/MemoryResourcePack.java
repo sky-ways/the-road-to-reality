@@ -20,52 +20,71 @@ import java.util.function.Supplier;
 
 public class MemoryResourcePack implements ResourcePack {
     public static final String NAMESPACE = "inker_render_memory";
+    public static final Set<String> NAMESPACES = Set.of(NAMESPACE);
     public static final MemoryResourcePack INSTANCE = MemoryResourcePack.arbitrary();
     private static final Logger LOGGER = LogManager.getLogger();
     private final AtomicLong idAlloc = new AtomicLong();
     private final Map<Long, Supplier<InputStream>> registers;
     private final BiOption<Boolean> async;
 
-    private static MemoryResourcePack async() {
-        return new MemoryResourcePack(BiOption.of(true, false));
-    }
-
-    private static MemoryResourcePack sync() {
-        return new MemoryResourcePack(BiOption.of(false, true));
-    }
-
-    private static MemoryResourcePack arbitrary() {
-        return new MemoryResourcePack(BiOption.of(false, false));
-    }
-
     private MemoryResourcePack(BiOption<Boolean> async) {
-        registers = async.first() ? new ConcurrentHashMap<>() : new Long2ObjectOpenHashMap<>();
+        this.registers = async.first() ? new ConcurrentHashMap<>() : new Long2ObjectOpenHashMap<>();
         this.async = async;
     }
 
-    public Identifier put(Supplier<InputStream> supplier) {
-        if (async.second()) {
-            synchronized (this) {
-                return putting(supplier);
-            }
-        }
-        return putting(supplier);
+    private static MemoryResourcePack async() {
+        return new MemoryResourcePack(BiOption.of(
+                true,
+                false
+        ));
     }
 
-    private Identifier putting(Supplier<InputStream> supplier) {
-        long id = idAlloc.getAndIncrement();
-        registers.put(id, supplier);
-        Identifier identifier = Identifier.of(NAMESPACE, String.valueOf(id));
-        LOGGER.debug("put() = {}", identifier);
+    private static MemoryResourcePack sync() {
+        return new MemoryResourcePack(BiOption.of(
+                false,
+                true
+        ));
+    }
+
+    private static MemoryResourcePack arbitrary() {
+        return new MemoryResourcePack(BiOption.of(
+                false,
+                false
+        ));
+    }
+
+    public Identifier put(Supplier<InputStream> supplier) {
+        if (this.async.second()) {
+            synchronized (this) {
+                return put0(supplier);
+            }
+        }
+        return put0(supplier);
+    }
+
+    private Identifier put0(Supplier<InputStream> supplier) {
+        long id = this.idAlloc.getAndIncrement();
+        this.registers.put(
+                id,
+                supplier
+        );
+        Identifier identifier = Identifier.of(
+                NAMESPACE,
+                String.valueOf(id)
+        );
+        LOGGER.debug(
+                "put() = {}",
+                identifier
+        );
         return identifier;
     }
 
     public int allocated() {
-        return idAlloc.intValue();
+        return this.idAlloc.intValue();
     }
 
     public BiOption<Boolean> asyncOption() {
-        return async;
+        return this.async;
     }
 
     @Nullable
@@ -76,17 +95,27 @@ public class MemoryResourcePack implements ResourcePack {
 
     @Override
     public InputStream open(ResourceType type, Identifier identifier) throws IOException {
-        if (async.second()) {
+        if (this.async.second()) {
             synchronized (this) {
-                return opening(type, identifier);
+                return open0(
+                        type,
+                        identifier
+                );
             }
         }
-        return opening(type, identifier);
+        return open0(
+                type,
+                identifier
+        );
     }
 
-    public InputStream opening(ResourceType type, Identifier id) throws IOException {
-        LOGGER.debug("open({},{})", type, id);
-        Supplier<InputStream> supplier = registers.get(getIdFromIdentifier(id));
+    public InputStream open0(ResourceType type, Identifier id) throws IOException {
+        LOGGER.debug(
+                "open({},{})",
+                type,
+                id
+        );
+        Supplier<InputStream> supplier = this.registers.get(getIdFromIdentifier(id));
         if (supplier == null) {
             throw new IOException("MemoryResource '" + id.getPath() + "' not found");
         }
@@ -94,7 +123,8 @@ public class MemoryResourcePack implements ResourcePack {
         try {
             resource = supplier.get();
         } catch (Exception e) {
-            throw new IOException("MemoryResource '" + id.getPath() + "' supplier throw " + e.getClass().getName() + ": '" + e.getMessage() + "'");
+            throw new IOException("MemoryResource '" + id.getPath() + "' supplier throw " + e.getClass()
+                                                                                             .getName() + ": '" + e.getMessage() + "'");
         }
         if (resource == null) {
             throw new IOException("MemoryResource '" + id.getPath() + "' can't open");
@@ -111,7 +141,7 @@ public class MemoryResourcePack implements ResourcePack {
             StringBuilder buf = new StringBuilder();
             for (int i = 0; i < input.length(); i++) {
                 char theChar = input.charAt(i);
-                if ('0' <= theChar && theChar <= '9') {
+                if (! ('0' > theChar || theChar > '9')) {
                     buf.append(theChar);
                 }
             }
@@ -128,18 +158,32 @@ public class MemoryResourcePack implements ResourcePack {
 
     @Override
     public boolean contains(ResourceType type, Identifier id) {
-        LOGGER.debug("contains({},{})", type, id);
-        if (async.second()) {
+        if (this.async.second()) {
             synchronized (this) {
-                return registers.containsKey(getIdFromIdentifier(id));
+                return this.contains0(
+                        type,
+                        id
+                );
             }
         }
-        return registers.containsKey(getIdFromIdentifier(id));
+        return this.contains0(
+                type,
+                id
+        );
+    }
+
+    private boolean contains0(ResourceType type, Identifier id) {
+        LOGGER.debug(
+                "contains({},{})",
+                type,
+                id
+        );
+        return this.registers.containsKey(getIdFromIdentifier(id));
     }
 
     @Override
     public Set<String> getNamespaces(ResourceType type) {
-        return Set.of(NAMESPACE);
+        return NAMESPACES;
     }
 
     @Nullable

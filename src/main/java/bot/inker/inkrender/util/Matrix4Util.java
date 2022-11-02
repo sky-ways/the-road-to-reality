@@ -9,7 +9,6 @@ import net.minecraft.util.math.Vector4f;
 import java.nio.FloatBuffer;
 
 public final class Matrix4Util {
-    public static final Matrix4f IDENTITY_MATRIX = identityMatrix();
     public static final Matrix4f ROTATE_Y_OF_QUARTER_PI = rotateY(Mathematics.QUARTER_PI);
     public static final Matrix4f HALF_OF_XYZ_TRANSLATE = translate(
             0.5F,

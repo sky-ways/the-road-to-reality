@@ -1,7 +1,7 @@
 package bot.inker.inkrender.render.resource.locators;
 
 import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
-import bot.inker.inkrender.util.UncheckUtil;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -42,17 +42,17 @@ public class FabricAdapterResourceLocator implements InkResourceLocator {
 
         @Override
         public InputStream openTexture(String name) {
-            return UncheckUtil.uncheck(() -> getResourceManager().open(Identifier.of(namespace, "textures/" + path + name)));
+            return EntrustExecution.result(() -> getResourceManager().open(Identifier.of(namespace, "textures/" + path + name)));
         }
 
         @Override
         public InputStream openMtl(String name) {
-            return UncheckUtil.uncheck(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + name)));
+            return EntrustExecution.result(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + name)));
         }
 
         @Override
         public InputStream openObj() {
-            return UncheckUtil.uncheck(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + objName)));
+            return EntrustExecution.result(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + objName)));
         }
 
         @Override

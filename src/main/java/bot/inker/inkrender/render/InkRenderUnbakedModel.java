@@ -2,7 +2,6 @@ package bot.inker.inkrender.render;
 
 import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
 import bot.inker.inkrender.MemoryResourcePack;
-import bot.inker.inkrender.util.UncheckUtil;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import com.mojang.datafixers.util.Pair;
 import de.javagl.obj.FloatTuple;
@@ -14,7 +13,6 @@ import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
-import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.ModelBakeSettings;
@@ -54,7 +52,10 @@ public class InkRenderUnbakedModel implements UnbakedModel {
         this.resourceLoader = resourceLoader;
         this.obj = obj;
         this.mtls = mtls;
-        this.transform = EntrustParser.getNotNull(transform, ModelTransformation.NONE);
+        this.transform = EntrustParser.getNotNull(
+                transform,
+                ModelTransformation.NONE
+        );
 
         if (mtls.size() == 0) {
             this.sprite = DEFAULT_SPRITE;
@@ -65,9 +66,7 @@ public class InkRenderUnbakedModel implements UnbakedModel {
                                 .iterator()
                                 .next() :
                             mtl).getMapKd();
-            this.sprite = mapKd == null ?
-                          DEFAULT_SPRITE :
-                          DEFAULT_SPRITE_IDENTIFIED.apply(new Identifier(mapKd));
+            this.sprite = mapKd == null ? DEFAULT_SPRITE : DEFAULT_SPRITE_IDENTIFIED.apply(new Identifier(mapKd));
         }
 
         this.resourceIdentifier = new Object2ObjectOpenHashMap<>();
@@ -107,7 +106,10 @@ public class InkRenderUnbakedModel implements UnbakedModel {
                     "Failed to bake obj model",
                     e
             );
-            return UncheckUtil.uncheck(e);
+            // TODO
+
+            //return UncheckUtil.uncheck(e);
+            return null;
         }
     }
 

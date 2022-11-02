@@ -11,7 +11,6 @@ import com.github.cao.awa.trtr.heat.handler.*;
 import com.github.cao.awa.trtr.loader.resource.*;
 import com.github.cao.awa.trtr.ref.item.fire.*;
 import com.github.cao.awa.trtr.type.*;
-import com.github.cao.awa.trtr.util.*;
 import com.github.cao.awa.trtr.util.io.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.*;
@@ -21,6 +20,7 @@ import org.apache.logging.log4j.*;
 
 import java.io.*;
 
+@Client
 @Server
 public class TrtrMod implements ModInitializer {
     public static final String VERSION = "1.0.0";
@@ -49,39 +49,31 @@ public class TrtrMod implements ModInitializer {
     }
 
     public static void initConfig() {
-        try {
-            configs = new Configure(() -> {
-                File config = new File("config/the-road-to-reality/config.conf");
-                final Receptacle<String> configInformation = new Receptacle<>(null);
-                try {
-                    if (! config.isFile()) {
-                        TrtrMod.LOGGER.info("Config not found, generating default config");
+        configs = new Configure(() -> {
+            File config = new File("config/the-road-to-reality/config.conf");
+            final Receptacle<String> configInformation = new Receptacle<>(null);
+            EntrustExecution.tryTemporary(() -> {
+                if (! config.isFile()) {
+                    TrtrMod.LOGGER.info("Config not found, generating default config");
 
-                        config.getParentFile()
-                              .mkdirs();
-                        configInformation.set(IOUtil.read(Resources.getResource(
-                                "default-config.conf",
-                                Resources.class
-                        )));
-                        EntrustExecution.tryTemporary(() -> {
-                            IOUtil.write(
-                                    new BufferedWriter(new FileWriter(config)),
-                                    configInformation.get()
-                            );
-                        });
-                    }
-
-                    if (configInformation.get() == null) {
-                        configInformation.set(IOUtil.read(new BufferedReader(new FileReader(config))));
-                    }
-                } catch (Exception e) {
-
+                    config.getParentFile()
+                          .mkdirs();
+                    configInformation.set(IOUtil.read(Resources.getResource(
+                            "default-config.conf"
+                    )));
+                    EntrustExecution.tryTemporary(() -> IOUtil.write(
+                            new BufferedWriter(new FileWriter(config)),
+                            configInformation.get()
+                    ));
                 }
-                return configInformation.get();
-            });
 
-            configs.load();
-        } catch (Exception e) {
-        }
+                if (configInformation.get() == null) {
+                    configInformation.set(IOUtil.read(new BufferedReader(new FileReader(config))));
+                }
+            });
+            return configInformation.get();
+        });
+
+        configs.load();
     }
 }

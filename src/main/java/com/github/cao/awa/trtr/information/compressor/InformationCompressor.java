@@ -1,12 +1,19 @@
 package com.github.cao.awa.trtr.information.compressor;
 
+/**
+ * Information compress.
+ *
+ * @author cao_awa
+ * @since 1.0.0
+ */
 public interface InformationCompressor {
     byte[] EMPTY_BYTES = new byte[0];
 
     /**
      * Compress for a data
      *
-     * @param bytes Data source
+     * @param bytes
+     *         Data source
      * @return Compress result
      */
     byte[] compress(byte[] bytes);
@@ -14,7 +21,8 @@ public interface InformationCompressor {
     /**
      * Decompress for a data
      *
-     * @param bytes Data source
+     * @param bytes
+     *         Data source
      * @return Decompress result
      */
     byte[] decompress(byte[] bytes);

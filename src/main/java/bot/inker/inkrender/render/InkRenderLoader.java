@@ -2,7 +2,7 @@ package bot.inker.inkrender.render;
 
 import bot.inker.inkrender.InkerRender;
 import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
-import bot.inker.inkrender.util.UncheckUtil;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import de.javagl.obj.*;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider;
@@ -76,8 +76,15 @@ public class InkRenderLoader implements ModelResourceProvider, Function<Resource
 
     public Map<String, Mtl> loadMTL(InkResourceLoader resourceLoader, List<String> names) {
         return names.stream()
-                    .flatMap(UncheckUtil.cast(task -> MtlReader.read(resourceLoader.openMtl(task))
-                                                               .stream()))
+                    .flatMap(EntrustExecution.function(str -> MtlReader.read(resourceLoader.openMtl(str))
+                                                                       .stream()))
+                    // Other way to do this
+                    //.flatMap(str -> EntrustExecution.result(() -> MtlReader.read(resourceLoader.openMtl(str))
+                    //                                                       .stream()))
+
+                    // Old way to do this (Deprecated)
+                    //.flatMap(UncheckUtil.cast(task -> MtlReader.read(resourceLoader.openMtl(task))
+                    //                                           .stream()))
                     .collect(Collectors.toMap(
                             Mtl::getName,
                             Function.identity()

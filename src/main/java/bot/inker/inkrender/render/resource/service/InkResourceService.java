@@ -1,4 +1,4 @@
-package bot.inker.inkrender.api;
+package bot.inker.inkrender.render.resource.service;
 
 import bot.inker.inkrender.render.resource.locators.*;
 

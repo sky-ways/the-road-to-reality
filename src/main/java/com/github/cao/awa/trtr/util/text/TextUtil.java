@@ -1,6 +1,5 @@
 package com.github.cao.awa.trtr.util.text;
 
-import it.unimi.dsi.fastutil.chars.*;
 import it.unimi.dsi.fastutil.objects.*;
 import org.jetbrains.annotations.*;
 
@@ -10,6 +9,7 @@ import java.util.*;
  * Processing string.
  *
  * @author cao_awa
+ * @since 1.0.0
  */
 public class TextUtil {
     /**
@@ -43,7 +43,8 @@ public class TextUtil {
      * <pre>
      * Sample2:
      *      Process string "AAABBBPPPP" as size 3.
-     *      If save unnecessary data, Result will be ["AAA", "BBB", "PPP", "P"].
+     *      If save unnecessary data
+     *      Result will be ["AAA", "BBB", "PPP", "P"].
      *      Else then will be ["AAA", "BBB", "PPP"].
      * </pre>
      *
@@ -51,6 +52,9 @@ public class TextUtil {
      * @param size Partition size
      * @param saveUnnecessary Save unnecessary or not
      * @return Partitioned strings
+     *
+     * @author cao_awa
+     * @since 1.0.0
      */
     @NotNull
     public static List<String> partitionToList(@NotNull String str, int size, boolean saveUnnecessary) {
@@ -76,13 +80,16 @@ public class TextUtil {
     }
 
     /**
-     * Do partition for abiding size. <br>
+     * Do partition for abiding size.
      *
      * @param str String
      * @param size Partition size
      * @return Partitioned strings
      *
      * @see #partitionToArray(String, int, boolean)
+     *
+     * @author cao_awa
+     * @since 1.0.0
      */
     @NotNull
     public static String[] partitionToArray(@NotNull String str, int size) {
@@ -94,13 +101,16 @@ public class TextUtil {
     }
 
     /**
-     * Do partition for abiding size. <br>
+     * Do partition for abiding size.
      *
      * @param str String
      * @param size Partition size
      * @return Partitioned strings
      *
      * @see #partitionToList(String, int, boolean)
+     *
+     * @author cao_awa
+     * @since 1.0.0
      */
     @NotNull
     public static String[] partitionToArray(@NotNull String str, int size, boolean saveUnnecessary) {
