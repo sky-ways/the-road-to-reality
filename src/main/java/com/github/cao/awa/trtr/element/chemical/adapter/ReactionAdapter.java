@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.element.chemical.adapter;
 import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.type.*;
+import com.github.cao.awa.trtr.element.chemical.result.*;
 
 public abstract class ReactionAdapter {
     private final ChemicalElement instance;
@@ -17,7 +18,7 @@ public abstract class ReactionAdapter {
 
     public abstract ChemicalReaction permit(ReactionInformation information);
 
-    public void adapter(ReactionInformation information) {
-        permit(information).reaction(information);
+    public ReactionResult adapter(ReactionInformation information) {
+        return permit(information).reaction(information);
     }
 }

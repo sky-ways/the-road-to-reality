@@ -289,84 +289,6 @@ public class FastRandom implements RandomGenerator {
     }
 
     /**
-     * Returns a pseudorandom, uniformly distributed {@code int} value
-     * between 0 (inclusive) and the specified value (exclusive), drawn from
-     * this random number generator's sequence.  The general contract of
-     * {@code nextInt} is that one {@code int} value in the specified range
-     * is pseudorandomly generated and returned.  All {@code bound} possible
-     * {@code int} values are produced with (approximately) equal
-     * probability.
-     *
-     * @param bound
-     *         the upper bound (exclusive).  Must be positive.
-     * @return the next pseudorandom, uniformly distributed {@code int}
-     * value between zero (inclusive) and {@code bound} (exclusive)
-     * from this random number generator's sequence
-     *
-     * @throws IllegalArgumentException
-     *         if bound is not positive
-     * @implSpec The method {@code nextInt(int bound)} is implemented by
-     * class {@code Random} as if by:
-     * <pre>{@code
-     * public int nextInt(int bound) {
-     *   if (bound <= 0)
-     *     throw new IllegalArgumentException("bound must be positive");
-     *
-     *   if ((bound & -bound) == bound)  // i.e., bound is a power of 2
-     *     return (int)((bound * (long)next(31)) >> 31);
-     *
-     *   int bits, val;
-     *   do {
-     *       bits = next(31);
-     *       val = bits % bound;
-     *   } while (bits - val + (bound-1) < 0);
-     *   return val;
-     * }}</pre>
-     *
-     * <p>The hedge "approximately" is used in the foregoing description only
-     * because the next method is only approximately an unbiased source of
-     * independently chosen bits.  If it were a perfect source of randomly
-     * chosen bits, then the algorithm shown would choose {@code int}
-     * values from the stated range with perfect uniformity.
-     * <p>
-     * The algorithm is slightly tricky.  It rejects values that would result
-     * in an uneven distribution (due to the fact that 2^31 is not divisible
-     * by n). The probability of a value being rejected depends on n.  The
-     * worst case is n=2^30+1, for which the probability of a reject is 1/2,
-     * and the expected number of iterations before the loop terminates is 2.
-     * <p>
-     * The algorithm treats the case where n is a power of two specially: it
-     * returns the correct number of high-order bits from the underlying
-     * pseudo-random number generator.  In the absence of special treatment,
-     * the correct number of <i>low-order</i> bits would be returned.  Linear
-     * congruential pseudo-random number generators such as the one
-     * implemented by this class are known to have short periods in the
-     * sequence of values of their low-order bits.  Thus, this special case
-     * greatly increases the length of the sequence of values returned by
-     * successive calls to this method if n is a small power of two.
-     * @since 1.2
-     */
-    @Override
-    public int nextInt(int bound) {
-        if (bound < 1) {
-            throw new IllegalArgumentException("bound must be positive");
-        }
-        int r = intNextBounded();
-        int m = bound - 1;
-        if ((bound & m) == 0) {
-            // i.e., bound is a power of 2
-            r = (bound * r) >> 31;
-        } else {
-            // reject over-represented candidates
-            int u = r;
-            while (0 > m + u - (r = u % bound)) {
-                u = intNextBounded();
-            }
-        }
-        return r;
-    }
-
-    /**
      * Returns the next pseudorandom, uniformly distributed {@code long}
      * value from this random number generator's sequence. The general
      * contract of {@code nextLong} is that one {@code long} value is
@@ -387,8 +309,7 @@ public class FastRandom implements RandomGenerator {
      */
     @Override
     public long nextLong() {
-        // it's okay that the bottom word remains signed.
-        return ((long) (next(32)) << 32) + next(32);
+        return longNext();
     }
 
     /**
@@ -458,11 +379,16 @@ public class FastRandom implements RandomGenerator {
     }
 
     protected int intNextBounded() {
-        return (int) ((seed = mask & (seed << 2L + addend)) >>> 17);
+        return (int) ((seed = mask & (seed * 4 + addend)) * 273673163155L >>> 17);
     }
 
     protected int intNext() {
-        return (int) (seed = mask & (seed << 2L) >>> 16);
+        return (int) ((seed = mask & ((seed * 4) + addend) * 273673163155L) >>> 16);
+    }
+
+    protected long longNext() {
+        return ((long) (next(32)) << 32) + next(32);
+//        return (int) (seed = mask & (seed << 2L) >>> 16);
     }
 
     /**
@@ -493,7 +419,7 @@ public class FastRandom implements RandomGenerator {
      * @since 1.1
      */
     protected int next(int bits) {
-        return (int) ((seed = mask & (seed << 2L + addend)) >>> 48 - bits);
+        return (int) ((seed = mask & (seed * 4 + addend)) * 273673163155L >>> 48 - bits);
     }
 
     public int simpleNextInt(int bound) {

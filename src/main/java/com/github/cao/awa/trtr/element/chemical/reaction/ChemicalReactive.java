@@ -1,9 +1,10 @@
 package com.github.cao.awa.trtr.element.chemical.reaction;
 
 import com.github.cao.awa.trtr.element.chemical.reaction.type.*;
+import com.github.cao.awa.trtr.element.chemical.result.*;
 
 public interface ChemicalReactive {
-    void reaction(ReactionInformation information);
+    ReactionResult reaction(ReactionInformation information);
 
     String getName();
 }
