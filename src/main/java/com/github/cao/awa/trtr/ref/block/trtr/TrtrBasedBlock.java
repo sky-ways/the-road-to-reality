@@ -20,12 +20,12 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public abstract class TrtrBasedBlock extends BlockWithEntity implements HeatConductiveBlock, ElectricConductive, BlockEntityProvider, RefRegister {
-    private TrtrBlockRegister register;
+    private final TrtrBlockRegister register;
     public final Random random = new Random();
 
     public TrtrBasedBlock(Settings settings) {
         super(settings);
-        this.register = new TrtrBlockRegister().registerBlock(true).registerItem(true).block(this);
+        this.register = new TrtrBlockRegister(this).registerBlock(true).registerItem(true);
         register();
     }
 

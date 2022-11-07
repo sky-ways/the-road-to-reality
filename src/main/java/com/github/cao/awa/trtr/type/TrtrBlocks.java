@@ -96,7 +96,7 @@ public class TrtrBlocks {
     public static final Block LOOSE_PEBBLE_BLOCK = new LoosePebbleBlock();
     public static final Block TREE_BRANCH = new TreeBranchBlock();
 
-    public static void pre() {
+    public static void initialize() {
 
     }
 }

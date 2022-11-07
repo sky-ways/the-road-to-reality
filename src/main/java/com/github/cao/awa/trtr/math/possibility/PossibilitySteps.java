@@ -16,6 +16,6 @@ public class PossibilitySteps {
     }
 
     public int select(int key) {
-        return EntrustParser.select(possibility.get(key), random);
+        return EntrustEnvironment.select(possibility.get(key), random);
     }
 }

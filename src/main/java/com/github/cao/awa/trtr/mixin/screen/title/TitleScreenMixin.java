@@ -1,6 +1,5 @@
 package com.github.cao.awa.trtr.mixin.screen.title;
 
-import com.github.zhuaidadaya.rikaishinikui.handler.conductor.string.builder.*;
 import net.minecraft.client.font.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.*;

@@ -76,8 +76,8 @@ public class InkRenderLoader implements ModelResourceProvider, Function<Resource
 
     public Map<String, Mtl> loadMTL(InkResourceLoader resourceLoader, List<String> names) {
         return names.stream()
-                    .flatMap(EntrustExecution.function(str -> MtlReader.read(resourceLoader.openMtl(str))
-                                                                       .stream()))
+                    .flatMap(EntrustEnvironment.function(str -> MtlReader.read(resourceLoader.openMtl(str))
+                                                                         .stream()))
                     // Other way to do this
                     //.flatMap(str -> EntrustExecution.result(() -> MtlReader.read(resourceLoader.openMtl(str))
                     //                                                       .stream()))

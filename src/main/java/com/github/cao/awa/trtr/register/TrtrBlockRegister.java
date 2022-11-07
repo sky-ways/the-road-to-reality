@@ -4,6 +4,9 @@ import com.github.cao.awa.trtr.ore.generic.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import net.minecraft.util.registry.*;
 
+/**
+ * Register for block.
+ */
 public final class TrtrBlockRegister {
     private boolean registerBlock = false;
     private boolean registerItem = false;
@@ -19,6 +22,14 @@ public final class TrtrBlockRegister {
 
     public TrtrBasedBlock getBlock() {
         return block;
+    }
+
+    public TrtrBlockRegister(TrtrBasedBlock block) {
+        block(block);
+    }
+
+    public TrtrBlockRegister() {
+
     }
 
     public void register() {

@@ -26,8 +26,6 @@ public class TimeUtil {
     }
 
     public static void coma(long millions) {
-        EntrustExecution.tryTemporary(() -> {
-            Thread.sleep(millions);
-        });
+        EntrustEnvironment.tryTemporary(() -> Thread.sleep(millions));
     }
 }

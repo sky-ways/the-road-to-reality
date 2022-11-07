@@ -53,7 +53,7 @@ public class TrtrHammerableProducts {
     // Food
     public static final RangeTable<Item, NumberRange<Item>> COCOA_POWDER = RangeTable.of(NumberRange.over(TrtrItems.COCOA_POWDER, 3));
 
-    public static void pre() {
+    public static void initialize() {
         register(TrtrItems.CRUSHED_STONE, CRUSHED_STONE);
         register(TrtrItems.CRUSHED_BAUXITE, CRUSHED_BAUXITE);
         register(TrtrItems.CRUSHED_COAL, CRUSHED_COAL);

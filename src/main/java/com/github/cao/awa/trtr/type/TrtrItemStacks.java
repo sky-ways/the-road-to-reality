@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.item.*;
 
 public class TrtrItemStacks {
-    public static final ObjectArrayList<ItemStack> ORES = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> ORES = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrBlocks.ACANTHITE_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.BAUXITE_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.GALENA_BLOCK.asItem().getDefaultStack());
@@ -39,7 +39,7 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.PEBBLE.asItem().getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> CRUSHED_ORES = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> CRUSHED_ORES = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrItems.CRUSHED_STONE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_ACANTHITE.getDefaultStack());
         stacks.add(TrtrItems.CRUSHED_GALENA.getDefaultStack());
@@ -75,7 +75,7 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.CRUSHED_NITER.getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> ORE_POWDERS = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> ORE_POWDERS = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrItems.STONE_POWDER.getDefaultStack());
         stacks.add(TrtrItems.DEEPSLATE_POWDER.getDefaultStack());
         stacks.add(TrtrItems.ACANTHITE_POWDER.getDefaultStack());
@@ -98,26 +98,26 @@ public class TrtrItemStacks {
         stacks.add(TrtrItems.ANORTHITE_POWDER.getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> TOOLS = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> TOOLS = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrItems.WOODEN_HAMMER.getDefaultStack());
         stacks.add(TrtrItems.STONE_HAMMER.getDefaultStack());
         stacks.add(TrtrItems.IRON_HAMMER.getDefaultStack());
         stacks.add(TrtrItems.THERMOMETER.getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> ASSEMBLY_BLOCK = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> ASSEMBLY_BLOCK = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrBlocks.LARGE_GEAR_WHEEL_BLOCK.asItem().getDefaultStack());
         stacks.add(TrtrBlocks.MEDIUM_GEAR_WHEEL_BLOCK.asItem().getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> ASSEMBLY = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> ASSEMBLY = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
     });
 
-    public static final ObjectArrayList<ItemStack> FOOD_MATERIALS = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> FOOD_MATERIALS = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrItems.COCOA_POWDER.getDefaultStack());
     });
 
-    public static final ObjectArrayList<ItemStack> COOKING_TOOL = EntrustParser.operation(new ObjectArrayList<>(), stacks -> {
+    public static final ObjectArrayList<ItemStack> COOKING_TOOL = EntrustEnvironment.operation(new ObjectArrayList<>(), stacks -> {
         stacks.add(TrtrBlocks.POT.asItem().getDefaultStack());
     });
 }

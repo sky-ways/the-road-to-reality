@@ -275,4 +275,8 @@ public class ChemicalElements {
         NAME_TO_ELEMENTS.put(target.getName(), target);
         return target;
     }
+
+    public static void initialize() {
+
+    }
 }

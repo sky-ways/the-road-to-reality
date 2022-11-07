@@ -1,7 +1,6 @@
 package com.github.cao.awa.trtr.explosion.vanilla.tnt;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.damage.*;
 import net.minecraft.entity.data.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;

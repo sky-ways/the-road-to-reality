@@ -44,4 +44,9 @@ public class PressuresConvertRates {
     public static Double get(Pressure target, Pressure self) {
         return get(target.getName(), self.getName());
     }
+
+    public static Pressure convert(Pressure target, Pressure self) {
+        target.set(get(target, self));
+        return target;
+    }
 }

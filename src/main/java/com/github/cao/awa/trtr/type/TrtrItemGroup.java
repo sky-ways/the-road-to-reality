@@ -53,7 +53,7 @@ public class TrtrItemGroup {
         stacks.addAll(TrtrItemStacks.COOKING_TOOL);
     }).build();
 
-    public static void pre() {
+    public static void initialize() {
 
     }
 }

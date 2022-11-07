@@ -1,9 +1,7 @@
 package com.github.cao.awa.trtr.ore.generic;
 
-import com.github.cao.awa.trtr.ref.*;
 import com.github.cao.awa.trtr.ref.block.trtr.*;
 import com.github.cao.awa.trtr.ref.item.trtr.*;
-import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.registry.*;

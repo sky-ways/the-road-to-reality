@@ -8,7 +8,7 @@ import java.util.*;
 public class CombinationReactions {
     public static Map<ChemicalElement, CombinationReaction> reactions = new Object2ObjectOpenHashMap<>();
 
-    public static void pre() {
+    public static void initialize() {
 //        reactions.put(ChemicalElements.ELEMENT_CARBON, new CarbonCombinationReaction());
     }
 }

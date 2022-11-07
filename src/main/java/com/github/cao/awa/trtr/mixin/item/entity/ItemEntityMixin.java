@@ -13,13 +13,12 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity implements PropertiesAccessible {
-    private static final Map<String, ThreeConsumer<World, BlockPos, ItemEntity>> actions = EntrustParser.operation(
+    private static final Map<String, ThreeConsumer<World, BlockPos, ItemEntity>> actions = EntrustEnvironment.operation(
             new Object2ObjectOpenHashMap<>(),
             map -> {
                 map.put(

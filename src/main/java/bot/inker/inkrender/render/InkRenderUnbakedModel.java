@@ -52,7 +52,7 @@ public class InkRenderUnbakedModel implements UnbakedModel {
         this.resourceLoader = resourceLoader;
         this.obj = obj;
         this.mtls = mtls;
-        this.transform = EntrustParser.getNotNull(
+        this.transform = EntrustEnvironment.getNotNull(
                 transform,
                 ModelTransformation.NONE
         );

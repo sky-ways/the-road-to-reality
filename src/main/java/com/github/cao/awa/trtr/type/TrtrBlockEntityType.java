@@ -45,7 +45,7 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
         this.blocks = blocks;
     }
 
-    public static void pre() {
+    public static void initialize() {
 
     }
 
@@ -188,7 +188,7 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
             "trtr:ore",
             Builder.create(
                     TrtrOreBlockEntity::new,
-                    EntrustParser.operation(
+                    EntrustEnvironment.operation(
                             new Block[TrtrOreBlock.ORES.size()],
                             array -> {
                                 for (int i = 0; i < array.length; i++) {
@@ -218,7 +218,7 @@ public class TrtrBlockEntityType<T extends BlockEntity> extends BlockEntityType<
             "trtr:slab",
             Builder.create(
                     TrtrConventionalSlabEntity::new,
-                    EntrustParser.operation(
+                    EntrustEnvironment.operation(
                             new Block[TrtrSlabBlock.SLABS.size()],
                             array -> {
                                 for (int i = 0; i < array.length; i++) {

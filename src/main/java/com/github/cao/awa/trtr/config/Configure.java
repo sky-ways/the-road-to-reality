@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.config;
 
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import it.unimi.dsi.fastutil.objects.*;
 import org.apache.logging.log4j.*;
 import org.jetbrains.annotations.*;
@@ -18,7 +19,7 @@ public class Configure {
     private static final Logger LOGGER = LogManager.getLogger();
     private final Map<String, Map<String, String>> warning = new Object2ObjectOpenHashMap<>();
     private final Map<String, String> configs = new Object2ObjectOpenHashMap<>();
-    private final Supplier<String> loader;
+    private Supplier<String> loader;
 
     /**
      * Setting basic prepares.
@@ -31,14 +32,23 @@ public class Configure {
     }
 
     /**
-     * Reload configurations
+     * Reload configurations.
      */
     public void reload() {
-        load(loader.get());
+        load(this.loader.get());
     }
 
     /**
-     * Load config from cold data
+     * Set config loader.
+     *
+     * @param loader Information loader
+     */
+    public void setLoader(@NotNull Supplier<String> loader) {
+        this.loader = loader;
+    }
+
+    /**
+     * Load config from cold data.
      *
      * @param configInformation
      *         Config deltas
@@ -72,36 +82,45 @@ public class Configure {
                                        .strip()
                                        .trim();
 
-                    if (key.equals("")) {
-                        LOGGER.warn(value.equals("") ?
-                                    "The key and value not found in configuration line" :
-                                    "The key not found in configuration line");
-                        continue;
-                    } else {
-                        if (value.equals("")) {
-                            LOGGER.warn("The value not found in configuration line");
-                            continue;
-                        }
-                    }
-
-                    LOGGER.info("Processing config: " + key + " = " + value);
-
-                    set(
+                    EntrustEnvironment.equals(
+                            "",
                             key,
-                            value
-                    );
+                            () -> EntrustEnvironment.equals(
+                                    "",
+                                    value,
+                                    () -> LOGGER.info("The key and value not found in configuration line"),
+                                    () -> LOGGER.info("The key not found in configuration line")
+                            ),
+                            value,
+                            () -> LOGGER.warn("The value not found in configuration line"),
+                            () -> {
+                                LOGGER.info(
+                                        "Processing config: {} = {}",
+                                        key,
+                                        value
+                                );
 
-                    Map<String, String> warning = this.warning.get(key);
-                    if (warning != null) {
-                        String info = warning.get(value);
-                        if (info != null) {
-                            LOGGER.warn(info);
-                        }
-                    }
+                                set(
+                                        key,
+                                        value
+                                );
+
+                                EntrustEnvironment.ifNotNull(
+                                        this.warning.get(key),
+                                        warnings -> EntrustEnvironment.ifNotNull(
+                                                warnings.get(value),
+                                                LOGGER::warn
+                                        )
+                                );
+                            }
+                    );
                 }
             }
         } catch (Exception e) {
-            LOGGER.warn("Unable to load the rest of the configuration");
+            LOGGER.warn(
+                    "Unable to load the rest of the configuration",
+                    e
+            );
         }
     }
 
@@ -135,8 +154,11 @@ public class Configure {
         );
     }
 
+    /**
+     * Read and load configs.
+     */
     public void load() {
-        load(loader.get());
+        load(this.loader.get());
     }
 
     /**

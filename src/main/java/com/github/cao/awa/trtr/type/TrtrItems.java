@@ -126,6 +126,6 @@ public class TrtrItems {
     public static final Item PEBBLE = new Pebble();
     public static final Item TREE_BRANCH = PEBBLE;
 
-    public static void pre() {
+    public static void initialize() {
     }
 }

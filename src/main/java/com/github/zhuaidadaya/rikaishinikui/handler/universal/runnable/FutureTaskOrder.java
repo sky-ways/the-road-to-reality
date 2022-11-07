@@ -5,25 +5,37 @@ import it.unimi.dsi.fastutil.objects.*;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.stream.*;
 
-public class FutureTaskOrder {
+public final class FutureTaskOrder {
     private final List<FutureTask> tasks = new ObjectArrayList<>();
     private final List<FutureTask> parallelTasks = new ObjectArrayList<>();
 
     public void submit(Temporary action, int waitTicks) {
-        submit(action, waitTicks, false);
+        submit(
+                action,
+                false,
+                waitTicks
+        );
     }
 
-    public void submit(Temporary action, int waitTicks, boolean parallel) {
+    public void submit(Temporary action, boolean parallel, int waitTicks) {
         if (waitTicks < 1) {
-            submit(action, parallel);
-            return;
-        }
-        if (parallel) {
-            parallelTasks.add(new FutureTask(action, waitTicks));
+            submit(
+                    action,
+                    parallel
+            );
         } else {
-            tasks.add(new FutureTask(action, waitTicks));
+            if (parallel) {
+                this.parallelTasks.add(new FutureTask(
+                        action,
+                        waitTicks
+                ));
+            } else {
+                this.tasks.add(new FutureTask(
+                        action,
+                        waitTicks
+                ));
+            }
         }
     }
 
@@ -40,15 +52,19 @@ public class FutureTaskOrder {
     }
 
     public void tick() {
-        if (tasks.size() > 0) {
-            tasks.removeAll(tasks.stream().filter(FutureTask::tick).toList());
+        if (this.tasks.size() > 0) {
+            this.tasks.removeAll(this.tasks.stream()
+                                           .filter(FutureTask::tick)
+                                           .toList());
         }
-        if (parallelTasks.size() > 0) {
-            tasks.removeAll(parallelTasks.parallelStream().filter(FutureTask::tick).toList());
+        if (this.parallelTasks.size() > 0) {
+            this.parallelTasks.removeAll(this.parallelTasks.parallelStream()
+                                                           .filter(FutureTask::tick)
+                                                           .toList());
         }
     }
 
-    private static class FutureTask {
+    private static final class FutureTask {
         private final Temporary action;
         private int tick;
 
@@ -58,41 +74,11 @@ public class FutureTaskOrder {
         }
 
         public boolean tick() {
-            if (--tick == 0) {
-                action.apply();
+            if (-- this.tick == 0) {
+                this.action.apply();
                 return true;
             }
             return false;
         }
-    }
-
-    public static void main(String[] args) {
-        FutureTaskOrder order = new FutureTaskOrder();
-        order.submit(() -> {
-            System.out.println("???");
-        }, 1);
-
-        order.submit(() -> {
-            System.out.println("???");
-        }, 1);
-
-        order.submit(() -> {
-            order.submit(() -> {
-                System.out.println("???");
-            }, 1);
-        }, 1);
-
-        order.submit(() -> {
-            order.submit(() -> {
-                System.out.println("???");
-            }, 1);
-        }, 1);
-
-        order.tick();
-        order.tick();
-        order.tick();
-
-        System.out.println(order.tasks);
-
     }
 }

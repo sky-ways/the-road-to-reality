@@ -42,17 +42,17 @@ public class FabricAdapterResourceLocator implements InkResourceLocator {
 
         @Override
         public InputStream openTexture(String name) {
-            return EntrustExecution.result(() -> getResourceManager().open(Identifier.of(namespace, "textures/" + path + name)));
+            return EntrustEnvironment.result(() -> getResourceManager().open(Identifier.of(namespace, "textures/" + path + name)));
         }
 
         @Override
         public InputStream openMtl(String name) {
-            return EntrustExecution.result(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + name)));
+            return EntrustEnvironment.result(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + name)));
         }
 
         @Override
         public InputStream openObj() {
-            return EntrustExecution.result(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + objName)));
+            return EntrustEnvironment.result(() -> getResourceManager().open(Identifier.of(namespace, "models/" + path + objName)));
         }
 
         @Override

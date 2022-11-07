@@ -10,7 +10,7 @@ import java.util.*;
 public class FireReacts {
     public static final Map<Item, FireReact> REACTS = new Object2ObjectOpenHashMap<>();
 
-    public static void pre() {
+    public static void initialize() {
         register(Blocks.TNT, ((world, pos, strength) -> {
             VanillaTntBlock.explode(world, pos, null);
         }));

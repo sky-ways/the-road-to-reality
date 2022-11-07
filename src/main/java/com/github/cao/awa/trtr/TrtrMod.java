@@ -25,54 +25,50 @@ import java.io.*;
 public class TrtrMod implements ModInitializer {
     public static final String VERSION = "1.0.0";
     public static final Logger LOGGER = LogManager.getLogger("Trtr");
+    public static final FutureTaskOrder delayTasks = new FutureTaskOrder();
+    public static final Configure configs = new Configure(SupplierTemplates.emptyString());
     public static HeatManager heatManager = new HeatManager();
     public static AirManager airManager = new AirManager();
     public static SubmitTimeTracker timeTracker = new SubmitTimeTracker();
-    public static FutureTaskOrder delayTasks = new FutureTaskOrder();
-    public static Configure configs = new Configure(SupplierTemplates.emptyString());
-
     public static InstancePropertiesDatabase propertiesDatabase = null;
 
     @Override
     public void onInitialize() {
-        initConfig();
-        TrtrItems.pre();
-        TrtrBlocks.pre();
-        TrtrBlockEntityType.pre();
-        TrtrScreenHandlerType.pre();
-        TrtrPlacedFeatures.pre();
-        TrtrHammerableProducts.pre();
-        TrtrItemGroup.pre();
-        TrtrEntityType.pre();
-        CombinationReactions.pre();
-        FireReacts.pre();
+        initializeConfig();
+        TrtrItems.initialize();
+        TrtrBlocks.initialize();
+        TrtrBlockEntityType.initialize();
+        TrtrScreenHandlerType.initialize();
+        TrtrPlacedFeatures.initialize();
+        TrtrHammerableProducts.initialize();
+        TrtrItemGroup.initialize();
+        TrtrEntityType.initialize();
+        CombinationReactions.initialize();
+        FireReacts.initialize();
+        ChemicalElements.initialize();
     }
 
-    public static void initConfig() {
-        configs = new Configure(() -> {
+    public static void initializeConfig() {
+        configs.setLoader(() -> EntrustEnvironment.receptacle(receptacle -> {
             File config = new File("config/the-road-to-reality/config.conf");
-            final Receptacle<String> configInformation = new Receptacle<>(null);
-            EntrustExecution.tryTemporary(() -> {
-                if (! config.isFile()) {
-                    TrtrMod.LOGGER.info("Config not found, generating default config");
+            if (! config.isFile()) {
+                TrtrMod.LOGGER.info("Config not found, generating default config");
 
-                    config.getParentFile()
-                          .mkdirs();
-                    configInformation.set(IOUtil.read(Resources.getResource(
-                            "default-config.conf"
-                    )));
-                    EntrustExecution.tryTemporary(() -> IOUtil.write(
-                            new BufferedWriter(new FileWriter(config)),
-                            configInformation.get()
-                    ));
-                }
+                EntrustEnvironment.tryTemporary(() -> config.getParentFile()
+                                                            .mkdirs());
 
-                if (configInformation.get() == null) {
-                    configInformation.set(IOUtil.read(new BufferedReader(new FileReader(config))));
-                }
-            });
-            return configInformation.get();
-        });
+                receptacle.set(IOUtil.read(Resources.getResource("default-config.conf")));
+
+                EntrustEnvironment.tryTemporary(() -> IOUtil.write(
+                        new BufferedWriter(new FileWriter(config)),
+                        receptacle.get()
+                ));
+            }
+
+            if (receptacle.get() == null) {
+                receptacle.set(IOUtil.read(new BufferedReader(new FileReader(config))));
+            }
+        }));
 
         configs.load();
     }

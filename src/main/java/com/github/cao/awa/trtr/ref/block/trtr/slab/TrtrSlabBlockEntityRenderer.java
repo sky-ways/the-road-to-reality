@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.*;
 import net.minecraft.item.*;
 
 public class TrtrSlabBlockEntityRenderer implements BlockEntityRenderer<TrtrConventionalSlabEntity> {
-    private static final ObjectArrayList<Item> BLOCK_EXCEPT = EntrustParser.operation(new ObjectArrayList<>(), list -> {
+    private static final ObjectArrayList<Item> BLOCK_EXCEPT = EntrustEnvironment.operation(new ObjectArrayList<>(), list -> {
         list.add(Items.COCOA_BEANS);
         list.add(Items.REDSTONE);
     });

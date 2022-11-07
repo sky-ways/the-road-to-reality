@@ -231,7 +231,7 @@ public class InstanceProperties {
      * @return result
      */
     private <X> X safeGet(String key) {
-        return EntrustParser.trying(() -> (X) map.get(key));
+        return EntrustEnvironment.trying(() -> (X) map.get(key));
     }
 
     /**
@@ -398,7 +398,7 @@ public class InstanceProperties {
         for (String key : nbt.keySet()) {
             JSONObject element = nbt.getJSONObject(key);
             String type = element.getString("type");
-            EntrustExecution.tryTemporary(
+            EntrustEnvironment.tryTemporary(
                     () -> {
                         put(
                                 key,

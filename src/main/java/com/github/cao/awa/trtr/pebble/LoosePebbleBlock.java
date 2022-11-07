@@ -9,16 +9,12 @@ import com.github.cao.awa.trtr.type.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.*;
 import net.minecraft.block.*;
-import net.minecraft.block.enums.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
-import net.minecraft.item.*;
 import net.minecraft.state.*;
 import net.minecraft.state.property.*;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
 import net.minecraft.util.math.*;
@@ -42,7 +38,7 @@ public class LoosePebbleBlock extends TrtrOreBlock implements GentleBlock, Water
             6
     );
     private static final Random random = new Random();
-    private final PossibilitySteps typeOneSteps = EntrustParser.trying(() -> {
+    private final PossibilitySteps typeOneSteps = EntrustEnvironment.trying(() -> {
         PossibilitySteps steps = new PossibilitySteps();
         steps.append(
                 0,

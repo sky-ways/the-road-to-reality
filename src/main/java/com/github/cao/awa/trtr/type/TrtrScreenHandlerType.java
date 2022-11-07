@@ -8,7 +8,7 @@ public class TrtrScreenHandlerType<T extends ScreenHandler> {
         return Registry.register(Registry.SCREEN_HANDLER, id, new ScreenHandlerType<>(factory));
     }
 
-    public static void pre() {
+    public static void initialize() {
 
     }
 }
