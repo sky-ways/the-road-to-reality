@@ -16,10 +16,10 @@ import java.util.function.*;
  * @author cao_awa
  */
 public class Configure {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private final Map<String, Map<String, String>> warning = new Object2ObjectOpenHashMap<>();
-    private final Map<String, String> configs = new Object2ObjectOpenHashMap<>();
-    private Supplier<String> loader;
+    private static final @NotNull Logger LOGGER = LogManager.getLogger();
+    private final @NotNull Map<String, Map<String, String>> warning = new Object2ObjectOpenHashMap<>();
+    private final @NotNull Map<String, String> configs = new Object2ObjectOpenHashMap<>();
+    private @NotNull Supplier<String> loader;
 
     /**
      * Setting basic prepares.
@@ -27,7 +27,7 @@ public class Configure {
      * @param loader
      *         Support loading config information
      */
-    public Configure(Supplier<String> loader) {
+    public Configure(@NotNull Supplier<String> loader) {
         this.loader = loader;
     }
 
@@ -35,7 +35,7 @@ public class Configure {
      * Reload configurations.
      */
     public void reload() {
-        load(this.loader.get());
+        load();
     }
 
     /**
@@ -48,12 +48,22 @@ public class Configure {
     }
 
     /**
+     * Set config loader and load.
+     *
+     * @param loader Information loader
+     */
+    public void init(@NotNull Supplier<String> loader) {
+        setLoader(loader);
+        load();
+    }
+
+    /**
      * Load config from cold data.
      *
      * @param configInformation
      *         Config deltas
      */
-    private void load(String configInformation) {
+    private void load(@NotNull String configInformation) {
         BufferedReader reader = new BufferedReader(new StringReader(configInformation));
         String line;
         try {
@@ -62,6 +72,7 @@ public class Configure {
                            .strip();
                 if (line.startsWith("#")) {
                     // Note here
+                    LOGGER.debug("Note: " + line);
                 } else {
                     int note = line.indexOf("#");
                     if (note != - 1) {
@@ -105,9 +116,9 @@ public class Configure {
                                         value
                                 );
 
-                                EntrustEnvironment.ifNotNull(
+                                EntrustEnvironment.notNull(
                                         this.warning.get(key),
-                                        warnings -> EntrustEnvironment.ifNotNull(
+                                        warnings -> EntrustEnvironment.notNull(
                                                 warnings.get(value),
                                                 LOGGER::warn
                                         )
@@ -132,7 +143,7 @@ public class Configure {
      * @param value
      *         Config value
      */
-    public void set(String key, String value) {
+    public void set(@NotNull String key, @NotNull String value) {
         this.configs.put(
                 key,
                 value

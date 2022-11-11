@@ -47,7 +47,7 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
 
     @Override
     public void generateElement() {
-        EntrustEnvironment.ifNotNull(air, airBlock -> {
+        EntrustEnvironment.notNull(air, airBlock -> {
             airBlock.generateElements(world, pos, properties);
         });
     }
@@ -64,7 +64,7 @@ public class AirBlockEntity extends BlockEntity implements ChemicalElementGenera
 
     @Override
     public void generatePressures() {
-        EntrustEnvironment.ifNotNull(air, airBlock -> {
+        EntrustEnvironment.notNull(air, airBlock -> {
             airBlock.generatePressures(world, pos, properties);
         });
     }

@@ -21,11 +21,11 @@ public class ManualDataRegion {
         if (! base.isDirectory()) {
             base.mkdirs();
         }
-        this.data = EntrustEnvironment.trying(() -> new AdapterDataAccessor(new RandomAccessFile(
+        this.data = EntrustEnvironment.trys(() -> new AdapterDataAccessor(new RandomAccessFile(
                 this.baseFile + "/page.page",
                 "rw"
         )));
-        this.index = EntrustEnvironment.trying(() -> new AdapterIndexAccessor(
+        this.index = EntrustEnvironment.trys(() -> new AdapterIndexAccessor(
                 new RandomAccessFile(
                         this.baseFile + "/page.index",
                         "rw"

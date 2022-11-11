@@ -22,8 +22,7 @@ public class Limestone extends TrtrOreBlock {
                 ChemicalSubstances.CALCIUM_CARBONATE,
                 new ChemicalContent(
                         ChemicalSubstances.CALCIUM_CARBONATE,
-                        random.nextDouble(70, 85),
-                        0
+                        random.nextDouble(70, 85)
                 )
         );
     }

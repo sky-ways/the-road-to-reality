@@ -22,8 +22,7 @@ public class BauxiteBlock extends TrtrOreBlock {
                 ChemicalElements.ALUMINUM_ELEMENT,
                 new ChemicalContent(
                         ChemicalElements.ALUMINUM_ELEMENT,
-                        random.nextDouble(70, 85),
-                        0
+                        random.nextDouble(70, 85)
                 )
         );
 
@@ -31,8 +30,7 @@ public class BauxiteBlock extends TrtrOreBlock {
                 ChemicalElements.ALUMINUM_ELEMENT,
                 new ChemicalContent(
                         ChemicalElements.ALUMINUM_ELEMENT,
-                        random.nextDouble(0, 5),
-                        0
+                        random.nextDouble(0, 5)
                 )
         );
     }

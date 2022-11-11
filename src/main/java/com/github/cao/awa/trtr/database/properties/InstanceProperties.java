@@ -1,13 +1,24 @@
 package com.github.cao.awa.trtr.database.properties;
 
 import com.github.cao.awa.modmdo.security.*;
+import com.github.cao.awa.trtr.database.properties.handler.*;
+import com.github.cao.awa.trtr.database.properties.handler.nbt.*;
+import com.github.cao.awa.trtr.database.properties.handler.stack.*;
+import com.github.cao.awa.trtr.database.properties.handler.string.*;
+import com.github.cao.awa.trtr.database.properties.handler.decimal.*;
+import com.github.cao.awa.trtr.database.properties.handler.integer.*;
+import com.github.cao.awa.trtr.database.properties.handler.logic.*;
 import com.github.cao.awa.trtr.database.properties.pool.*;
 import com.github.cao.awa.trtr.database.properties.stack.*;
 import com.github.cao.awa.trtr.database.properties.type.*;
+import com.github.cao.awa.trtr.element.chemical.*;
+import com.github.cao.awa.trtr.element.chemical.content.*;
 import com.github.cao.awa.trtr.element.chemical.properties.*;
+import com.github.cao.awa.trtr.element.chemical.properties.handle.*;
 import com.github.cao.awa.trtr.math.*;
 import com.github.cao.awa.trtr.util.uuid.*;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
+import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import org.jetbrains.annotations.*;
@@ -20,84 +31,55 @@ import java.util.function.*;
 import static com.github.cao.awa.trtr.TrtrMod.propertiesDatabase;
 
 public class InstanceProperties {
+    public static final Map<Class<?>, PropertiesHandler<?>> HANDLERS = new Object2ObjectOpenHashMap<>();
+    public static final Map<String, Class<?>> HANDLER_NAMES = new Object2ObjectOpenHashMap<>();
     public static final Map<Class<?>, Function<Object, String>> SERIALIZERS = new ConcurrentHashMap<>();
     public static final Map<Class<?>, Function<Object, JSONObject>> JSON_SERIALIZERS = new ConcurrentHashMap<>();
     public static final Map<Class<?>, String> TYPE_S = new ConcurrentHashMap<>();
     public static final Map<String, Function<String, Object>> TYPE_D = new ConcurrentHashMap<>();
 
     static {
-        setHandler(
-                Integer.class,
-                "(I",
-                Numerical::parseInt
-        );
-        setHandler(
-                Double.class,
-                "(D",
-                Numerical::parseDouble
-        );
-        setHandler(
-                Float.class,
-                "(F",
-                Numerical::parseFloat
-        );
-        setHandler(
-                Short.class,
-                "(S",
-                Numerical::parseShort
-        );
-        setHandler(
-                Byte.class,
-                "(Byt",
-                Numerical::parseByte
-        );
-        setHandler(
-                Long.class,
-                "(Byt",
-                Numerical::parseLong
-        );
-        setHandler(
-                Boolean.class,
-                "(I",
-                Boolean::parseBoolean
-        );
-        setHandler(
-                Character.class,
-                "(C",
-                s -> (char) Numerical.parseInt(s)
-        );
-        setHandler(
-                String.class,
-                "[STR",
-                s -> s
-        );
+        registerHandler(new IntegerPropertiesHandler());
 
-        // ChemicalElementProperties
-        setHandler(
-                ChemicalElementProperties.class,
-                "*CE",
-                ChemicalElementProperties::deserialize,
-                properties -> properties.serialize()
-                                        .toString()
-        );
+        registerHandler(new LongPropertiesHandler());
 
-        setJSONObjectHandler(
-                ChemicalElementProperties.class,
-                ChemicalElementProperties::serialize
-        );
+        registerHandler(new ShortPropertiesHandler());
 
-        setHandler(
-                AppointedPropertiesStack.class,
-                "*STACK",
-                AppointedPropertiesStack::deserialize,
-                AppointedPropertiesStack::serialize
-        );
-        setHandler(
-                NbtCompound.class,
-                "[Nbt[C",
-                NbtCompoundSerializer::deserialize,
-                NbtCompoundSerializer::serialize
-        );
+        registerHandler(new FloatPropertiesHandler());
+
+        registerHandler(new DoublePropertiesHandler());
+
+        registerHandler(new BooleanPropertiesHandler());
+
+        registerHandler(new CharPropertiesHandler());
+
+        registerHandler(new BytePropertiesHandler());
+
+        registerHandler(new StringPropertiesHandler());
+
+        registerHandler(new ChemicalElementPropertiesHandler());
+
+        registerHandler(new NbtCompoundPropertiesHandler());
+
+        registerHandler(new AppointedPropertiesStackHandler());
+
+//        setJSONObjectHandler(
+//                ChemicalElementProperties.class,
+//                ChemicalElementProperties::serialize
+//        );
+
+//        setHandler(
+//                AppointedPropertiesStack.class,
+//                "*STACK",
+//                AppointedPropertiesStack::deserialize,
+//                AppointedPropertiesStack::serialize
+//        );
+//        setHandler(
+//                NbtCompound.class,
+//                "[Nbt[C",
+//                NbtCompoundSerializer::deserialize,
+//                NbtCompoundSerializer::serialize
+//        );
         setHandler(
                 NbtString.class,
                 "[Nbt[S",
@@ -165,6 +147,17 @@ public class InstanceProperties {
         this.safe = isSafe;
     }
 
+    public static <T> void registerHandler(@NotNull PropertiesHandler<T> handler) {
+        HANDLERS.put(
+                handler.getClazz(),
+                handler
+        );
+        HANDLER_NAMES.put(
+                handler.getName(),
+                handler.getClazz()
+        );
+    }
+
     public static <T> void setHandler(@NotNull Class<T> target, @NotNull String serial, @NotNull Function<String, T> deserializer) {
         setHandler(
                 target,
@@ -196,6 +189,141 @@ public class InstanceProperties {
         JSON_SERIALIZERS.put(
                 target,
                 (Function<Object, JSONObject>) serializer
+        );
+    }
+
+    public static void main(String[] args) {
+        InstanceProperties properties = new InstanceProperties();
+        ChemicalElementProperties properties1 = new ChemicalElementProperties();
+        properties1.put(ChemicalElements.CARBON_ELEMENT, new ChemicalContent(ChemicalElements.CARBON_ELEMENT, 114));
+        properties.put(
+                "a",
+                properties1
+        );
+        JSONObject json = properties.toJSONObject0();
+
+        System.out.println(json);
+
+        InstanceProperties des = new InstanceProperties();
+        des.readJSONObject0(json);
+        System.out.println(des.toJSONObject0());
+    }
+
+    public JSONObject toJSONObject0() {
+        JSONObject nbt = new JSONObject();
+        writeJSONObject0(nbt);
+        return nbt;
+    }
+
+    public void writeJSONObject0(JSONObject json) {
+        JSONObject inner = new JSONObject();
+        map.forEach((k, v) -> {
+            Class<?> clazz = v.getClass();
+            if (HANDLERS.containsKey(clazz)) {
+                PropertiesHandler<?> type = HANDLERS.get(clazz);
+                JSONObject element = new JSONObject();
+                element.put(
+                        "type",
+                        type.getName()
+                );
+                if (HANDLERS.containsKey(clazz)) {
+                    HANDLERS.get(clazz)
+                            .postJSON(
+                                    "info",
+                                    v,
+                                    element
+                            );
+                }
+                inner.put(
+                        k,
+                        element
+                );
+            }
+        });
+        json.put(
+                "properties",
+                inner
+        );
+    }
+
+    /**
+     * Put target
+     *
+     * @param key
+     *         target key
+     * @param value
+     *         target value
+     */
+    public void put(String key, Object value) {
+        map.put(
+                key,
+                value
+        );
+    }
+
+    public void readJSONObject0(@NotNull JSONObject json) {
+        JSONObject nbt = json.getJSONObject("properties");
+        for (String key : nbt.keySet()) {
+            JSONObject element = nbt.getJSONObject(key);
+            String type = element.getString("type");
+            EntrustEnvironment.trys(() -> {
+                put(
+                        key,
+                        HANDLERS.get(HANDLER_NAMES.get(type))
+                                .getFromJSON(
+                                        "info",
+                                        element
+                                )
+                );
+            });
+        }
+    }
+
+    public JSONObject toJSONObject() {
+        JSONObject nbt = new JSONObject();
+        writeJSONObject(nbt);
+        return nbt;
+    }
+
+    /**
+     * Write data to JSONObject
+     *
+     * @param json
+     *         JSONObject instance
+     */
+    public void writeJSONObject(JSONObject json) {
+        JSONObject nbt = new JSONObject();
+        map.forEach((k, v) -> {
+            Class<?> clazz = v.getClass();
+            if (TYPE_S.containsKey(clazz)) {
+                String type = TYPE_S.get(clazz);
+                JSONObject element = new JSONObject();
+                element.put(
+                        "type",
+                        type
+                );
+                if (JSON_SERIALIZERS.containsKey(clazz)) {
+                    element.put(
+                            "info",
+                            JSON_SERIALIZERS.get(clazz)
+                                            .apply(v)
+                    );
+                } else {
+                    element.put(
+                            "info",
+                            SERIALIZERS.get(clazz)
+                                       .apply(v)
+                    );
+                }
+                nbt.put(
+                        k,
+                        element
+                );
+            }
+        });
+        json.put(
+                "properties",
+                nbt
         );
     }
 
@@ -231,22 +359,7 @@ public class InstanceProperties {
      * @return result
      */
     private <X> X safeGet(String key) {
-        return EntrustEnvironment.trying(() -> (X) map.get(key));
-    }
-
-    /**
-     * Put target
-     *
-     * @param key
-     *         target key
-     * @param value
-     *         target value
-     */
-    public void put(String key, Object value) {
-        map.put(
-                key,
-                value
-        );
+        return EntrustEnvironment.trys(() -> (X) map.get(key));
     }
 
     @Deprecated
@@ -309,10 +422,6 @@ public class InstanceProperties {
         InstanceProperties properties = propertiesDatabase.get(key);
         this.access = key;
 
-        if (properties == null) {
-            return;
-        }
-
         this.map.clear();
 
         this.map.putAll(properties.map);
@@ -341,7 +450,10 @@ public class InstanceProperties {
             return;
         }
         access = access == null || access.equals("") ? RandomIdentifier.noLrIdentifier(16) : access;
-        propertiesDatabase.put(access, this);
+        propertiesDatabase.put(
+                access,
+                this
+        );
 
         compound.putString(
                 "acs",
@@ -398,7 +510,7 @@ public class InstanceProperties {
         for (String key : nbt.keySet()) {
             JSONObject element = nbt.getJSONObject(key);
             String type = element.getString("type");
-            EntrustEnvironment.tryTemporary(
+            EntrustEnvironment.trys(
                     () -> {
                         put(
                                 key,
@@ -552,54 +664,6 @@ public class InstanceProperties {
             );
         });
         compound.put(
-                "properties",
-                nbt
-        );
-    }
-
-    public JSONObject toJSONObject() {
-        JSONObject nbt = new JSONObject();
-        writeJSONObject(nbt);
-        return nbt;
-    }
-
-    /**
-     * Write data to JSONObject
-     *
-     * @param json
-     *         JSONObject instance
-     */
-    public void writeJSONObject(JSONObject json) {
-        JSONObject nbt = new JSONObject();
-        map.forEach((k, v) -> {
-            Class<?> clazz = v.getClass();
-            if (TYPE_S.containsKey(clazz)) {
-                String type = TYPE_S.get(clazz);
-                JSONObject element = new JSONObject();
-                element.put(
-                        "type",
-                        type
-                );
-                if (JSON_SERIALIZERS.containsKey(clazz)) {
-                    element.put(
-                            "info",
-                            JSON_SERIALIZERS.get(clazz)
-                                            .apply(v)
-                    );
-                } else {
-                    element.put(
-                            "info",
-                            SERIALIZERS.get(clazz)
-                                       .apply(v)
-                    );
-                }
-                nbt.put(
-                        k,
-                        element
-                );
-            }
-        });
-        json.put(
                 "properties",
                 nbt
         );

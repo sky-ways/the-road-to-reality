@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "trtr:plant_fiber"
+        }
+    ],
+    "result": {
+        "item": "trtr:kindling",
+        "count": 2
+    }
+}

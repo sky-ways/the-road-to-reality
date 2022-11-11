@@ -34,6 +34,6 @@ public class FileLimitCompressor extends FileCompressor {
      */
     @Override
     public byte[] decompress(byte[] source) {
-        return EntrustEnvironment.trying(() -> compressor.decompress(source));
+        return EntrustEnvironment.trys(() -> compressor.decompress(source));
     }
 }

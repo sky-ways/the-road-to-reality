@@ -38,7 +38,7 @@ public class LoosePebbleBlock extends TrtrOreBlock implements GentleBlock, Water
             6
     );
     private static final Random random = new Random();
-    private final PossibilitySteps typeOneSteps = EntrustEnvironment.trying(() -> {
+    private final PossibilitySteps typeOneSteps = EntrustEnvironment.trys(() -> {
         PossibilitySteps steps = new PossibilitySteps();
         steps.append(
                 0,

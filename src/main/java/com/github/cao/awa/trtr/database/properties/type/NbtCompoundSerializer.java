@@ -13,7 +13,7 @@ import java.util.function.Function;
 public final class NbtCompoundSerializer {
     public static String serialize(NbtCompound nbt) {
         JSONObject json = new JSONObject();
-        Map<String, NbtElement> map = EntrustEnvironment.trying(() -> {
+        Map<String, NbtElement> map = EntrustEnvironment.trys(() -> {
             Method method = nbt.getClass().getDeclaredMethod("toMap");
             method.setAccessible(true);
             return (Map<String, NbtElement>) method.invoke(nbt);
@@ -44,7 +44,7 @@ public final class NbtCompoundSerializer {
             map.put(key, (NbtElement) function.apply(element.getString("info")));
         });
 
-        return EntrustEnvironment.trying(() -> {
+        return EntrustEnvironment.trys(() -> {
             Constructor<NbtCompound> constructor = NbtCompound.class.getDeclaredConstructor(Map.class);
             constructor.setAccessible(true);
             return constructor.newInstance(map);

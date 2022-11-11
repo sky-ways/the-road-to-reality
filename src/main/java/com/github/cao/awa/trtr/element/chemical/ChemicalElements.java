@@ -25,6 +25,12 @@ import com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.four.gallium
 import com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.seven.nihonium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.three.aluminum.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.boron.cycle.two.boron.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.five.tin.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.four.germanium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.seven.flerovium.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.six.lead.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.three.silicon.*;
+import com.github.cao.awa.trtr.element.chemical.grouped.carbon.cycle.two.carbon.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.chromium.cycle.five.molybdenum.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.chromium.cycle.four.chromium.*;
 import com.github.cao.awa.trtr.element.chemical.grouped.chromium.cycle.seven.seaborgium.*;
@@ -126,6 +132,14 @@ public class ChemicalElements {
     public static final RubidiumElement RUBIDIUM_ELEMENT = register(new RubidiumElement());
     public static final CaesiumElement CAESIUM_ELEMENT = register(new CaesiumElement());
     public static final FranciumElement FRANCIUM_ELEMENT = register(new FranciumElement());
+
+    // Group "Carbon"
+    public static final CarbonElement CARBON_ELEMENT = register(new CarbonElement());
+    public static final SiliconElement SILICON_ELEMENT = register(new SiliconElement());
+    public static final GermaniumElement GERMANIUM_ELEMENT = register(new GermaniumElement());
+    public static final TinElement TIN_ELEMENT = register(new TinElement());
+    public static final LeadElement LEAD_ELEMENT = register(new LeadElement());
+    public static final FleroviumElement FLEROVIUM_ELEMENT = register(new FleroviumElement());
 
     // Group "Beryllium"
     public static final BerylliumElement BERYLLIUM_ELEMENT = register(new BerylliumElement());

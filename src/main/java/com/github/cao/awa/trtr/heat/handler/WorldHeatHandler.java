@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 import java.util.function.*;
 
 public class WorldHeatHandler {
-    private static final Method UNLOAD_CHECKER = EntrustEnvironment.trying(() -> {
+    private static final Method UNLOAD_CHECKER = EntrustEnvironment.trys(() -> {
         Method method = ServerChunkManager.class.getDeclaredMethod("getChunkHolder", long.class);
         method.setAccessible(true);
         return method;
@@ -103,7 +103,7 @@ public class WorldHeatHandler {
 
     public boolean shouldUnload(World world, BlockPos pos) {
         ChunkManager manager = world.getChunkManager();
-        return EntrustEnvironment.trying(() -> {
+        return EntrustEnvironment.trys(() -> {
             assert UNLOAD_CHECKER != null;
             return ! ((ChunkHolder) UNLOAD_CHECKER.invoke(manager, ChunkPos.toLong(pos))).getLevelType().isAfter(ChunkHolder.LevelType.TICKING);
         }, () -> true);

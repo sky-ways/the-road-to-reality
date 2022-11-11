@@ -7,6 +7,7 @@ import net.minecraft.client.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.math.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -54,5 +55,34 @@ public abstract class TrtrItem extends Item implements RefRegister {
         );
 
         matrices.pop();
+    }
+
+    public static ItemStack exchangeStack(ItemStack inputStack, PlayerEntity player, ItemStack outputStack, boolean creativeOverride) {
+        boolean bl = player.getAbilities().creativeMode;
+        if (creativeOverride && bl) {
+            if (!player.getInventory().contains(outputStack)) {
+                player.getInventory().insertStack(outputStack);
+            }
+
+            return inputStack;
+        } else {
+            if (inputStack.isEmpty()) {
+                return outputStack;
+            } else {
+                if (!player.getInventory().insertStack(outputStack)) {
+                    player.dropItem(outputStack, false);
+                }
+
+                if (!bl) {
+                    inputStack.decrement(1);
+                }
+
+                return inputStack;
+            }
+        }
+    }
+
+    public static ItemStack exchangeStack(ItemStack inputStack, PlayerEntity player, ItemStack outputStack) {
+        return exchangeStack(inputStack, player, outputStack, true);
     }
 }

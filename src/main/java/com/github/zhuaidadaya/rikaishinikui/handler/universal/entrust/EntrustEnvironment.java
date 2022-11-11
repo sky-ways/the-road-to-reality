@@ -8,9 +8,10 @@ import java.util.*;
 import java.util.function.*;
 
 /**
- * Entrust to a no exception environment.
+ * Entrust action to a no exception environment.
  *
  * @author cao_awa
+ * @author zhuaidadaya
  * @since 1.0.0
  */
 public class EntrustEnvironment {
@@ -18,77 +19,115 @@ public class EntrustEnvironment {
         return target == null ? defaultValue : target;
     }
 
-    public static <T> void ifNotNull(T target, Consumer<T> action) {
-        if (target != null) {
-            action.accept(target);
-        }
-    }
-
-    public static <T> void ifNull(T target, Consumer<T> action) {
+    public static <T> void notNull(T target, ExceptingConsumer<T> action) {
         if (target == null) {
-            action.accept(null);
+            return;
+        }
+        trys(() -> action.accept(target));
+    }
+
+    /**
+     * Do action, and ignored exception.
+     *
+     * @param action
+     *         Action
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static void trys(ExceptingTemporary action) {
+        try {
+            action.apply();
+        } catch (Throwable e) {
+
         }
     }
 
-    public static <T> T operation(T target, Consumer<T> action) {
-        action.accept(target);
+    public static <T> void nulls(T target, ExceptingConsumer<T> action) {
+        if (target == null) {
+            trys(() -> action.accept(null));
+        }
+    }
+
+    public static <T> T operation(T target, ExceptingConsumer<T> action) {
+        trys(() -> action.accept(target));
         return target;
     }
 
-    public static <T> T trying(ExceptingSupplier<T> action) {
+    /**
+     * Do action to compute object, and ignored exception.
+     *
+     * @param target
+     *         Compute target
+     * @param action
+     *         Action
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static <T, R> R function(T target, ExceptingFunction<T, R> action) {
         try {
-            return action.get();
+            return action.apply(target);
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    public static <T> T trying(ExceptingSupplier<T> action, Supplier<T> actionWhenException) {
-        try {
-            return action.get();
-        } catch (Exception e) {
-            return actionWhenException.get();
-        }
-    }
-
-
-    public static <T> void tryTemporary(ExceptingTemporary action, Temporary whenException) {
-        try {
-            action.apply();
-        } catch (Throwable e) {
-            whenException.apply();
-        }
-    }
-
-    public static <T> void tryTemporary(ExceptingTemporary action, Consumer<Throwable> whenException) {
-        try {
-            action.apply();
-        } catch (Throwable e) {
-            whenException.accept(e);
         }
     }
 
     /**
-     * Entrust for supplier.
+     * Do action to get object, and care exception.
+     * <br>
+     * Get other when excepting.
+     * <br>
+     * Ignored exception when handling exception.
+     * <br>
      *
-     * @param input
-     *         Source supplier
-     * @param <R>
-     *         Result type
-     * @return Result
-     *
+     * @param action
+     *         Action
+     * @param whenException
+     *         Action when exception
      * @author cao_awa
      * @since 1.0.0
      */
-    public static <R> R result(ExceptingSupplier<R> input) {
-        return tryTemporary(input);
-    }
-
-    public static <T> T tryTemporary(ExceptingSupplier<T> action) {
+    public static <T> T trys(ExceptingSupplier<T> action, ExceptingSupplier<T> whenException) {
         try {
             return action.get();
-        } catch (Throwable e) {
+        } catch (Exception e) {
+            return trys(whenException);
+        }
+    }
+
+    /**
+     * Do action to get object, and ignored exception.
+     *
+     * @param action
+     *         Action
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static <T> T trys(ExceptingSupplier<T> action) {
+        try {
+            return action.get();
+        } catch (Exception e) {
             return null;
+        }
+    }
+
+    /**
+     * Do action, and care exception.
+     * <br>
+     * Ignored exception when handling exception.
+     * <br>
+     *
+     * @param action
+     *         Action
+     * @param whenException
+     *         Action when exception
+     * @author cao_awa
+     * @since 1.0.0
+     */
+    public static void trys(ExceptingTemporary action, ExceptingTemporary whenException) {
+        try {
+            action.apply();
+        } catch (Throwable e) {
+            trys(whenException);
         }
     }
 
@@ -104,10 +143,11 @@ public class EntrustEnvironment {
      * @return No exception environment
      *
      * @author cao_awa
+     * @author zhuaidadaya
      * @since 1.0.0
      */
     public static <I, R> Function<I, R> function(ExceptingFunction<I, R> input) {
-        return s -> tryTemporary(() -> input.apply(s));
+        return s -> function(s, input);
     }
 
     /**
@@ -127,15 +167,7 @@ public class EntrustEnvironment {
                 source,
                 target
         )) {
-            tryTemporary(action);
-        }
-    }
-
-    public static <T> void tryTemporary(ExceptingTemporary action) {
-        try {
-            action.apply();
-        } catch (Throwable e) {
-
+            trys(action);
         }
     }
 
@@ -158,9 +190,9 @@ public class EntrustEnvironment {
                 source,
                 target
         )) {
-            tryTemporary(action);
+            trys(action);
         } else {
-            tryTemporary(orElse);
+            trys(orElse);
         }
     }
 
@@ -185,12 +217,12 @@ public class EntrustEnvironment {
                 source,
                 target1
         )) {
-            tryTemporary(action1);
+            trys(action1);
         } else if (Objects.equals(
                 source,
                 target2
         )) {
-            tryTemporary(action2);
+            trys(action2);
         }
     }
 
@@ -217,14 +249,14 @@ public class EntrustEnvironment {
                 source,
                 target1
         )) {
-            tryTemporary(action1);
+            trys(action1);
         } else if (Objects.equals(
                 source,
                 target2
         )) {
-            tryTemporary(action2);
+            trys(action2);
         } else {
-            tryTemporary(orElse);
+            trys(orElse);
         }
     }
 
@@ -259,9 +291,19 @@ public class EntrustEnvironment {
      * @since 1.0.0
      */
     public static <T> T receptacle(ExceptingConsumer<Receptacle<T>> action) {
-        Receptacle<T> receptacle = Receptacle.of();
-        tryTemporary(() -> action.accept(receptacle));
-        return receptacle.get();
+        return operation(Receptacle.of(), action).get();
+    }
+
+    /**
+     * Cast an object.
+     *
+     * @param target Cast target type
+     * @param <T> Cast type
+     * @return Cast object
+     */
+    @NotNull
+    public static <T> T cast(@NotNull Object target) {
+        return (T) target;
     }
 }
 

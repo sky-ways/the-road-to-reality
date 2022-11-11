@@ -94,8 +94,7 @@ public class TrtrDumpAirBlock extends TrtrAirBlock implements ChemicalElemental<
                 ChemicalSubstances.CARBON_DIOXIDE,
                 new ChemicalContent(
                         ChemicalSubstances.CARBON_DIOXIDE,
-                        11.4,
-                        0
+                        11.4
                 )
         );
     }

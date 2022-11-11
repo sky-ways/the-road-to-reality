@@ -9,6 +9,7 @@ import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.factor.*;
 import com.github.cao.awa.trtr.heat.handler.*;
 import com.github.cao.awa.trtr.loader.resource.*;
+import com.github.cao.awa.trtr.ref.block.fire.*;
 import com.github.cao.awa.trtr.ref.item.fire.*;
 import com.github.cao.awa.trtr.type.*;
 import com.github.cao.awa.trtr.util.io.*;
@@ -46,30 +47,33 @@ public class TrtrMod implements ModInitializer {
         CombinationReactions.initialize();
         FireReacts.initialize();
         ChemicalElements.initialize();
+
+        VanillaFireBlock.registerDefaultFlammables();
     }
 
     public static void initializeConfig() {
-        configs.setLoader(() -> EntrustEnvironment.receptacle(receptacle -> {
+        configs.init(() -> EntrustEnvironment.receptacle(receptacle -> {
             File config = new File("config/the-road-to-reality/config.conf");
             if (! config.isFile()) {
-                TrtrMod.LOGGER.info("Config not found, generating default config");
+                TrtrMod.LOGGER.warn("Config not found, generating default config");
 
-                EntrustEnvironment.tryTemporary(() -> config.getParentFile()
-                                                            .mkdirs());
+                EntrustEnvironment.trys(() -> config.getParentFile()
+                                                    .mkdirs());
 
                 receptacle.set(IOUtil.read(Resources.getResource("default-config.conf")));
 
-                EntrustEnvironment.tryTemporary(() -> IOUtil.write(
+                EntrustEnvironment.operation(
                         new BufferedWriter(new FileWriter(config)),
-                        receptacle.get()
-                ));
+                        writer -> IOUtil.write(
+                                writer,
+                                receptacle.get()
+                        )
+                );
             }
 
             if (receptacle.get() == null) {
                 receptacle.set(IOUtil.read(new BufferedReader(new FileReader(config))));
             }
         }));
-
-        configs.load();
     }
 }

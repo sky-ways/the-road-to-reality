@@ -1,10 +1,9 @@
 package com.github.cao.awa.trtr.mixin.block;
 
 import com.github.cao.awa.trtr.explosion.vanilla.tnt.VanillaTntBlock;
-import com.github.cao.awa.trtr.ref.block.fire.FireBlock;
+import com.github.cao.awa.trtr.ref.block.fire.VanillaFireBlock;
 import com.github.cao.awa.trtr.ref.block.iron.*;
 import com.github.cao.awa.trtr.ref.block.trtr.slab.*;
-import com.github.cao.awa.trtr.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.cauldron.*;
 import net.minecraft.block.entity.*;
@@ -1179,7 +1178,7 @@ public abstract class BlocksMixin {
         OBSIDIAN = register("obsidian", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).requiresTool().strength(50.0F, 1200.0F)));
         TORCH = register("torch", new TorchBlock(AbstractBlock.Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> 14).sounds(BlockSoundGroup.WOOD), ParticleTypes.FLAME));
         WALL_TORCH = register("wall_torch", new WallTorchBlock(AbstractBlock.Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> 14).sounds(BlockSoundGroup.WOOD).dropsLike(TORCH), ParticleTypes.FLAME));
-        FIRE = register("fire", new FireBlock(AbstractBlock.Settings.of(Material.FIRE, MapColor.BRIGHT_RED).noCollision().breakInstantly().luminance((state) -> 15).sounds(BlockSoundGroup.WOOL)));
+        FIRE = register("fire", new VanillaFireBlock(AbstractBlock.Settings.of(Material.FIRE, MapColor.BRIGHT_RED).noCollision().breakInstantly().luminance((state) -> 15).sounds(BlockSoundGroup.WOOL)));
         SOUL_FIRE = register("soul_fire", new SoulFireBlock(AbstractBlock.Settings.of(Material.FIRE, MapColor.LIGHT_BLUE).noCollision().breakInstantly().luminance((state) -> 10).sounds(BlockSoundGroup.WOOL)));
         SPAWNER = register("spawner", new SpawnerBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(5.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
         OAK_STAIRS = register("oak_stairs", new StairsBlock(OAK_PLANKS.getDefaultState(), AbstractBlock.Settings.copy(OAK_PLANKS)));

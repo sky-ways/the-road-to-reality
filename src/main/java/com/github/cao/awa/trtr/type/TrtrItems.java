@@ -4,6 +4,7 @@ import com.github.cao.awa.trtr.container.bowl.wooden.water.*;
 import com.github.cao.awa.trtr.container.bucket.wooden.*;
 import com.github.cao.awa.trtr.debuger.*;
 import com.github.cao.awa.trtr.food.chocolate.cocoa.powder.*;
+import com.github.cao.awa.trtr.kindling.*;
 import com.github.cao.awa.trtr.ore.niter.powder.*;
 import com.github.cao.awa.trtr.ore.niter.crushed.*;
 import com.github.cao.awa.trtr.ore.aluminum.alunite.crushed.*;
@@ -62,6 +63,9 @@ public class TrtrItems {
     public static final Item WATER_WOODEN_BUCKET = WoodenBucket.register(WoodenBucket.WATER_IDENTIFIER, Fluids.WATER);
 
     public static final Item PLANT_FIBER = new PlantFibre();
+
+    public static final Item KINDLING = new Kindling();
+    public static final Item LIT_KINDLING = new LitKindling();
 
     // Ore powders
     public static final Item MALACHITE_POWDER = new MalachitePowder();

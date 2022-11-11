@@ -1,8 +1,6 @@
 package com.github.cao.awa.trtr.element.chemical.result.generate;
 
-import com.github.cao.awa.trtr.element.chemical.*;
 import com.github.cao.awa.trtr.element.chemical.reaction.*;
-import it.unimi.dsi.fastutil.objects.*;
 
 import java.util.*;
 

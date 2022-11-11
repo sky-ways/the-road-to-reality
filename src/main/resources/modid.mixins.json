@@ -9,6 +9,7 @@
         "block.BlockMixin",
         "block.BlocksMixin",
         "block.SpreadableBlockMixin",
+        "block.campfire.CampfireBlockEntityMixin",
         "block.fire.AbstractFireBlockMixin",
         "block.settings.BlockSettingsMixin",
         "block.state.variant.ModelVariantMapMixin",
