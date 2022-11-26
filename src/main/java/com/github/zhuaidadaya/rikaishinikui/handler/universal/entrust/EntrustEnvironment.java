@@ -37,7 +37,7 @@ public class EntrustEnvironment {
     public static void trys(ExceptingTemporary action) {
         try {
             action.apply();
-        } catch (Throwable e) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -63,7 +63,7 @@ public class EntrustEnvironment {
      * @author cao_awa
      * @since 1.0.0
      */
-    public static <T, R> R function(T target, ExceptingFunction<T, R> action) {
+    public static <T, R> R result(T target, ExceptingFunction<T, R> action) {
         try {
             return action.apply(target);
         } catch (Exception e) {
@@ -147,7 +147,10 @@ public class EntrustEnvironment {
      * @since 1.0.0
      */
     public static <I, R> Function<I, R> function(ExceptingFunction<I, R> input) {
-        return s -> function(s, input);
+        return s -> result(
+                s,
+                input
+        );
     }
 
     /**

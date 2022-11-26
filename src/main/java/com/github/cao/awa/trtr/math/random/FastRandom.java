@@ -3,7 +3,7 @@ package com.github.cao.awa.trtr.math.random;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.times.*;
 
 public class FastRandom {
-    public long seed = TimeUtil.nano();
+    private long seed = TimeUtil.nano();
     private long flip = 0B100;
 
     public long nextLong() {

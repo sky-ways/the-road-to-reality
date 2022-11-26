@@ -6,6 +6,9 @@ import net.minecraft.util.registry.*;
 
 /**
  * Register for block.
+ *
+ * @author cao_awa
+ * @since 1.0.0
  */
 public final class TrtrBlockRegister {
     private boolean registerBlock = false;
