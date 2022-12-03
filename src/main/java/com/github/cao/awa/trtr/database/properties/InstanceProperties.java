@@ -63,23 +63,23 @@ public class InstanceProperties {
 
         registerHandler(new AppointedPropertiesStackHandler());
 
-//        setJSONObjectHandler(
-//                ChemicalElementProperties.class,
-//                ChemicalElementProperties::serialize
-//        );
+        //        setJSONObjectHandler(
+        //                ChemicalElementProperties.class,
+        //                ChemicalElementProperties::serialize
+        //        );
 
-//        setHandler(
-//                AppointedPropertiesStack.class,
-//                "*STACK",
-//                AppointedPropertiesStack::deserialize,
-//                AppointedPropertiesStack::serialize
-//        );
-//        setHandler(
-//                NbtCompound.class,
-//                "[Nbt[C",
-//                NbtCompoundSerializer::deserialize,
-//                NbtCompoundSerializer::serialize
-//        );
+        //        setHandler(
+        //                AppointedPropertiesStack.class,
+        //                "*STACK",
+        //                AppointedPropertiesStack::deserialize,
+        //                AppointedPropertiesStack::serialize
+        //        );
+        //        setHandler(
+        //                NbtCompound.class,
+        //                "[Nbt[C",
+        //                NbtCompoundSerializer::deserialize,
+        //                NbtCompoundSerializer::serialize
+        //        );
         setHandler(
                 NbtString.class,
                 "[Nbt[S",
@@ -195,7 +195,13 @@ public class InstanceProperties {
     public static void main(String[] args) {
         InstanceProperties properties = new InstanceProperties();
         ChemicalElementProperties properties1 = new ChemicalElementProperties();
-        properties1.put(ChemicalElements.CARBON_ELEMENT, new ChemicalContent(ChemicalElements.CARBON_ELEMENT, 114));
+        properties1.put(
+                ChemicalElements.CARBON_ELEMENT,
+                new ChemicalContent(
+                        ChemicalElements.CARBON_ELEMENT,
+                        114
+                )
+        );
         properties.put(
                 "a",
                 properties1
@@ -266,16 +272,14 @@ public class InstanceProperties {
         for (String key : nbt.keySet()) {
             JSONObject element = nbt.getJSONObject(key);
             String type = element.getString("type");
-            EntrustEnvironment.trys(() -> {
-                put(
-                        key,
-                        HANDLERS.get(HANDLER_NAMES.get(type))
-                                .getFromJSON(
-                                        "info",
-                                        element
-                                )
-                );
-            });
+            EntrustEnvironment.trys(() -> put(
+                    key,
+                    HANDLERS.get(HANDLER_NAMES.get(type))
+                            .getFromJSON(
+                                    "info",
+                                    element
+                            )
+            ));
         }
     }
 
@@ -511,21 +515,17 @@ public class InstanceProperties {
             JSONObject element = nbt.getJSONObject(key);
             String type = element.getString("type");
             EntrustEnvironment.trys(
-                    () -> {
-                        put(
-                                key,
-                                TYPE_D.get(type)
-                                      .apply(element.getString("info"))
-                        );
-                    },
-                    () -> {
-                        put(
-                                key,
-                                TYPE_D.get(type)
-                                      .apply(element.getJSONObject("info")
-                                                    .toString())
-                        );
-                    }
+                    () -> put(
+                            key,
+                            TYPE_D.get(type)
+                                  .apply(element.getString("info"))
+                    ),
+                    () -> put(
+                            key,
+                            TYPE_D.get(type)
+                                  .apply(element.getJSONObject("info")
+                                                .toString())
+                    )
             );
         }
     }
