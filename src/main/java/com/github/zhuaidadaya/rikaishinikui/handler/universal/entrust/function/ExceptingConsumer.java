@@ -1,7 +1,9 @@
 package com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function;
 
-import java.io.*;
-import java.util.*;
+import com.github.cao.awa.apricot.anntations.Stable;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represents an operation that accepts a single input argument and returns no
@@ -17,6 +19,7 @@ import java.util.*;
  *
  * @since 1.8
  */
+@Stable
 @FunctionalInterface
 public interface ExceptingConsumer<T> extends Serializable {
 

@@ -1,6 +1,8 @@
 package com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function;
 
-import java.io.*;
+import com.github.cao.awa.apricot.anntations.Stable;
+
+import java.io.Serializable;
 
 /**
  * Represents a supplier of results.
@@ -15,6 +17,7 @@ import java.io.*;
  *
  * @param <T> the type of results supplied by this supplier
  */
+@Stable
 @FunctionalInterface
 public interface ExceptingSupplier<T> extends Serializable {
 

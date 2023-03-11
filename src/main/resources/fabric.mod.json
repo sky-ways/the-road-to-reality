@@ -6,6 +6,7 @@
     "description": "A mod",
     "authors": [
         "cao_awa",
+        "草二号机",
         "zhuaidadaya",
         "Oneleaves",
         "XiaoKuKMC",
@@ -36,16 +37,16 @@
         ]
     },
     "mixins": [
-        "modid.mixins.json"
+        "trtr.mixins.json"
     ],
     "breaks": {
         "tic_tacs": "*",
         "optifabric": "*"
     },
     "depends": {
-        "fabricloader": ">=0.14.9",
+        "fabricloader": ">=0.14.17",
         "fabric-api": "*",
-        "minecraft": "1.19.2",
+        "minecraft": "1.19.3",
         "java": ">=17"
     },
     "suggests": {

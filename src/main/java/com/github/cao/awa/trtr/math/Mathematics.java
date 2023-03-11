@@ -20,8 +20,6 @@ public class Mathematics extends MathHelper {
      *
      * @param x Long value
      * @return String size
-     *
-     * @see java.lang.Long#stringSize(long)
      */
     static int stringSize(long x) {
         int d = 1;

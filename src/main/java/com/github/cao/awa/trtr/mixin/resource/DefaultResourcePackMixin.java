@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.mixin.resource;
 
 import bot.inker.inkrender.MemoryResourcePack;
 import net.minecraft.resource.DefaultResourcePack;
+import net.minecraft.resource.InputSupplier;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,23 +17,10 @@ import java.util.Set;
 @Mixin(DefaultResourcePack.class)
 public class DefaultResourcePackMixin {
     @Inject(at = @At("HEAD"), method = "open", cancellable = true)
-    public void open(ResourceType type, Identifier id, CallbackInfoReturnable<InputStream> cir) {
+    public void open(ResourceType type, Identifier id, CallbackInfoReturnable<InputSupplier<InputStream>> cir) {
         if (MemoryResourcePack.NAMESPACE.equals(id.getNamespace())) {
             try {
                 cir.setReturnValue(MemoryResourcePack.INSTANCE.open(type, id));
-            } catch (Throwable ignored) {
-
-            }
-        }
-    }
-
-    @Inject(at = @At("HEAD"), method = "contains", cancellable = true)
-    public void contains(ResourceType type, Identifier id, CallbackInfoReturnable<Boolean> cir) {
-        if (MemoryResourcePack.NAMESPACE.equals(id.getNamespace())) {
-            try {
-                if (MemoryResourcePack.INSTANCE.contains(type, id)) {
-                    cir.setReturnValue(true);
-                }
             } catch (Throwable ignored) {
 
             }

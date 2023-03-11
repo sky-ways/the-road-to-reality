@@ -1,7 +1,8 @@
 package bot.inker.inkrender;
 
-import com.github.zhuaidadaya.rikaishinikui.handler.option.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.option.BiOption;
 import it.unimi.dsi.fastutil.longs.*;
+import net.minecraft.resource.InputSupplier;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.metadata.ResourceMetadataReader;
@@ -10,12 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class MemoryResourcePack implements ResourcePack {
@@ -89,12 +89,12 @@ public class MemoryResourcePack implements ResourcePack {
 
     @Nullable
     @Override
-    public InputStream openRoot(String fileName) {
+    public InputSupplier<InputStream> openRoot(String... segments) {
         return null;
     }
 
     @Override
-    public InputStream open(ResourceType type, Identifier identifier) throws IOException {
+    public InputSupplier<InputStream> open(ResourceType type, Identifier identifier) {
         if (this.async.second()) {
             synchronized (this) {
                 return open0(
@@ -109,7 +109,7 @@ public class MemoryResourcePack implements ResourcePack {
         );
     }
 
-    public InputStream open0(ResourceType type, Identifier id) throws IOException {
+    public InputSupplier<InputStream> open0(ResourceType type, Identifier id) {
         LOGGER.debug(
                 "open({},{})",
                 type,
@@ -117,19 +117,9 @@ public class MemoryResourcePack implements ResourcePack {
         );
         Supplier<InputStream> supplier = this.registers.get(getIdFromIdentifier(id));
         if (supplier == null) {
-            throw new IOException("MemoryResource '" + id.getPath() + "' not found");
+            throw new RuntimeException("MemoryResource '" + id.getPath() + "' not found");
         }
-        InputStream resource;
-        try {
-            resource = supplier.get();
-        } catch (Exception e) {
-            throw new IOException("MemoryResource '" + id.getPath() + "' supplier throw " + e.getClass()
-                                                                                             .getName() + ": '" + e.getMessage() + "'");
-        }
-        if (resource == null) {
-            throw new IOException("MemoryResource '" + id.getPath() + "' can't open");
-        }
-        return resource;
+        return InputSupplier.create(Path.of(id.getPath()));
     }
 
     private long getIdFromIdentifier(Identifier identifier) {
@@ -152,33 +142,8 @@ public class MemoryResourcePack implements ResourcePack {
     }
 
     @Override
-    public Collection<Identifier> findResources(ResourceType type, String namespace, String prefix, Predicate<Identifier> allowedPathPredicate) {
-        return Collections.emptyList();
-    }
+    public void findResources(ResourceType type, String namespace, String prefix, ResultConsumer consumer) {
 
-    @Override
-    public boolean contains(ResourceType type, Identifier id) {
-        if (this.async.second()) {
-            synchronized (this) {
-                return this.contains0(
-                        type,
-                        id
-                );
-            }
-        }
-        return this.contains0(
-                type,
-                id
-        );
-    }
-
-    private boolean contains0(ResourceType type, Identifier id) {
-        LOGGER.debug(
-                "contains({},{})",
-                type,
-                id
-        );
-        return this.registers.containsKey(getIdFromIdentifier(id));
     }
 
     @Override

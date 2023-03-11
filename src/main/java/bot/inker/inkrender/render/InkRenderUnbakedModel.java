@@ -14,17 +14,14 @@ import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.ModelBakeSettings;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.client.render.model.UnbakedModel;
+import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -87,15 +84,11 @@ public class InkRenderUnbakedModel implements UnbakedModel {
     }
 
     @Override
-    public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> unbakedModelGetter, Set<Pair<String, String>> unresolvedTextureReferences) {
-        return resourceIdentifier.values()
-                                 .stream()
-                                 .map(DEFAULT_SPRITE_IDENTIFIED)
-                                 .toList();
+    public void setParents(Function<Identifier, UnbakedModel> modelLoader) {
     }
 
     @Override
-    public BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId) {
+    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId) {
         try {
             return bake(
                     textureGetter,
@@ -108,7 +101,7 @@ public class InkRenderUnbakedModel implements UnbakedModel {
             );
             // TODO
 
-            //return UncheckUtil.uncheck(e);
+//            return UncheckUtil.uncheck(e);
             return null;
         }
     }
@@ -136,7 +129,7 @@ public class InkRenderUnbakedModel implements UnbakedModel {
                                                    .getNumVertices(); v++) {
                         FloatTuple floatTuple = matGroupObj.getVertex(matGroupObj.getFace(i)
                                                                                  .getVertexIndex(v));
-                        Vec3f vertex = new Vec3f(
+                        Vec3d vertex = new Vec3d(
                                 floatTuple.getX(),
                                 floatTuple.getY(),
                                 floatTuple.getZ()
@@ -208,12 +201,12 @@ public class InkRenderUnbakedModel implements UnbakedModel {
         );
     }
 
-    private void addVertex(int faceIndex, int vertIndex, int realIndex, Vec3f vertex, QuadEmitter emitter, Obj matGroup) {
+    private void addVertex(int faceIndex, int vertIndex, int realIndex, Vec3d vertex, QuadEmitter emitter, Obj matGroup) {
         emitter.pos(
                 vertIndex,
-                vertex.getX(),
-                vertex.getY(),
-                vertex.getZ()
+                (float) vertex.getX(),
+                (float) vertex.getY(),
+                (float) vertex.getZ()
         );
 
         if (matGroup.getFace(faceIndex)

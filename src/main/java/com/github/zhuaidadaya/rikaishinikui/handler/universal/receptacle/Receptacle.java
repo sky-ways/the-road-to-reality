@@ -1,5 +1,10 @@
 package com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle;
 
+import com.github.cao.awa.apricot.anntations.Stable;
+
+import java.util.function.Supplier;
+
+@Stable
 public final class Receptacle<T> {
     private T target;
 
@@ -7,12 +12,19 @@ public final class Receptacle<T> {
         this.target = target;
     }
 
+    public static <X> Receptacle<X> of() {
+        return of(null);
+    }
+
     public static <X> Receptacle<X> of(X target) {
         return new Receptacle<>(target);
     }
 
-    public static <X> Receptacle<X> of() {
-        return of(null);
+    public T getOrSet(Supplier<T> target) {
+        if (this.target == null) {
+            return set(target.get()).get();
+        }
+        return get();
     }
 
     public T get() {

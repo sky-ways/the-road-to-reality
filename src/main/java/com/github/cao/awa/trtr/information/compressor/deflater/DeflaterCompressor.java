@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.information.compressor.deflater;
 
+import com.github.cao.awa.apricot.util.io.IOUtil;
 import com.github.cao.awa.trtr.information.compressor.*;
-import com.github.cao.awa.trtr.util.io.*;
 
 import java.io.*;
 import java.util.zip.*;
