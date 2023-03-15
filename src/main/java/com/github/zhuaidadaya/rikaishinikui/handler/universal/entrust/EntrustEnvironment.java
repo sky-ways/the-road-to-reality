@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Entrust action to a no exception environment.
@@ -24,9 +25,12 @@ import java.util.function.Function;
  * @since 1.0.0
  */
 public class EntrustEnvironment {
-    @NotNull
-    public static <T> T getNotNull(@Nullable T target, @NotNull T defaultValue) {
+    public static <T> T nonnull(@Nullable T target, @NotNull T defaultValue) {
         return target == null ? defaultValue : target;
+    }
+
+    public static <T> T nonnull(@Nullable T target, Supplier<T> defaultValue) {
+        return target == null ? defaultValue == null ? null : defaultValue.get() : target;
     }
 
     public static <T> void notNull(T target, ExceptingConsumer<T> action) {
@@ -364,8 +368,20 @@ public class EntrustEnvironment {
      * @return Target type or null
      */
     @Nullable
-    public static <T> T cast(@NotNull Object target) {
+    public static <T> T cast(@Nullable Object target) {
         return trys(() -> (T) target);
+    }
+
+    /**
+     * Cast an object.
+     *
+     * @param target Cast target
+     * @param <T> Cast type
+     * @return Target type or null
+     */
+    @Nullable
+    public static <T> T cast(@Nullable Object target, Class<T> clazz) {
+        return trys(() -> clazz.cast(target));
     }
 
     /**

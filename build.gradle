@@ -46,7 +46,8 @@ dependencies {
     shadow 'commons-io:commons-io:2.11.0'
     shadow 'org.lz4:lz4-java:1.8.0'
     shadow 'org.iq80.leveldb:leveldb:0.12'
-    shadow 'com.esotericsoftware:kryo:5.3.0'
+
+    shadow 'org.reflections:reflections:0.10.2'
 }
 
 processResources {

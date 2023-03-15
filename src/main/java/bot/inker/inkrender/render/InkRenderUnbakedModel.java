@@ -3,7 +3,6 @@ package bot.inker.inkrender.render;
 import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
 import bot.inker.inkrender.MemoryResourcePack;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
-import com.mojang.datafixers.util.Pair;
 import de.javagl.obj.FloatTuple;
 import de.javagl.obj.Mtl;
 import de.javagl.obj.Obj;
@@ -49,7 +48,7 @@ public class InkRenderUnbakedModel implements UnbakedModel {
         this.resourceLoader = resourceLoader;
         this.obj = obj;
         this.mtls = mtls;
-        this.transform = EntrustEnvironment.getNotNull(
+        this.transform = EntrustEnvironment.nonnull(
                 transform,
                 ModelTransformation.NONE
         );
