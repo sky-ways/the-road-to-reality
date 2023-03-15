@@ -22,4 +22,16 @@ public class BlockSettingAccessor implements FieldAccessor {
     public AbstractBlock.Settings get(TrtrBlock block) {
         return get((Class<TrtrBlock>) block.getClass());
     }
+
+    public boolean has(Class<TrtrBlock> clazz) {
+        if (has(clazz, "SETTINGS")) {
+            return true;
+        }
+        return has(clazz, "SETTING");
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean has(TrtrBlock block) {
+        return has((Class<TrtrBlock>) block.getClass());
+    }
 }

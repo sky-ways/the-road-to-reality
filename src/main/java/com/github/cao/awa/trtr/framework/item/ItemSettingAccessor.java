@@ -19,4 +19,16 @@ public class ItemSettingAccessor implements FieldAccessor {
                                           )
         );
     }
+
+    public boolean has(Class<Item> clazz) {
+        if (has(clazz, "SETTINGS")) {
+            return true;
+        }
+        return has(clazz, "SETTING");
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean has(Item block) {
+        return has((Class<Item>) block.getClass());
+    }
 }

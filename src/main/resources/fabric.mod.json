@@ -33,7 +33,7 @@
             "com.github.cao.awa.trtr.TrtrServer"
         ],
         "fabric-datagen": [
-            "com.github.cao.awa.trtr.TrtrDatagen"
+            "com.github.cao.awa.trtr.data.gen.TrtrDataGen"
         ]
     },
     "mixins": [

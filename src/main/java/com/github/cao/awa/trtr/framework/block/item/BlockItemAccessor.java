@@ -25,10 +25,10 @@ public class BlockItemAccessor implements FieldAccessor {
     }
 
     public Class<? extends BlockItem> getType(Class<TrtrBlock> clazz) {
-        return EntrustEnvironment.nonnull(get(clazz,
+        return EntrustEnvironment.nonnull(type(clazz,
                                               "ITEM"
                                              ),
-                                          get(clazz,
+                                          type(clazz,
                                                  "BLOCK_ITEM"
                                              )
         );
@@ -37,5 +37,17 @@ public class BlockItemAccessor implements FieldAccessor {
     @SuppressWarnings("unchecked")
     public Class<? extends BlockItem> getType(TrtrBlock block) {
         return getType((Class<TrtrBlock>) block.getClass());
+    }
+
+    public boolean has(Class<TrtrBlock> clazz) {
+        if (has(clazz, "ITEM")) {
+            return true;
+        }
+        return has(clazz, "BLOCK_ITEM");
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean has(TrtrBlock block) {
+        return has((Class<TrtrBlock>) block.getClass());
     }
 }

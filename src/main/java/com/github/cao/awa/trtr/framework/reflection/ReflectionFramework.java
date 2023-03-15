@@ -1,6 +1,5 @@
 package com.github.cao.awa.trtr.framework.reflection;
 
-import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
@@ -10,7 +9,7 @@ import org.reflections.util.ConfigurationBuilder;
 
 import java.util.List;
 
-public abstract class ReflectionFramework implements FieldAccessor {
+public abstract class ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/ReflectionFramework");
     private static final Reflections REFLECTIONS = new Reflections(new ConfigurationBuilder().addUrls(ClasspathHelper.forPackage(""))
                                                                                              .addScanners(Scanners.TypesAnnotated));

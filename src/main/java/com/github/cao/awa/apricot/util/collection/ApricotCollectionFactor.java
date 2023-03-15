@@ -28,6 +28,11 @@ public class ApricotCollectionFactor {
         //        return new ObjectArrayList<>(capacity);
     }
 
+    public static <V> List<V> newArrayList(Collection<V> collection) {
+        return new ArrayList<>(collection);
+        //        return new ObjectArrayList<>(capacity);
+    }
+
     public static <V> List<V> newLinkedList() {
         return new LinkedList<>();
     }

@@ -1,15 +1,13 @@
-package com.github.cao.awa.trtr.block.ore.aluminum.alunite;
+package com.github.cao.awa.trtr.block.example;
 
-import com.github.cao.awa.apricot.anntations.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlockItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 
-@Auto
-public class AluniteOreItem extends TrtrBlockItem {
+public class ExampleBlockItem extends TrtrBlockItem {
     public static final FabricItemSettings SETTINGS = new FabricItemSettings();
 
-    public AluniteOreItem(Block block, Settings settings) {
+    public ExampleBlockItem(Block block, Settings settings) {
         super(block,
               settings
         );
