@@ -23,17 +23,6 @@ public class ExampleBlock extends TrtrBlock {
                                                                               DyeColor.WHITE
     );
 
-    // Loots.
-    // Direct loot provider.
-    @DataGen
-    public static ExampleLoot LOOT;
-
-    // Here two loot provider is invalid, the name must be "LOOT" or "LOOT_PROVIDER", framework will ignore it automatically.
-    // Direct loot with class provider.
-    public static final Class<ExampleLoot> TYPE_LOOT = ExampleLoot.class;
-    // Factory loot.
-    public static final LootFactory<ExampleLoot> FACTORY_LOOT = ExampleLoot::new;
-
     // Block item.
     // Direct item.
     public static ExampleBlockItem ITEM;
@@ -42,12 +31,27 @@ public class ExampleBlock extends TrtrBlock {
     // Direct item with class.
     public static final Class<ExampleBlockItem> TYPE_ITEM = ExampleBlockItem.class;
 
+    // Loots.
+    // Direct loot provider.
+    @DataGen
+    public static ExampleLoot LOOT;
+
+    // Here two loot provider is invalid, the name must be "LOOT" or "LOOT_PROVIDER", framework will ignore it automatically.
+    // Direct loot with class provider.
+    @DataGen
+    public static final Class<ExampleLoot> TYPE_LOOT = ExampleLoot.class;
+    // Factory loot.
+    @DataGen
+    public static final LootFactory<ExampleLoot> FACTORY_LOOT = ExampleLoot::new;
+
     // Models.
     // Direct model provider
+    @DataGen
     public static ExampleModel MODEL;
 
     // Here one block model provider is invalid, the name must be "MODEL" or "MODEL_PROVIDER", framework will ignore it automatically.
     // Direct item with class.
+    @DataGen
     public static final Class<ExampleModel> TYPE_MODEL = ExampleModel.class;
 
     // Constructor...

@@ -2,7 +2,7 @@ package com.github.cao.awa.trtr.framework.block.data.gen.model;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.block.TrtrBlock;
-import com.github.cao.awa.trtr.data.gen.model.GenericModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.data.gen.model.ModelDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.data.gen.model.TrtrModelFactory;
@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Objects;
 
 public class BlockModelDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockModelDataGenFramework");
@@ -104,15 +103,15 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                             .getConstructor(FabricDataOutput.class)
                             .newInstance(output)));
                 } else {
-                    return output -> new GenericModelProvider(output,
-                                                              block
+                    return output -> new GenericBlockModelProvider(output,
+                                                                   block
                     );
                 }
             }
             return provider;
         } catch (Exception e) {
-            return output -> new GenericModelProvider(output,
-                                                      block
+            return output -> new GenericBlockModelProvider(output,
+                                                           block
             );
         }
     }

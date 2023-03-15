@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 @Auto
 public class Alunite extends TrtrBlock {
     public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "alunite_ore"
+                                                              "alunite"
     );
 
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
