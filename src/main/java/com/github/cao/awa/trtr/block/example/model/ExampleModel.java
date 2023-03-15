@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.block.example.model;
 
+import com.github.cao.awa.apricot.anntations.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.example.ExampleBlock;
 import com.github.cao.awa.trtr.framework.data.gen.model.TrtrBlockModelProvider;
@@ -7,7 +8,9 @@ import com.github.cao.awa.trtr.identifier.namespane.Namespace;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.data.client.BlockStateModelGenerator;
 
+@Auto
 public class ExampleModel extends TrtrBlockModelProvider {
+    @Auto
     public ExampleModel(FabricDataOutput output) {
         super(output);
     }

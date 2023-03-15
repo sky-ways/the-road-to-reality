@@ -12,6 +12,7 @@ import java.util.function.BiConsumer;
 @Auto
 @DataGen
 public class AluniteLoot extends TrtrLootTableProvider {
+    @Auto
     public AluniteLoot(FabricDataOutput output) {
         super(output);
     }

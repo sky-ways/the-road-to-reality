@@ -10,6 +10,7 @@ import java.util.function.BiConsumer;
 
 @Auto
 public class ExampleLoot extends TrtrLootTableProvider {
+    @Auto
     public ExampleLoot(FabricDataOutput output) {
         super(output);
     }

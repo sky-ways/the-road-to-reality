@@ -11,10 +11,12 @@ import net.minecraft.util.Identifier;
 
 @Auto
 public class Alunite extends TrtrBlock {
+    @Auto
     public static final Identifier IDENTIFIER = Identifier.of("trtr",
                                                               "alunite"
     );
 
+    @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
                                                                               MapColor.GRAY
                                                                           )
@@ -23,11 +25,13 @@ public class Alunite extends TrtrBlock {
                                                                                     6.0F
                                                                           );
 
+    @Auto
     public static AluniteOreItem ITEM;
 
     @DataGen
     public static AluniteLoot LOOT;
 
+    @Auto
     public Alunite(Settings settings) {
         super(settings);
     }

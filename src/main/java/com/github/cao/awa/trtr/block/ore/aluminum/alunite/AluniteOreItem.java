@@ -7,8 +7,10 @@ import net.minecraft.block.Block;
 
 @Auto
 public class AluniteOreItem extends TrtrBlockItem {
+    @Auto
     public static final FabricItemSettings SETTINGS = new FabricItemSettings();
 
+    @Auto
     public AluniteOreItem(Block block, Settings settings) {
         super(block,
               settings
