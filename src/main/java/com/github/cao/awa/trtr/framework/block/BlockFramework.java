@@ -33,7 +33,7 @@ public class BlockFramework extends ReflectionFramework {
     private final List<Block> blocks = ApricotCollectionFactor.newArrayList();
     private final BlockDataGenFramework DATA_GEN = new BlockDataGenFramework(this);
 
-    public void load() {
+    public void work() {
         getReflection().getTypesAnnotatedWith(Auto.class)
                        .stream()
                        .filter(this :: match)

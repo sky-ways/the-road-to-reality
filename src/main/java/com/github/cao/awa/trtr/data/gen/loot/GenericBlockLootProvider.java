@@ -21,7 +21,7 @@ public class GenericBlockLootProvider extends TrtrLootTableProvider {
     @Override
     public void accept(BiConsumer<Identifier, LootTable.Builder> identifierBuilderBiConsumer) {
         identifierBuilderBiConsumer.accept(this.block.getLootTableId(),
-                                           new LootTable.Builder().pool(new LootPool.Builder().with(ItemEntry.builder(this.block.asItem()).quality(64)))
+                                           new LootTable.Builder().pool(new LootPool.Builder().with(ItemEntry.builder(this.block.asItem())))
         );
     }
 }

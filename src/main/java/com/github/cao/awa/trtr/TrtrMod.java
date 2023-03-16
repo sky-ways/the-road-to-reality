@@ -13,7 +13,7 @@ public class TrtrMod implements ModInitializer {
     public void onInitialize() {
         initializeConfig();
 
-        BLOCK_FRAMEWORK.load();
+        BLOCK_FRAMEWORK.work();
     }
 
     public static void initializeConfig() {
