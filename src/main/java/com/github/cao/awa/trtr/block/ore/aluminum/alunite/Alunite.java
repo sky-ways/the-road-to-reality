@@ -3,10 +3,11 @@ package com.github.cao.awa.trtr.block.ore.aluminum.alunite;
 import com.github.cao.awa.apricot.anntations.Auto;
 import com.github.cao.awa.trtr.annotations.DataGen;
 import com.github.cao.awa.trtr.block.TrtrBlock;
-import com.github.cao.awa.trtr.block.ore.aluminum.alunite.loot.AluniteLoot;
+import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
+import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
 
 @Auto
@@ -20,16 +21,15 @@ public class Alunite extends TrtrBlock {
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
                                                                               MapColor.GRAY
                                                                           )
-                                                                          .requiresTool()
-                                                                          .strength(1.5F,
-                                                                                    6.0F
+                                                                          .strength(0.1F,
+                                                                                    1.0F
                                                                           );
 
     @Auto
-    public static AluniteOreItem ITEM;
+    public static Class<? extends BlockItem> ITEM = AluniteOreItem.class;
 
     @DataGen
-    public static AluniteLoot LOOT;
+    public static GenericBlockLootProvider LOOT;
 
     @Auto
     public Alunite(Settings settings) {

@@ -1,7 +1,6 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.model;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.data.gen.model.ModelDataGeneratorAccessor;
@@ -11,6 +10,7 @@ import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnv
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import org.apache.logging.log4j.LogManager;
@@ -68,7 +68,7 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
         }
     }
 
-    private TrtrModelFactory instance(TrtrBlock block) {
+    private TrtrModelFactory instance(Block block) {
         // Construct the block model provider.
         LOGGER.info("Constructing model provider for block '{}'",
                     block.getClass()
@@ -78,7 +78,7 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
         return create(block);
     }
 
-    private boolean verify(TrtrBlock block) {
+    private boolean verify(Block block) {
         if (! ModelDataGeneratorAccessor.ACCESSOR.has(block)) {
             LOGGER.info("Block '{}' has no model provider, will use generic provider to generate",
                         block.getClass()
@@ -93,7 +93,7 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
         return true;
     }
 
-    private TrtrModelFactory create(TrtrBlock block) {
+    private TrtrModelFactory create(Block block) {
         try {
             final TrtrModelFactory provider = o -> ModelDataGeneratorAccessor.ACCESSOR.get(block);
             if (EntrustEnvironment.trys(() -> provider.apply(null)) == null) {

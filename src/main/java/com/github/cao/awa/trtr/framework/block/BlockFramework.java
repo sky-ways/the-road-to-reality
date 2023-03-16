@@ -2,7 +2,6 @@ package com.github.cao.awa.trtr.framework.block;
 
 import com.github.cao.awa.apricot.anntations.Auto;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.framework.block.data.gen.BlockDataGenFramework;
 import com.github.cao.awa.trtr.framework.block.item.BlockItemAccessor;
@@ -31,7 +30,7 @@ import java.util.Objects;
 
 public class BlockFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockFramework");
-    private final List<TrtrBlock> blocks = ApricotCollectionFactor.newArrayList();
+    private final List<Block> blocks = ApricotCollectionFactor.newArrayList();
     private final BlockDataGenFramework DATA_GEN = new BlockDataGenFramework(this);
 
     public void load() {
@@ -45,14 +44,14 @@ public class BlockFramework extends ReflectionFramework {
     }
 
     private boolean match(Class<?> clazz) {
-        return ! Modifier.isAbstract(clazz.getModifiers()) && TrtrBlock.class.isAssignableFrom(clazz);
+        return ! Modifier.isAbstract(clazz.getModifiers()) && Block.class.isAssignableFrom(clazz);
     }
 
-    private Class<TrtrBlock> cast(Class<?> clazz) {
+    private Class<Block> cast(Class<?> clazz) {
         return EntrustEnvironment.cast(clazz);
     }
 
-    private TrtrBlock instance(Class<TrtrBlock> clazz) {
+    private Block instance(Class<Block> clazz) {
         // Construct the block using settings.
         // Here have not a default template settings for coping with settings missing.
         LOGGER.info("Constructing block: '{}'",
@@ -63,7 +62,7 @@ public class BlockFramework extends ReflectionFramework {
         );
     }
 
-    private boolean verify(Class<TrtrBlock> block) {
+    private boolean verify(Class<Block> block) {
         final List<String> missing = ApricotCollectionFactor.newArrayList();
 
         // Check indispensable fields, cannot register if missing.
@@ -79,7 +78,7 @@ public class BlockFramework extends ReflectionFramework {
         );
     }
 
-    private void build(TrtrBlock block) {
+    private void build(Block block) {
         LOGGER.info("Building block: '{}'",
                     block.getClass()
                          .getName()
@@ -115,11 +114,11 @@ public class BlockFramework extends ReflectionFramework {
         return DATA_GEN;
     }
 
-    public List<TrtrBlock> dumpBlocks() {
+    public List<Block> dumpBlocks() {
         return ApricotCollectionFactor.newArrayList(this.blocks);
     }
 
-    private void item(TrtrBlock block) {
+    private void item(Block block) {
         EntrustEnvironment.trys(() -> {
                                     // Use block identifier for register block item.
                                     Identifier identifier = IdentifierAccessor.ACCESSOR.get(block);

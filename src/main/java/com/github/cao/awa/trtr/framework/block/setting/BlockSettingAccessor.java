@@ -1,14 +1,14 @@
 package com.github.cao.awa.trtr.framework.block.setting;
 
-import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
 
 public class BlockSettingAccessor implements FieldAccessor {
     public static final BlockSettingAccessor ACCESSOR = new BlockSettingAccessor();
 
-    public AbstractBlock.Settings get(Class<TrtrBlock> clazz) {
+    public AbstractBlock.Settings get(Class<Block> clazz) {
         return EntrustEnvironment.nonnull(get(clazz,
                                               "SETTINGS"
                                           ),
@@ -19,11 +19,11 @@ public class BlockSettingAccessor implements FieldAccessor {
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractBlock.Settings get(TrtrBlock block) {
-        return get((Class<TrtrBlock>) block.getClass());
+    public AbstractBlock.Settings get(Block block) {
+        return get((Class<Block>) block.getClass());
     }
 
-    public boolean has(Class<TrtrBlock> clazz) {
+    public boolean has(Class<Block> clazz) {
         if (has(clazz,
                 "SETTINGS"
         )) {
@@ -35,7 +35,7 @@ public class BlockSettingAccessor implements FieldAccessor {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean has(TrtrBlock block) {
-        return has((Class<TrtrBlock>) block.getClass());
+    public boolean has(Block block) {
+        return has((Class<Block>) block.getClass());
     }
 }

@@ -1,7 +1,6 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.loot;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.data.gen.loot.LootDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.data.gen.loot.LootFactory;
@@ -11,7 +10,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.block.Block;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContextType;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
@@ -64,7 +65,7 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
         }
     }
 
-    private LootFactory<?> instance(TrtrBlock block) {
+    private LootFactory<?> instance(Block block) {
         // Construct the block loot provider..
         LOGGER.info("Constructing loot provider for block '{}'",
                     block.getClass()
@@ -83,7 +84,7 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
         return factory;
     }
 
-    private boolean verify(TrtrBlock block) {
+    private boolean verify(Block block) {
         final List<String> missing = ApricotCollectionFactor.newArrayList();
 
         // Check indispensable fields, cannot register if missing.
@@ -96,18 +97,42 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
         );
     }
 
-    private LootFactory<?> create(TrtrBlock block) {
+    private LootFactory<?> create(Block block) {
         try {
             LootFactory<?> factory = LootDataGeneratorAccessor.ACCESSOR.get(block);
             if (factory == null) {
-                Class<? extends SimpleFabricLootTableProvider> type = LootDataGeneratorAccessor.ACCESSOR.getType(block);
-                factory = output -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> type
-                        .getConstructor(FabricDataOutput.class)
-                        .newInstance(output)));
+                Class<? extends SimpleFabricLootTableProvider> clazz = LootDataGeneratorAccessor.ACCESSOR.getType(block);
+                factory = output -> EntrustEnvironment.cast(instance(clazz,
+                                                                     output,
+                                                                     block
+                ));
             }
             return factory;
         } catch (Exception e) {
             return null;
         }
+    }
+
+    private FabricLootTableProvider instance(Class<? extends SimpleFabricLootTableProvider> clazz, FabricDataOutput output, Block block) {
+        return EntrustEnvironment.trys(
+                () -> clazz
+                        .getConstructor(FabricDataOutput.class)
+                        .newInstance(output),
+                () -> EntrustEnvironment.trys(
+                        () -> clazz
+                                .getConstructor(FabricDataOutput.class,
+                                                Block.class
+                                )
+                                .newInstance(output,
+                                             block
+                                ),
+                        () -> clazz.getConstructor(FabricDataOutput.class,
+                                                   LootContextType.class
+                                   )
+                                   .newInstance(output,
+                                                LootContextTypes.BLOCK
+                                   )
+                )
+        );
     }
 }

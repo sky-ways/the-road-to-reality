@@ -1,15 +1,14 @@
 package com.github.cao.awa.trtr.framework.block.item;
 
-import com.github.cao.awa.trtr.block.TrtrBlock;
-import com.github.cao.awa.trtr.block.TrtrBlockItem;
 import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 
 public class BlockItemAccessor implements FieldAccessor {
     public static final BlockItemAccessor ACCESSOR = new BlockItemAccessor();
 
-    public TrtrBlockItem get(Class<TrtrBlock> clazz) {
+    public BlockItem get(Class<Block> clazz) {
         return EntrustEnvironment.nonnull(get(clazz,
                                               "ITEM"
                                           ),
@@ -20,11 +19,11 @@ public class BlockItemAccessor implements FieldAccessor {
     }
 
     @SuppressWarnings("unchecked")
-    public BlockItem get(TrtrBlock block) {
-        return get((Class<TrtrBlock>) block.getClass());
+    public BlockItem get(Block block) {
+        return get((Class<Block>) block.getClass());
     }
 
-    public Class<? extends BlockItem> getType(Class<TrtrBlock> clazz) {
+    public Class<? extends BlockItem> getType(Class<Block> clazz) {
         return EntrustEnvironment.nonnull(type(clazz,
                                                "ITEM"
                                           ),
@@ -35,11 +34,11 @@ public class BlockItemAccessor implements FieldAccessor {
     }
 
     @SuppressWarnings("unchecked")
-    public Class<? extends BlockItem> getType(TrtrBlock block) {
-        return getType((Class<TrtrBlock>) block.getClass());
+    public Class<? extends BlockItem> getType(Block block) {
+        return getType((Class<Block>) block.getClass());
     }
 
-    public boolean has(Class<TrtrBlock> clazz) {
+    public boolean has(Class<Block> clazz) {
         return has(clazz,
                    "ITEM"
         ) || has(clazz,
@@ -48,7 +47,7 @@ public class BlockItemAccessor implements FieldAccessor {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean has(TrtrBlock block) {
-        return has((Class<TrtrBlock>) block.getClass());
+    public boolean has(Block block) {
+        return has((Class<Block>) block.getClass());
     }
 }
