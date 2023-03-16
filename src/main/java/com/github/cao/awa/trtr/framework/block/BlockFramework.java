@@ -7,13 +7,15 @@ import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.framework.block.data.gen.BlockDataGenFramework;
 import com.github.cao.awa.trtr.framework.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.block.setting.BlockSettingAccessor;
+import com.github.cao.awa.trtr.framework.exception.InvertOfControlException;
+import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
 import com.github.cao.awa.trtr.framework.identifier.IdentifierAccessor;
 import com.github.cao.awa.trtr.framework.item.ItemSettingAccessor;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.ExceptionEnvironment;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -23,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,11 +37,15 @@ public class BlockFramework extends ReflectionFramework {
     public void load() {
         getReflection().getTypesAnnotatedWith(Auto.class)
                        .stream()
-                       .filter(TrtrBlock.class :: isAssignableFrom)
+                       .filter(this :: match)
                        .map(this :: cast)
                        .filter(this :: verify)
                        .map(this :: instance)
                        .forEach(this :: build);
+    }
+
+    private boolean match(Class<?> clazz) {
+        return ! Modifier.isAbstract(clazz.getModifiers()) && TrtrBlock.class.isAssignableFrom(clazz);
     }
 
     private Class<TrtrBlock> cast(Class<?> clazz) {
@@ -118,17 +125,23 @@ public class BlockFramework extends ReflectionFramework {
                                     Identifier identifier = IdentifierAccessor.ACCESSOR.get(block);
                                     BlockItem item = EntrustEnvironment.trys(
                                             // If has created block item, use it directly, do not create again.
-                                            () -> Objects.requireNonNull(BlockItemAccessor.ACCESSOR.get(block)),
+                                            () -> ExceptionEnvironment.nullWhen(() -> Objects.requireNonNull(BlockItemAccessor.ACCESSOR.get(block)),
+                                                                                InvertOfControlException.class
+                                            ),
                                             () -> {
                                                 // If it has no done block item creating in block, create it by automatic.
                                                 // Should use settings in block item.
                                                 Class<? extends BlockItem> clazz = BlockItemAccessor.ACCESSOR.getType(block);
-                                                return clazz.getConstructor(Block.class,
-                                                                            Item.Settings.class
-                                                            )
-                                                            .newInstance(block,
-                                                                         ItemSettingAccessor.ACCESSOR.get(clazz)
-                                                            );
+                                                try {
+                                                    return clazz.getConstructor(Block.class,
+                                                                                Item.Settings.class
+                                                                )
+                                                                .newInstance(block,
+                                                                             ItemSettingAccessor.ACCESSOR.get(clazz)
+                                                                );
+                                                } catch (NotStaticFieldException e) {
+                                                    return null;
+                                                }
                                             }
                                     );
 

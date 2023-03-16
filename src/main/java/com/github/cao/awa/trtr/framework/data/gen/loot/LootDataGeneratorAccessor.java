@@ -11,7 +11,7 @@ public class LootDataGeneratorAccessor implements FieldAccessor {
         return EntrustEnvironment.nonnull(get(clazz,
                                               "LOOT"
                                           ),
-                                          get(clazz,
+                                          () -> get(clazz,
                                               "LOOT_PROVIDER"
                                           )
         );
@@ -25,7 +25,7 @@ public class LootDataGeneratorAccessor implements FieldAccessor {
         return EntrustEnvironment.nonnull(type(clazz,
                                               "LOOT"
                                           ),
-                                          type(clazz,
+                                          () -> type(clazz,
                                               "LOOT_PROVIDER"
                                           )
         );

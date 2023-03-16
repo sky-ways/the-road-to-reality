@@ -12,7 +12,7 @@ public class ItemSettingAccessor implements FieldAccessor {
         return EntrustEnvironment.nonnull(get(clazz,
                                               "SETTINGS"
                                           ),
-                                          EntrustEnvironment.nonnull(get(clazz,
+                                          () -> EntrustEnvironment.nonnull(get(clazz,
                                                                          "SETTING"
                                                                      ),
                                                                      FabricItemSettings :: new

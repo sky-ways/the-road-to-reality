@@ -11,10 +11,10 @@ public class BlockSettingAccessor implements FieldAccessor {
     public AbstractBlock.Settings get(Class<TrtrBlock> clazz) {
         return EntrustEnvironment.nonnull(get(clazz,
                                               "SETTINGS"
-                                             ),
-                                          get(clazz,
-                                                 "SETTING"
-                                             )
+                                          ),
+                                          () -> get(clazz,
+                                              "SETTING"
+                                          )
         );
     }
 
@@ -24,10 +24,14 @@ public class BlockSettingAccessor implements FieldAccessor {
     }
 
     public boolean has(Class<TrtrBlock> clazz) {
-        if (has(clazz, "SETTINGS")) {
+        if (has(clazz,
+                "SETTINGS"
+        )) {
             return true;
         }
-        return has(clazz, "SETTING");
+        return has(clazz,
+                   "SETTING"
+        );
     }
 
     @SuppressWarnings("unchecked")

@@ -43,8 +43,7 @@ public class EntrustEnvironment {
     /**
      * Do action, and ignored exception.
      *
-     * @param action
-     *         Action
+     * @param action Action
      * @author cao_awa
      * @since 1.0.0
      */
@@ -57,14 +56,15 @@ public class EntrustEnvironment {
     }
 
     public static <T> T get(ExceptingSupplier<T> supplier, T defaultValue) {
-        return trys(supplier, ex -> defaultValue);
+        return trys(supplier,
+                    ex -> defaultValue
+        );
     }
 
     /**
      * Do action, and handle exception.
      *
-     * @param action
-     *         Action
+     * @param action Action
      * @author cao_awa
      * @since 1.0.0
      */
@@ -79,8 +79,7 @@ public class EntrustEnvironment {
     /**
      * Do action, and handle exception.
      *
-     * @param action
-     *         Action
+     * @param action Action
      * @author cao_awa
      * @since 1.0.0
      */
@@ -115,10 +114,8 @@ public class EntrustEnvironment {
     /**
      * Do action to compute object, and ignored exception.
      *
-     * @param target
-     *         Compute target
-     * @param action
-     *         Action
+     * @param target Compute target
+     * @param action Action
      * @author cao_awa
      * @since 1.0.0
      */
@@ -138,10 +135,8 @@ public class EntrustEnvironment {
      * Ignored exception when handling exception.
      * <br>
      *
-     * @param action
-     *         Action
-     * @param whenException
-     *         Action when exception
+     * @param action        Action
+     * @param whenException Action when exception
      * @author cao_awa
      * @since 1.0.0
      */
@@ -156,8 +151,7 @@ public class EntrustEnvironment {
     /**
      * Do action to get object, and ignored exception.
      *
-     * @param action
-     *         Action
+     * @param action Action
      * @author cao_awa
      * @since 1.0.0
      */
@@ -175,10 +169,8 @@ public class EntrustEnvironment {
      * Ignored exception when handling exception.
      * <br>
      *
-     * @param action
-     *         Action
-     * @param whenException
-     *         Action when exception
+     * @param action        Action
+     * @param whenException Action when exception
      * @author cao_awa
      * @since 1.0.0
      */
@@ -193,14 +185,10 @@ public class EntrustEnvironment {
     /**
      * Entrust for function.
      *
-     * @param input
-     *         Source function
-     * @param <I>
-     *         Input type
-     * @param <R>
-     *         Result type
+     * @param input Source function
+     * @param <I>   Input type
+     * @param <R>   Result type
      * @return No exception environment
-     *
      * @author cao_awa
      * @author zhuaidadaya
      * @since 1.0.0
@@ -215,12 +203,9 @@ public class EntrustEnvironment {
     /**
      * Compare objects, do action if equals.
      *
-     * @param source
-     *         Source
-     * @param target
-     *         Target
-     * @param action
-     *         Action when equals
+     * @param source Source
+     * @param target Target
+     * @param action Action when equals
      * @author cao_awa
      * @since 1.0.0
      */
@@ -236,14 +221,10 @@ public class EntrustEnvironment {
     /**
      * Compare objects, do action if equals.
      *
-     * @param source
-     *         Source
-     * @param target
-     *         Target
-     * @param action
-     *         Action when equals
-     * @param orElse
-     *         Action when no equals
+     * @param source Source
+     * @param target Target
+     * @param action Action when equals
+     * @param orElse Action when no equals
      * @author cao_awa
      * @since 1.0.0
      */
@@ -261,16 +242,11 @@ public class EntrustEnvironment {
     /**
      * Compare objects, do action if equals.
      *
-     * @param source
-     *         Source
-     * @param target1
-     *         Target 1
-     * @param action1
-     *         Action when equals target 1
-     * @param target2
-     *         Target 2
-     * @param action2
-     *         Action when equals target 2
+     * @param source  Source
+     * @param target1 Target 1
+     * @param action1 Action when equals target 1
+     * @param target2 Target 2
+     * @param action2 Action when equals target 2
      * @author cao_awa
      * @since 1.0.0
      */
@@ -291,18 +267,12 @@ public class EntrustEnvironment {
     /**
      * Compare objects, do action if equals.
      *
-     * @param source
-     *         Source
-     * @param target1
-     *         Target 1
-     * @param action1
-     *         Action when equals target 1
-     * @param target2
-     *         Target 2
-     * @param action2
-     *         Action when equals target 2
-     * @param orElse
-     *         Action when no equals
+     * @param source  Source
+     * @param target1 Target 1
+     * @param action1 Action when equals target 1
+     * @param target2 Target 2
+     * @param action2 Action when equals target 2
+     * @param orElse  Action when no equals
      * @author cao_awa
      * @since 1.0.0
      */
@@ -347,24 +317,23 @@ public class EntrustEnvironment {
     /**
      * Create a receptacle, do something operation and return value of this receptacle.
      *
-     * @param action
-     *         Operation
-     * @param <T>
-     *         Type
+     * @param action Operation
+     * @param <T>    Type
      * @return Value of receptacle
-     *
      * @author cao_awa
      * @since 1.0.0
      */
     public static <T> T receptacle(ExceptingConsumer<Receptacle<T>> action) {
-        return operation(Receptacle.of(), action).get();
+        return operation(Receptacle.of(),
+                         action
+        ).get();
     }
 
     /**
      * Cast an object.
      *
      * @param target Cast target
-     * @param <T> Cast type
+     * @param <T>    Cast type
      * @return Target type or null
      */
     @Nullable
@@ -376,7 +345,7 @@ public class EntrustEnvironment {
      * Cast an object.
      *
      * @param target Cast target
-     * @param <T> Cast type
+     * @param <T>    Cast type
      * @return Target type or null
      */
     @Nullable
@@ -389,13 +358,12 @@ public class EntrustEnvironment {
      *
      * @param action Action
      * @return The thread of target action
-     *
      * @author 草二号机
      * @since 1.0.0
      */
     @NotNull
     public static Thread thread(Runnable action) {
-        return new Thread(action::run);
+        return new Thread(action :: run);
     }
 
 //    /**

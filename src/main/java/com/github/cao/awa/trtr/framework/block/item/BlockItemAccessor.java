@@ -12,10 +12,10 @@ public class BlockItemAccessor implements FieldAccessor {
     public TrtrBlockItem get(Class<TrtrBlock> clazz) {
         return EntrustEnvironment.nonnull(get(clazz,
                                               "ITEM"
-                                             ),
-                                          get(clazz,
-                                                 "BLOCK_ITEM"
-                                             )
+                                          ),
+                                          () -> get(clazz,
+                                                    "BLOCK_ITEM"
+                                          )
         );
     }
 
@@ -26,11 +26,11 @@ public class BlockItemAccessor implements FieldAccessor {
 
     public Class<? extends BlockItem> getType(Class<TrtrBlock> clazz) {
         return EntrustEnvironment.nonnull(type(clazz,
-                                              "ITEM"
-                                             ),
-                                          type(clazz,
-                                                 "BLOCK_ITEM"
-                                             )
+                                               "ITEM"
+                                          ),
+                                          () -> type(clazz,
+                                                     "BLOCK_ITEM"
+                                          )
         );
     }
 
@@ -40,10 +40,11 @@ public class BlockItemAccessor implements FieldAccessor {
     }
 
     public boolean has(Class<TrtrBlock> clazz) {
-        if (has(clazz, "ITEM")) {
-            return true;
-        }
-        return has(clazz, "BLOCK_ITEM");
+        return has(clazz,
+                   "ITEM"
+        ) || has(clazz,
+                 "BLOCK_ITEM"
+        );
     }
 
     @SuppressWarnings("unchecked")
