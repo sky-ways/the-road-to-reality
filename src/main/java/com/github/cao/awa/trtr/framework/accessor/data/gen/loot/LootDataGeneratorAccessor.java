@@ -1,6 +1,6 @@
-package com.github.cao.awa.trtr.framework.data.gen.loot;
+package com.github.cao.awa.trtr.framework.accessor.data.gen.loot;
 
-import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
+import com.github.cao.awa.trtr.framework.accessor.filed.FieldAccessor;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 

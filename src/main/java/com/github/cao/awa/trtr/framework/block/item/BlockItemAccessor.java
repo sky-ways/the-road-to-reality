@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.framework.block.item;
 
-import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
+import com.github.cao.awa.trtr.framework.accessor.filed.FieldAccessor;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

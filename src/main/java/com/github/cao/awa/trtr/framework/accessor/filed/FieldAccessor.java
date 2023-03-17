@@ -1,8 +1,7 @@
-package com.github.cao.awa.trtr.framework.reflection.filed;
+package com.github.cao.awa.trtr.framework.accessor.filed;
 
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
-import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.ExceptionEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

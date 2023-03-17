@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.framework.identifier;
 
-import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
+import com.github.cao.awa.trtr.framework.accessor.filed.FieldAccessor;
 import net.minecraft.util.Identifier;
 
 public class IdentifierAccessor implements FieldAccessor {

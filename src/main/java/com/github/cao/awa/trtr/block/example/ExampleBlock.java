@@ -3,9 +3,11 @@ package com.github.cao.awa.trtr.block.example;
 import com.github.cao.awa.apricot.anntations.Auto;
 import com.github.cao.awa.trtr.annotations.DataGen;
 import com.github.cao.awa.trtr.block.TrtrBlock;
+import com.github.cao.awa.trtr.block.example.item.ExampleBlockItem;
 import com.github.cao.awa.trtr.block.example.loot.ExampleLoot;
 import com.github.cao.awa.trtr.block.example.model.ExampleModel;
-import com.github.cao.awa.trtr.framework.data.gen.loot.LootFactory;
+import com.github.cao.awa.trtr.block.example.tag.ExampleBlockTag;
+import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Material;
 import net.minecraft.util.DyeColor;
@@ -53,8 +55,17 @@ public class ExampleBlock extends TrtrBlock {
     public static ExampleModel MODEL;
 
     // Here one block model provider is invalid, the name must be "MODEL" or "MODEL_PROVIDER", framework will ignore it automatically.
-    // Direct item with class.
+    // Direct model with class.
     public static final Class<ExampleModel> TYPE_MODEL = ExampleModel.class;
+
+    // Tags.
+    // Direct block tag provider
+    @Auto
+    public static ExampleBlockTag TAG;
+
+    // Here one block taf provider is invalid, the name must be "TAG" or "TAG_PROVIDER", framework will ignore it automatically.
+    // Direct block tag with class.
+    public static final Class<ExampleBlockTag> TYPE_TAG = ExampleBlockTag.class;
 
     // Constructor...
     @Auto

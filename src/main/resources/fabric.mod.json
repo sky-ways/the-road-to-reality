@@ -19,7 +19,7 @@
         "issues": "https://github.com/cao-awa/the-road-to-reality/issues"
     },
     "license": "GPL-3.0",
-    "icon": "assets/modid/icon.png",
+    "icon": "TRTR_Logo.png",
     "environment": "*",
     "entrypoints": {
         "main": [

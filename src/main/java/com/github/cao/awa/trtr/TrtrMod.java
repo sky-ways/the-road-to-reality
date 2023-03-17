@@ -1,8 +1,10 @@
 package com.github.cao.awa.trtr;
 
-import com.github.cao.awa.modmdo.annotations.platform.*;
+import com.github.cao.awa.modmdo.annotations.platform.Client;
+import com.github.cao.awa.modmdo.annotations.platform.Server;
+import com.github.cao.awa.trtr.annotations.repo.MineableAnnotations;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
-import net.fabricmc.api.*;
+import net.fabricmc.api.ModInitializer;
 
 @Client
 @Server
@@ -12,6 +14,8 @@ public class TrtrMod implements ModInitializer {
     @Override
     public void onInitialize() {
         initializeConfig();
+
+        MineableAnnotations.putDefaults();
 
         BLOCK_FRAMEWORK.work();
     }

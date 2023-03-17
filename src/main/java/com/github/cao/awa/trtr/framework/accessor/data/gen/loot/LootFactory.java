@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.framework.data.gen.loot;
+package com.github.cao.awa.trtr.framework.accessor.data.gen.loot;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.data.DataProvider;

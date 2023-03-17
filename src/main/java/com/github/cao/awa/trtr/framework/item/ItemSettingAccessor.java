@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.framework.item;
 
-import com.github.cao.awa.trtr.framework.reflection.filed.FieldAccessor;
+import com.github.cao.awa.trtr.framework.accessor.filed.FieldAccessor;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;

@@ -2,17 +2,15 @@ package com.github.cao.awa.trtr.framework.block.data.gen.model;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
+import com.github.cao.awa.trtr.framework.accessor.data.gen.model.ModelDataGeneratorAccessor;
+import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
-import com.github.cao.awa.trtr.framework.data.gen.model.ModelDataGeneratorAccessor;
-import com.github.cao.awa.trtr.framework.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,42 +28,22 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
     public void model(FabricDataGenerator generator) {
         this.blockFramework.dumpBlocks()
                            .stream()
+                           .filter(this :: match)
                            .filter(this :: verify)
                            .map(this :: instance)
                            .forEach(this.factories :: add);
         done(generator);
     }
 
-    private void done(FabricDataGenerator generator) {
-        generator.createPack()
-                 .addProvider((o, f) -> new ModelProvider(o));
+    private boolean match(Block clazz) {
+        return true;
     }
 
-    class ModelProvider extends FabricModelProvider {
-        private final FabricDataOutput output;
-        private final List<FabricModelProvider> providers = ApricotCollectionFactor.newArrayList();
-
-        public ModelProvider(FabricDataOutput output) {
-            super(output);
-            this.output = output;
-            this.providers.addAll(factories.stream()
-                                           .map(p -> p.apply(this.output))
-                                           .toList());
-        }
-
-        @Override
-        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-            for (FabricModelProvider provider : this.providers) {
-                provider.generateBlockStateModels(blockStateModelGenerator);
-            }
-        }
-
-        @Override
-        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-            for (FabricModelProvider provider : this.providers) {
-                provider.generateItemModels(itemModelGenerator);
-            }
-        }
+    private void done(FabricDataGenerator generator) {
+        generator.createPack()
+                 .addProvider((o, f) -> new FrameworkModelProvider(o,
+                                                                   this.factories
+                 ));
     }
 
     private TrtrModelFactory instance(Block block) {
@@ -79,13 +57,13 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
     }
 
     private boolean verify(Block block) {
-        if (! ModelDataGeneratorAccessor.ACCESSOR.has(block)) {
-            LOGGER.info("Block '{}' has no model provider, will use generic provider to generate",
+        if (ModelDataGeneratorAccessor.ACCESSOR.has(block)) {
+            LOGGER.info("Block '{}' has model provider, will use to generate",
                         block.getClass()
                              .getName()
             );
         } else {
-            LOGGER.info("Block '{}' has model provider, will use to generate",
+            LOGGER.info("Block '{}' has no model provider, will use generic provider to generate",
                         block.getClass()
                              .getName()
             );

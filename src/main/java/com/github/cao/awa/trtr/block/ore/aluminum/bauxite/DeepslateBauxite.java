@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.block.ore.aluminum.alunite;
+package com.github.cao.awa.trtr.block.ore.aluminum.bauxite;
 
 import com.github.cao.awa.apricot.anntations.Auto;
 import com.github.cao.awa.trtr.annotations.DataGen;
@@ -14,18 +14,18 @@ import net.minecraft.util.Identifier;
 
 @Auto
 @PickaxeMining(MiningLevels.STONE)
-public class Alunite extends TrtrBlock {
+public class DeepslateBauxite extends TrtrBlock {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "alunite"
+                                                              "deepslate_bauxite"
     );
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
-                                                                              MapColor.WHITE
-                                                                              )
+                                                                              MapColor.GRAY
+                                                                          )
                                                                           .requiresTool()
-                                                                          .strength(1.4F,
+                                                                          .strength(1.5F,
                                                                                     6.0F
                                                                           );
 
@@ -36,7 +36,7 @@ public class Alunite extends TrtrBlock {
     public static GenericBlockLootProvider LOOT;
 
     @Auto
-    public Alunite(Settings settings) {
+    public DeepslateBauxite(Settings settings) {
         super(settings);
     }
 }

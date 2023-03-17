@@ -72,9 +72,9 @@ public class BlockFramework extends ReflectionFramework {
         if (! BlockSettingAccessor.ACCESSOR.has(block)) {
             missing.add("SETTINGS or SETTING");
         }
-        return verifyFields(block
-                                    .getName(),
-                            missing
+        return checkFields(block
+                                   .getName(),
+                           missing
         );
     }
 
@@ -132,12 +132,9 @@ public class BlockFramework extends ReflectionFramework {
                                                 // Should use settings in block item.
                                                 Class<? extends BlockItem> clazz = BlockItemAccessor.ACCESSOR.getType(block);
                                                 try {
-                                                    return clazz.getConstructor(Block.class,
-                                                                                Item.Settings.class
-                                                                )
-                                                                .newInstance(block,
-                                                                             ItemSettingAccessor.ACCESSOR.get(clazz)
-                                                                );
+                                                    return instance(clazz,
+                                                                    block
+                                                    );
                                                 } catch (NotStaticFieldException e) {
                                                     return null;
                                                 }
@@ -174,5 +171,18 @@ public class BlockFramework extends ReflectionFramework {
                                     );
                                 }
         );
+    }
+
+    private BlockItem instance(Class<? extends BlockItem> clazz, Block block) {
+        try {
+            return clazz.getConstructor(Block.class,
+                                        Item.Settings.class
+                        )
+                        .newInstance(block,
+                                     ItemSettingAccessor.ACCESSOR.get(clazz)
+                        );
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

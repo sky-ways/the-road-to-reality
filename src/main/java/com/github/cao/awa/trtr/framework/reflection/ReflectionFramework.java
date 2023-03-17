@@ -18,12 +18,17 @@ public abstract class ReflectionFramework {
         return REFLECTIONS;
     }
 
-    public boolean verifyFields(String target, List<String> field) {
+    public boolean checkFields(String target, List<String> field) {
         if (field.size() > 0) {
-            LOGGER.error("'{}' has missing required field(s): {}", target, field);
+            LOGGER.error("'{}' has missing required field(s): {}",
+                         target,
+                         field
+            );
             return false;
         } else {
-            LOGGER.debug("'{}' has passed checking required field(s)", target);
+            LOGGER.debug("'{}' has passed checking required field(s)",
+                         target
+            );
             return true;
         }
     }

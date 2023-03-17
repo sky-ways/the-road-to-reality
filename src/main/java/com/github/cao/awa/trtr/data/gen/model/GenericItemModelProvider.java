@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.data.gen.model;
 
 import com.github.cao.awa.apricot.anntations.Auto;
-import com.github.cao.awa.trtr.framework.data.gen.model.TrtrItemModelProvider;
+import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrItemModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;

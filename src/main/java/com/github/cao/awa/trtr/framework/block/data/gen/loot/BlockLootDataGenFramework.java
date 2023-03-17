@@ -1,9 +1,9 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.loot;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
+import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootDataGeneratorAccessor;
+import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
-import com.github.cao.awa.trtr.framework.data.gen.loot.LootDataGeneratorAccessor;
-import com.github.cao.awa.trtr.framework.data.gen.loot.LootFactory;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -11,16 +11,13 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.block.Block;
-import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextType;
 import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 
 public class BlockLootDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockLootDataGenFramework");
@@ -34,6 +31,7 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
     public void loot(FabricDataGenerator generator) {
         this.blockFramework.dumpBlocks()
                            .stream()
+                           .filter(this :: match)
                            .filter(this :: verify)
                            .map(this :: instance)
                            .filter(Objects :: nonNull)
@@ -41,28 +39,15 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
         done(generator);
     }
 
-    private void done(FabricDataGenerator generator) {
-        generator.createPack()
-                 .addProvider((o, f) -> new LootProvider(o));
+    private boolean match(Block clazz) {
+        return true;
     }
 
-    class LootProvider extends SimpleFabricLootTableProvider {
-        public LootProvider(FabricDataOutput output) {
-            super(output,
-                  LootContextTypes.BLOCK
-            );
-        }
-
-        @Override
-        public void accept(BiConsumer<Identifier, LootTable.Builder> biConsumer) {
-            for (LootFactory<?> factory : factories) {
-                EntrustEnvironment.notNull(EntrustEnvironment.cast(factory.create(this.output),
-                                                                   FabricLootTableProvider.class
-                                           ),
-                                           provider -> provider.accept(biConsumer)
-                );
-            }
-        }
+    private void done(FabricDataGenerator generator) {
+        generator.createPack()
+                 .addProvider((o, f) -> new FrameworkLootProvider(o,
+                                                                  this.factories
+                 ));
     }
 
     private LootFactory<?> instance(Block block) {
@@ -91,9 +76,9 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
         if (! LootDataGeneratorAccessor.ACCESSOR.has(block)) {
             missing.add("LOOT or LOOT_PROVIDER");
         }
-        return verifyFields(block.getClass()
-                                 .getName(),
-                            missing
+        return checkFields(block.getClass()
+                                .getName(),
+                           missing
         );
     }
 
