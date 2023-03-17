@@ -2,8 +2,8 @@ package com.github.cao.awa.trtr.framework.block.data.gen.tag.mineable;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.annotations.repo.MineableAnnotations;
+import com.github.cao.awa.trtr.framework.accessor.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
-import com.github.cao.awa.trtr.framework.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.block.Block;

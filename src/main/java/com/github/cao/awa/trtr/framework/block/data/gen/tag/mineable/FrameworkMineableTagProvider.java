@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.tag.mineable;
 
 import com.github.cao.awa.trtr.annotations.repo.MineableAnnotations;
-import com.github.cao.awa.trtr.framework.identifier.IdentifierAccessor;
+import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;

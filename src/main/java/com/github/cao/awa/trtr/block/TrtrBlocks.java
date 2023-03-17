@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.block;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.framework.identifier.IdentifierAccessor;
+import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 

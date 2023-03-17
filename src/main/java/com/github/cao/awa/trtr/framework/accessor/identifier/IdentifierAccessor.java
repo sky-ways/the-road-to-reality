@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.framework.identifier;
+package com.github.cao.awa.trtr.framework.accessor.identifier;
 
 import com.github.cao.awa.trtr.framework.accessor.filed.FieldAccessor;
 import net.minecraft.util.Identifier;

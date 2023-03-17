@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.framework.block.item;
+package com.github.cao.awa.trtr.framework.accessor.block.item;
 
 import com.github.cao.awa.trtr.framework.accessor.filed.FieldAccessor;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
