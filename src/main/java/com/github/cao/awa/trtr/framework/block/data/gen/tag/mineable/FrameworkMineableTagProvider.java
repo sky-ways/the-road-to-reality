@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.tag.mineable;
 
-import com.github.cao.awa.trtr.annotations.repo.MineableAnnotations;
+import com.github.cao.awa.trtr.annotation.mine.repo.MineableAnnotations;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -14,6 +14,15 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Provide automatic mineable tag generate by framework.
+ *
+ * @author 草二号机
+ * @author cao_awa
+ * @see BlockMineableDataGenFramework
+ * @see MineableAnnotations
+ * @since 1.0.0
+ */
 public class FrameworkMineableTagProvider extends FabricTagProvider<Block> {
     private final Map<Block, Collection<Annotation>> mineableFactories;
 

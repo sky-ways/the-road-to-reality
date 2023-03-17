@@ -1,8 +1,8 @@
 package com.github.cao.awa.trtr.block.ore.aluminum.bauxite;
 
-import com.github.cao.awa.apricot.anntations.Auto;
-import com.github.cao.awa.trtr.annotations.DataGen;
-import com.github.cao.awa.trtr.annotations.mining.PickaxeMining;
+import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.trtr.annotation.DataGen;
+import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;

@@ -5,9 +5,9 @@ import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function.E
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function.ExceptingRunnable;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function.ExceptingSupplier;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.Receptacle;
+import com.google.gson.JsonArray;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONArray;
 
 import java.util.List;
 import java.util.Objects;
@@ -304,8 +304,8 @@ public class EntrustEnvironment {
         return list.get(random.nextInt(list.size()));
     }
 
-    public static <T> T select(JSONArray list, Random random) {
-        return cast(list.get(random.nextInt(list.length())));
+    public static <T> T select(JsonArray list, Random random) {
+        return cast(list.get(random.nextInt(list.size())));
     }
 
     public static <T> T desert(List<T> list, Random random) {

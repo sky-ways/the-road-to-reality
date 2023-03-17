@@ -1,8 +1,8 @@
 package com.github.cao.awa.trtr.block.ore.aluminum.alunite;
 
-import com.github.cao.awa.apricot.anntations.Auto;
-import com.github.cao.awa.trtr.annotations.DataGen;
-import com.github.cao.awa.trtr.annotations.mining.PickaxeMining;
+import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.trtr.annotation.DataGen;
+import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -25,7 +25,7 @@ public class Alunite extends TrtrBlock {
                                                                               MapColor.WHITE
                                                                               )
                                                                           .requiresTool()
-                                                                          .strength(1.4F,
+                                                                          .strength(1.5F,
                                                                                     6.0F
                                                                           );
 

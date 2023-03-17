@@ -1,6 +1,6 @@
 package com.github.cao.awa.apricot.util.digger;
 
-import com.github.cao.awa.apricot.anntations.Stable;
+import com.github.cao.awa.apricot.anntation.Stable;
 
 import java.io.File;
 import java.io.RandomAccessFile;

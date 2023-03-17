@@ -1,6 +1,6 @@
 package com.github.cao.awa.apricot.mathematic.base;
 
-import com.github.cao.awa.apricot.anntations.*;
+import com.github.cao.awa.apricot.anntation.Stable;
 
 /**
  * An util using to convert number and bytes.
