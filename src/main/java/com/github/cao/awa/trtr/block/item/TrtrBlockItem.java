@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.block;
+package com.github.cao.awa.trtr.block.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

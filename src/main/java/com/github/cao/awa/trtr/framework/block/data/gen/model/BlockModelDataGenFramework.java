@@ -1,7 +1,9 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.model;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
+import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.no.BlockNoModelProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.ModelDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
@@ -15,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BlockModelDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockModelDataGenFramework");
@@ -31,6 +34,7 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                            .filter(this :: match)
                            .filter(this :: verify)
                            .map(this :: instance)
+                           .filter(Objects :: nonNull)
                            .forEach(this.factories :: add);
         done(generator);
     }
@@ -73,20 +77,31 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
 
     private TrtrModelFactory create(Block block) {
         try {
-            final TrtrModelFactory provider = o -> ModelDataGeneratorAccessor.ACCESSOR.get(block);
-            if (EntrustEnvironment.trys(() -> provider.apply(null)) == null) {
-                Class<? extends FabricModelProvider> type = ModelDataGeneratorAccessor.ACCESSOR.getType(block);
-                if (FabricModelProvider.class.isAssignableFrom(type)) {
-                    return output -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> type
-                            .getConstructor(FabricDataOutput.class)
-                            .newInstance(output)));
-                } else {
-                    return output -> new GenericBlockModelProvider(output,
-                                                                   block
-                    );
+            if (block.getClass()
+                     .getAnnotation(NoModel.class) == null) {
+                final TrtrModelFactory provider = o -> ModelDataGeneratorAccessor.ACCESSOR.get(block);
+                if (EntrustEnvironment.trys(() -> provider.apply(null)) == null) {
+                    Class<? extends FabricModelProvider> type = ModelDataGeneratorAccessor.ACCESSOR.getType(block);
+                    if (FabricModelProvider.class.isAssignableFrom(type)) {
+                        return output -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> type
+                                .getConstructor(FabricDataOutput.class)
+                                .newInstance(output)));
+                    } else {
+                        return output -> new GenericBlockModelProvider(output,
+                                                                       block
+                        );
+                    }
                 }
+                return provider;
+            } else {
+                LOGGER.info("No model marked in '{}', will not generate",
+                            block.getClass()
+                                 .getName()
+                );
+                return output -> new BlockNoModelProvider(output,
+                                                          block
+                );
             }
-            return provider;
         } catch (Exception e) {
             return output -> new GenericBlockModelProvider(output,
                                                            block

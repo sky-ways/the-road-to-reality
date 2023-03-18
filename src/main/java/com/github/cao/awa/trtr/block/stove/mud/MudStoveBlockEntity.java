@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 @Auto
 public class MudStoveBlockEntity extends BlockEntity {
@@ -13,5 +14,10 @@ public class MudStoveBlockEntity extends BlockEntity {
               pos,
               state
         );
+    }
+
+    @Auto
+    public static void tick(World world, BlockPos pos, BlockState state, MudStoveBlockEntity blockEntity) {
+        System.out.println(blockEntity);
     }
 }

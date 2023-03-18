@@ -2,16 +2,18 @@ package com.github.cao.awa.trtr.framework.block;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.block.TrtrBlockItems;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
+import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.BlockEntityAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.TrtrBlockEntityFactory;
 import com.github.cao.awa.trtr.framework.accessor.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.setting.BlockSettingAccessor;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
 import com.github.cao.awa.trtr.framework.accessor.item.ItemSettingAccessor;
+import com.github.cao.awa.trtr.framework.accessor.method.MethodAccess;
 import com.github.cao.awa.trtr.framework.block.data.gen.BlockDataGenFramework;
 import com.github.cao.awa.trtr.framework.exception.InvertOfControlException;
+import com.github.cao.awa.trtr.framework.exception.NoAutoAnnotationException;
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.cao.awa.trtr.item.TrtrItems;
@@ -31,8 +33,10 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -87,12 +91,12 @@ public class BlockFramework extends ReflectionFramework {
         return clazz;
     }
 
+    @NotNull
     private static Method ensureAccessible(Method clazz) {
-        if (clazz.canAccess(null)) {
-            return clazz;
+        if (clazz.getAnnotation(Auto.class) != null) {
+            return MethodAccess.ensureAccessible(clazz);
         }
-        clazz.trySetAccessible();
-        return clazz;
+        throw new NoAutoAnnotationException();
     }
 
     private boolean verify(Class<Block> block) {
@@ -144,9 +148,9 @@ public class BlockFramework extends ReflectionFramework {
                                     // Method automatic call need @Auto annotation always.
                                     Method method = block.getClass()
                                                          .getMethod("done");
-                                    if (method.getAnnotation(Auto.class) != null) {
-                                        method.invoke(block);
-                                    }
+
+                                    ensureAccessible(method);
+                                    method.invoke(block);
                                 }
         );
     }
@@ -255,6 +259,43 @@ public class BlockFramework extends ReflectionFramework {
         this.blockEntities.put(block,
                                entityType
         );
+    }
+
+    public <T extends BlockEntity> BlockEntityType<T> entityType(Block block) {
+        return EntrustEnvironment.cast(this.blockEntities.get(block));
+    }
+
+    public void tick(Block block, World world, BlockPos pos, BlockState state, BlockEntity entity) {
+        if (entity.getType() == this.blockEntities.get(block)) {
+            EntrustEnvironment.trys(
+                    () -> ensureAccessible(entity.getClass()
+                                                 .getMethod("tick",
+                                                            World.class,
+                                                            BlockPos.class,
+                                                            BlockState.class,
+                                                            entity.getClass()
+                                                 ))
+                            .invoke(null,
+                                    world,
+                                    pos,
+                                    state,
+                                    entity
+                            ),
+                    () -> ensureAccessible(entity.getClass()
+                                                 .getMethod("tick",
+                                                            World.class,
+                                                            BlockPos.class,
+                                                            BlockState.class,
+                                                            BlockEntity.class
+                                                 ))
+                            .invoke(null,
+                                    world,
+                                    pos,
+                                    state,
+                                    entity
+                            )
+            );
+        }
     }
 
     public void entityType(Block block, String id) {

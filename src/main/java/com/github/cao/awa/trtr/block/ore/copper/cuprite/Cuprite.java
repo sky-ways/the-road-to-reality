@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.block.ore.copper.cuprite;
 
 import com.github.cao.awa.apricot.anntation.Auto;
-import com.github.cao.awa.trtr.annotation.DataGen;
+import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;

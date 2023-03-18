@@ -337,6 +337,7 @@ public class EntrustEnvironment {
      * @return Target type or null
      */
     @Nullable
+    @SuppressWarnings("unchecked")
     public static <T> T cast(@Nullable Object target) {
         return trys(() -> (T) target);
     }

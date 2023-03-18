@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.command;
 
-import com.github.cao.awa.trtr.block.TrtrBlockItems;
+import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
 import net.minecraft.server.MinecraftServer;
 
 import static net.minecraft.server.command.CommandManager.literal;

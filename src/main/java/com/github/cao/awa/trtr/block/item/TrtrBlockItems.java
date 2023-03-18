@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.block;
+package com.github.cao.awa.trtr.block.item;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;

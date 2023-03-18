@@ -5,6 +5,7 @@ import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrBlockModelP
 import com.github.cao.awa.trtr.framework.block.data.gen.model.BlockModelDataGenFramework;
 import com.github.cao.awa.trtr.framework.block.data.gen.model.FrameworkModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 
 /**
@@ -17,12 +18,16 @@ import net.minecraft.data.client.BlockStateModelGenerator;
  */
 @Auto
 public class BlockNoModelProvider extends TrtrBlockModelProvider {
+    private final Block block;
+
     @Auto
-    public BlockNoModelProvider(FabricDataOutput output) {
+    public BlockNoModelProvider(FabricDataOutput output, Block block) {
         super(output);
+        this.block = block;
     }
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        blockStateModelGenerator.registerSimpleState(this.block);
     }
 }
