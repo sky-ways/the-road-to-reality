@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.block.stove.mud;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
+import com.github.cao.awa.trtr.data.gen.model.no.BlockNoModelProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
@@ -28,6 +29,9 @@ public class MudStove extends TrtrBlockWithEntity {
 
     @Auto
     public static MudStoveBlockEntity ENTITY;
+
+    @Auto
+    public static BlockNoModelProvider MODEL;
 
     @Auto
     public static GenericBlockLootProvider LOOT;
