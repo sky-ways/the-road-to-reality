@@ -49,7 +49,7 @@ public class BlockMineableDataGenFramework extends ReflectionFramework {
     private boolean match(Block block) {
         return MineableAnnotations.getMineableAnnotation(List.of(block.getClass()
                                                                       .getAnnotations()))
-                                  .size() > 0;
+                                  .size() > 0 && checkDev(block.getClass());
     }
 
     private void done(FabricDataGenerator generator) {

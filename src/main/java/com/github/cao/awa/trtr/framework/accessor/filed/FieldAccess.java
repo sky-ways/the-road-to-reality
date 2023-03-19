@@ -30,6 +30,15 @@ public class FieldAccess {
                                                                           .get(null)));
     }
 
+    public static Field getField(Class<?> clazz, String fieldName) {
+        // Make the field be accessible.
+        ensureAccessible(clazz,
+                         fieldName
+        );
+        // Access the field.
+        return EntrustEnvironment.trys(() -> clazz.getField(fieldName));
+    }
+
     public static <T> Class<T> type(Class<?> clazz, String fieldName) {
         // Make the field be accessible.
         ensureAccessible(clazz,

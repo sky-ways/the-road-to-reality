@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 @Server
 public class TrtrMod implements ModInitializer {
     public static final BlockFramework BLOCK_FRAMEWORK = new BlockFramework();
+    public static final boolean DEV_MODE = false;
 
     @Override
     public void onInitialize() {

@@ -33,7 +33,6 @@ public class BlockEntityAccessor implements FieldAccessor {
         );
     }
 
-    @SuppressWarnings("unchecked")
     public Class<? extends BlockEntity> getType(Block block) {
         return getType(block.getClass());
     }

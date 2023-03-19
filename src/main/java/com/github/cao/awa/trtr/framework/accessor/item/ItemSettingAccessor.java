@@ -28,7 +28,7 @@ public class ItemSettingAccessor implements FieldAccessor {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean has(Item block) {
-        return has((Class<Item>) block.getClass());
+    public boolean has(Item item) {
+        return has((Class<Item>) item.getClass());
     }
 }

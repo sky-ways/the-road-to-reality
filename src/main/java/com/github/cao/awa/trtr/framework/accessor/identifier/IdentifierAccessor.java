@@ -17,7 +17,9 @@ public class IdentifierAccessor implements FieldAccessor {
     }
 
     public boolean has(Class<?> clazz) {
-        return has(clazz, "IDENTIFIER");
+        return has(clazz,
+                   "IDENTIFIER"
+        );
     }
 
     public boolean has(Object block) {

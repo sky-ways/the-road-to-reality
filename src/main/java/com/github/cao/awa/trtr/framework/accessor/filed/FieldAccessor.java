@@ -29,6 +29,20 @@ public interface FieldAccessor {
         );
     }
 
+    default Field field(Class<?> clazz, String field) {
+        // Calls util.
+        return FieldAccess.getField(clazz,
+                                    field
+        );
+    }
+
+    default Field field(Object obj, String field) {
+        // Calls util.
+        return FieldAccess.getField(obj.getClass(),
+                                    field
+        );
+    }
+
     default boolean has(Class<?> clazz, String field) {
         // Get all fields, to find target in these fields.
         return Arrays.stream(clazz.getFields())

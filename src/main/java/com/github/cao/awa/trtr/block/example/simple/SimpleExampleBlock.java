@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.block.example.simple;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
+import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.mine.AxeMining;
 import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
@@ -17,6 +18,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 @Auto
+@DevOnly
 @PickaxeMining(MiningLevels.DIAMOND)
 @AxeMining(MiningLevels.IRON)
 public class SimpleExampleBlock extends TrtrBlockWithEntity {

@@ -12,7 +12,7 @@ public class LootDataGeneratorAccessor implements FieldAccessor {
                                               "LOOT"
                                           ),
                                           () -> get(clazz,
-                                              "LOOT_PROVIDER"
+                                                    "LOOT_PROVIDER"
                                           )
         );
     }
@@ -23,10 +23,10 @@ public class LootDataGeneratorAccessor implements FieldAccessor {
 
     public Class<? extends SimpleFabricLootTableProvider> getType(Class<?> clazz) {
         return EntrustEnvironment.nonnull(type(clazz,
-                                              "LOOT"
+                                               "LOOT"
                                           ),
                                           () -> type(clazz,
-                                              "LOOT_PROVIDER"
+                                                     "LOOT_PROVIDER"
                                           )
         );
     }
@@ -36,10 +36,14 @@ public class LootDataGeneratorAccessor implements FieldAccessor {
     }
 
     public boolean has(Class<?> clazz) {
-        if (has(clazz, "LOOT")) {
+        if (has(clazz,
+                "LOOT"
+        )) {
             return true;
         }
-        return has(clazz, "LOOT_PROVIDER");
+        return has(clazz,
+                   "LOOT_PROVIDER"
+        );
     }
 
     public boolean has(Object o) {

@@ -65,7 +65,7 @@ public class BlockFramework extends ReflectionFramework {
     private boolean match(Class<?> clazz) {
         // The abstract class cannot be instanced, filter it out.
         // And framework can process only Block, if not then reject the process in this framework.
-        return ! Modifier.isAbstract(clazz.getModifiers()) && Block.class.isAssignableFrom(clazz);
+        return ! Modifier.isAbstract(clazz.getModifiers()) && Block.class.isAssignableFrom(clazz) && checkDev(clazz);
     }
 
     private Class<Block> cast(Class<?> clazz) {
@@ -138,8 +138,9 @@ public class BlockFramework extends ReflectionFramework {
                                     // Register block item.
                                     item(block);
 
+            // Register block entity type
                                     entityType(block,
-                                               identifier.getPath()
+                                               identifier.toString()
                                     );
 
                                     this.blocks.add(block);
@@ -298,9 +299,26 @@ public class BlockFramework extends ReflectionFramework {
 
     public void entityType(Block block, String id) {
         Class<? extends BlockEntity> clazz = BlockEntityAccessor.ACCESSOR.getType(block);
+        // Debug...
         if (clazz == null) {
+            LOGGER.debug("Block '{}' has no item",
+                         block.getClass()
+                              .getName()
+            );
             return;
+        } else {
+            LOGGER.debug("Block '{}' has item",
+                         block.getClass()
+                              .getName()
+            );
         }
+
+        LOGGER.info("Building block entity '{}' for block '{}'",
+                    clazz.getName(),
+                    block.getClass()
+                         .getName()
+        );
+
         entityType(clazz,
                    block,
                    id

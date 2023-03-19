@@ -42,7 +42,7 @@ public class BlockTagDataGenFramework extends ReflectionFramework {
     }
 
     private boolean match(Block block) {
-        return true;
+        return checkDev(block.getClass());
     }
 
     private void done(FabricDataGenerator generator) {

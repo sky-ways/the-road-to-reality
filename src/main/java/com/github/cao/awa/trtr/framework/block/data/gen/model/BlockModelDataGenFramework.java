@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Objects;
 
 public class BlockModelDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockModelDataGenFramework");
@@ -34,13 +33,12 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                            .filter(this :: match)
                            .filter(this :: verify)
                            .map(this :: instance)
-                           .filter(Objects :: nonNull)
                            .forEach(this.factories :: add);
         done(generator);
     }
 
-    private boolean match(Block clazz) {
-        return true;
+    private boolean match(Block block) {
+        return checkDev(block.getClass());
     }
 
     private void done(FabricDataGenerator generator) {
