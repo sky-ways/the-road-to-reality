@@ -4,8 +4,8 @@
 		32
 	],
 	"textures": {
-		"0": "mud_stove",
-		"particle": "mud_stove"
+		"0": "trtr:block/mud_stove",
+		"particle": "trtr:block/mud_stove"
 	},
 	"elements": [
 		{
