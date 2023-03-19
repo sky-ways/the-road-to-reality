@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.block;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.TrtrMod;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -41,5 +42,9 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
                          TrtrMod.BLOCK_FRAMEWORK.entityType(this.getClass()),
                          TrtrMod.BLOCK_FRAMEWORK :: entityTick
         );
+    }
+
+    public static <T extends BlockEntity> T getBlockEntity(World world, BlockPos pos) {
+        return EntrustEnvironment.cast(world.getBlockEntity(pos));
     }
 }

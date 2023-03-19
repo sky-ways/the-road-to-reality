@@ -2,10 +2,13 @@ package com.github.cao.awa.trtr.framework.block;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
+import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
+import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.BlockEntityAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.TrtrBlockEntityFactory;
+import com.github.cao.awa.trtr.framework.accessor.block.entity.render.BlockEntityRenderAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.setting.BlockSettingAccessor;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
@@ -19,12 +22,16 @@ import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.ExceptionEnvironment;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.Receptacle;
 import com.mojang.datafixers.types.Type;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -295,6 +302,58 @@ public class BlockFramework extends ReflectionFramework {
                                 entity
                         )
         );
+    }
+
+    public void render(Block block) {
+        if (BlockEntityRenderAccessor.ACCESSOR.has(block)) {
+            BlockEntityType<MudStoveBlockEntity> type = TrtrMod.BLOCK_FRAMEWORK.entityType(block.getClass());
+
+            Class<? extends BlockEntityRenderer<?>> render = BlockEntityRenderAccessor.ACCESSOR.getType(block);
+
+            LOGGER.info("Building block entity render '{}' for block '{}'",
+                        render.getName(),
+                        block.getClass()
+                             .getName()
+            );
+
+            Receptacle<Boolean> hasCtx = Receptacle.of(true);
+
+            Constructor<BlockEntityRenderer<?>> constructor = EntrustEnvironment.cast(EntrustEnvironment.trys(() -> render
+                                                                                                                      .getConstructor(BlockEntityRendererFactory.Context.class),
+                                                                                                              () -> {
+                                                                                                                  hasCtx.set(false);
+                                                                                                                  return block.getClass()
+                                                                                                                              .getConstructor();
+                                                                                                              }
+            ));
+
+            if (constructor == null) {
+                LOGGER.warn("Block entity render '{}' of block '{}' is unable to construct, missing constructors: arg of (BlockEntityRendererFactory.Context.class) or no arg constructor",
+                            render.getName(),
+                            block.getClass()
+                                 .getName()
+                );
+                return;
+            }
+
+            ensureAccessible(constructor);
+
+            BlockEntityRendererFactories.register(type,
+                                                  ctx -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> {
+                                                      if (hasCtx.get()) {
+                                                          return constructor.newInstance(ctx);
+                                                      } else {
+                                                          return constructor.newInstance();
+                                                      }
+                                                  }))
+            );
+        }
+    }
+
+    public void renders() {
+        for (Block block : this.blocks) {
+            render(block);
+        }
     }
 
     public void entityType(Block block, String id) {
