@@ -3,7 +3,6 @@ package com.github.cao.awa.trtr.block.stove.mud.render;
 import com.github.cao.awa.apricot.anntation.Planning;
 import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
-import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -34,25 +33,18 @@ public class MudStoveRender implements BlockEntityRenderer<MudStoveBlockEntity> 
                            0.5
         );
 
-        EntrustEnvironment.operation(entity.getFuel(),
-                                     item -> {
-                                         if (item == null) {
-                                             return;
-                                         }
-                                         MinecraftClient.getInstance()
-                                                        .getItemRenderer()
-                                                        .renderItem(
-                                                                item,
-                                                                ModelTransformationMode.GROUND,
-                                                                light,
-                                                                OverlayTexture.DEFAULT_UV,
-                                                                matrices,
-                                                                vertexConsumers,
-                                                                entity.getWorld(),
-                                                                0
-                                                        );
-                                     }
-        );
+        MinecraftClient.getInstance()
+                       .getItemRenderer()
+                       .renderItem(
+                               entity.getFuel(),
+                               ModelTransformationMode.GROUND,
+                               light,
+                               OverlayTexture.DEFAULT_UV,
+                               matrices,
+                               vertexConsumers,
+                               entity.getWorld(),
+                               0
+                       );
 
         matrices.pop();
     }

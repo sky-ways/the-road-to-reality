@@ -59,11 +59,15 @@ public class MudStoveBlockEntity extends TrtrBlockEntity {
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        this.stack.writeNbt(nbt);
+        NbtCompound item1 = new NbtCompound();
+        this.stack.writeNbt(item1);
+        nbt.put("item1",
+                item1
+        );
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        this.stack = ItemStack.fromNbt(nbt);
+        this.stack = ItemStack.fromNbt(nbt.getCompound("item1"));
     }
 }
