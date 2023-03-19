@@ -48,7 +48,7 @@ import java.util.Objects;
 public class BlockFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockFramework");
     private final List<Block> blocks = ApricotCollectionFactor.newArrayList();
-    private final Map<Block, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.newHashMap();
+    private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.newHashMap();
     private final BlockDataGenFramework DATA_GEN = new BlockDataGenFramework(this);
 
     public void work() {
@@ -256,46 +256,44 @@ public class BlockFramework extends ReflectionFramework {
                                                                          )
                                                                                  .build(type)
         );
-        this.blockEntities.put(block,
+        this.blockEntities.put(block.getClass(),
                                entityType
         );
     }
 
-    public <T extends BlockEntity> BlockEntityType<T> entityType(Block block) {
+    public <T extends BlockEntity> BlockEntityType<T> entityType(Class<? extends Block> block) {
         return EntrustEnvironment.cast(this.blockEntities.get(block));
     }
 
-    public void tick(Block block, World world, BlockPos pos, BlockState state, BlockEntity entity) {
-        if (entity.getType() == this.blockEntities.get(block)) {
-            EntrustEnvironment.trys(
-                    () -> ensureAccessible(entity.getClass()
-                                                 .getMethod("tick",
-                                                            World.class,
-                                                            BlockPos.class,
-                                                            BlockState.class,
-                                                            entity.getClass()
-                                                 ))
-                            .invoke(null,
-                                    world,
-                                    pos,
-                                    state,
-                                    entity
-                            ),
-                    () -> ensureAccessible(entity.getClass()
-                                                 .getMethod("tick",
-                                                            World.class,
-                                                            BlockPos.class,
-                                                            BlockState.class,
-                                                            BlockEntity.class
-                                                 ))
-                            .invoke(null,
-                                    world,
-                                    pos,
-                                    state,
-                                    entity
-                            )
-            );
-        }
+    public void entityTick(World world, BlockPos pos, BlockState state, BlockEntity entity) {
+        EntrustEnvironment.trys(
+                () -> ensureAccessible(entity.getClass()
+                                             .getMethod("tick",
+                                                        World.class,
+                                                        BlockPos.class,
+                                                        BlockState.class,
+                                                        entity.getClass()
+                                             ))
+                        .invoke(null,
+                                world,
+                                pos,
+                                state,
+                                entity
+                        ),
+                () -> ensureAccessible(entity.getClass()
+                                             .getMethod("tick",
+                                                        World.class,
+                                                        BlockPos.class,
+                                                        BlockState.class,
+                                                        BlockEntity.class
+                                             ))
+                        .invoke(null,
+                                world,
+                                pos,
+                                state,
+                                entity
+                        )
+        );
     }
 
     public void entityType(Block block, String id) {
@@ -316,7 +314,7 @@ public class BlockFramework extends ReflectionFramework {
                                                                       BlockPos.class,
                                                                       BlockState.class
                                                       )
-                                                      .newInstance(this.blockEntities.get(block),
+                                                      .newInstance(this.blockEntities.get(block.getClass()),
                                                                    pos,
                                                                    state
                                                       ));

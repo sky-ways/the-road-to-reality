@@ -35,11 +35,9 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return (world1, pos, state1, blockEntity) -> TrtrMod.BLOCK_FRAMEWORK.tick(this,
-                                                                                  world1,
-                                                                                  pos,
-                                                                                  state,
-                                                                                  blockEntity
+        return checkType(type,
+                         TrtrMod.BLOCK_FRAMEWORK.entityType(this.getClass()),
+                         TrtrMod.BLOCK_FRAMEWORK :: entityTick
         );
     }
 }

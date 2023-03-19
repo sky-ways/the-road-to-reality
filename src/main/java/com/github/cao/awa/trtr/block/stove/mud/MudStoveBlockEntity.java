@@ -18,6 +18,6 @@ public class MudStoveBlockEntity extends BlockEntity {
 
     @Auto
     public static void tick(World world, BlockPos pos, BlockState state, MudStoveBlockEntity blockEntity) {
-        System.out.println(blockEntity);
+        // Tick details...
     }
 }
