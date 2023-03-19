@@ -18,6 +18,7 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
         super(settings);
     }
 
+    @Auto
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -32,6 +33,7 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
+    @Auto
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
