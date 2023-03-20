@@ -3,8 +3,8 @@
 # certain platforms or Java versions, and provides a first line of defence
 # against bad commits.
 
-name: build
-on: [ merge, push ]
+name: pull request
+on: [ pull_request ]
 
 jobs:
   build:
