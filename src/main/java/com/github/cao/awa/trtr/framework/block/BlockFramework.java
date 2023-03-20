@@ -3,6 +3,8 @@ package com.github.cao.awa.trtr.framework.block;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
+import com.github.cao.awa.trtr.annotation.property.AutoProperty;
+import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
 import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
@@ -13,12 +15,11 @@ import com.github.cao.awa.trtr.framework.accessor.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.setting.BlockSettingAccessor;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
 import com.github.cao.awa.trtr.framework.accessor.item.ItemSettingAccessor;
-import com.github.cao.awa.trtr.framework.accessor.method.MethodAccess;
 import com.github.cao.awa.trtr.framework.block.data.gen.BlockDataGenFramework;
 import com.github.cao.awa.trtr.framework.exception.InvertOfControlException;
-import com.github.cao.awa.trtr.framework.exception.NoAutoAnnotationException;
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
+import com.github.cao.awa.trtr.framework.serializer.NbtSerializer;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.ExceptionEnvironment;
@@ -35,19 +36,22 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -87,23 +91,139 @@ public class BlockFramework extends ReflectionFramework {
                     clazz.getName()
         );
         return EntrustEnvironment.trys(() -> ensureAccessible(clazz.getDeclaredConstructor(AbstractBlock.Settings.class))
-                .newInstance(BlockSettingAccessor.ACCESSOR.get(clazz)));
+                                               .newInstance(BlockSettingAccessor.ACCESSOR.get(clazz)),
+                                       ex -> {
+                                           ex.printStackTrace();
+                                           return null;
+                                       }
+        );
     }
 
-    private static <T> Constructor<T> ensureAccessible(Constructor<T> clazz) {
-        if (clazz.canAccess(null)) {
-            return clazz;
-        }
-        clazz.trySetAccessible();
-        return clazz;
+    public void writeNbt(BlockEntity entity, NbtCompound nbt) {
+        Arrays.stream(entity.getClass()
+                            .getDeclaredFields())
+              .peek(f -> ReflectionFramework.ensureAccessible(f,
+                                                              entity
+              ))
+              .filter(f -> f.isAnnotationPresent(AutoNbt.class))
+              .forEach(field -> {
+                  EntrustEnvironment.trys(() -> {
+                      if (field.get(entity) instanceof NbtSerializer serializer) {
+                          String name = field.getAnnotation(AutoNbt.class)
+                                             .value();
+                          name = name.equals("") ? field.getName() : name;
+                          nbt.put(name,
+                                  serializer.toNbt()
+                          );
+                          LOGGER.debug("Block entity '{}' at {} has written nbt for field '{}': {}",
+                                       entity.getClass()
+                                             .getName(),
+                                       entity.getPos(),
+                                       field.getName(),
+                                       serializer.toNbt()
+                          );
+                      }
+                  });
+              });
     }
 
-    @NotNull
-    private static Method ensureAccessible(Method clazz) {
-        if (clazz.getAnnotation(Auto.class) != null) {
-            return MethodAccess.ensureAccessible(clazz);
-        }
-        throw new NoAutoAnnotationException();
+    public void readNbt(BlockEntity entity, NbtCompound nbt) {
+        Arrays.stream(entity.getClass()
+                            .getDeclaredFields())
+              .peek(f -> ReflectionFramework.ensureAccessible(f,
+                                                              entity
+              ))
+              .filter(f -> f.isAnnotationPresent(AutoNbt.class))
+              .forEach(field -> {
+                  EntrustEnvironment.trys(() -> {
+                      if (ensureAccessible(field.getType()
+                                                .getConstructor()).newInstance() instanceof NbtSerializer serializer) {
+                          String name = field.getAnnotation(AutoNbt.class)
+                                             .value();
+                          name = name.equals("") ? field.getName() : name;
+                          serializer.fromNbt(nbt.getCompound(name));
+                          field.set(entity,
+                                    serializer
+                          );
+                          LOGGER.debug("Block entity '{}' at {} reading nbt for field '{}': {}",
+                                       entity.getClass()
+                                             .getName(),
+                                       entity.getPos(),
+                                       field.getName(),
+                                       serializer.toNbt()
+                          );
+                      }
+                  });
+              });
+    }
+
+    public void initEntity(BlockEntity entity) {
+        Arrays.stream(entity.getClass()
+                            .getDeclaredFields())
+              .peek(f -> ReflectionFramework.ensureAccessible(f,
+                                                              entity
+              ))
+              .filter(f -> f.isAnnotationPresent(AutoNbt.class))
+              .forEach(field -> {
+                  EntrustEnvironment.trys(() -> {
+                      try {
+                          Object o = ensureAccessible(field.getType()
+                                                           .getConstructor()).newInstance();
+                          if (o instanceof NbtSerializer serializer) {
+                              field.set(entity,
+                                        serializer
+                              );
+                              LOGGER.debug("Block entity '{}' at {} initialized @AutoNbt field '{}' as type '{}'",
+                                           entity.getClass()
+                                                 .getName(),
+                                           entity.getPos(),
+                                           field.getName(),
+                                           serializer.getClass()
+                                                     .getName()
+                              );
+                          }
+                      } catch (Exception e) {
+                          LOGGER.warn("Block entity '{}' at {} unable to initialize @AutoNbt field '{}' with type '{}'",
+                                      entity.getClass()
+                                            .getName(),
+                                      entity.getPos(),
+                                      field.getName(),
+                                      field.getType()
+                                           .getName()
+                          );
+                      }
+                  });
+              });
+    }
+
+    public void properties(Block block, StateManager.Builder<Block, BlockState> builder) {
+        Arrays.stream(block.getClass()
+                           .getDeclaredFields())
+              .peek(f -> ReflectionFramework.ensureAccessible(f,
+                                                              block
+              ))
+              .filter(f -> f.isAnnotationPresent(AutoProperty.class))
+              .forEach(field -> {
+                  EntrustEnvironment.trys(() -> {
+                      Property<?> properties = EntrustEnvironment.cast(field.get(block));
+                      LOGGER.info("Building property '{}' as '{}' for block '{}' ",
+                                  field.getName(),
+                                  field.getType()
+                                       .getName(),
+                                  block.getClass()
+                                       .getName()
+                      );
+                      if (properties == null) {
+                          LOGGER.warn("Property '{}' as field is unable to access with '{}'",
+                                      field.getName(),
+                                      field.getType()
+                                           .getName()
+                          );
+                      } else {
+                          builder.add(properties);
+                      }
+                  });
+              });
     }
 
     private boolean verify(Class<Block> block) {
@@ -307,6 +427,13 @@ public class BlockFramework extends ReflectionFramework {
     public void render(Block block) {
         if (BlockEntityRenderAccessor.ACCESSOR.has(block)) {
             BlockEntityType<MudStoveBlockEntity> type = TrtrMod.BLOCK_FRAMEWORK.entityType(block.getClass());
+
+            if (type == null) {
+                LOGGER.warn("Block '{}' has RENDER or ENTITY_RENDER field was found, but missing block entity type, unable to build block entity render",
+                            block.getClass()
+                                 .getName()
+                );
+            }
 
             Class<? extends BlockEntityRenderer<?>> render = BlockEntityRenderAccessor.ACCESSOR.getType(block);
 

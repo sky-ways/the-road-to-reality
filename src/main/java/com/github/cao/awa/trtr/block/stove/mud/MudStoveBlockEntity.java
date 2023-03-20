@@ -1,27 +1,20 @@
 package com.github.cao.awa.trtr.block.stove.mud;
 
 import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.block.entity.TrtrBlockEntity;
+import com.github.cao.awa.trtr.block.stove.mud.fuel.MudStoveFuelLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 @Auto
 public class MudStoveBlockEntity extends TrtrBlockEntity {
-    private ItemStack stack = new ItemStack(Items.AIR);
-
-    public ItemStack getFuel() {
-        return this.stack;
-    }
+    @AutoNbt("layer")
+    private MudStoveFuelLayer layer;
 
     public MudStoveBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type,
@@ -35,39 +28,15 @@ public class MudStoveBlockEntity extends TrtrBlockEntity {
         // Tick details...
     }
 
-    public void addFuel(ItemStack stack) {
-        if (this.stack == null || this.getFuel()
-                                      .getItem() != stack.getItem()) {
-            this.stack = stack.copy();
+    public boolean addFuel(ItemStack stack) {
+        if (stack.getItem() == Items.COAL && this.layer.add()) {
+            stack.decrement(1);
+            return true;
         }
-
-        stack.decrement(1);
+        return false;
     }
 
-    @Auto
-    @Nullable
-    @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
-    }
-
-    @Auto
-    @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
-    }
-
-    @Override
-    protected void writeNbt(NbtCompound nbt) {
-        NbtCompound item1 = new NbtCompound();
-        this.stack.writeNbt(item1);
-        nbt.put("item1",
-                item1
-        );
-    }
-
-    @Override
-    public void readNbt(NbtCompound nbt) {
-        this.stack = ItemStack.fromNbt(nbt.getCompound("item1"));
+    public double getFuel() {
+        return this.layer.get() / 45D;
     }
 }

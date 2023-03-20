@@ -3,12 +3,14 @@ package com.github.cao.awa.trtr.block;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -41,6 +43,12 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
         return checkType(type,
                          TrtrMod.BLOCK_FRAMEWORK.entityType(this.getClass()),
                          TrtrMod.BLOCK_FRAMEWORK :: entityTick
+        );
+    }
+
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        TrtrMod.BLOCK_FRAMEWORK.properties(this,
+                                           builder
         );
     }
 

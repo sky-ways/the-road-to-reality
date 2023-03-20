@@ -3,14 +3,12 @@ package com.github.cao.awa.trtr.block.stove.mud.render;
 import com.github.cao.awa.apricot.anntation.Planning;
 import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.TestOnly;
 
 import java.util.Random;
 
@@ -23,29 +21,33 @@ public class MudStoveRender implements BlockEntityRenderer<MudStoveBlockEntity> 
 
     }
 
-    @TestOnly
     @Override
     public void render(MudStoveBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        matrices.push();
+        if (entity.getFuel() > 0) {
+            matrices.push();
 
-        matrices.translate(0.5,
-                           1.25,
-                           0.5
-        );
+            matrices.translate(0.125,
+                               0.12,
+                               0.125
+            );
 
-        MinecraftClient.getInstance()
-                       .getItemRenderer()
-                       .renderItem(
-                               entity.getFuel(),
-                               ModelTransformationMode.GROUND,
-                               light,
-                               OverlayTexture.DEFAULT_UV,
-                               matrices,
-                               vertexConsumers,
-                               entity.getWorld(),
-                               0
-                       );
+            matrices.scale(0.75F,
+                           (float) Math.max(entity.getFuel() * 0.6,
+                                            (entity.getFuel() - 0.35)
+                           ),
+                           0.75F
+            );
 
-        matrices.pop();
+            MinecraftClient.getInstance()
+                           .getBlockRenderManager()
+                           .renderBlockAsEntity(Blocks.COAL_BLOCK.getDefaultState(),
+                                                matrices,
+                                                vertexConsumers,
+                                                light,
+                                                overlay
+                           );
+
+            matrices.pop();
+        }
     }
 }
