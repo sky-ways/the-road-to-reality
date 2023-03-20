@@ -1,4 +1,4 @@
-// 1.19.4	2023-03-19T16:32:00.9936824	The road to reality/minecraft:block Loot Table
+// 1.19.4	2023-03-20T12:11:44.8773703	The road to reality/minecraft:block Loot Table
 d920a3a0bc376a731f81fb269d9a06327e49bb4c data\trtr\loot_tables\blocks\chalcopyrite.json
 0fe245396b83f548b3c7b007c33178b1d9256975 data\trtr\loot_tables\blocks\alunite.json
 03c0c95d457ba18a7f35e58d425577646e61cce8 data\trtr\loot_tables\blocks\rutile.json
@@ -13,8 +13,8 @@ cce80da0b769497327aa96f8cb7a54d9162ee711 data\trtr\loot_tables\blocks\autunite.j
 ee4fbc1748483a5096539593612f024ac31886a0 data\trtr\loot_tables\blocks\deepslate_cuprite.json
 208540b54db8306f43c2008f3ba5ffd65ea7f5fd data\trtr\loot_tables\blocks\deepslate_chalcopyrite.json
 61a5cd7731e5f6860a31501cd06967f876f16d81 data\trtr\loot_tables\blocks\cuprite.json
-6cb8989d09af499c395aacb44ad1a08e40365dfe data\trtr\loot_tables\blocks\deepslate_carnotite.json
 b285cb7c8f372b1765ea25c3a391c0cc83d7747d data\trtr\loot_tables\blocks\deepslate_ilmenite.json
+6cb8989d09af499c395aacb44ad1a08e40365dfe data\trtr\loot_tables\blocks\deepslate_carnotite.json
 c171a180a71b9171ee56edda050fef4abacb6066 data\trtr\loot_tables\blocks\orthoclase.json
 c588241d21d83e13cbad19e21be25978dfc8c032 data\trtr\loot_tables\blocks\pitchblende.json
 cd725e3347f81de70fe3a3e33b0a9d414f4907fa data\trtr\loot_tables\blocks\mud_stove.json

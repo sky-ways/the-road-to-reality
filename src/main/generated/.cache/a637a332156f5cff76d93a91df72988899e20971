@@ -1,12 +1,12 @@
-// 1.19.4	2023-03-19T16:32:00.9946814	The road to reality/Model Definitions
+// 1.19.4	2023-03-20T12:11:44.8793699	The road to reality/Model Definitions
 e2536ba22e52d9a6dbbc2bcaa17f676eda65ec61 assets\trtr\blockstates\deepslate_acanthite.json
 162b8d0378355612dd09346d6e3d267e75afa745 assets\trtr\models\item\chalcopyrite.json
 26f935e57f2c380b33150fadfa0c67885179863d assets\trtr\blockstates\autunite.json
 ff8e3cf35181d166ef75984d30f3d7395fab614b assets\trtr\blockstates\bauxite.json
 2848ef292355a95273f6cb7c5916250e862af63b assets\trtr\models\item\cuprite.json
 fda9538ef110bd7c6e7c16a2c87e2df4a9bf0afd assets\trtr\models\item\rutile.json
-163d3374f17ced7409617afba94dad89eac48d1f assets\trtr\models\block\galena.json
 cdce315001521bc28239a9f168f69dc3fb973215 assets\trtr\blockstates\deepslate_pitchblende.json
+163d3374f17ced7409617afba94dad89eac48d1f assets\trtr\models\block\galena.json
 9f7403a8bf82539158ff73bcd120964f78f1c97a assets\trtr\models\block\marble.json
 c5e41128c53ae4a12f2e79f9319b866a7dc5fa4e assets\trtr\models\block\anorthite.json
 29cbe8156554ffe601146e973b873333e3649325 assets\trtr\models\item\albite.json
@@ -21,21 +21,21 @@ a34f3640e1442548d5ff1952c5fbaaba3a52418d assets\trtr\models\item\deepslate_galen
 97edecea26228b275c8d4ced5b425fc67eda5f34 assets\trtr\models\block\albite.json
 93cebe609cd9767c52c4d9c82039035b8eae3458 assets\trtr\models\item\mud_stove.json
 db97c71e68813d9a5152c4b451f4df95e26502f7 assets\trtr\blockstates\marble.json
-98851a66adf5f48b35686b374d36d50284f7b31f assets\trtr\models\item\acanthite.json
 746eee19894403c650ff7caead31a3727f8ecbe4 assets\trtr\models\item\marble.json
+98851a66adf5f48b35686b374d36d50284f7b31f assets\trtr\models\item\acanthite.json
 c3952973b162e3fc969a5bda99a52baff9318fd4 assets\trtr\blockstates\alunite.json
 3291d7cacdb2cb6fe12b75838e869431a88250ff assets\trtr\blockstates\pitchblende.json
 a1a3030387db44f6757ab6767b1a6e8446f6af50 assets\trtr\models\block\pitchblende.json
 8a4dc8f6f1931fdb7c40edffc55957907a49116d assets\trtr\models\block\acanthite.json
-856d0b61b9e916536158540855d6f10d59909203 assets\trtr\blockstates\mud_stove.json
+d1b89219bf0ad6db3f2c90161a5c3e5b9766ff96 assets\trtr\blockstates\mud_stove.json
 72231772909782b445a759aa6e702c8558a8f248 assets\trtr\models\block\deepslate_galena.json
 9c8231768c675a77ded6228627d462414a6dbf20 assets\trtr\blockstates\deepslate_autunite.json
 a9d7a85fda29acf0d3f170f008534d6dcecb85cf assets\trtr\models\item\alunite.json
 f0c35b428d798c3c13c3014f97c9c85a977d4942 assets\trtr\blockstates\limestone.json
 babeda09c675f2c683083ee5d1a8e7b822af9c4b assets\trtr\models\block\deepslate_acanthite.json
 d9d069440d18dd676206b99c260c0cfddda1a985 assets\trtr\models\block\bauxite.json
-5152f9fd65d8d9a01d2c33cca842eb756a32d6b4 assets\trtr\blockstates\deepslate_cuprite.json
 84c1d0c0e58c1c7025348a68785b878797c64fd3 assets\trtr\blockstates\deepslate_chalcopyrite.json
+5152f9fd65d8d9a01d2c33cca842eb756a32d6b4 assets\trtr\blockstates\deepslate_cuprite.json
 f38904036c05fd4df7522b987bdd5089977c893d assets\trtr\models\item\deepslate_cuprite.json
 0dec7a04e9156896d66535f9d0a2d89037248dd8 assets\trtr\blockstates\cuprite.json
 7c9fa445533c12674f112c14e2367161864584b7 assets\trtr\models\item\deepslate_chalcopyrite.json
@@ -49,8 +49,8 @@ a28f02c260ac956734533047a9930a1a522652bd assets\trtr\models\item\ilmenite.json
 c4bec9151a3bdacefc1500240181347f2500ff47 assets\trtr\models\block\deepslate_pitchblende.json
 ed420171e60771a79806b96a89ae46af3ffa938e assets\trtr\blockstates\deepslate_ilmenite.json
 052fe74b5933ed87f457a21dd15ea207142c61f4 assets\trtr\models\item\deepslate_carnotite.json
-5d83ad20c9d4ff0cd05bcbaced8dd4a842ec7c8a assets\trtr\models\item\deepslate_autunite.json
 70610ce64794e4ea32adabb177163cc3855d6b37 assets\trtr\blockstates\deepslate_carnotite.json
+5d83ad20c9d4ff0cd05bcbaced8dd4a842ec7c8a assets\trtr\models\item\deepslate_autunite.json
 7c9d2889f85834ad93678840ba9b031c702db63d assets\trtr\models\item\deepslate_ilmenite.json
 f1ca6f2c5d5e37152a482b2408888ab39ffa5603 assets\trtr\blockstates\acanthite.json
 3267db574140f6f4f4b12fcfbedc781bb043d813 assets\trtr\models\item\malachite.json
@@ -59,8 +59,8 @@ f1ca6f2c5d5e37152a482b2408888ab39ffa5603 assets\trtr\blockstates\acanthite.json
 c8f2edbeec6f0c61a93b1de02584c3332a73947f assets\trtr\models\block\alunite.json
 aa2b2412e84cb9ce98f984b62a0c5fd99d3b19b6 assets\trtr\models\block\deepslate_carnotite.json
 7dc2a4078c782a4b609283508147974b365ca593 assets\trtr\blockstates\carnotite.json
-edb89e6d5f7141d502a071df1cf17077247318b4 assets\trtr\models\block\deepslate_bauxite.json
 29596aa2926f7c7697f1a47ca35196006f0adba1 assets\trtr\models\block\autunite.json
+edb89e6d5f7141d502a071df1cf17077247318b4 assets\trtr\models\block\deepslate_bauxite.json
 04ee5c45eca7d39156ead4a012a486746c8f3188 assets\trtr\models\block\deepslate_chalcopyrite.json
 1a0dac81b830aaff2fd16b566907bf59d1560ad3 assets\trtr\models\item\limestone.json
 a539f9e127d589cbd4bbe18aea39539fd10a0cf7 assets\trtr\models\block\deepslate_cuprite.json

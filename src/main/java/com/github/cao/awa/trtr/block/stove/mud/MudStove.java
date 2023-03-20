@@ -1,18 +1,23 @@
 package com.github.cao.awa.trtr.block.stove.mud;
 
 import com.github.cao.awa.apricot.anntation.Auto;
-import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
+import com.github.cao.awa.trtr.block.stove.mud.model.MudStoveModelProvider;
 import com.github.cao.awa.trtr.block.stove.mud.render.MudStoveRender;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -23,7 +28,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 @Auto
-@NoModel
 public class MudStove extends TrtrBlockWithEntity {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.of("trtr",
@@ -48,7 +52,12 @@ public class MudStove extends TrtrBlockWithEntity {
     public static GenericBlockLootProvider LOOT;
 
     @Auto
+    public static MudStoveModelProvider MODEL;
+
+    @Auto
     public static MudStoveRender RENDER;
+
+    public static final DirectionProperty FACING = Properties.FACING;
 
     @Override
     public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
@@ -60,6 +69,18 @@ public class MudStove extends TrtrBlockWithEntity {
                 16,
                 15
         );
+    }
+
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return this.getDefaultState()
+                   .with(FACING,
+                         ctx.getHorizontalPlayerFacing()
+                            .getOpposite()
+                   );
     }
 
     @Override
