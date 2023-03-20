@@ -1,11 +1,12 @@
 package com.github.cao.awa.trtr.block.stove.mud.fuel;
 
 import com.github.cao.awa.apricot.anntation.Auto;
-import com.github.cao.awa.trtr.framework.serializer.NbtSerializer;
+import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 
 @Auto
-public class MudStoveFuelLayer implements NbtSerializer {
+public class MudStoveFuelLayer implements NbtSerializable {
     private int count;
 
     public boolean add() {
@@ -26,15 +27,20 @@ public class MudStoveFuelLayer implements NbtSerializer {
 
     @Auto
     @Override
-    public NbtCompound toNbt() {
-        return nbt(nbt -> nbt.putInt("count",
-                                     this.count
+    public NbtElement toNbt() {
+        return compound(nbt -> nbt.putInt("count",
+                                          this.count
         ));
     }
 
     @Auto
     @Override
-    public void fromNbt(NbtCompound compound) {
-        this.count = compound.getInt("count");
+    public void fromNbt(NbtElement element) {
+        as(element,
+           NbtCompound.class,
+           compound -> {
+               this.count = compound.getInt("count");
+           }
+        );
     }
 }
