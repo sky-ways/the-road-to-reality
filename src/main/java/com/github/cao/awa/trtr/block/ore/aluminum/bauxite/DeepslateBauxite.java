@@ -32,6 +32,7 @@ public class DeepslateBauxite extends TrtrBlock {
     @Auto
     public static BlockItem ITEM;
 
+    @Auto
     @DataGen
     public static GenericBlockLootProvider LOOT;
 

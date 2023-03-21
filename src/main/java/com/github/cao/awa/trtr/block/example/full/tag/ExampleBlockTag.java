@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Auto
 public class ExampleBlockTag extends TrtrBlockTagProvider {
+    @Auto
     public ExampleBlockTag(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output,
               registriesFuture

@@ -50,8 +50,10 @@ public class SimpleExampleBlock extends TrtrBlockWithEntity {
 
     // Tags.
     @Auto
+    @DataGen
     public static SimpleExampleBlockTag TAG;
 
+    // Block entity.
     @Auto
     public static SimpleExampleBlockEntity ENTITY;
 

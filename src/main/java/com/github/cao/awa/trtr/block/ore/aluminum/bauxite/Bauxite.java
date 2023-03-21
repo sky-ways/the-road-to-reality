@@ -32,6 +32,7 @@ public class Bauxite extends TrtrBlock {
     @Auto
     public static BlockItem ITEM;
 
+    @Auto
     @DataGen
     public static GenericBlockLootProvider LOOT;
 

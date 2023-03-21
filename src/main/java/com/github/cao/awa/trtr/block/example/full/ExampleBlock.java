@@ -3,19 +3,25 @@ package com.github.cao.awa.trtr.block.example.full;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
+import com.github.cao.awa.trtr.annotation.mine.AxeMining;
+import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.block.example.full.item.ExampleBlockItem;
 import com.github.cao.awa.trtr.block.example.full.loot.ExampleLoot;
 import com.github.cao.awa.trtr.block.example.full.model.ExampleModel;
 import com.github.cao.awa.trtr.block.example.full.tag.ExampleBlockTag;
+import com.github.cao.awa.trtr.block.example.simple.entity.SimpleExampleBlockEntity;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.Material;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 @Auto
 @DevOnly
+@PickaxeMining(MiningLevels.DIAMOND)
+@AxeMining(MiningLevels.IRON)
 public class ExampleBlock extends TrtrBlock {
     // Identifier.
     @Auto
@@ -63,11 +69,20 @@ public class ExampleBlock extends TrtrBlock {
     // Tags.
     // Direct block tag provider
     @Auto
+    @DataGen
     public static ExampleBlockTag TAG;
 
-    // Here one block taf provider is invalid, the name must be "TAG" or "TAG_PROVIDER", framework will ignore it automatically.
+    // Here one block tag provider is invalid, the name must be "TAG" or "TAG_PROVIDER", framework will ignore it automatically.
     // Direct block tag with class.
     public static final Class<ExampleBlockTag> TYPE_TAG = ExampleBlockTag.class;
+
+    // Block entity.
+    @Auto
+    public static SimpleExampleBlockEntity ENTITY;
+
+    // Here one block entity provider is invalid, the name must be "ENTITY" or "BLOCK_ENTITY", framework will ignore it automatically.
+    // Direct block tag with class.
+    public static final Class<ExampleBlockTag> TYPE_ENTITY = ExampleBlockTag.class;
 
     // Constructor...
     @Auto

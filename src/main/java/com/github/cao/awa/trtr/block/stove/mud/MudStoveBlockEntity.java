@@ -16,6 +16,7 @@ public class MudStoveBlockEntity extends TrtrBlockEntity {
     @AutoNbt("layer")
     private MudStoveFuelLayer layer;
 
+    @Auto
     public MudStoveBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type,
               pos,

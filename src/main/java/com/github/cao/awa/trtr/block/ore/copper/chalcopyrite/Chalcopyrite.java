@@ -32,6 +32,7 @@ public class Chalcopyrite extends TrtrBlock {
     @Auto
     public static BlockItem ITEM;
 
+    @Auto
     @DataGen
     public static GenericBlockLootProvider LOOT;
 

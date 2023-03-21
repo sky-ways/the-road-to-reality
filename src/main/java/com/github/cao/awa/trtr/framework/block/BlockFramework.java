@@ -4,7 +4,6 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
-import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
 import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
@@ -18,7 +17,7 @@ import com.github.cao.awa.trtr.framework.accessor.item.ItemSettingAccessor;
 import com.github.cao.awa.trtr.framework.block.data.gen.BlockDataGenFramework;
 import com.github.cao.awa.trtr.framework.exception.InvertOfControlException;
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
-import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializable;
+import com.github.cao.awa.trtr.framework.nbt.NbtSerializeFramework;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializer;
 import com.github.cao.awa.trtr.framework.nbt.serializer.item.NbtItemStackSerializer;
 import com.github.cao.awa.trtr.framework.nbt.serializer.type.raw.*;
@@ -41,7 +40,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.state.StateManager;
@@ -69,6 +67,7 @@ public class BlockFramework extends ReflectionFramework {
     private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.newHashMap();
     private final BlockDataGenFramework DATA_GEN = new BlockDataGenFramework(this);
     private final Map<Class<?>, NbtSerializer<?>> nbtSerializers = ApricotCollectionFactor.newHashMap();
+    private final NbtSerializeFramework nbtSerializeFramework = new NbtSerializeFramework(this);
 
     public void work() {
         initNbtSerializers();
@@ -139,6 +138,10 @@ public class BlockFramework extends ReflectionFramework {
         }
     }
 
+    public NbtSerializeFramework nbtSerializeFramework() {
+        return this.nbtSerializeFramework;
+    }
+
     public <T> NbtSerializer<T> getNbtSerializer(Class<T> type) {
         return EntrustEnvironment.cast(this.nbtSerializers.get(type));
     }
@@ -170,174 +173,19 @@ public class BlockFramework extends ReflectionFramework {
     }
 
     public void writeNbt(BlockEntity entity, NbtCompound nbt) {
-        Arrays.stream(entity.getClass()
-                            .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              entity
-              ))
-              .filter(f -> f.isAnnotationPresent(AutoNbt.class))
-              .forEach(field -> {
-                  String name = field.getAnnotation(AutoNbt.class)
-                                     .value();
-                  name = name.equals("") ? field.getName() : name;
-
-                  NbtElement element = null;
-
-                  String failedCause = null;
-
-                  try {
-                      Object f = field.get(entity);
-
-                      if (f instanceof NbtSerializable serializable) {
-                          element = serializable.toNbt();
-                      } else {
-                          NbtSerializer<?> nbtSerializer = getNbtSerializer(field.getType());
-                          if (nbtSerializer != null) {
-                              element = nbtSerializer.serialize(EntrustEnvironment.cast(f));
-                          } else {
-                              failedCause = "'" + field.getName() + "' is not nbt serializable and missing serializer of type";
-                          }
-                      }
-                  } catch (Exception ex) {
-                      failedCause = "exception " + ex;
-                  }
-
-                  if (element == null) {
-                      if (failedCause == null) {
-                          LOGGER.warn("Failed to write field '{}' as type '{}' to nbt for block entity '{}' at '{}' by unknown reason",
-                                      field.getName(),
-                                      field.getType()
-                                           .getName(),
-                                      entity.getClass()
-                                            .getName(),
-                                      entity.getPos()
-                          );
-                      } else {
-                          LOGGER.warn("Failed to write field '{}' as type '{}' to nbt for block entity '{}' at '{}' because {}",
-                                      field.getName(),
-                                      field.getType()
-                                           .getName(),
-                                      entity.getClass()
-                                            .getName(),
-                                      entity.getPos(),
-                                      failedCause
-                          );
-                      }
-                      return;
-                  }
-
-                  nbt.put(name,
-                          element
-                  );
-                  LOGGER.debug("Block entity '{}' at {} has written nbt for field '{}': {}",
-                               entity.getClass()
-                                     .getName(),
-                               entity.getPos(),
-                               field.getName(),
-                               element
-                  );
-              });
+        this.nbtSerializeFramework.writeNbt(entity,
+                                            nbt
+        );
     }
 
     public void readNbt(BlockEntity entity, NbtCompound nbt) {
-        Arrays.stream(entity.getClass()
-                            .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              entity
-              ))
-              .filter(f -> f.isAnnotationPresent(AutoNbt.class))
-              .forEach(field -> {
-                  EntrustEnvironment.trys(() -> {
-                      String name = field.getAnnotation(AutoNbt.class)
-                                         .value();
-                      name = name.equals("") ? field.getName() : name;
-
-                      NbtElement element = nbt.get(name);
-
-                      if (NbtSerializable.class.isAssignableFrom(field.getType()) && ensureAccessible(field.getType()
-                                                                                                           .getConstructor()).newInstance() instanceof NbtSerializable serializer) {
-                          serializer.fromNbt(element);
-                          field.set(entity,
-                                    serializer
-                          );
-                          LOGGER.debug("Block entity '{}' at {} reading nbt for field '{}': {}",
-                                       entity.getClass()
-                                             .getName(),
-                                       entity.getPos(),
-                                       field.getName(),
-                                       element
-                          );
-                      } else {
-                          NbtSerializer<?> nbtSerializer = getNbtSerializer(field.getType());
-                          if (nbtSerializer != null) {
-                              field.set(entity,
-                                        nbtSerializer.deserialize(element)
-                              );
-                              LOGGER.debug("Block entity '{}' at {} reading nbt for field '{}': {}",
-                                           entity.getClass()
-                                                 .getName(),
-                                           entity.getPos(),
-                                           field.getName(),
-                                           element
-                              );
-                          } else {
-                              LOGGER.warn("The field in block entity '{}' at {} is not nbt serializable and missing serializer of type '{}'",
-                                          entity.getClass()
-                                                .getName(),
-                                          entity.getPos(),
-                                          field.getType()
-                                               .getName()
-                              );
-                          }
-                      }
-                  });
-              });
+        this.nbtSerializeFramework.readNbt(entity,
+                                           nbt
+        );
     }
 
     public void initEntity(BlockEntity entity) {
-        Arrays.stream(entity.getClass()
-                            .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              entity
-              ))
-              .filter(f -> f.isAnnotationPresent(AutoNbt.class))
-              .forEach(field -> {
-                  EntrustEnvironment.trys(() -> {
-                      try {
-                          NbtSerializer<?> serializer = getNbtSerializer(field.getType());
-                          if (serializer != null) {
-                              field.set(entity,
-                                        serializer.initializer()
-                              );
-                          } else {
-                              Object o = ensureAccessible(field.getType()
-                                                               .getConstructor()).newInstance();
-                              if (o instanceof NbtSerializable serializable) {
-                                  field.set(entity,
-                                            serializable
-                                  );
-                                  LOGGER.debug("Block entity '{}' at {} initialized @AutoNbt field '{}' as type '{}'",
-                                               entity.getClass()
-                                                     .getName(),
-                                               entity.getPos(),
-                                               field.getName(),
-                                               serializable.getClass()
-                                                           .getName()
-                                  );
-                              }
-                          }
-                      } catch (Exception e) {
-                          LOGGER.warn("Block entity '{}' at {} unable to initialize @AutoNbt field '{}' with type '{}'",
-                                      entity.getClass()
-                                            .getName(),
-                                      entity.getPos(),
-                                      field.getName(),
-                                      field.getType()
-                                           .getName()
-                          );
-                      }
-                  });
-              });
+        this.nbtSerializeFramework.init(entity);
     }
 
     public void properties(Block block, StateManager.Builder<Block, BlockState> builder) {
