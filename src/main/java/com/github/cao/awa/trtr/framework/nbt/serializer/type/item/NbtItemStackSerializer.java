@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.framework.nbt.serializer.item;
+package com.github.cao.awa.trtr.framework.nbt.serializer.type.item;
 
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializer;
 import net.minecraft.item.ItemStack;

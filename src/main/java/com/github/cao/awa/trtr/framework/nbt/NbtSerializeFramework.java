@@ -1,25 +1,118 @@
 package com.github.cao.awa.trtr.framework.nbt;
 
+import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializable;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializer;
+import com.github.cao.awa.trtr.framework.nbt.serializer.type.item.NbtItemStackSerializer;
+import com.github.cao.awa.trtr.framework.nbt.serializer.type.list.NbtListSerializer;
+import com.github.cao.awa.trtr.framework.nbt.serializer.type.raw.*;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class NbtSerializeFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("Trtr/NbtSerializeFramework");
+    private final Map<Class<?>, NbtSerializer<?>> nbtSerializers = ApricotCollectionFactor.newHashMap();
     private final BlockFramework framework;
 
     public NbtSerializeFramework(BlockFramework framework) {
         this.framework = framework;
+
+        initNbtSerializers();
+    }
+
+    private void initNbtSerializers() {
+        registerNbtSerializer(new NbtItemStackSerializer(),
+                              ItemStack.class
+        );
+        registerNbtSerializer(new NbtBooleanSerializer(),
+                              boolean.class,
+                              Boolean.class
+        );
+        registerNbtSerializer(new NbtByteSerializer(),
+                              byte.class,
+                              Byte.class
+        );
+        registerNbtSerializer(new NbtCharSerializer(),
+                              char.class,
+                              Character.class
+        );
+        registerNbtSerializer(new NbtShortSerializer(),
+                              short.class,
+                              Short.class
+        );
+        registerNbtSerializer(new NbtIntSerializer(),
+                              int.class,
+                              Integer.class
+        );
+        registerNbtSerializer(new NbtLongSerializer(),
+                              long.class,
+                              Long.class
+        );
+        registerNbtSerializer(new NbtBigIntegerSerializer(),
+                              BigInteger.class
+        );
+        registerNbtSerializer(new NbtFloatSerializer(),
+                              float.class,
+                              Float.class
+        );
+        registerNbtSerializer(new NbtDoubleSerializer(),
+                              double.class,
+                              Double.class
+        );
+        registerNbtSerializer(new NbtBigDecimalSerializer(),
+                              BigDecimal.class
+        );
+        registerNbtSerializer(new NbtStringSerializer(),
+                              String.class
+        );
+        registerNbtSerializer(new NbtListSerializer(),
+                              List.class
+        );
+    }
+
+    public final <T> void registerNbtSerializer(NbtSerializer<T> serializer, @Nullable Class<?>... matchType) {
+        if (matchType == null) {
+            return;
+        }
+        for (Class<?> t : matchType) {
+            this.nbtSerializers.put(t,
+                                    serializer
+            );
+        }
+    }
+
+    public <T> NbtSerializer<T> getNbtSerializer(Class<T> type) {
+        if (type == null) {
+            return null;
+        }
+        NbtSerializer<T> serializer = EntrustEnvironment.cast(this.nbtSerializers.get(type));
+        if (serializer == null) {
+            serializer = EntrustEnvironment.cast(getNbtSerializer(type.getSuperclass()));
+            if (serializer == null) {
+                for (Class<?> aInterface : type.getInterfaces()) {
+                    serializer = EntrustEnvironment.cast(getNbtSerializer(aInterface));
+                    if (serializer != null) {
+                        break;
+                    }
+                }
+            }
+        }
+        return serializer;
     }
 
     private void readNbt(Object entity, NbtCompound nbt, String callsName) {
@@ -49,7 +142,7 @@ public class NbtSerializeFramework extends ReflectionFramework {
                                        element
                           );
                       } else {
-                          NbtSerializer<?> nbtSerializer = this.framework.getNbtSerializer(field.getType());
+                          NbtSerializer<?> nbtSerializer = getNbtSerializer(field.getType());
                           if (nbtSerializer != null) {
                               field.set(entity,
                                         nbtSerializer.deserialize(element)
@@ -123,7 +216,7 @@ public class NbtSerializeFramework extends ReflectionFramework {
                       if (f instanceof NbtSerializable serializable) {
                           element = serializable.toNbt();
                       } else {
-                          NbtSerializer<?> nbtSerializer = this.framework.getNbtSerializer(field.getType());
+                          NbtSerializer<?> nbtSerializer = getNbtSerializer(field.getType());
                           if (nbtSerializer != null) {
                               element = nbtSerializer.serialize(EntrustEnvironment.cast(f));
                           } else {
@@ -176,7 +269,7 @@ public class NbtSerializeFramework extends ReflectionFramework {
               .forEach(field -> {
                   EntrustEnvironment.trys(() -> {
                       try {
-                          NbtSerializer<?> serializer = this.framework.getNbtSerializer(field.getType());
+                          NbtSerializer<?> serializer = getNbtSerializer(field.getType());
                           if (serializer != null) {
                               field.set(entity,
                                         serializer.initializer()

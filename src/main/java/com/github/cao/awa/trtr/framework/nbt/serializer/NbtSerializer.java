@@ -5,6 +5,7 @@ import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnv
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.function.ExceptingConsumer;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -24,7 +25,10 @@ public interface NbtSerializer<T> {
         );
     }
 
-    default <Y extends NbtElement> T as(NbtElement element, Class<Y> type, Function<Y, T> function) {
+    default <Y extends NbtElement> T as(@Nullable NbtElement element, Class<Y> type, Function<Y, T> function) {
+        if (element == null) {
+            return null;
+        }
         if (type.isAssignableFrom(element.getClass())) {
             T result = function.apply(type.cast(element));
             if (result != null) {
@@ -32,5 +36,15 @@ public interface NbtSerializer<T> {
             }
         }
         return initializer();
+    }
+
+    default <Y extends NbtElement, Z> Z is(@Nullable NbtElement element, Class<Y> type, Function<Y, Z> function) {
+        if (element == null) {
+            return null;
+        }
+        if (type.isAssignableFrom(element.getClass())) {
+            return function.apply(type.cast(element));
+        }
+        return null;
     }
 }
