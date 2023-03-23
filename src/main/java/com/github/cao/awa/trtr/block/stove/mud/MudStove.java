@@ -40,8 +40,9 @@ public class MudStove extends TrtrBlockWithEntity {
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.SOIL,
                                                                               MapColor.BROWN
                                                                           )
-                                                                          .hardness(1F)
-                                                                          .strength(4.0F);
+                                                                          .strength(1F,
+                                                                                    4.0F
+                                                                          );
 
     @Auto
     public static BlockItem ITEM;

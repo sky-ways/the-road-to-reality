@@ -75,14 +75,17 @@
     "block.trtr.deepslate_carnotite": "Deepslate carnotite",
     "block.trtr.autunite": "Autunite",
     "block.trtr.deepslate_autunite": "Deepslate autunite",
+    "block.trtr.ilmenite": "Ilmenite",
+    "block.trtr.deepslate_ilmenite": "Deepslate ilmenite",
+    "block.trtr.magnetite": "Magnetite",
     "block.trtr.niter": "Niter",
     "block.trtr.limestone": "Limestone",
-
+    "block.trtr.rutile": "Rutile",
+    "block.trtr.marble": "Marble",
+    "block.trtr.mud_stove": "Mud stove",
     "death.attack.trtr.burner.hot": "%s try stand on high temperature burner",
     "death.attack.trtr.nuclear.disease": "%s dead in nuclear disease",
-
     "attribute.name.trtr.thump_efficiency": "Thump efficiency",
-
     "itemGroup.trtr.all": "All",
     "itemGroup.trtr.ore": "Ores",
     "itemGroup.trtr.crushed_ore": "Crushed ores",
