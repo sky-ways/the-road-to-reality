@@ -1,7 +1,8 @@
 package bot.inker.inkrender;
 
+import com.github.cao.awa.trtr.util.string.StringConcat;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.option.BiOption;
-import it.unimi.dsi.fastutil.longs.*;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.resource.InputSupplier;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourceType;
@@ -13,8 +14,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
@@ -117,7 +119,10 @@ public class MemoryResourcePack implements ResourcePack {
         );
         Supplier<InputStream> supplier = this.registers.get(getIdFromIdentifier(id));
         if (supplier == null) {
-            throw new RuntimeException("MemoryResource '" + id.getPath() + "' not found");
+            throw new RuntimeException(StringConcat.concat("MemoryResource '",
+                                                           id.getPath(),
+                                                           "' not found"
+            ));
         }
         return InputSupplier.create(Path.of(id.getPath()));
     }

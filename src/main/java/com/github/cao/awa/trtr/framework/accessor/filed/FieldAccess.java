@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.framework.accessor.filed;
 
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
 import com.github.cao.awa.trtr.framework.exception.SetFinalFieldException;
+import com.github.cao.awa.trtr.util.string.StringConcat;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -115,7 +116,10 @@ public class FieldAccess {
             if (field.trySetAccessible()) {
                 return;
             }
-            throw new IllegalStateException("The field '" + field.getName() + "' with @Auto automatic IoC is not accessible");
+            throw new IllegalStateException(StringConcat.concat("The field '",
+                                                                field.getName(),
+                                                                "' with @Auto automatic IoC is not accessible"
+            ));
         }
     }
 }

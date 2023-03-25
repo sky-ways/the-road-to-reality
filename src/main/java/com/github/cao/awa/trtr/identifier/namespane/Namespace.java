@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.identifier.namespane;
 
+import com.github.cao.awa.trtr.util.string.StringConcat;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,6 +11,11 @@ public class Namespace {
                                   sub
             );
         }
-        return Identifier.tryParse(identifier.getNamespace() + ":" + sub + "/" + identifier.getPath());
+        return Identifier.tryParse(StringConcat.concat(identifier.getNamespace(),
+                                                       ":",
+                                                       sub,
+                                                       "/",
+                                                       identifier.getPath()
+        ));
     }
 }

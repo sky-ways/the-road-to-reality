@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.framework.accessor.method;
 
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
+import com.github.cao.awa.trtr.util.string.StringConcat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +24,10 @@ public class MethodAccess {
             if (method.trySetAccessible()) {
                 return method;
             }
-            throw new IllegalStateException("The method '" + method.getName() + "' with @Auto automatic IoC is not accessible");
+            throw new IllegalStateException(StringConcat.concat("The method '",
+                                                                method.getName(),
+                                                                "' with @Auto automatic IoC is not accessible"
+            ));
         }
         return method;
     }

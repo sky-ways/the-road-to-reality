@@ -4,6 +4,7 @@ import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializable;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializer;
+import com.github.cao.awa.trtr.util.string.StringConcat;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -35,8 +36,11 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
             NbtSerializer<?> serializer = TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
                                                                  .getNbtSerializer(o.getClass());
             if (serializer == null) {
-                throw new IllegalArgumentException("The type '" + o.getClass()
-                                                                   .getName() + "' is not nbt serializable and missing serializer");
+                throw new IllegalArgumentException(StringConcat.concat("The type '",
+                                                                       o.getClass()
+                                                                        .getName(),
+                                                                       "' is not nbt serializable and missing serializer"
+                ));
             } else {
                 return serializer;
             }
@@ -69,8 +73,11 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                 }
 
                 if (element == null) {
-                    throw new IllegalArgumentException("The type '" + o.getClass()
-                                                                       .getName() + "' is not nbt serializable and missing serializer");
+                    throw new IllegalArgumentException(StringConcat.concat("The type '",
+                                                                           o.getClass()
+                                                                            .getName(),
+                                                                           "' is not nbt serializable and missing serializer"
+                    ));
                 }
 
                 NbtCompound compound = compound(c -> {
@@ -154,7 +161,10 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                                                                                                  return serializer.deserialize(data.get("e"));
                                                                                              }
                                                                                          } catch (Exception e) {
-                                                                                             throw new IllegalArgumentException("The type '" + detailsType + "' is not nbt serializable and missing serializer");
+                                                                                             throw new IllegalArgumentException(StringConcat.concat("The type '",
+                                                                                                                                                    detailsType,
+                                                                                                                                                    "' is not nbt serializable and missing serializer"
+                                                                                             ));
                                                                                          }
                                                                                      }
                                             )));
@@ -190,7 +200,10 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                                             }
                                             return arrayList;
                                         } catch (Exception e) {
-                                            throw new IllegalArgumentException("The type '" + type + "' is not nbt serializable and missing serializer");
+                                            throw new IllegalArgumentException(StringConcat.concat("The type '",
+                                                                                                   type,
+                                                                                                   "' is not nbt serializable and missing serializer"
+                                            ));
                                         }
                                     }
                           );

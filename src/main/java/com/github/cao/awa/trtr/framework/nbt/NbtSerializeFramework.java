@@ -9,6 +9,7 @@ import com.github.cao.awa.trtr.framework.nbt.serializer.type.item.NbtItemStackSe
 import com.github.cao.awa.trtr.framework.nbt.serializer.type.list.NbtListSerializer;
 import com.github.cao.awa.trtr.framework.nbt.serializer.type.raw.*;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
+import com.github.cao.awa.trtr.util.string.StringConcat;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
@@ -167,30 +168,44 @@ public class NbtSerializeFramework extends ReflectionFramework {
     public void readNbt(BlockEntity entity, NbtCompound nbt) {
         readNbt(entity,
                 nbt,
-                "block entity '" + entity.getClass()
-                                         .getName() + "' at " + entity.getPos()
+                StringConcat.concat("block entity '",
+                                    entity.getClass()
+                                          .getName(),
+                                    "' at ",
+                                    entity.getPos()
+                )
         );
     }
 
     public void readNbt(Object entity, NbtCompound nbt) {
         readNbt(entity,
                 nbt,
-                "object '" + entity.getClass() + "'"
+                StringConcat.concat("object '",
+                                    entity.getClass(),
+                                    "'"
+                )
         );
     }
 
     public void writeNbt(BlockEntity entity, NbtCompound nbt) {
         writeNbt(entity,
                  nbt,
-                 "block entity '" + entity.getClass()
-                                          .getName() + "' at " + entity.getPos()
+                 StringConcat.concat("block entity '",
+                                     entity.getClass()
+                                           .getName(),
+                                     "' at ",
+                                     entity.getPos()
+                 )
         );
     }
 
     public void writeNbt(Object entity, NbtCompound nbt) {
         writeNbt(entity,
                  nbt,
-                 "object '" + entity.getClass() + "'"
+                 StringConcat.concat("object '",
+                                     entity.getClass(),
+                                     "'"
+                 )
         );
     }
 
@@ -220,12 +235,19 @@ public class NbtSerializeFramework extends ReflectionFramework {
                           if (nbtSerializer != null) {
                               element = nbtSerializer.serialize(EntrustEnvironment.cast(f));
                           } else {
-                              failedCause = "'" + field.getName() + "' is not nbt serializable and missing serializer of type '" + field.getType()
-                                                                                                                                        .getName() + "'";
+                              failedCause = StringConcat.concat("'",
+                                                                field.getName(),
+                                                                "' is not nbt serializable and missing serializer of type '",
+                                                                field.getType()
+                                                                     .getName(),
+                                                                "'"
+                              );
                           }
                       }
                   } catch (Exception ex) {
-                      failedCause = "exception " + ex;
+                      failedCause = StringConcat.concat("exception ",
+                                                        ex
+                      );
                   }
 
                   if (element == null) {
