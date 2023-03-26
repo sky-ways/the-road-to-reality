@@ -6,7 +6,14 @@ import com.github.cao.awa.trtr.annotation.mine.repo.MineableAnnotations;
 import com.github.cao.awa.trtr.command.GetAllTrtrBlockCommand;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.PlacedFeature;
 
 @Client
 @Server
@@ -27,6 +34,18 @@ public class TrtrMod implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTING.register(l -> {
             GetAllTrtrBlockCommand.register(l);
         });
+
+        // Test ore feature.
+        RegistryKey<PlacedFeature> marbleKey = RegistryKey.of(RegistryKeys.PLACED_FEATURE,
+                                                              new Identifier("trtr",
+                                                                             "ore_xxx"
+                                                              )
+        );
+
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
+                                      GenerationStep.Feature.UNDERGROUND_ORES,
+                                      marbleKey
+        );
     }
 
     public static void initializeConfig() {

@@ -188,7 +188,7 @@ public class BlockFramework extends ReflectionFramework {
                                     // Register block item.
                                     item(block);
 
-            // Register block entity type
+                                    // Register block entity type
                                     entityType(block,
                                                identifier.toString()
                                     );

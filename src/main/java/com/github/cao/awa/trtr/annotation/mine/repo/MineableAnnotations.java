@@ -19,17 +19,20 @@ public class MineableAnnotations {
     public static final Map<Class<? extends Annotation>, TagKey<Block>> toolsKey = ApricotCollectionFactor.newHashMap();
     public static final Map<Integer, TagKey<Block>> levelsKey = ApricotCollectionFactor.newHashMap();
 
-    public static void register(Class<? extends Annotation> annotation, TagKey<Block> key) {
-        annotations.add(annotation
-        );
+    public static void register(Class<? extends Annotation> annotation, Identifier key) {
+        annotations.add(annotation);
         toolsKey.put(annotation,
-                     key
+                     TagKey.of(Registries.BLOCK.getKey(),
+                               key
+                     )
         );
     }
 
-    public static void register(int level, TagKey<Block> key) {
+    public static void register(int level, Identifier key) {
         levelsKey.put(level,
-                      key
+                      TagKey.of(Registries.BLOCK.getKey(),
+                                key
+                      )
         );
     }
 
@@ -84,81 +87,60 @@ public class MineableAnnotations {
 
     public static void putDefaults() {
         register(AxeMining.class,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "mineable/axe"
-                           )
+
+                 Identifier.of("minecraft",
+                               "mineable/axe"
                  )
         );
         register(HoeMining.class,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "mineable/hoe"
-                           )
+                 Identifier.of("minecraft",
+                               "mineable/hoe"
                  )
         );
         register(PickaxeMining.class,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "mineable/pickaxe"
-                           )
+                 Identifier.of("minecraft",
+                               "mineable/pickaxe"
                  )
         );
         register(ShearsMining.class,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "mineable/shear"
-                           )
+                 Identifier.of("minecraft",
+                               "mineable/shear"
                  )
         );
         register(ShovelMining.class,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "mineable/shovel"
-                           )
+                 Identifier.of("minecraft",
+                               "mineable/shovel"
                  )
         );
         register(SwordMining.class,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "mineable/sword"
-                           )
+                 Identifier.of("minecraft",
+                               "mineable/sword"
                  )
         );
 
         register(MiningLevels.WOOD,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "needs_wood_tool"
-                           )
+                 Identifier.of("minecraft",
+                               "needs_wood_tool"
                  )
         );
         register(MiningLevels.STONE,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "needs_stone_tool"
-                           )
+                 Identifier.of("minecraft",
+                               "needs_stone_tool"
                  )
         );
         register(MiningLevels.IRON,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "needs_iron_tool"
-                           )
+                 Identifier.of("minecraft",
+                               "needs_iron_tool"
                  )
         );
         register(MiningLevels.DIAMOND,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "needs_diamond_tool"
-                           )
+                 Identifier.of("minecraft",
+                               "needs_diamond_tool"
                  )
         );
         register(MiningLevels.NETHERITE,
-                 TagKey.of(Registries.BLOCK.getKey(),
-                           Identifier.of("minecraft",
-                                         "needs_netherite_tool"
-                           )
+                 Identifier.of("minecraft",
+                               "needs_netherite_tool"
                  )
         );
     }
