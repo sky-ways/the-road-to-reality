@@ -1,6 +1,4 @@
 {
-    "item.trtr.battery": "电池",
-    "item.trtr.hand_hold_thermometer": "手持温度计",
     "item.trtr.iron_hammer": "铁锤",
     "item.trtr.stone_hammer": "石锤",
     "item.trtr.wooden_hammer": "木锤",
@@ -82,20 +80,6 @@
     "block.trtr.limestone": "石灰石",
     "block.trtr.rutile": "金红石",
     "block.trtr.marble": "大理石",
-    "block.trtr.mud_stove": "泥炉",
-    "death.attack.trtr.burner.hot": "%s 试图站在极高温的燃烧炉上",
-    "death.attack.trtr.nuclear.disease": "核症状",
-    "attribute.name.trtr.thump_efficiency": "捶打效率",
-    "itemGroup.trtr.all": "所有",
-    "itemGroup.trtr.ore": "矿石",
-    "itemGroup.trtr.crushed_ore": "碎矿",
-    "itemGroup.trtr.ore_powder": "矿粉",
-    "itemGroup.trtr.tool": "工具",
-    "itemGroup.trtr.assembly": "组件",
-    "itemGroup.trtr.assembly_block": "方块组件",
-    "itemGroup.trtr.food_materials": "食物原材料",
-    "itemGroup.trtr.cooking_tools": "厨具",
-
-    "advancements.nitrate.title": "硝化",
-    "advancements.nitrate.description": "硝化"
+    "block.trtr.halite": "石盐矿石",
+    "block.trtr.mud_stove": "泥炉"
 }

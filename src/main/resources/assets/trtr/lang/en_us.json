@@ -1,6 +1,4 @@
 {
-    "item.trtr.battery": "battery",
-    "item.trtr.hand_hold_thermometer": "Hand hold thermometer",
     "item.trtr.iron_hammer": "Iron hammer",
     "item.trtr.stone_hammer": "Stone hammer",
     "item.trtr.wooden_hammer": "Wooden hammer",
@@ -82,20 +80,6 @@
     "block.trtr.limestone": "Limestone",
     "block.trtr.rutile": "Rutile",
     "block.trtr.marble": "Marble",
-    "block.trtr.mud_stove": "Mud stove",
-    "death.attack.trtr.burner.hot": "%s try stand on high temperature burner",
-    "death.attack.trtr.nuclear.disease": "%s dead in nuclear disease",
-    "attribute.name.trtr.thump_efficiency": "Thump efficiency",
-    "itemGroup.trtr.all": "All",
-    "itemGroup.trtr.ore": "Ores",
-    "itemGroup.trtr.crushed_ore": "Crushed ores",
-    "itemGroup.trtr.ore_powder": "Ore powders",
-    "itemGroup.trtr.tool": "Tools",
-    "itemGroup.trtr.assembly": "Assembly",
-    "itemGroup.trtr.assembly_block": "Block assembly",
-    "itemGroup.trtr.food_materials": "Food materials",
-    "itemGroup.trtr.cooking_tools": "Cooking tools",
-
-    "advancements.nitrate.title": "Nitrate",
-    "advancements.nitrate.description": "Nitrate"
+    "block.trtr.halite": "Halite",
+    "block.trtr.mud_stove": "Mud stove"
 }
