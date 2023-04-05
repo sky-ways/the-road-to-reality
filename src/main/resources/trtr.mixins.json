@@ -4,8 +4,10 @@
   "package": "com.github.cao.awa.trtr.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
+    "server.ServerPlayerInteractionManagerMixin"
   ],
   "client": [
+    "client.ClientPlayerInteractionManagerMixin",
     "resource.DefaultResourcePackMixin"
   ],
   "injectors": {
