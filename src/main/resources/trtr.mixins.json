@@ -8,7 +8,6 @@
   ],
   "client": [
     "client.ClientPlayerInteractionManagerMixin",
-    "resource.DefaultResourcePackMixin"
   ],
   "injectors": {
     "defaultRequire": 1
