@@ -31,9 +31,7 @@ public class TrtrMod implements ModInitializer {
         // Startup block framework.
         BLOCK_FRAMEWORK.work();
 
-        ServerLifecycleEvents.SERVER_STARTING.register(l -> {
-            GetAllTrtrBlockCommand.register(l);
-        });
+        ServerLifecycleEvents.SERVER_STARTING.register(GetAllTrtrBlockCommand :: register);
 
         // Test ore feature.
         RegistryKey<PlacedFeature> marbleKey = RegistryKey.of(RegistryKeys.PLACED_FEATURE,
