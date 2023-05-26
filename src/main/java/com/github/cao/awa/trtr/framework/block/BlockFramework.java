@@ -64,13 +64,13 @@ public class BlockFramework extends ReflectionFramework {
 
     public void work() {
         // Working stream...
-        getReflection().getTypesAnnotatedWith(Auto.class)
-                       .stream()
-                       .filter(this :: match)
-                       .map(this :: cast)
-                       .filter(this :: verify)
-                       .map(this :: block)
-                       .forEach(this :: build);
+        reflection().getTypesAnnotatedWith(Auto.class)
+                    .stream()
+                    .filter(this :: match)
+                    .map(this :: cast)
+                    .filter(this :: verify)
+                    .map(this :: block)
+                    .forEach(this :: build);
     }
 
     public NbtSerializeFramework nbtSerializeFramework() {
@@ -80,7 +80,7 @@ public class BlockFramework extends ReflectionFramework {
     private boolean match(Class<?> clazz) {
         // The abstract class cannot be instanced, filter it out.
         // And framework can process only Block, if not then reject the process in this framework.
-        return ! Modifier.isAbstract(clazz.getModifiers()) && Block.class.isAssignableFrom(clazz) && checkDev(clazz);
+        return ! Modifier.isAbstract(clazz.getModifiers()) && Block.class.isAssignableFrom(clazz) && dev(clazz);
     }
 
     private Class<Block> cast(Class<?> clazz) {
@@ -94,7 +94,7 @@ public class BlockFramework extends ReflectionFramework {
         LOGGER.info("Constructing block: '{}'",
                     clazz.getName()
         );
-        return EntrustEnvironment.trys(() -> ensureAccessible(clazz.getDeclaredConstructor(AbstractBlock.Settings.class))
+        return EntrustEnvironment.trys(() -> accessible(clazz.getDeclaredConstructor(AbstractBlock.Settings.class))
                                                .newInstance(BlockSettingAccessor.ACCESSOR.get(clazz)),
                                        ex -> {
                                            ex.printStackTrace();
@@ -122,8 +122,8 @@ public class BlockFramework extends ReflectionFramework {
     public void properties(Block block, StateManager.Builder<Block, BlockState> builder) {
         Arrays.stream(block.getClass()
                            .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              block
+              .peek(f -> ReflectionFramework.accessible(f,
+                                                        block
               ))
               .filter(f -> f.isAnnotationPresent(AutoProperty.class))
               .forEach(field -> {
@@ -200,8 +200,8 @@ public class BlockFramework extends ReflectionFramework {
                                     Method method = block.getClass()
                                                          .getMethod("done");
 
-                                    ensureAccessible(method);
-                                    method.invoke(block);
+            accessible(method);
+            method.invoke(block);
                                 }
         );
     }
@@ -318,26 +318,26 @@ public class BlockFramework extends ReflectionFramework {
 
     public void entityTick(World world, BlockPos pos, BlockState state, BlockEntity entity) {
         EntrustEnvironment.trys(
-                () -> ensureAccessible(entity.getClass()
-                                             .getMethod("tick",
-                                                        World.class,
-                                                        BlockPos.class,
-                                                        BlockState.class,
-                                                        entity.getClass()
-                                             ))
+                () -> accessible(entity.getClass()
+                                       .getMethod("tick",
+                                                  World.class,
+                                                  BlockPos.class,
+                                                  BlockState.class,
+                                                  entity.getClass()
+                                       ))
                         .invoke(null,
                                 world,
                                 pos,
                                 state,
                                 entity
                         ),
-                () -> ensureAccessible(entity.getClass()
-                                             .getMethod("tick",
-                                                        World.class,
-                                                        BlockPos.class,
-                                                        BlockState.class,
-                                                        BlockEntity.class
-                                             ))
+                () -> accessible(entity.getClass()
+                                       .getMethod("tick",
+                                                  World.class,
+                                                  BlockPos.class,
+                                                  BlockState.class,
+                                                  BlockEntity.class
+                                       ))
                         .invoke(null,
                                 world,
                                 pos,
@@ -386,7 +386,7 @@ public class BlockFramework extends ReflectionFramework {
                 return;
             }
 
-            ensureAccessible(constructor);
+            accessible(constructor);
 
             BlockEntityRendererFactories.register(type,
                                                   ctx -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> {

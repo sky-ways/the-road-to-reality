@@ -28,7 +28,7 @@ public abstract class ReflectionFramework {
                                                                                              .addUrls(ClasspathHelper.forPackage(""))
                                                                                              .addScanners(Scanners.TypesAnnotated));
 
-    public Reflections getReflection() {
+    public Reflections reflection() {
         return REFLECTIONS;
     }
 
@@ -47,15 +47,15 @@ public abstract class ReflectionFramework {
         }
     }
 
-    public static boolean checkDev(Class<?> clazz) {
+    public static boolean dev(Class<?> clazz) {
         return clazz != null && (! clazz.isAnnotationPresent(DevOnly.class) || TrtrMod.DEV_MODE);
     }
 
-    public static boolean checkDev(Field field) {
+    public static boolean dev(Field field) {
         return field != null && (! field.isAnnotationPresent(DevOnly.class) || TrtrMod.DEV_MODE);
     }
 
-    public static <T> Constructor<T> ensureAccessible(Constructor<T> clazz) {
+    public static <T> Constructor<T> accessible(Constructor<T> clazz) {
         if (clazz.canAccess(null)) {
             return clazz;
         }
@@ -64,20 +64,20 @@ public abstract class ReflectionFramework {
     }
 
     @NotNull
-    public static Method ensureAccessible(Method clazz) {
+    public static Method accessible(Method clazz) {
         if (clazz.getAnnotation(Auto.class) != null) {
             return MethodAccess.ensureAccessible(clazz);
         }
         throw new NoAutoAnnotationException();
     }
 
-    public static Field ensureAccessible(@NotNull Field field) {
-        return ensureAccessible(field,
-                                null
+    public static Field accessible(@NotNull Field field) {
+        return accessible(field,
+                          null
         );
     }
 
-    public static Field ensureAccessible(@NotNull Field field, @Nullable Object obj) {
+    public static Field accessible(@NotNull Field field, @Nullable Object obj) {
         if (field.canAccess(Modifier.isStatic(field.getModifiers()) ? null : obj)) {
             return field;
         }

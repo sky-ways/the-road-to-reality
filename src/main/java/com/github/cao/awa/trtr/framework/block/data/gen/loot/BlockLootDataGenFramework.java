@@ -40,7 +40,7 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
     }
 
     private boolean match(Block block) {
-        return checkDev(block.getClass());
+        return dev(block.getClass());
     }
 
     private void done(FabricDataGenerator generator) {

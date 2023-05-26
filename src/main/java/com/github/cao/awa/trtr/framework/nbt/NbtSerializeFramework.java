@@ -119,8 +119,8 @@ public class NbtSerializeFramework extends ReflectionFramework {
     private void readNbt(Object entity, NbtCompound nbt, String callsName) {
         Arrays.stream(entity.getClass()
                             .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              entity
+              .peek(f -> ReflectionFramework.accessible(f,
+                                                        entity
               ))
               .filter(f -> f.isAnnotationPresent(AutoNbt.class))
               .forEach(field -> {
@@ -131,8 +131,8 @@ public class NbtSerializeFramework extends ReflectionFramework {
 
                       NbtElement element = nbt.get(name);
 
-                      if (NbtSerializable.class.isAssignableFrom(field.getType()) && ensureAccessible(field.getType()
-                                                                                                           .getConstructor()).newInstance() instanceof NbtSerializable serializer) {
+                      if (NbtSerializable.class.isAssignableFrom(field.getType()) && accessible(field.getType()
+                                                                                                     .getConstructor()).newInstance() instanceof NbtSerializable serializer) {
                           serializer.fromNbt(element);
                           field.set(entity,
                                     serializer
@@ -212,8 +212,8 @@ public class NbtSerializeFramework extends ReflectionFramework {
     public void writeNbt(Object entity, NbtCompound nbt, String callsName) {
         Arrays.stream(entity.getClass()
                             .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              entity
+              .peek(f -> ReflectionFramework.accessible(f,
+                                                        entity
               ))
               .filter(f -> f.isAnnotationPresent(AutoNbt.class))
               .forEach(field -> {
@@ -284,8 +284,8 @@ public class NbtSerializeFramework extends ReflectionFramework {
     public void init(BlockEntity entity) {
         Arrays.stream(entity.getClass()
                             .getDeclaredFields())
-              .peek(f -> ReflectionFramework.ensureAccessible(f,
-                                                              entity
+              .peek(f -> ReflectionFramework.accessible(f,
+                                                        entity
               ))
               .filter(f -> f.isAnnotationPresent(AutoNbt.class))
               .forEach(field -> {
@@ -297,8 +297,8 @@ public class NbtSerializeFramework extends ReflectionFramework {
                                         serializer.initializer()
                               );
                           } else {
-                              Object o = ensureAccessible(field.getType()
-                                                               .getConstructor()).newInstance();
+                              Object o = accessible(field.getType()
+                                                         .getConstructor()).newInstance();
                               if (o instanceof NbtSerializable serializable) {
                                   field.set(entity,
                                             serializable
