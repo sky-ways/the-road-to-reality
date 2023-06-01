@@ -70,9 +70,15 @@ public class BlockMineableDataGenFramework extends ReflectionFramework {
         }
 
         // Combine conditions.
-        return MineableAnnotations.getMineableAnnotation(List.of(block.getClass()
-                                                                      .getAnnotations()))
-                                  .size() > 0 && ! dev && ! unsupported;
+        return
+                // Block should have at least one mineable annotation.
+                MineableAnnotations.getMineableAnnotation(List.of(block.getClass()
+                                                                       .getAnnotations()))
+                                   .size() > 0 &&
+                        // Ignored dev check when dev mode enabled.
+                        (TrtrMod.DEV_MODE || ! dev) &&
+                        // Unsupported class will not be proxy.
+                        ! unsupported;
     }
 
     private void done(FabricDataGenerator generator) {

@@ -61,7 +61,11 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
         }
 
         // Combine conditions.
-        return ! dev && ! unsupported;
+        return
+                // Ignored dev check when dev mode enabled.
+                (TrtrMod.DEV_MODE || ! dev) &&
+                        // Unsupported class will not be proxy.
+                        ! unsupported;
     }
 
     private void done(FabricDataGenerator generator) {

@@ -119,7 +119,13 @@ public class BlockFramework extends ReflectionFramework {
         }
 
         // Combine conditions.
-        return ! abs && ! dev && ! unsupported;
+        return
+                // Ignored dev check when dev mode enabled.
+                (TrtrMod.DEV_MODE || ! dev) &&
+                        // Unsupported class will not be proxy.
+                        ! unsupported &&
+                        // Abstract class will not be proxy
+                        ! abs;
     }
 
     /**
