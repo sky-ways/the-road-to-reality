@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.loot;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
+import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
@@ -40,7 +41,29 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
     }
 
     private boolean match(Block block) {
-        return dev(block.getClass());
+        // Get the class of block.
+        Class<? extends Block> clazz = block.getClass();
+
+        // Framework will not process the unsupported class.
+        boolean unsupported = unsupported(clazz);
+        boolean dev = dev(clazz);
+
+        // Notice the unsupported class.
+        if (unsupported) {
+            LOGGER.warn("Class '{}' is unsupported, ignored it",
+                        clazz.getName()
+            );
+        }
+
+        // Notice development class.
+        if (dev && ! TrtrMod.DEV_MODE) {
+            LOGGER.warn("Class '{}' is only available in development environment, ignored it",
+                        clazz.getName()
+            );
+        }
+
+        // Combine conditions.
+        return ! dev && ! unsupported;
     }
 
     private void done(FabricDataGenerator generator) {

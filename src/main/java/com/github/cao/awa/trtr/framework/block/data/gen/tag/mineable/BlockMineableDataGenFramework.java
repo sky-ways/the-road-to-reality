@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.framework.block.data.gen.tag.mineable;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
+import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.mine.repo.MineableAnnotations;
 import com.github.cao.awa.trtr.framework.accessor.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
@@ -47,9 +48,31 @@ public class BlockMineableDataGenFramework extends ReflectionFramework {
     }
 
     private boolean match(Block block) {
+        // Get the class of block.
+        Class<? extends Block> clazz = block.getClass();
+
+        // Framework will not process the unsupported class.
+        boolean unsupported = unsupported(clazz);
+        boolean dev = dev(clazz);
+
+        // Notice the unsupported class.
+        if (unsupported) {
+            LOGGER.warn("Class '{}' is unsupported, ignored it",
+                        clazz.getName()
+            );
+        }
+
+        // Notice development class.
+        if (dev && ! TrtrMod.DEV_MODE) {
+            LOGGER.warn("Class '{}' is only available in development environment, ignored it",
+                        clazz.getName()
+            );
+        }
+
+        // Combine conditions.
         return MineableAnnotations.getMineableAnnotation(List.of(block.getClass()
                                                                       .getAnnotations()))
-                                  .size() > 0 && dev(block.getClass());
+                                  .size() > 0 && ! dev && ! unsupported;
     }
 
     private void done(FabricDataGenerator generator) {
