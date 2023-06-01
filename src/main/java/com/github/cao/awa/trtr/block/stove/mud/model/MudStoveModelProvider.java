@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.block.stove.mud.model;
 
 import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.stove.mud.MudStove;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrBlockModelProvider;
@@ -13,7 +14,9 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
+// TODO Waiting for plan 'Smelting Process'
 @Auto
+@Unsupported
 public class MudStoveModelProvider extends TrtrBlockModelProvider {
     @Auto
     public MudStoveModelProvider(FabricDataOutput output) {

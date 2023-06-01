@@ -12,6 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Random;
 
+// TODO Waiting for plan 'Smelting Process'
 @Planning
 @Unsupported
 public class MudStoveRender implements BlockEntityRenderer<MudStoveBlockEntity> {

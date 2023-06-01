@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlockMineableDataGenFramework extends ReflectionFramework {
-    private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockMineableDataGenFramework");
+    private static final Logger LOGGER = LogManager.getLogger("BlockMineableDataGenFramework");
     private final BlockFramework blockFramework;
     private final Map<Block, Collection<Annotation>> mineableFactories = ApricotCollectionFactor.newHashMap();
 

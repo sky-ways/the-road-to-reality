@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.framework.reflection;
 
 import com.github.cao.awa.apricot.anntation.Auto;
-import com.github.cao.awa.trtr.TrtrMod;
+import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.framework.accessor.method.MethodAccess;
 import com.github.cao.awa.trtr.framework.exception.NoAutoAnnotationException;
@@ -23,7 +23,7 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 public abstract class ReflectionFramework {
-    private static final Logger LOGGER = LogManager.getLogger("Trtr/ReflectionFramework");
+    private static final Logger LOGGER = LogManager.getLogger("ReflectionFramework");
     private static final Reflections REFLECTIONS = new Reflections(new ConfigurationBuilder().addUrls(JarSearchLoader.load(new File("mods")))
                                                                                              .addUrls(ClasspathHelper.forPackage(""))
                                                                                              .addScanners(Scanners.TypesAnnotated));
@@ -48,11 +48,19 @@ public abstract class ReflectionFramework {
     }
 
     public static boolean dev(Class<?> clazz) {
-        return clazz != null && (! clazz.isAnnotationPresent(DevOnly.class) || TrtrMod.DEV_MODE);
+        return clazz != null && clazz.isAnnotationPresent(DevOnly.class);
     }
 
     public static boolean dev(Field field) {
-        return field != null && (! field.isAnnotationPresent(DevOnly.class) || TrtrMod.DEV_MODE);
+        return field != null && field.isAnnotationPresent(DevOnly.class);
+    }
+
+    public static boolean unsupported(Class<?> clazz) {
+        return clazz != null && clazz.isAnnotationPresent(Unsupported.class);
+    }
+
+    public static boolean unsupported(Field field) {
+        return field != null && field.isAnnotationPresent(Unsupported.class);
     }
 
     public static <T> Constructor<T> accessible(Constructor<T> clazz) {

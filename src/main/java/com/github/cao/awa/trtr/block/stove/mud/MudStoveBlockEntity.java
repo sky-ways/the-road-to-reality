@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.block.stove.mud;
 
 import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.block.entity.TrtrBlockEntity;
 import com.github.cao.awa.trtr.block.stove.mud.fuel.MudStoveFuelLayer;
@@ -11,7 +12,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+// TODO Waiting for plan 'Smelting Process'
 @Auto
+@Unsupported
 public class MudStoveBlockEntity extends TrtrBlockEntity {
     @AutoNbt("layer")
     private MudStoveFuelLayer layer;

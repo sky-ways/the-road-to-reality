@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BlockLootDataGenFramework extends ReflectionFramework {
-    private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockLootDataGenFramework");
+    private static final Logger LOGGER = LogManager.getLogger("BlockLootDataGenFramework");
     private final BlockFramework blockFramework;
     private final List<LootFactory<?>> factories = ApricotCollectionFactor.newArrayList();
 

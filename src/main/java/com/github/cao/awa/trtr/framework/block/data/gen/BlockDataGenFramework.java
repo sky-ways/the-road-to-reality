@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BlockDataGenFramework extends ReflectionFramework {
-    private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockDataGenFramework");
+    private static final Logger LOGGER = LogManager.getLogger("BlockDataGenFramework");
     private final BlockLootDataGenFramework lootFramework;
     private final BlockModelDataGenFramework modelFramework;
     private final BlockMineableDataGenFramework mineableFramework;

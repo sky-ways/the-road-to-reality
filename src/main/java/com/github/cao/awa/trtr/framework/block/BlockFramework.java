@@ -55,8 +55,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * <p>
+ * The proxy framework of 'Block' and anything 'Block' related.
+ * </p>
+ * <p>
+ * Targeted to 'Block', 'BlockEntity', 'BlockItem' and other.
+ * </p>
+ *
+ * @author cao_awa
+ * @author 草二号机
+ * @since 1.0.0
+ */
 public class BlockFramework extends ReflectionFramework {
-    private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockFramework");
+    private static final Logger LOGGER = LogManager.getLogger("BlockFramework");
     private final List<Block> blocks = ApricotCollectionFactor.newArrayList();
     private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.newHashMap();
     private final BlockDataGenFramework DATA_GEN = new BlockDataGenFramework(this);
@@ -78,77 +90,184 @@ public class BlockFramework extends ReflectionFramework {
     }
 
     private boolean match(Class<?> clazz) {
+        // Framework will not process the unsupported class.
+        boolean unsupported = unsupported(clazz);
+        boolean dev = dev(clazz);
+
         // The abstract class cannot be instanced, filter it out.
-        // And framework can process only Block, if not then reject the process in this framework.
-        return ! Modifier.isAbstract(clazz.getModifiers()) && Block.class.isAssignableFrom(clazz) && dev(clazz);
+        boolean abs = Modifier.isAbstract(clazz.getModifiers());
+
+        // And framework can process only 'Block', if not then reject the process in this framework.
+        boolean matchType = Block.class.isAssignableFrom(clazz);
+
+        if (! matchType) {
+            return false;
+        }
+
+        // Notice the unsupported class.
+        if (unsupported) {
+            LOGGER.warn("Class '{}' is unsupported, ignored it",
+                        clazz.getName()
+            );
+        }
+
+        // Notice development class.
+        if (dev && ! TrtrMod.DEV_MODE) {
+            LOGGER.warn("Class '{}' is only available in development environment, ignored it",
+                        clazz.getName()
+            );
+        }
+
+        // Combine conditions.
+        return ! abs && ! dev && ! unsupported;
     }
 
+    /**
+     * <p>
+     * Cast the class type to class of 'Block'.
+     * </p>
+     *
+     * @param clazz target class
+     * @return class of block
+     * @author cao_awa
+     * @since 1.0.0
+     */
     private Class<Block> cast(Class<?> clazz) {
         // This cast should not move to map calls in working stream, EntrustEnvironment did not know what type you want!
         return EntrustEnvironment.cast(clazz);
     }
 
+    /**
+     * <p>
+     * Mapping class of 'Block' to 'Block' instance.
+     * </p>
+     *
+     * @param clazz target class
+     * @return block instance
+     * @author cao_awa
+     * @since 1.0.0
+     */
     private Block block(Class<Block> clazz) {
         // Construct the block using settings.
         // Here have not a default template settings for coping with settings missing.
         LOGGER.info("Constructing block: '{}'",
                     clazz.getName()
         );
-        return EntrustEnvironment.trys(() -> accessible(clazz.getDeclaredConstructor(AbstractBlock.Settings.class))
-                                               .newInstance(BlockSettingAccessor.ACCESSOR.get(clazz)),
-                                       ex -> {
-                                           ex.printStackTrace();
-                                           return null;
-                                       }
+        return EntrustEnvironment.trys(
+                // Ensure accessible and create instance.
+                () -> accessible(clazz.getDeclaredConstructor(AbstractBlock.Settings.class))
+                        .newInstance(BlockSettingAccessor.ACCESSOR.get(clazz)),
+                ex -> {
+                    // Notice the errors.
+                    LOGGER.warn("Failed create block instance",
+                                ex
+                    );
+                    return null;
+                }
         );
     }
 
+    /**
+     * <p>
+     * Proxy method to calls 'writeNbt' for the block entity.
+     * </p>
+     *
+     * @param entity block entity
+     * @param nbt    nbt
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public void writeNbt(BlockEntity entity, NbtCompound nbt) {
         this.nbtSerializeFramework.writeNbt(entity,
                                             nbt
         );
     }
 
+    /**
+     * <p>
+     * Proxy method to calls 'readNbt' for the block entity.
+     * </p>
+     *
+     * @param entity block entity
+     * @param nbt    nbt
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public void readNbt(BlockEntity entity, NbtCompound nbt) {
         this.nbtSerializeFramework.readNbt(entity,
                                            nbt
         );
     }
 
+    /**
+     * <p>
+     * Proxy method call by 'TrtrBlock' constructor.
+     * </p>
+     *
+     * @param entity block entity
+     * @author cao_awa
+     * @since 1.0.0
+     */
     public void initEntity(BlockEntity entity) {
         this.nbtSerializeFramework.init(entity);
     }
 
+    /**
+     * <p>
+     * Proxy method to append block properties.
+     * </p>
+     *
+     * @param block   block instance
+     * @param builder block state builder
+     * @author cao_awa
+     * @author 草二号机
+     * @since 1.0.0
+     */
     public void properties(Block block, StateManager.Builder<Block, BlockState> builder) {
         Arrays.stream(block.getClass()
                            .getDeclaredFields())
+              // Ensure field accessible.
               .peek(f -> ReflectionFramework.accessible(f,
                                                         block
               ))
+              // Ensure annotation presents.
               .filter(f -> f.isAnnotationPresent(AutoProperty.class))
-              .forEach(field -> {
-                  EntrustEnvironment.trys(() -> {
-                      Property<?> properties = EntrustEnvironment.cast(field.get(block));
-                      LOGGER.info("Building property '{}' as '{}' for block '{}' ",
+              // Do appends.
+              .forEach(field -> EntrustEnvironment.trys(() -> {
+                  // Get and ensure it is a property.
+                  Property<?> properties = EntrustEnvironment.cast(field.get(block));
+                  LOGGER.info("Building property '{}' as '{}' for block '{}' ",
+                              field.getName(),
+                              field.getType()
+                                   .getName(),
+                              block.getClass()
+                                   .getName()
+                  );
+                  // If properties is null, it will not be appended successfully.
+                  // Notice this problem to logs.
+                  if (properties == null) {
+                      LOGGER.warn("Property '{}' as field is unable to access with '{}'",
                                   field.getName(),
                                   field.getType()
-                                       .getName(),
-                                  block.getClass()
                                        .getName()
                       );
-                      if (properties == null) {
-                          LOGGER.warn("Property '{}' as field is unable to access with '{}'",
-                                      field.getName(),
-                                      field.getType()
-                                           .getName()
-                          );
-                      } else {
-                          builder.add(properties);
-                      }
-                  });
-              });
+                  } else {
+                      // Append to builder.
+                      builder.add(properties);
+                  }
+              }));
     }
 
+    /**
+     * <p>
+     * Verify the proxy requirement field in the class presents.
+     * </p>
+     *
+     * @param block class of block
+     * @return field correct
+     * @author cao_awa
+     * @since 1.0.0
+     */
     private boolean verify(Class<Block> block) {
         final List<String> missing = ApricotCollectionFactor.newArrayList();
 
@@ -200,8 +319,8 @@ public class BlockFramework extends ReflectionFramework {
                                     Method method = block.getClass()
                                                          .getMethod("done");
 
-            accessible(method);
-            method.invoke(block);
+                                    accessible(method);
+                                    method.invoke(block);
                                 }
         );
     }

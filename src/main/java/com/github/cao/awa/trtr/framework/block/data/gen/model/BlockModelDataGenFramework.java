@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class BlockModelDataGenFramework extends ReflectionFramework {
-    private static final Logger LOGGER = LogManager.getLogger("Trtr/BlockModelDataGenFramework");
+    private static final Logger LOGGER = LogManager.getLogger("BlockModelDataGenFramework");
     private final BlockFramework blockFramework;
     private final List<TrtrModelFactory> factories = ApricotCollectionFactor.newArrayList();
 
