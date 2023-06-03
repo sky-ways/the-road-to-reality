@@ -5,6 +5,7 @@ import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.mine.AxeMining;
 import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
+import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.block.example.simple.entity.SimpleExampleBlockEntity;
 import com.github.cao.awa.trtr.block.example.simple.item.SimpleExampleBlockItem;
@@ -14,6 +15,8 @@ import com.github.cao.awa.trtr.block.example.simple.tag.SimpleExampleBlockTag;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.Material;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
@@ -54,6 +57,14 @@ public class SimpleExampleBlock extends TrtrBlockWithEntity {
     // Block entity.
     @Auto
     public static SimpleExampleBlockEntity ENTITY;
+
+    // Auto properties to state builder
+    @AutoProperty
+    public static final DirectionProperty DIRECTION = Properties.FACING;
+
+    // This property will not append to state builder, will auto ignored because field type is not 'net.minecraft.state.property.Property'.
+    @AutoProperty
+    public static final String WRONG_PROPERTY = "Test wrong property";
 
     // Constructor...
     @Auto

@@ -46,6 +46,7 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
         );
     }
 
+    // Append properties to state builder.
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         TrtrMod.BLOCK_FRAMEWORK.properties(this,
                                            builder
