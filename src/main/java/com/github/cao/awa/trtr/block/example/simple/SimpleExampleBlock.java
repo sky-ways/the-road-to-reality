@@ -24,9 +24,7 @@ import net.minecraft.util.Identifier;
 public class SimpleExampleBlock extends TrtrBlockWithEntity {
     // Identifier.
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "example_simple"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:example_simple");
 
     // Settings.
     @Auto

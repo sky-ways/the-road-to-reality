@@ -35,9 +35,7 @@ import net.minecraft.world.World;
 @Unsupported
 public class MudStove extends TrtrBlockWithEntity {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "mud_stove"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:mud_stove");
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.SOIL,
