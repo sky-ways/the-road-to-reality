@@ -5,6 +5,7 @@ import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.mine.AxeMining;
 import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
+import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.block.example.full.item.ExampleBlockItem;
 import com.github.cao.awa.trtr.block.example.full.loot.ExampleLoot;
@@ -15,6 +16,8 @@ import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.Material;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
@@ -81,6 +84,14 @@ public class ExampleBlock extends TrtrBlock {
     // Here one block entity provider is invalid, the name must be "ENTITY" or "BLOCK_ENTITY", framework will ignore it automatically.
     // Direct block tag with class.
     public static final Class<ExampleBlockTag> TYPE_ENTITY = ExampleBlockTag.class;
+
+    // Auto properties to state builder
+    @AutoProperty
+    public static final DirectionProperty DIRECTION = Properties.FACING;
+
+    // This property will not append to state builder, will auto ignored because field type is not 'net.minecraft.state.property.Property'.
+    @AutoProperty
+    public static final String WRONG_PROPERTY = "Test wrong property";
 
     // Constructor...
     @Auto

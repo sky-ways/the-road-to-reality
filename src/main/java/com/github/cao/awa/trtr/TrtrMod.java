@@ -19,7 +19,7 @@ public class TrtrMod implements ModInitializer {
         initializeConfig();
 
         // Register mineable annotations for data generator.
-        MineableAnnotations.putDefaults();
+        MineableAnnotations.register();
 
         // Startup block framework.
         BLOCK_FRAMEWORK.work();

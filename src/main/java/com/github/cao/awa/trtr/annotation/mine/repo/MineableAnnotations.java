@@ -85,7 +85,7 @@ public class MineableAnnotations {
         return - 1;
     }
 
-    public static void putDefaults() {
+    public static void register() {
         register(AxeMining.class,
                  Identifier.tryParse("minecraft:mineable/axe")
         );

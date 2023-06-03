@@ -241,7 +241,19 @@ public class BlockFramework extends ReflectionFramework {
               // Do appends.
               .forEach(field -> EntrustEnvironment.trys(() -> {
                   // Get and ensure it is a property.
-                  Property<?> properties = EntrustEnvironment.cast(field.get(block));
+                  Object fieldResult = field.get(block);
+
+                  if (! (fieldResult instanceof Property<?>)) {
+                      LOGGER.debug("Property in '{}' is not block state property, got type '{}', ignored in block framework",
+                                   block.getClass()
+                                        .getName(),
+                                   fieldResult.getClass()
+                                              .getName()
+                      );
+                      return;
+                  }
+                  Property<?> properties = EntrustEnvironment.cast(fieldResult);
+
                   LOGGER.info("Building property '{}' as '{}' for block '{}' ",
                               field.getName(),
                               field.getType()
@@ -302,7 +314,10 @@ public class BlockFramework extends ReflectionFramework {
                                     // Do not build null identifier block.
                                     // Null identifier means something was wrong.
                                     if (identifier == null) {
-                                        LOGGER.error("Got null identifier, cancel building block '{}'", block.getClass().getName());
+                                        LOGGER.error("Got null identifier, cancel building block '{}'",
+                                                     block.getClass()
+                                                          .getName()
+                                        );
                                         return;
                                     }
 
