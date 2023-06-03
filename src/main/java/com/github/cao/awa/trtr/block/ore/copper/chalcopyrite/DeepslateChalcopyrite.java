@@ -16,9 +16,7 @@ import net.minecraft.util.Identifier;
 @PickaxeMining(MiningLevels.STONE)
 public class DeepslateChalcopyrite extends TrtrBlock {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "deepslate_chalcopyrite"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:deepslate_chalcopyrite");
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,

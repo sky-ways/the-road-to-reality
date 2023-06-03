@@ -16,9 +16,7 @@ import net.minecraft.util.Identifier;
 @PickaxeMining(MiningLevels.STONE)
 public class Orthoclase extends TrtrBlock {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "orthoclase"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:orthoclase");
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,

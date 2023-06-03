@@ -16,9 +16,8 @@ import net.minecraft.util.Identifier;
 @PickaxeMining(MiningLevels.STONE)
 public class DeepslateMagnetite extends TrtrBlock {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "deepslate_magnetite"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:deepslate_magnetite");
+
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
                                                                               DyeColor.BLACK

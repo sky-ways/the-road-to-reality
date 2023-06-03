@@ -16,9 +16,7 @@ import net.minecraft.util.Identifier;
 @PickaxeMining(MiningLevels.STONE)
 public class Alunite extends TrtrBlock {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "alunite"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:alunite");
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,

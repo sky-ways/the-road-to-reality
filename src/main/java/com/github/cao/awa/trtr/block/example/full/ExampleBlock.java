@@ -25,9 +25,7 @@ import net.minecraft.util.Identifier;
 public class ExampleBlock extends TrtrBlock {
     // Identifier.
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "example"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:example");
 
     // Settings.
     @Auto

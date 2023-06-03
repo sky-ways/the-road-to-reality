@@ -16,9 +16,7 @@ import net.minecraft.util.Identifier;
 @PickaxeMining(MiningLevels.STONE)
 public class DeepslatePitchblende extends TrtrBlock {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "deepslate_pitchblende"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:deepslate_pitchblende");
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,

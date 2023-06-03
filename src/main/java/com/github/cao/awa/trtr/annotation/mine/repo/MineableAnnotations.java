@@ -87,61 +87,38 @@ public class MineableAnnotations {
 
     public static void putDefaults() {
         register(AxeMining.class,
-
-                 Identifier.of("minecraft",
-                               "mineable/axe"
-                 )
+                 Identifier.tryParse("minecraft:mineable/axe")
         );
         register(HoeMining.class,
-                 Identifier.of("minecraft",
-                               "mineable/hoe"
-                 )
+                 Identifier.tryParse("minecraft:mineable/hoe")
         );
         register(PickaxeMining.class,
-                 Identifier.of("minecraft",
-                               "mineable/pickaxe"
-                 )
+                 Identifier.tryParse("minecraft:mineable/pickaxe")
         );
         register(ShearsMining.class,
-                 Identifier.of("minecraft",
-                               "mineable/shear"
-                 )
+                 Identifier.tryParse("minecraft:mineable/shear")
         );
         register(ShovelMining.class,
-                 Identifier.of("minecraft",
-                               "mineable/shovel"
-                 )
+                 Identifier.tryParse("minecraft:mineable/shovel")
         );
         register(SwordMining.class,
-                 Identifier.of("minecraft",
-                               "mineable/sword"
-                 )
+                 Identifier.tryParse("minecraft:mineable/sword")
         );
 
         register(MiningLevels.WOOD,
-                 Identifier.of("minecraft",
-                               "needs_wood_tool"
-                 )
+                 Identifier.tryParse("minecraft:needs_wood_tool")
         );
         register(MiningLevels.STONE,
-                 Identifier.of("minecraft",
-                               "needs_stone_tool"
-                 )
+                 Identifier.tryParse("minecraft:needs_stone_tool")
         );
         register(MiningLevels.IRON,
-                 Identifier.of("minecraft",
-                               "needs_iron_tool"
-                 )
+                 Identifier.tryParse("minecraft:needs_iron_tool")
         );
         register(MiningLevels.DIAMOND,
-                 Identifier.of("minecraft",
-                               "needs_diamond_tool"
-                 )
+                 Identifier.tryParse("minecraft:needs_diamond_tool")
         );
         register(MiningLevels.NETHERITE,
-                 Identifier.of("minecraft",
-                               "needs_netherite_tool"
-                 )
+                 Identifier.tryParse("minecraft:needs_netherite_tool")
         );
     }
 }

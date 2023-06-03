@@ -16,9 +16,8 @@ import net.minecraft.util.Identifier;
 @PickaxeMining(MiningLevels.STONE)
 public class Bauxite extends TrtrBlock {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.of("trtr",
-                                                              "bauxite"
-    );
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:bauxite");
+
 
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,

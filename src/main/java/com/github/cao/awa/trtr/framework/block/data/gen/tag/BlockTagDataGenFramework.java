@@ -88,7 +88,7 @@ public class BlockTagDataGenFramework extends ReflectionFramework {
                          .getName()
         );
 
-        TrtrTagFactory factory = create(block);
+        TrtrTagFactory factory = factory(block);
 
         if (factory == null) {
             LOGGER.error("Failed construct the data provider for '{}', if this block using LootFactory<T>, then maybe type has been erasure by java",
@@ -116,7 +116,7 @@ public class BlockTagDataGenFramework extends ReflectionFramework {
         return true;
     }
 
-    private TrtrTagFactory create(Block block) {
+    private TrtrTagFactory factory(Block block) {
         try {
             final TrtrTagFactory factory = (output, registryKey, future) -> TagDataGeneratorAccessor.ACCESSOR.get(block);
             if (EntrustEnvironment.trys(() -> factory.apply(null,

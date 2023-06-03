@@ -299,6 +299,13 @@ public class BlockFramework extends ReflectionFramework {
         EntrustEnvironment.trys(() -> {
                                     Identifier identifier = IdentifierAccessor.ACCESSOR.get(block);
 
+                                    // Do not build null identifier block.
+                                    // Null identifier means something was wrong.
+                                    if (identifier == null) {
+                                        LOGGER.error("Got null identifier, cancel building block '{}'", block.getClass().getName());
+                                        return;
+                                    }
+
                                     // Register this block to vanilla.
                                     Registry.register(Registries.BLOCK,
                                                       identifier,
