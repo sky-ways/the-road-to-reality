@@ -17,8 +17,8 @@ But there can you to prepare for:
 
 ```
 Java 19
-Fabric Loader 0.14.17
-Fabric API 0.75.3+1.19.4
+Fabric Loader 0.14.21
+Fabric API 0.83.0+1.19.4
 Minecraft 1.19.4
 ```
 
