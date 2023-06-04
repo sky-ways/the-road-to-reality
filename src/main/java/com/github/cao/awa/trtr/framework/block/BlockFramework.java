@@ -6,7 +6,6 @@ import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
-import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.BlockEntityAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.TrtrBlockEntityFactory;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.render.BlockEntityRenderAccessor;
@@ -465,6 +464,7 @@ public class BlockFramework extends ReflectionFramework {
 
     public void entityTick(World world, BlockPos pos, BlockState state, BlockEntity entity) {
         EntrustEnvironment.trys(
+                // Invoke method that static World, BlockPos, BlockState, <T extends BlockEntity> T.
                 () -> accessible(entity.getClass()
                                        .getMethod("tick",
                                                   World.class,
@@ -478,25 +478,45 @@ public class BlockFramework extends ReflectionFramework {
                                 state,
                                 entity
                         ),
-                () -> accessible(entity.getClass()
-                                       .getMethod("tick",
-                                                  World.class,
-                                                  BlockPos.class,
-                                                  BlockState.class,
-                                                  BlockEntity.class
-                                       ))
-                        .invoke(null,
-                                world,
-                                pos,
-                                state,
-                                entity
-                        )
+                () -> EntrustEnvironment.trys(
+                        // Does not match to <T>, change to BlockEntity.
+                        // Invoke method that static World, BlockPos, BlockState, BlockEntity.
+                        () -> accessible(entity.getClass()
+                                               .getMethod("tick",
+                                                          World.class,
+                                                          BlockPos.class,
+                                                          BlockState.class,
+                                                          BlockEntity.class
+                                               ))
+                                .invoke(null,
+                                        world,
+                                        pos,
+                                        state,
+                                        entity
+                                ),
+                        () -> {
+                            // Not static tick method.
+                            // Invoke no block entity in parameter method.
+                            accessible(entity.getClass()
+                                             .getMethod("tick",
+                                                        World.class,
+                                                        BlockPos.class,
+                                                        BlockState.class
+                                             ),
+                                       entity
+                            ).invoke(entity,
+                                     world,
+                                     pos,
+                                     state
+                            );
+                        }
+                )
         );
     }
 
     public void render(Block block) {
         if (BlockEntityRenderAccessor.ACCESSOR.has(block)) {
-            BlockEntityType<MudStoveBlockEntity> type = TrtrMod.BLOCK_FRAMEWORK.entityType(block.getClass());
+            BlockEntityType<BlockEntity> type = TrtrMod.BLOCK_FRAMEWORK.entityType(block.getClass());
 
             if (type == null) {
                 LOGGER.warn("Block '{}' has RENDER or ENTITY_RENDER field was found, but missing block entity type, unable to build block entity render",

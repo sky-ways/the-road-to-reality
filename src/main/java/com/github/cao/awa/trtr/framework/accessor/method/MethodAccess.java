@@ -31,4 +31,20 @@ public class MethodAccess {
         }
         return method;
     }
+
+    public static Method ensureAccessible(Method method, Object object) throws NotStaticFieldException {
+        // Modifier maybe private or without declarations.
+        // Need to make it be accessible.
+        // If unable to access, then throw an exception for notice this error.
+        if (! method.canAccess(object)) {
+            if (method.trySetAccessible()) {
+                return method;
+            }
+            throw new IllegalStateException(StringConcat.concat("The method '",
+                                                                method.getName(),
+                                                                "' with @Auto automatic IoC is not accessible"
+            ));
+        }
+        return method;
+    }
 }

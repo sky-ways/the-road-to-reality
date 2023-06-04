@@ -6,12 +6,12 @@ import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.mine.AxeMining;
 import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
-import com.github.cao.awa.trtr.block.TrtrBlock;
+import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
+import com.github.cao.awa.trtr.block.example.full.entity.ExampleBlockEntity;
 import com.github.cao.awa.trtr.block.example.full.item.ExampleBlockItem;
 import com.github.cao.awa.trtr.block.example.full.loot.ExampleLoot;
 import com.github.cao.awa.trtr.block.example.full.model.ExampleModel;
 import com.github.cao.awa.trtr.block.example.full.tag.ExampleBlockTag;
-import com.github.cao.awa.trtr.block.example.simple.entity.SimpleExampleBlockEntity;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.yarn.constants.MiningLevels;
@@ -25,7 +25,7 @@ import net.minecraft.util.Identifier;
 @DevOnly
 @PickaxeMining(MiningLevels.DIAMOND)
 @AxeMining(MiningLevels.IRON)
-public class ExampleBlock extends TrtrBlock {
+public class ExampleBlock extends TrtrBlockWithEntity {
     // Identifier.
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:example");
@@ -79,7 +79,7 @@ public class ExampleBlock extends TrtrBlock {
 
     // Block entity.
     @Auto
-    public static SimpleExampleBlockEntity ENTITY;
+    public static ExampleBlockEntity ENTITY;
 
     // Here one block entity provider is invalid, the name must be "ENTITY" or "BLOCK_ENTITY", framework will ignore it automatically.
     // Direct block tag with class.

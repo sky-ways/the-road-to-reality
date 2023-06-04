@@ -3,7 +3,6 @@ package com.github.cao.awa.trtr.block.example.full.entity;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.block.entity.TrtrBlockEntity;
-import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
@@ -40,9 +39,16 @@ public class ExampleBlockEntity extends TrtrBlockEntity {
     }
 
     @Auto
-    public static void tick(World world, BlockPos pos, BlockState state, MudStoveBlockEntity blockEntity) {
+    public void tick(World world, BlockPos pos, BlockState state) {
         // Tick details...
+        System.out.println(pos);
     }
+
+//    //Or this ways
+//    @Auto
+//    public static void tick(World world, BlockPos pos, BlockState state, MudStoveBlockEntity blockEntity) {
+//         //Tick details...
+//    }
 
     public void somethingTest() {
         this.testInteger = 500;

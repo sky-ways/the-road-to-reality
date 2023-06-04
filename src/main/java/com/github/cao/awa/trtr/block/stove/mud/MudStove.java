@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.block.stove.mud;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
+import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.block.stove.mud.model.MudStoveModelProvider;
@@ -32,6 +33,7 @@ import net.minecraft.world.World;
 
 // TODO Waiting for plan 'Smelting Process'
 @Auto
+@DevOnly
 @Unsupported
 public class MudStove extends TrtrBlockWithEntity {
     @Auto
@@ -50,7 +52,6 @@ public class MudStove extends TrtrBlockWithEntity {
 
     @Auto
     public static MudStoveBlockEntity ENTITY;
-
 
     @Auto
     @DataGen
