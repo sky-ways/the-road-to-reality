@@ -73,8 +73,18 @@ public abstract class ReflectionFramework {
 
     @NotNull
     public static Method accessible(Method clazz) {
-        if (clazz.getAnnotation(Auto.class) != null) {
+        if (clazz.isAnnotationPresent(Auto.class)) {
             return MethodAccess.ensureAccessible(clazz);
+        }
+        throw new NoAutoAnnotationException();
+    }
+
+    @NotNull
+    public static Method accessible(Method clazz, Object object) {
+        if (clazz.isAnnotationPresent(Auto.class)) {
+            return MethodAccess.ensureAccessible(clazz,
+                                                 object
+            );
         }
         throw new NoAutoAnnotationException();
     }
