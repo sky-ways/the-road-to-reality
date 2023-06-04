@@ -1,10 +1,12 @@
-package com.github.cao.awa.trtr.framework.block.data.gen.model;
+package com.github.cao.awa.trtr.framework.model.provider;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
 import com.github.cao.awa.trtr.data.gen.model.GenericItemModelProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelProvider;
+import com.github.cao.awa.trtr.framework.block.data.gen.model.BlockModelDataGenFramework;
+import com.github.cao.awa.trtr.framework.item.data.gen.model.ItemModelDataGenFramework;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -17,6 +19,7 @@ import java.util.List;
  *
  * @author cao_awa
  * @see BlockModelDataGenFramework
+ * @see ItemModelDataGenFramework
  * @see TrtrModelProvider
  * @see TrtrModelFactory
  * @see GenericItemModelProvider
