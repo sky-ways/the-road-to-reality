@@ -35,7 +35,7 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                            .filter(this :: verify)
                            .map(this :: instance)
                            .forEach(this.factories :: add);
-        done(generator);
+        done();
     }
 
     private boolean match(Block block) {
@@ -68,11 +68,8 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                         ! unsupported;
     }
 
-    private void done(FabricDataGenerator generator) {
-        generator.createPack()
-                 .addProvider((o, f) -> new FrameworkModelProvider(o,
-                                                                   this.factories
-                 ));
+    private void done() {
+        TrtrMod.MODEL_FRAMEWORK.add(this.factories);
     }
 
     private TrtrModelFactory instance(Block block) {
@@ -102,8 +99,8 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
 
     private TrtrModelFactory create(Block block) {
         try {
-            if (block.getClass()
-                     .getAnnotation(NoModel.class) == null) {
+            if (! block.getClass()
+                       .isAnnotationPresent(NoModel.class)) {
                 final TrtrModelFactory provider = o -> ModelDataGeneratorAccessor.ACCESSOR.get(block);
                 if (EntrustEnvironment.trys(() -> provider.apply(null)) == null) {
                     Class<? extends FabricModelProvider> type = ModelDataGeneratorAccessor.ACCESSOR.getType(block);

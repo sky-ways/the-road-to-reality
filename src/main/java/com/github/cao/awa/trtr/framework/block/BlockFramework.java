@@ -80,7 +80,7 @@ public class BlockFramework extends ReflectionFramework {
                     .filter(this :: match)
                     .map(this :: cast)
                     .filter(this :: verify)
-                    .map(this :: block)
+                    .map(this :: instance)
                     .forEach(this :: build);
     }
 
@@ -152,7 +152,7 @@ public class BlockFramework extends ReflectionFramework {
      * @author cao_awa
      * @since 1.0.0
      */
-    private Block block(Class<Block> clazz) {
+    private Block instance(Class<Block> clazz) {
         // Construct the block using settings.
         // Here have not a default template settings for coping with settings missing.
         LOGGER.info("Constructing block: '{}'",
