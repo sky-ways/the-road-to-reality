@@ -35,7 +35,7 @@ The road to reality current planning to a lot of stages.
 
 |        Name        |  Status   | Expect Cycle (After start) | Start Date |
 |:------------------:|:---------:|:--------------------------:|:----------:|
-|   Stone Overture   | Preparing |         In 3 Years         |    N/A     |
+|   Stone Overture   |   Doing   |         In 3 Years         |  2023.6.4  |
 |     Mine Craft     |   Doing   |         In 5 Years         | 2023.3.12  |
 |   Ceramic Years    |  Waiting  |         In 5 Years         |    N/A     |
 |    Dietary Art     |   Doing   |         Long Term          |  2023.6.1  |

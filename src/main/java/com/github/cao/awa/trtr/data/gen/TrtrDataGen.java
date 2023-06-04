@@ -15,5 +15,10 @@ public class TrtrDataGen implements DataGeneratorEntrypoint {
                                .mineable(fabricDataGenerator);
         TrtrMod.BLOCK_FRAMEWORK.dataGen()
                                .tag(fabricDataGenerator);
+
+        TrtrMod.ITEM_FRAMEWORK.dataGen()
+                              .model(fabricDataGenerator);
+
+        TrtrMod.MODEL_FRAMEWORK.done(fabricDataGenerator);
     }
 }
