@@ -8,11 +8,13 @@ import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.item.branch.BranchItem;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.SideShapeType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
@@ -33,7 +35,8 @@ public class BranchBlock extends TrtrBlock {
     @Auto
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.create()
                                                                           .mapColor(DyeColor.BROWN)
-                                                                          .breakInstantly();
+                                                                          .breakInstantly()
+                                                                          .notSolid();
 
     @AutoProperty
     public static final DirectionProperty FACING = Properties.FACING;
@@ -44,53 +47,41 @@ public class BranchBlock extends TrtrBlock {
     @Auto
     public static final ItemConvertible LOOT = TrtrItems.get(BranchItem.class);
 
+    public static final VoxelShape OUTLINE_SHAPE = PixelVoxelShapes.cuboid(2,
+                                                                           0,
+                                                                           2,
+                                                                           14,
+                                                                           2,
+                                                                           14
+    );
+
     public BranchBlock(Settings settings) {
         super(settings);
     }
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        return direction == Direction.DOWN && ! this.canPlaceAt(state,
-                                                                world,
-                                                                pos
-        ) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state,
-                                                                           direction,
-                                                                           neighborState,
-                                                                           world,
-                                                                           pos,
-                                                                           neighborPos
-        );
+        return direction == Direction.DOWN && ! canPlaceAt(state,
+                                                           world,
+                                                           pos
+        ) ? Blocks.AIR.getDefaultState() : state;
     }
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return sideCoversSmallSquare(world,
-                                     pos.down(),
-                                     Direction.UP
+        pos = pos.down();
+        BlockState blockState = world.getBlockState(pos);
+        return blockState.isSideSolid(world,
+                                      pos,
+                                      Direction.UP,
+                                      SideShapeType.FULL
         );
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return PixelVoxelShapes.cuboid(2,
-                                       0,
-                                       2,
-                                       14,
-                                       2,
-                                       14
-        );
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return super.getCollisionShape(state,
-                                       world,
-                                       pos,
-                                       context
-        );
+        return OUTLINE_SHAPE;
     }
 
     public static boolean canPlace(BlockState state) {
-        return state.isAir() || state.isIn(TagKey.of(RegistryKeys.BLOCK,
-                                                     Identifier.tryParse("minecraft:replaceable_plants")
-        ));
+        return state.isAir() || state.isIn(BlockTags.REPLACEABLE);
     }
 }

@@ -15,36 +15,47 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.function.Function;
+
 @Auto
 public class BranchItem extends TrtrItem {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:branch");
 
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         PlayerEntity playerEntity = context.getPlayer();
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
 
-        BlockPos blockPos2 = blockPos.offset(context.getSide());
+        BlockState placeSource = world.getBlockState(blockPos);
 
-        BlockState placeSource = world.getBlockState(blockPos2);
-
-        if (BranchBlock.canPlace(placeSource)) {
-            world.setBlockState(blockPos2,
-                                TrtrBlocks.get(BranchBlock.class).getDefaultState(),
+        Function<BlockPos, ActionResult> placeFunction = pos -> {
+            world.setBlockState(pos,
+                                TrtrBlocks.get(BranchBlock.class)
+                                          .getDefaultState(),
                                 11
             );
             world.emitGameEvent(playerEntity,
                                 GameEvent.BLOCK_PLACE,
-                                blockPos
+                                pos
             );
             ItemStack itemStack = context.getStack();
             if (playerEntity instanceof ServerPlayerEntity) {
                 itemStack.decrement(1);
             }
 
-
             return ActionResult.success(world.isClient());
+        };
+
+        if (BranchBlock.canPlace(placeSource)) {
+            return placeFunction.apply(blockPos);
+        } else {
+            BlockPos blockPos2 = blockPos.offset(context.getSide());
+            placeSource = world.getBlockState(blockPos2);
+            if (BranchBlock.canPlace(placeSource)) {
+                return placeFunction.apply(blockPos2);
+            }
         }
         return ActionResult.PASS;
     }
