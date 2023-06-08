@@ -5,6 +5,7 @@ import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -29,5 +30,9 @@ public class TrtrBlocks {
 
     public static Block get(Identifier identifier) {
         return BLOCKS.get(identifier);
+    }
+
+    public static Block get(Class<? extends Block> clazz) {
+        return get(IdentifierAccessor.ACCESSOR.get(clazz));
     }
 }

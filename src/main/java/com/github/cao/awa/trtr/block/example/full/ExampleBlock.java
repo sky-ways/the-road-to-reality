@@ -15,7 +15,7 @@ import com.github.cao.awa.trtr.block.example.full.tag.ExampleBlockTag;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.yarn.constants.MiningLevels;
-import net.minecraft.block.Material;
+import net.minecraft.block.MapColor;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
@@ -32,9 +32,9 @@ public class ExampleBlock extends TrtrBlockWithEntity {
 
     // Settings.
     @Auto
-    public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.AIR,
-                                                                              DyeColor.WHITE
-    );
+    public static final FabricBlockSettings SETTINGS = FabricBlockSettings.create()
+                                                                          .mapColor(MapColor.WHITE)
+                                                                          .breakInstantly();
 
     // Block item.
     // Direct item.
@@ -55,7 +55,7 @@ public class ExampleBlock extends TrtrBlockWithEntity {
     // Direct loot with class provider.
     public static final Class<ExampleLoot> TYPE_LOOT = ExampleLoot.class;
     // Factory loot.
-    public static final LootFactory<ExampleLoot> FACTORY_LOOT = ExampleLoot::new;
+    public static final LootFactory<ExampleLoot> FACTORY_LOOT = ExampleLoot :: new;
 
     // Models.
     // Direct model provider

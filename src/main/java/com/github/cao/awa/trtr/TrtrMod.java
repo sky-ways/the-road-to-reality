@@ -26,8 +26,8 @@ public class TrtrMod implements ModInitializer {
         MineableAnnotations.register();
 
         // Startup frameworks.
-        BLOCK_FRAMEWORK.work();
         ITEM_FRAMEWORK.work();
+        BLOCK_FRAMEWORK.work();
 
         ServerLifecycleEvents.SERVER_STARTING.register(GetAllTrtrBlockCommand :: register);
     }

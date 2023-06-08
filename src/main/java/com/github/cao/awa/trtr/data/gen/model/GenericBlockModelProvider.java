@@ -34,7 +34,7 @@ public class GenericBlockModelProvider extends TrtrBlockModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         // Default block model is a whole block.
         // The item parented models should in 'block' subspace.
-        blockStateModelGenerator.registerSimpleCubeAll(this.block);
+        blockStateModelGenerator.registerSimpleState(this.block);
         blockStateModelGenerator.registerParentedItemModel(this.block,
                                                            Namespace.subSpace(TrtrBlocks.getIdentifier(this.block),
                                                                               "block"
