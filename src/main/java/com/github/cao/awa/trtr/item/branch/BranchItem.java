@@ -4,8 +4,7 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.stone.branch.BranchBlock;
 import com.github.cao.awa.trtr.item.TrtrItem;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -41,10 +40,6 @@ public class BranchItem extends TrtrItem {
             );
             ItemStack itemStack = context.getStack();
             if (playerEntity instanceof ServerPlayerEntity) {
-                Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity,
-                                              blockPos2,
-                                              itemStack
-                );
                 itemStack.decrement(1);
             }
 

@@ -18,7 +18,7 @@ public class ExampleModel extends TrtrBlockModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         System.out.println("Custom model generator");
-        blockStateModelGenerator.registerSimpleCubeAll(TrtrBlocks.get(ExampleBlock.IDENTIFIER));
+        blockStateModelGenerator.registerSimpleState(TrtrBlocks.get(ExampleBlock.IDENTIFIER));
         blockStateModelGenerator.registerParentedItemModel(TrtrBlocks.get(ExampleBlock.IDENTIFIER),
                                                            Namespace.subSpace(ExampleBlock.IDENTIFIER,
                                                                               "block"
