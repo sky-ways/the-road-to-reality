@@ -24,4 +24,8 @@ public class TrtrItems {
     public static Item get(Identifier identifier) {
         return ITEMS.get(identifier);
     }
+
+    public static Item get(Class<? extends Item> clazz) {
+        return get(IdentifierAccessor.ACCESSOR.get(clazz));
+    }
 }

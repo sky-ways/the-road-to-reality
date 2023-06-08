@@ -19,9 +19,8 @@ public class Halite extends TrtrBlock {
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:halite");
 
     @Auto
-    public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
-                                                                              MapColor.WHITE
-                                                                          )
+    public static final FabricBlockSettings SETTINGS = FabricBlockSettings.create()
+                                                                          .mapColor(MapColor.WHITE)
                                                                           .requiresTool()
                                                                           .strength(1.5F,
                                                                                     6.0F

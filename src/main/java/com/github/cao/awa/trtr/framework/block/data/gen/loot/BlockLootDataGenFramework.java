@@ -2,8 +2,11 @@ package com.github.cao.awa.trtr.framework.block.data.gen.loot;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
+import com.github.cao.awa.trtr.data.gen.loot.DestroyToItemLootProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
+import com.github.cao.awa.trtr.framework.accessor.item.ItemSettingAccessor;
+import com.github.cao.awa.trtr.framework.accessor.item.LootItemConvertibleAccessor;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
@@ -12,6 +15,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.loot.context.LootContextType;
 import net.minecraft.loot.context.LootContextTypes;
 import org.apache.logging.log4j.LogManager;
@@ -114,14 +118,23 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
         try {
             LootFactory<?> factory = LootDataGeneratorAccessor.ACCESSOR.get(block);
             if (factory == null) {
-                Class<? extends SimpleFabricLootTableProvider> clazz = LootDataGeneratorAccessor.ACCESSOR.getType(block);
-                factory = output -> EntrustEnvironment.cast(instance(clazz,
-                                                                     output,
-                                                                     block
-                ));
+                    Class<? extends SimpleFabricLootTableProvider> clazz = LootDataGeneratorAccessor.ACCESSOR.getType(block);
+                    factory = output -> EntrustEnvironment.cast(instance(clazz,
+                                                                         output,
+                                                                         block
+                    ));
             }
             return factory;
         } catch (Exception e) {
+            ItemConvertible convertible = EntrustEnvironment.trys(() -> LootItemConvertibleAccessor.ACCESSOR.get(block));
+            if (convertible != null) {
+                return output -> new DestroyToItemLootProvider(output,
+                                                               block,
+                                                               convertible
+                );
+            }
+
+            e.printStackTrace();
             return null;
         }
     }

@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 
 @Auto
-public class TrtrItem extends Item {
+public abstract class TrtrItem extends Item {
     public TrtrItem(Settings settings) {
         super(settings);
     }

@@ -41,9 +41,9 @@ public class PebbleItem extends TrtrItem {
                                                      user.getY(),
                                                      user.getZ(),
                                                      stick,
-                                                     Randoms.d(0.15),
                                                      Randoms.d(0.1),
-                                                     Randoms.d(0.15)
+                                                     Randoms.d(0.05),
+                                                     Randoms.d(0.1)
                     ));
                 }
                 return;

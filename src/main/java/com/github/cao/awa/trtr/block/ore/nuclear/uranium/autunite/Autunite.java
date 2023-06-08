@@ -19,9 +19,8 @@ public class Autunite extends TrtrBlock {
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:autunite");
 
     @Auto
-    public static final FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE,
-                                                                              MapColor.GRAY
-                                                                          )
+    public static final FabricBlockSettings SETTINGS = FabricBlockSettings.create()
+                                                                          .mapColor(MapColor.GRAY)
                                                                           .requiresTool()
                                                                           .strength(1.5F,
                                                                                     6.0F
