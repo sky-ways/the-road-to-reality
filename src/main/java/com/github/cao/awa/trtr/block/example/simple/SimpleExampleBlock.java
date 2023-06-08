@@ -15,10 +15,8 @@ import com.github.cao.awa.trtr.block.example.simple.tag.SimpleExampleBlockTag;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 @Auto

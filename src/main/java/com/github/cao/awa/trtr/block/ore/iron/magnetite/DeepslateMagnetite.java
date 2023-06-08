@@ -8,9 +8,7 @@ import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 @Auto
