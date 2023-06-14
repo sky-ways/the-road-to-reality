@@ -18,8 +18,8 @@ But there can you to prepare for:
 ```
 Java 19
 Fabric Loader 0.14.21
-Fabric API 0.83.0+1.20
-Minecraft 1.20
+Fabric API 0.83.1+1.20.1
+Minecraft 1.20.1
 ```
 
 You can play in temporary if you are so in a hurry, clone this repository and run in your IDE(Intellij idea? eclipse? or
@@ -39,6 +39,7 @@ The road to reality current planning to a lot of stages.
 |     Mine Craft     |   Doing   |         In 5 Years         | 2023.3.12  |
 |   Ceramic Years    |  Waiting  |         In 5 Years         |    N/A     |
 |    Dietary Art     |   Doing   |         Long Term          |  2023.6.1  |
+| Building Aesthetic |  Waiting  |         In 5 Years         |    N/A     |
 | Farming Technology | Preparing |         Long Term          |    N/A     |
 | Husbandry Industry | Preparing |         Long Term          |    N/A     |
 |   Water Ecology    |  Waiting  |         In 5 Years         |    N/A     |
@@ -48,6 +49,7 @@ The road to reality current planning to a lot of stages.
 |  System Mysteries  | Preparing |         Long Term          |    N/A     |
 | Actuality Physics  |  Waiting  |         Long Term          |    N/A     |
 |  Fluid Mechanics   |  Waiting  |         Long Term          |    N/A     |
+|   Chemistry Work   |  Waiting  |         Long Term          |    N/A     |
 |     Steam Age      |  Waiting  |         In 3 Years         |    N/A     |
 |    Electric Age    |  Waiting  |         In 6 Years         |    N/A     |
 |  Information Age   |  Waiting  |         In 6 Years         |    N/A     |
