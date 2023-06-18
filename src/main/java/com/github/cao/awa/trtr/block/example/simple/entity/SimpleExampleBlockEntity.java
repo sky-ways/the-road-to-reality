@@ -18,6 +18,7 @@ public class SimpleExampleBlockEntity extends TrtrBlockEntity {
     //     id: "trtr:example_simple",
     //     specify_key: 114514
     // }
+    @Auto
     @AutoNbt("specify_key")
     private int testInteger = 114514;
     // Write to nbt with the field name like:
@@ -28,6 +29,7 @@ public class SimpleExampleBlockEntity extends TrtrBlockEntity {
     //     id: "trtr:example_simple",
     //     testString: "www"
     // }
+    @Auto
     @AutoNbt
     private String testString = "www";
 

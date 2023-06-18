@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.util.identity;
+package com.github.cao.awa.trtr.util.identifier;
 
 import com.github.cao.awa.apricot.anntation.Stable;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;

@@ -24,7 +24,7 @@ public class MemoryResourcePack implements ResourcePack {
     public static final String NAMESPACE = "inker_render_memory";
     public static final Set<String> NAMESPACES = Set.of(NAMESPACE);
     public static final MemoryResourcePack INSTANCE = MemoryResourcePack.arbitrary();
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger("MemoryResourcePack");
     private final AtomicLong idAlloc = new AtomicLong();
     private final Map<Long, Supplier<InputStream>> registers;
     private final BiOption<Boolean> async;

@@ -22,6 +22,11 @@ public class BranchItem extends TrtrItem {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:branch");
 
+    @Auto
+    public BranchItem(Settings settings) {
+        super(settings);
+    }
+
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         PlayerEntity playerEntity = context.getPlayer();

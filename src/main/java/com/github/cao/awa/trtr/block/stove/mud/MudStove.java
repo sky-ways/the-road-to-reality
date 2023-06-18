@@ -62,6 +62,7 @@ public class MudStove extends TrtrBlockWithEntity {
     @Auto
     public static MudStoveRender RENDER;
 
+    @Auto
     @AutoProperty
     public static final DirectionProperty FACING = Properties.FACING;
 

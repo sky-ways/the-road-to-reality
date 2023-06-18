@@ -12,7 +12,8 @@ import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
 import org.joml.Matrix4f;
@@ -35,7 +36,7 @@ public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
 
     @Override
     public List<BakedQuad> getQuads(BlockState blockState, Direction direction, Random random) {
-        List<BakedQuad>[] bakedQuads = ModelHelper.toQuadLists(mesh);
+        List<BakedQuad>[] bakedQuads = ModelHelper.toQuadLists(this.mesh);
         return bakedQuads[direction == null ? 6 : direction.getId()];
     }
 
@@ -66,7 +67,7 @@ public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
 
     @Override
     public ModelTransformation getTransformation() {
-        return transformation;
+        return this.transformation;
     }
 
     @Override
@@ -81,7 +82,7 @@ public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
 
     @Override
     public void emitBlockQuads(BlockRenderView blockRenderView, BlockState blockState, BlockPos blockPos, Supplier<Random> supplier, RenderContext context) {
-        if (mesh == null) {
+        if (this.mesh == null) {
             return;
         }
         context.pushTransform(quad -> {
@@ -107,16 +108,16 @@ public class InkRenderBakedModel implements BakedModel, FabricBakedModel {
             return true;
         });
         context.meshConsumer()
-               .accept(mesh);
+               .accept(this.mesh);
         context.popTransform();
     }
 
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-        if (mesh == null) {
+        if (this.mesh == null) {
             return;
         }
         context.meshConsumer()
-               .accept(mesh);
+               .accept(this.mesh);
     }
 }

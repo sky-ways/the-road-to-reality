@@ -2,7 +2,7 @@ package bot.inker.inkrender.render;
 
 import bot.inker.inkrender.InkerRender;
 import bot.inker.inkrender.render.resource.loader.InkResourceLoader;
-import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.*;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import de.javagl.obj.*;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider;
@@ -15,42 +15,32 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class InkRenderLoader implements ModelResourceProvider, Function<ResourceManager, ModelResourceProvider> {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger("InkRenderLoader");
 
     @Override
     public UnbakedModel loadModelResource(Identifier identifier, ModelProviderContext modelProviderContext) {
-        return loadModelResource(
-                identifier,
-                modelProviderContext,
-                ModelTransformation.NONE
-        );
-    }
-
-    protected UnbakedModel loadModelResource(Identifier identifier, ModelProviderContext modelProviderContext, ModelTransformation transform) {
-        // logger.info("loadModelResource({},{},{})", identifier, modelProviderContext, transform);
         if (identifier.getPath()
                       .endsWith(".obj")) {
             Optional<InkResourceLoader> resource = InkerRender.resourceService()
-                                                              .findModel(identifier.toString());
-            if (resource.isEmpty()) {
-                return null;
-            }
-            return loadModel(
-                    resource.get(),
-                    transform
-            );
+                                                              .findModel(identifier);
+            return resource.map(inkResourceLoader -> loadModel(
+                                   inkResourceLoader,
+                                   ModelTransformation.NONE
+                           ))
+                           .orElse(null);
         }
 
         return null;
     }
 
     public InkRenderUnbakedModel loadModel(InkResourceLoader resourceLoader, ModelTransformation transform) {
-        // logger.info("loadModel({},{})", resourceLoader, transform);
         try {
             Obj obj = ObjUtils.convertToRenderable(ObjReader.read(new InputStreamReader(
                     resourceLoader.openObj(),
@@ -76,8 +66,6 @@ public class InkRenderLoader implements ModelResourceProvider, Function<Resource
 
     public Map<String, Mtl> loadMTL(InkResourceLoader resourceLoader, List<String> names) {
         return names.stream()
-                    .flatMap(EntrustEnvironment.function(str -> MtlReader.read(resourceLoader.openMtl(str))
-                                                                         .stream()))
                     // Other way to do this
                     //.flatMap(str -> EntrustExecution.result(() -> MtlReader.read(resourceLoader.openMtl(str))
                     //                                                       .stream()))
@@ -85,8 +73,10 @@ public class InkRenderLoader implements ModelResourceProvider, Function<Resource
                     // Old way to do this (Deprecated)
                     //.flatMap(UncheckUtil.cast(task -> MtlReader.read(resourceLoader.openMtl(task))
                     //                                           .stream()))
+                    .flatMap(EntrustEnvironment.function(str -> MtlReader.read(resourceLoader.openMtl(str))
+                                                                         .stream()))
                     .collect(Collectors.toMap(
-                            Mtl::getName,
+                            Mtl :: getName,
                             Function.identity()
                     ));
     }
