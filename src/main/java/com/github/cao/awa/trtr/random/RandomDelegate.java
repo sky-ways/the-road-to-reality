@@ -18,7 +18,23 @@ public class RandomDelegate {
     }
 
     public double d(double origin, double bound) {
-        return this.delegate.nextDouble(origin, bound);
+        return this.delegate.nextDouble(origin,
+                                        bound
+        );
+    }
+
+    public float f() {
+        return this.delegate.nextFloat();
+    }
+
+    public float f(float bound) {
+        return this.delegate.nextFloat(bound);
+    }
+
+    public float f(float origin, float bound) {
+        return this.delegate.nextFloat(origin,
+                                       bound
+        );
     }
 
     public int i() {

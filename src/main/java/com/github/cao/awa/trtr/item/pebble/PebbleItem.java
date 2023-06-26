@@ -3,13 +3,12 @@ package com.github.cao.awa.trtr.item.pebble;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.stone.pebble.PebbleBlock;
+import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.dev.OffhandUtil;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.item.branch.BranchItem;
-import com.github.cao.awa.trtr.random.Randoms;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -32,6 +31,11 @@ public class PebbleItem extends TrtrItem {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:pebble");
 
+    @Auto
+    public PebbleItem(Settings settings) {
+        super(settings);
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         Consumer<ItemStack> action = useItem -> {
@@ -43,18 +47,10 @@ public class PebbleItem extends TrtrItem {
                            0
                 );
                 ItemStack stick = new ItemStack(Items.STICK);
-                if (! user.getInventory()
-                          .insertStack(stick)) {
-                    world.spawnEntity(new ItemEntity(world,
-                                                     user.getX(),
-                                                     user.getY(),
-                                                     user.getZ(),
-                                                     stick,
-                                                     Randoms.d(0.1),
-                                                     Randoms.d(0.05),
-                                                     Randoms.d(0.1)
-                    ));
-                }
+                InventoryUtil.insertOrDrop(user,
+                                           world,
+                                           stick
+                );
                 return;
             }
             nbt.putInt("carve",

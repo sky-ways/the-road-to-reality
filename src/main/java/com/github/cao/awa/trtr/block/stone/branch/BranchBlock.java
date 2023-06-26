@@ -38,6 +38,7 @@ public class BranchBlock extends TrtrBlock {
                                                                           .breakInstantly()
                                                                           .notSolid();
 
+    @Auto
     @AutoProperty
     public static final DirectionProperty FACING = Properties.FACING;
 
@@ -55,6 +56,7 @@ public class BranchBlock extends TrtrBlock {
                                                                            14
     );
 
+    @Auto
     public BranchBlock(Settings settings) {
         super(settings);
     }

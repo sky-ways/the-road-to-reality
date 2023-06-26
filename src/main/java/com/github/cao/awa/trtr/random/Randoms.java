@@ -17,7 +17,23 @@ public class Randoms {
     }
 
     public static double d(double origin, double bound) {
-        return RANDOM.d(origin, bound);
+        return RANDOM.d(origin,
+                        bound
+        );
+    }
+
+    public static float f() {
+        return RANDOM.f();
+    }
+
+    public static float f(float bound) {
+        return RANDOM.f(bound);
+    }
+
+    public static float f(float origin, float bound) {
+        return RANDOM.f(origin,
+                        bound
+        );
     }
 
     public static int i() {

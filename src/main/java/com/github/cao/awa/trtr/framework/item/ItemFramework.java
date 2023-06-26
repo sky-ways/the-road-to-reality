@@ -23,8 +23,9 @@ import java.util.List;
 
 public class ItemFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("ItemFramework");
-    private final ItemDataGenFramework DATA_GEN = new ItemDataGenFramework(this);
+    private final ItemDataGenFramework dataGen = new ItemDataGenFramework(this);
     private final List<Item> items = ApricotCollectionFactor.newArrayList();
+    private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.newArrayList();
 
     public void work() {
         // Working stream...
@@ -80,7 +81,7 @@ public class ItemFramework extends ReflectionFramework {
                 (TrtrMod.DEV_MODE || ! dev) &&
                         // Unsupported class will not be proxy.
                         ! unsupported &&
-                        // Abstract class will not be proxy
+                        // Abstract class will not be proxy.
                         ! abs;
     }
 
@@ -165,28 +166,38 @@ public class ItemFramework extends ReflectionFramework {
         EntrustEnvironment.trys(() -> {
                                     Identifier identifier = IdentifierAccessor.ACCESSOR.get(item);
 
-                                    // Do not build null identifier item.
-                                    // Null identifier means something was wrong.
-                                    if (identifier == null) {
-                                        LOGGER.error("Got null identifier, cancel building item '{}'",
-                                                     item.getClass()
-                                                         .getName()
-                                        );
-                                        return;
-                                    }
+            // Do not build null identifier item.
+            // Null identifier means something was wrong.
+            if (identifier == null) {
+                LOGGER.error("Got null identifier, cancel building item '{}'",
+                             item.getClass()
+                                 .getName()
+                );
+                return;
+            }
 
-                                    // Register this block to vanilla.
-                                    Registry.register(Registries.ITEM,
-                                                      identifier,
-                                                      item
+            // Do not register the duplicate identifier.
+            if (this.alreadyRegistered.contains(identifier)) {
+                LOGGER.error("The identifier '{}' already registered, duplicate identifier will not be register successful",
+                             identifier
+                );
+                return;
+            }
+
+            // Register this block to vanilla.
+            Registry.register(Registries.ITEM,
+                              identifier,
+                              item
+            );
+
+            // Register this block to trtr.
+            TrtrItems.register(identifier,
+                               item
                                     );
 
-                                    // Register this block to trtr.
-                                    TrtrItems.register(identifier,
-                                                       item
-                                    );
-
-                                    this.items.add(item);
+            // Add to lists.
+            this.items.add(item);
+            this.alreadyRegistered.add(identifier);
 
                                     // Call done method for custom action when done building.
                                     // Method automatic call need @Auto annotation always.
@@ -200,7 +211,7 @@ public class ItemFramework extends ReflectionFramework {
     }
 
     public ItemDataGenFramework dataGen() {
-        return DATA_GEN;
+        return this.dataGen;
     }
 
     public List<Item> dumpItems() {

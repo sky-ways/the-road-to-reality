@@ -34,6 +34,7 @@ public class PebbleBlock extends TrtrBlock {
                                                                           .breakInstantly()
                                                                           .notSolid();
 
+    @Auto
     @AutoProperty
     public static final DirectionProperty FACING = Properties.FACING;
 

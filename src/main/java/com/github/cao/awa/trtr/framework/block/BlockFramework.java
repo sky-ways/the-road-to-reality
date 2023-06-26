@@ -70,7 +70,8 @@ public class BlockFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("BlockFramework");
     private final List<Block> blocks = ApricotCollectionFactor.newArrayList();
     private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.newHashMap();
-    private final BlockDataGenFramework DATA_GEN = new BlockDataGenFramework(this);
+    private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.newArrayList();
+    private final BlockDataGenFramework dataGen = new BlockDataGenFramework(this);
     private final NbtSerializeFramework nbtSerializeFramework = new NbtSerializeFramework(this);
 
     public void work() {
@@ -123,7 +124,7 @@ public class BlockFramework extends ReflectionFramework {
                 (TrtrMod.DEV_MODE || ! dev) &&
                         // Unsupported class will not be proxy.
                         ! unsupported &&
-                        // Abstract class will not be proxy
+                        // Abstract class will not be proxy.
                         ! abs;
     }
 
@@ -231,12 +232,12 @@ public class BlockFramework extends ReflectionFramework {
     public void properties(Block block, StateManager.Builder<Block, BlockState> builder) {
         Arrays.stream(block.getClass()
                            .getDeclaredFields())
-              // Ensure field accessible.
-              .peek(f -> ReflectionFramework.accessible(f,
-                                                        block
-              ))
               // Ensure annotation presents.
               .filter(f -> f.isAnnotationPresent(AutoProperty.class))
+              // Ensure field accessible.
+              .map(f -> ReflectionFramework.accessible(f,
+                                                       block
+              ))
               // Do appends.
               .forEach(field -> EntrustEnvironment.trys(() -> {
                   // Get and ensure it is a property.
@@ -310,25 +311,33 @@ public class BlockFramework extends ReflectionFramework {
         EntrustEnvironment.trys(() -> {
                                     Identifier identifier = IdentifierAccessor.ACCESSOR.get(block);
 
-                                    // Do not build null identifier block.
-                                    // Null identifier means something was wrong.
-                                    if (identifier == null) {
-                                        LOGGER.error("Got null identifier, cancel building block '{}'",
-                                                     block.getClass()
-                                                          .getName()
-                                        );
-                                        return;
-                                    }
+            // Do not build null identifier block.
+            // Null identifier means something was wrong.
+            if (identifier == null) {
+                LOGGER.error("Got null identifier, cancel building block '{}'",
+                             block.getClass()
+                                  .getName()
+                );
+                return;
+            }
 
-                                    // Register this block to vanilla.
-                                    Registry.register(Registries.BLOCK,
-                                                      identifier,
-                                                      block
-                                    );
+            // Do not register the duplicate identifier.
+            if (this.alreadyRegistered.contains(identifier)) {
+                LOGGER.error("The identifier '{}' already registered, duplicate identifier will not be register successful",
+                             identifier
+                );
+                return;
+            }
 
-                                    // Register this block to trtr.
-                                    TrtrBlocks.register(identifier,
-                                                        block
+            // Register this block to vanilla.
+            Registry.register(Registries.BLOCK,
+                              identifier,
+                              block
+            );
+
+            // Register this block to trtr.
+            TrtrBlocks.register(identifier,
+                                block
                                     );
 
                                     // Register block item.
@@ -339,7 +348,9 @@ public class BlockFramework extends ReflectionFramework {
                                                identifier.toString()
                                     );
 
-                                    this.blocks.add(block);
+            // Add to lists.
+            this.blocks.add(block);
+            this.alreadyRegistered.add(identifier);
 
                                     // Call done method for custom action when done building.
                                     // Method automatic call need @Auto annotation always.
@@ -353,7 +364,7 @@ public class BlockFramework extends ReflectionFramework {
     }
 
     public BlockDataGenFramework dataGen() {
-        return DATA_GEN;
+        return this.dataGen;
     }
 
     public List<Block> dumpBlocks() {

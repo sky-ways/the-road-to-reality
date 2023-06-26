@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 @Auto
 @Unsupported
 public class MudStoveBlockEntity extends TrtrBlockEntity {
+    @Auto
     @AutoNbt("layer")
     private MudStoveFuelLayer layer;
 

@@ -16,10 +16,7 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.List;
 
 public abstract class ReflectionFramework {
@@ -63,12 +60,12 @@ public abstract class ReflectionFramework {
         return field != null && field.isAnnotationPresent(Unsupported.class);
     }
 
-    public static <T> Constructor<T> accessible(Constructor<T> clazz) {
-        if (clazz.canAccess(null)) {
-            return clazz;
+    public static <T> Constructor<T> accessible(Constructor<T> constructor) {
+        if (constructor.canAccess(null)) {
+            return constructor;
         }
-        clazz.trySetAccessible();
-        return clazz;
+        constructor.trySetAccessible();
+        return constructor;
     }
 
     @NotNull
@@ -81,7 +78,7 @@ public abstract class ReflectionFramework {
 
     @NotNull
     public static Method accessible(Method clazz, Object object) {
-        if (clazz.isAnnotationPresent(Auto.class)) {
+        if (autoAnnotated(clazz)) {
             return MethodAccess.ensureAccessible(clazz,
                                                  object
             );
@@ -90,16 +87,26 @@ public abstract class ReflectionFramework {
     }
 
     public static Field accessible(@NotNull Field field) {
-        return accessible(field,
-                          null
-        );
+        if (autoAnnotated(field)) {
+            return accessible(field,
+                              null
+            );
+        }
+        throw new NoAutoAnnotationException();
     }
 
     public static Field accessible(@NotNull Field field, @Nullable Object obj) {
-        if (field.canAccess(Modifier.isStatic(field.getModifiers()) ? null : obj)) {
+        if (autoAnnotated(field)) {
+            if (field.canAccess(Modifier.isStatic(field.getModifiers()) ? null : obj)) {
+                return field;
+            }
+            field.trySetAccessible();
             return field;
         }
-        field.trySetAccessible();
-        return field;
+        throw new NoAutoAnnotationException();
+    }
+
+    public static boolean autoAnnotated(AccessibleObject object) {
+        return object.isAnnotationPresent(Auto.class);
     }
 }
