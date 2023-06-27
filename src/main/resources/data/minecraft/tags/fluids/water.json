@@ -1,0 +1,8 @@
+{
+    "NOTICE": "Only test environment",
+    "replace": false,
+    "values": [
+        "minecraft:awa",
+        "minecraft:flowing_awa"
+    ]
+}
