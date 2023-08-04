@@ -2,7 +2,7 @@ package com.github.cao.awa.trtr.item.branch;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
-import com.github.cao.awa.trtr.block.stone.branch.BranchBlock;
+import com.github.cao.awa.trtr.block.branch.BranchBlock;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

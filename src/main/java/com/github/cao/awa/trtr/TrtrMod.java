@@ -23,7 +23,7 @@ public class TrtrMod implements ModInitializer {
     public static final AnnotationScannerFramework SCANNER_FRAMEWORK = new AnnotationScannerFramework();
     public static final ItemFramework ITEM_FRAMEWORK = new ItemFramework();
     public static final ModelFramework MODEL_FRAMEWORK = new ModelFramework();
-    public static final boolean DEV_MODE = false;
+    public static final boolean DEV_MODE = true;
 
     //TODO
     // THIS IS TEST WILL BE DELETE

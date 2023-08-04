@@ -58,10 +58,12 @@ public class SimpleExampleBlock extends TrtrBlockWithEntity {
     public static SimpleExampleBlockEntity ENTITY;
 
     // Auto properties to state builder
+    @Auto
     @AutoProperty
     public static final DirectionProperty DIRECTION = Properties.FACING;
 
     // This property will not append to state builder, will auto ignored because field type is not 'net.minecraft.state.property.Property'.
+    @Auto
     @AutoProperty
     public static final String WRONG_PROPERTY = "Test wrong property";
 

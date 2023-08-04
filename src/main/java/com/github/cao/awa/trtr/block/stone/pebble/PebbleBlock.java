@@ -32,6 +32,7 @@ public class PebbleBlock extends TrtrBlock {
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.create()
                                                                           .mapColor(MapColor.GRAY)
                                                                           .breakInstantly()
+                                                                          .replaceable()
                                                                           .notSolid();
 
     @Auto

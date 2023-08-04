@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.block.stone.branch;
+package com.github.cao.awa.trtr.block.branch;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
@@ -36,6 +36,7 @@ public class BranchBlock extends TrtrBlock {
     public static final FabricBlockSettings SETTINGS = FabricBlockSettings.create()
                                                                           .mapColor(DyeColor.BROWN)
                                                                           .breakInstantly()
+                                                                          .replaceable()
                                                                           .notSolid();
 
     @Auto
