@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.block.stove.mud;
+package com.github.cao.awa.trtr.block.stove.mud.entity;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.anntation.Unsupported;

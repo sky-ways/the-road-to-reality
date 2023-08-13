@@ -525,7 +525,7 @@ public class BlockFramework extends ReflectionFramework {
         );
     }
 
-    public void render(Block block) {
+    public void renderer(Block block) {
         if (BlockEntityRenderAccessor.ACCESSOR.has(block)) {
             BlockEntityType<BlockEntity> type = TrtrMod.BLOCK_FRAMEWORK.entityType(block.getClass());
 
@@ -578,9 +578,9 @@ public class BlockFramework extends ReflectionFramework {
         }
     }
 
-    public void renders() {
+    public void renderers() {
         for (Block block : this.blocks) {
-            render(block);
+            renderer(block);
         }
     }
 

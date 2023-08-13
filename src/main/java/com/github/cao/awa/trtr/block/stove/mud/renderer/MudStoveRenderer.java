@@ -1,8 +1,8 @@
-package com.github.cao.awa.trtr.block.stove.mud.render;
+package com.github.cao.awa.trtr.block.stove.mud.renderer;
 
 import com.github.cao.awa.apricot.anntation.Planning;
 import com.github.cao.awa.apricot.anntation.Unsupported;
-import com.github.cao.awa.trtr.block.stove.mud.MudStoveBlockEntity;
+import com.github.cao.awa.trtr.block.stove.mud.entity.MudStoveBlockEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -15,10 +15,10 @@ import java.util.Random;
 // TODO Waiting for plan 'Smelting Process'
 @Planning
 @Unsupported
-public class MudStoveRender implements BlockEntityRenderer<MudStoveBlockEntity> {
+public class MudStoveRenderer implements BlockEntityRenderer<MudStoveBlockEntity> {
     private static final Random RANDOM = new Random();
 
-    public MudStoveRender(BlockEntityRendererFactory.Context ctx) {
+    public MudStoveRenderer(BlockEntityRendererFactory.Context ctx) {
 
     }
 
