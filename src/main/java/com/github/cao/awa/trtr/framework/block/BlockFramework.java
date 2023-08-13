@@ -448,27 +448,6 @@ public class BlockFramework extends ReflectionFramework {
         }
     }
 
-    public void entityType(Class<? extends BlockEntity> clazz, Block block, String id) {
-        TrtrBlockEntityFactory factory = (p, s) -> entity(clazz,
-                                                          block,
-                                                          p,
-                                                          s
-        );
-        Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY,
-                                          id
-        );
-        BlockEntityType<?> entityType = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                                                          id,
-                                                          BlockEntityType.Builder.create(factory :: create,
-                                                                                         block
-                                                                         )
-                                                                                 .build(type)
-        );
-        this.blockEntities.put(block.getClass(),
-                               entityType
-        );
-    }
-
     public <T extends BlockEntity> BlockEntityType<T> entityType(Class<? extends Block> block) {
         return EntrustEnvironment.cast(this.blockEntities.get(block));
     }
@@ -584,34 +563,6 @@ public class BlockFramework extends ReflectionFramework {
         }
     }
 
-    public void entityType(Block block, String id) {
-        Class<? extends BlockEntity> clazz = BlockEntityAccessor.ACCESSOR.getType(block);
-        // Debug...
-        if (clazz == null) {
-            LOGGER.debug("Block '{}' has no item",
-                         block.getClass()
-                              .getName()
-            );
-            return;
-        } else {
-            LOGGER.debug("Block '{}' has item",
-                         block.getClass()
-                              .getName()
-            );
-        }
-
-        LOGGER.info("Building block entity '{}' for block '{}'",
-                    clazz.getName(),
-                    block.getClass()
-                         .getName()
-        );
-
-        entityType(clazz,
-                   block,
-                   id
-        );
-    }
-
     public BlockEntity entity(Class<? extends BlockEntity> clazz, Block block, BlockPos pos, BlockState state) {
         try {
             // Construct the block entity.
@@ -640,5 +591,54 @@ public class BlockFramework extends ReflectionFramework {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public void entityType(Block block, String id) {
+        Class<? extends BlockEntity> clazz = BlockEntityAccessor.ACCESSOR.getType(block);
+        // Debug...
+        if (clazz == null) {
+            LOGGER.debug("Block '{}' has no entity",
+                         block.getClass()
+                              .getName()
+            );
+            return;
+        } else {
+            LOGGER.debug("Block '{}' has entity",
+                         block.getClass()
+                              .getName()
+            );
+        }
+
+        LOGGER.info("Building block entity '{}' for block '{}'",
+                    clazz.getName(),
+                    block.getClass()
+                         .getName()
+        );
+
+        entityType(clazz,
+                   block,
+                   id
+        );
+    }
+
+    public void entityType(Class<? extends BlockEntity> clazz, Block block, String id) {
+        TrtrBlockEntityFactory factory = (p, s) -> entity(clazz,
+                                                          block,
+                                                          p,
+                                                          s
+        );
+        Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY,
+                                          id
+        );
+        BlockEntityType<?> entityType = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+                                                          id,
+                                                          BlockEntityType.Builder.create(factory :: create,
+                                                                                         block
+                                                                         )
+                                                                                 .build(type)
+        );
+        this.blockEntities.put(block.getClass(),
+                               entityType
+        );
     }
 }
