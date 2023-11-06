@@ -17,9 +17,9 @@ But there can you to prepare for:
 
 ```
 Java 19
-Fabric Loader 0.14.21
-Fabric API 0.83.1+1.20.1
-Minecraft 1.20.1
+Fabric Loader 0.14.24
+Fabric API 0.90.7+1.20.2
+Minecraft 1.20.2
 ```
 
 You can play in temporary if you are so in a hurry, clone this repository and run in your IDE(Intellij idea? eclipse? or
