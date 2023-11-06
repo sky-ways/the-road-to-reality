@@ -513,6 +513,7 @@ public class BlockFramework extends ReflectionFramework {
                             block.getClass()
                                  .getName()
                 );
+                return;
             }
 
             Class<? extends BlockEntityRenderer<?>> render = BlockEntityRenderAccessor.ACCESSOR.getType(block);

@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.fluid;
+package com.github.cao.awa.trtr.fluid.awa;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.TrtrMod;
@@ -12,7 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,8 +30,7 @@ public class AwaBlock extends FluidBlock {
                                                                                 .strength(100.0F)
                                                                                 .pistonBehavior(PistonBehavior.DESTROY)
                                                                                 .dropsNothing()
-                                                                                .liquid()
-                                                                                .sounds(BlockSoundGroup.field_44608);
+                                                                                .liquid();
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {

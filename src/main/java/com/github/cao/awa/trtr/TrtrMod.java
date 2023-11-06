@@ -4,7 +4,7 @@ import com.github.cao.awa.modmdo.annotation.platform.Client;
 import com.github.cao.awa.modmdo.annotation.platform.Server;
 import com.github.cao.awa.trtr.annotation.mine.repo.MineableAnnotations;
 import com.github.cao.awa.trtr.command.GetAllTrtrBlockCommand;
-import com.github.cao.awa.trtr.fluid.AwaFluid;
+import com.github.cao.awa.trtr.fluid.awa.AwaFluid;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.item.ItemFramework;
 import com.github.cao.awa.trtr.framework.model.provider.ModelFramework;

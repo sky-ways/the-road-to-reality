@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.fluid;
+package com.github.cao.awa.trtr.fluid.awa;
 
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
