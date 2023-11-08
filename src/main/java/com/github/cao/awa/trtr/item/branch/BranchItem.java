@@ -1,6 +1,7 @@
 package com.github.cao.awa.trtr.item.branch;
 
 import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.branch.BranchBlock;
 import com.github.cao.awa.trtr.item.TrtrItem;
@@ -53,15 +54,11 @@ public class BranchItem extends TrtrItem {
             return ActionResult.success(world.isClient());
         };
 
-        if (BranchBlock.canPlace(placeSource)) {
-            return placeFunction.apply(blockPos);
-        } else {
-            BlockPos blockPos2 = blockPos.offset(context.getSide());
-            placeSource = world.getBlockState(blockPos2);
-            if (BranchBlock.canPlace(placeSource)) {
-                return placeFunction.apply(blockPos2);
-            }
-        }
-        return ActionResult.PASS;
+        return NoFloatingBlock.place(context,
+                                     world,
+                                     blockPos,
+                                     placeSource,
+                                     placeFunction
+        );
     }
 }

@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.block.branch;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
+import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.item.branch.BranchItem;
@@ -11,10 +12,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.block.SideShapeType;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
@@ -44,9 +42,6 @@ public class BranchBlock extends TrtrBlock {
     public static final DirectionProperty FACING = Properties.FACING;
 
     @Auto
-    public static BlockItem ITEM;
-
-    @Auto
     public static final ItemConvertible LOOT = TrtrItems.get(BranchItem.class);
 
     public static final VoxelShape OUTLINE_SHAPE = PixelVoxelShapes.cuboid(2,
@@ -70,21 +65,14 @@ public class BranchBlock extends TrtrBlock {
     }
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        pos = pos.down();
-        BlockState blockState = world.getBlockState(pos);
-        return blockState.isSideSolid(world,
-                                      pos,
-                                      Direction.UP,
-                                      SideShapeType.FULL
+        return NoFloatingBlock.canPlace(state,
+                                        world,
+                                        pos
         );
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return OUTLINE_SHAPE;
-    }
-
-    public static boolean canPlace(BlockState state) {
-        return state.isAir() || state.isIn(BlockTags.REPLACEABLE);
     }
 }
