@@ -136,7 +136,7 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                           return as(compound.get("l"),
                                     NbtList.class,
                                     list -> {
-                                        ArrayList<?> arrayList = ApricotCollectionFactor.newArrayList();
+                                        ArrayList<?> arrayList = ApricotCollectionFactor.arrayList();
                                         for (NbtElement nbtElement : list) {
                                             arrayList.add(EntrustEnvironment.cast(is(nbtElement,
                                                                                      NbtCompound.class,
@@ -178,7 +178,7 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                                     list -> {
                                         try {
                                             Class<?> typeOf = Class.forName(type);
-                                            ArrayList<?> arrayList = ApricotCollectionFactor.newArrayList();
+                                            ArrayList<?> arrayList = ApricotCollectionFactor.arrayList();
                                             if (NbtSerializable.class.isAssignableFrom(typeOf)) {
                                                 Constructor<?> constructor = typeOf.getConstructor();
                                                 for (NbtElement nbtElement : list) {
@@ -214,6 +214,6 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
 
     @Override
     public List<?> initializer() {
-        return ApricotCollectionFactor.newArrayList();
+        return ApricotCollectionFactor.arrayList();
     }
 }

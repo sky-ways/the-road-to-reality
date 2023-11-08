@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class FrameworkModelProvider extends FabricModelProvider {
     private final FabricDataOutput output;
-    private final List<FabricModelProvider> providers = ApricotCollectionFactor.newArrayList();
+    private final List<FabricModelProvider> providers = ApricotCollectionFactor.arrayList();
 
     public FrameworkModelProvider(FabricDataOutput output, List<TrtrModelFactory> factories) {
         super(output);

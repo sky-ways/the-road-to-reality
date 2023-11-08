@@ -19,7 +19,7 @@ import java.util.Map;
 public class BlockMineableDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("BlockMineableDataGenFramework");
     private final BlockFramework blockFramework;
-    private final Map<Block, Collection<Annotation>> mineableFactories = ApricotCollectionFactor.newHashMap();
+    private final Map<Block, Collection<Annotation>> mineableFactories = ApricotCollectionFactor.hashMap();
 
     public BlockMineableDataGenFramework(BlockFramework blockFramework) {
         this.blockFramework = blockFramework;
@@ -38,7 +38,7 @@ public class BlockMineableDataGenFramework extends ReflectionFramework {
         this.mineableFactories.compute(block,
                                        (k, v) -> {
                                            if (v == null) {
-                                               v = ApricotCollectionFactor.newArrayList();
+                                               v = ApricotCollectionFactor.arrayList();
                                            }
                                            v.addAll(MineableAnnotations.getMineableAnnotation(List.of(block.getClass()
                                                                                                            .getAnnotations())));
@@ -90,7 +90,7 @@ public class BlockMineableDataGenFramework extends ReflectionFramework {
     }
 
     private boolean verify(Block block) {
-        final List<String> missing = ApricotCollectionFactor.newArrayList();
+        final List<String> missing = ApricotCollectionFactor.arrayList();
 
         // Check indispensable fields, cannot register if missing.
         if (! BlockItemAccessor.ACCESSOR.has(block)) {

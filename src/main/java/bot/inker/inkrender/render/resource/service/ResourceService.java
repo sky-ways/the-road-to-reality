@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ResourceService implements InkResourceService {
     private static final Logger LOGGER = LogManager.getLogger("InkResourceService");
-    private final List<InkResourceLocator> locators = ApricotCollectionFactor.newArrayList();
+    private final List<InkResourceLocator> locators = ApricotCollectionFactor.arrayList();
 
     public ResourceService() {
         this.locators.add(new FabricAdapterResourceLocator());

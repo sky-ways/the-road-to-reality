@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class MineableAnnotations {
-    public static final List<Class<? extends Annotation>> annotations = ApricotCollectionFactor.newArrayList();
-    public static final Map<Class<? extends Annotation>, TagKey<Block>> toolsKey = ApricotCollectionFactor.newHashMap();
-    public static final Map<Integer, TagKey<Block>> levelsKey = ApricotCollectionFactor.newHashMap();
+    public static final List<Class<? extends Annotation>> annotations = ApricotCollectionFactor.arrayList();
+    public static final Map<Class<? extends Annotation>, TagKey<Block>> toolsKey = ApricotCollectionFactor.hashMap();
+    public static final Map<Integer, TagKey<Block>> levelsKey = ApricotCollectionFactor.hashMap();
 
     public static void register(Class<? extends Annotation> annotation, Identifier key) {
         annotations.add(annotation);
@@ -41,7 +41,7 @@ public class MineableAnnotations {
     }
 
     public static Collection<Class<? extends Annotation>> getMineableAnnotationClass(Collection<Class<? extends Annotation>> annotations) {
-        Set<Class<? extends Annotation>> result = ApricotCollectionFactor.newHashSet();
+        Set<Class<? extends Annotation>> result = ApricotCollectionFactor.hashSet();
         for (Class<? extends Annotation> annotation : annotations) {
             if (contains(annotation)) {
                 result.add(annotation);
@@ -51,7 +51,7 @@ public class MineableAnnotations {
     }
 
     public static Collection<Annotation> getMineableAnnotation(Collection<Annotation> annotations) {
-        Set<Annotation> result = ApricotCollectionFactor.newHashSet();
+        Set<Annotation> result = ApricotCollectionFactor.hashSet();
         for (Annotation annotation : annotations) {
             if (contains(annotation.annotationType())) {
                 result.add(annotation);

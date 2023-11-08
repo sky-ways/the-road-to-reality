@@ -68,9 +68,9 @@ import java.util.Objects;
  */
 public class BlockFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("BlockFramework");
-    private final List<Block> blocks = ApricotCollectionFactor.newArrayList();
-    private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.newHashMap();
-    private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.newArrayList();
+    private final List<Block> blocks = ApricotCollectionFactor.arrayList();
+    private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.hashMap();
+    private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.arrayList();
     private final BlockDataGenFramework dataGen = new BlockDataGenFramework(this);
     private final NbtSerializeFramework nbtSerializeFramework = new NbtSerializeFramework(this);
 
@@ -287,7 +287,7 @@ public class BlockFramework extends ReflectionFramework {
      * @since 1.0.0
      */
     private boolean verify(Class<Block> block) {
-        final List<String> missing = ApricotCollectionFactor.newArrayList();
+        final List<String> missing = ApricotCollectionFactor.arrayList();
 
         // Check indispensable fields, cannot register if missing.
         if (! IdentifierAccessor.ACCESSOR.has(block)) {
@@ -368,7 +368,7 @@ public class BlockFramework extends ReflectionFramework {
     }
 
     public List<Block> dumpBlocks() {
-        return ApricotCollectionFactor.newArrayList(this.blocks);
+        return ApricotCollectionFactor.arrayList(this.blocks);
     }
 
     private void item(Block block) {

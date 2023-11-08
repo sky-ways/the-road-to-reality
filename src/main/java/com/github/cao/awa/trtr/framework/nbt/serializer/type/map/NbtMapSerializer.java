@@ -19,6 +19,6 @@ public class NbtMapSerializer implements NbtSerializer<Map<?, ?>> {
 
     @Override
     public Map<?, ?> initializer() {
-        return ApricotCollectionFactor.newHashMap();
+        return ApricotCollectionFactor.hashMap();
     }
 }

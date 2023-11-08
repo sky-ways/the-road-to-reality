@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import java.util.List;
 
 public class ModelFramework {
-    private final List<TrtrModelFactory> factories = ApricotCollectionFactor.newArrayList();
+    private final List<TrtrModelFactory> factories = ApricotCollectionFactor.arrayList();
 
     public void add(List<TrtrModelFactory> factories) {
         this.factories.addAll(factories);
