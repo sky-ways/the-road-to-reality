@@ -2,30 +2,32 @@ package com.github.cao.awa.trtr.block.pebble;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlock;
+import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.item.pebble.PebbleItem;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 @Auto
-@NoModel
+//@NoModel
 public class PebbleBlock extends TrtrBlock {
     public static final Map<Integer, Integer> TYPE_MAX_COUNT = EntrustEnvironment.operation(ApricotCollectionFactor.hashMap(),
                                                                                             map -> {
@@ -122,6 +124,33 @@ public class PebbleBlock extends TrtrBlock {
 
         return stacks;
     }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        int currentCount = state.get(COUNT);
+
+        if (currentCount == 1) {
+            world.setBlockState(pos,
+                                Blocks.AIR.getDefaultState(),
+                                Block.NOTIFY_ALL
+            );
+        } else {
+            world.setBlockState(pos,
+                                state.with(COUNT,
+                                           currentCount - 1
+                                ),
+                                Block.NOTIFY_ALL
+            );
+        }
+
+        InventoryUtil.insertOrDrop(player,
+                                   world,
+                                   new ItemStack(TrtrItems.get(PebbleItem.class))
+        );
+
+        return ActionResult.SUCCESS;
+    }
+
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return NoFloatingBlock.canPlace(state,
