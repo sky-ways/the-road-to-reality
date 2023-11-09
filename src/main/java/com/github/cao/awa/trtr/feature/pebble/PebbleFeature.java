@@ -26,34 +26,11 @@ public class PebbleFeature extends Feature<PebbleFeatureConfig> {
 
     @Override
     public boolean generate(FeatureContext<PebbleFeatureConfig> context) {
-        System.out.println(context.getOrigin());
-
         PebbleFeatureConfig config = context.getConfig();
 
         WorldAccess world = context.getWorld();
 
         BlockPos blockPos = context.getOrigin();
-
-//        try (ChunkSectionCache chunkSectionCache = new ChunkSectionCache(world)) {
-//            ChunkSection section = chunkSectionCache.getSection(blockPos);
-//
-//            int x = blockPos.getX();
-//            int y = blockPos.getY();
-//            int z = blockPos.getZ();
-//
-//            section.setBlockState(
-//                    x,
-//                    y,
-//                    z,
-//                    Registries.BLOCK.get(
-//                                      Identifier.tryParse(
-//                                              context.getConfig()
-//                                                     .identifier()
-//                                      )
-//                              )
-//                                    .getDefaultState()
-//            );
-//        }
 
         // Generate on listed surface block.
         if (config.surfacePlaceable()

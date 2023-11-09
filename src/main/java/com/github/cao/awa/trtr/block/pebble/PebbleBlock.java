@@ -63,7 +63,7 @@ public class PebbleBlock extends TrtrBlock {
 
     @Auto
     @AutoProperty
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     @Auto
     @AutoProperty
     public static final IntProperty TYPE = IntProperty.of("type",
@@ -79,6 +79,9 @@ public class PebbleBlock extends TrtrBlock {
 
     @Auto
     public static final ItemConvertible LOOT = TrtrItems.get(PebbleItem.class);
+
+    @Auto
+    public static final Class<PebbleBlockModel> MODEL = PebbleBlockModel.class;
 
     public static final VoxelShape OUTLINE_SHAPE = PixelVoxelShapes.cuboid(2,
                                                                            0,

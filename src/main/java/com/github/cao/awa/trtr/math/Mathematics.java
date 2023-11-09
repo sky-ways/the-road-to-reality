@@ -1,11 +1,19 @@
 package com.github.cao.awa.trtr.math;
 
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.MathHelper;
 
-import java.math.*;
+import java.math.BigDecimal;
 
 public class Mathematics extends MathHelper {
     public static final float QUARTER_PI = 0.7853981633974483F;
+
+    public static boolean inRange(int current, int min, int max) {
+        return Math.max(min,
+                        current
+        ) == Math.min(current,
+                      max
+        );
+    }
 
     public static int absHash(Object key) {
         return key.hashCode() & Integer.MAX_VALUE;

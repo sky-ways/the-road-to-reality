@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.fluid.awa;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.TrtrMod;
+import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -18,6 +19,7 @@ import net.minecraft.world.World;
 
 @Auto
 @DevOnly
+@NoModel
 public class AwaBlock extends FluidBlock {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:awa");

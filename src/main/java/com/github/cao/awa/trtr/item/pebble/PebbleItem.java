@@ -8,6 +8,7 @@ import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.item.branch.BranchItem;
 import com.github.cao.awa.trtr.item.craft.CraftingItem;
+import com.github.cao.awa.trtr.item.stone.StonePartCraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,6 +27,12 @@ import java.util.function.Function;
 
 @Auto
 public class PebbleItem extends CraftingItem {
+    public static final int MAX_CRAFT_TIME =
+            //Anti-accidental touch.
+            ANTI_ACCIDENTAL_TOUCH_TIME +
+                    // 8.5s used to craft.
+                    (170);
+
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:pebble");
 
@@ -37,6 +44,8 @@ public class PebbleItem extends CraftingItem {
     @Override
     public TypedActionResult<ItemStack> craft(World world, PlayerEntity user, ItemStack craftingStack, ItemStack targetStack) {
         if (targetStack.getItem() == TrtrItems.get(BranchItem.class)) {
+            targetStack.decrement(1);
+
             InventoryUtil.insertOrDrop(
                     user,
                     world,
@@ -45,10 +54,46 @@ public class PebbleItem extends CraftingItem {
                             1
                     )
             );
+            return TypedActionResult.success(targetStack);
+        } else if (targetStack.getItem() == TrtrItems.get(PebbleItem.class)) {
             targetStack.decrement(1);
+
+            InventoryUtil.insertOrDrop(
+                    user,
+                    world,
+                    new ItemStack(
+                            Items.STONE,
+                            1
+                    )
+            );
             return TypedActionResult.success(targetStack);
         }
         return TypedActionResult.pass(targetStack);
+    }
+
+    @Override
+    public void scaledCraft(World world, PlayerEntity user, ItemStack craftingStack, ItemStack targetStack, int remainingUseTicks) {
+        if (targetStack.getItem() == TrtrItems.get(PebbleItem.class)) {
+            int alreadyUsedTicks = MAX_CRAFT_TIME - remainingUseTicks;
+
+            if (alreadyUsedTicks > ANTI_ACCIDENTAL_TOUCH_TIME) {
+                alreadyUsedTicks = alreadyUsedTicks - ANTI_ACCIDENTAL_TOUCH_TIME;
+
+                ItemStack craftedStack = StonePartCraft.craft(alreadyUsedTicks);
+
+                InventoryUtil.insertOrDrop(
+                        user,
+                        world,
+                        craftedStack
+                );
+                targetStack.decrement(1);
+            }
+        }
+    }
+
+    @Override
+    public int getMaxUseTime(ItemStack stack) {
+        return MAX_CRAFT_TIME;
     }
 
     @Override
@@ -86,6 +131,9 @@ public class PebbleItem extends CraftingItem {
                                               )
                                               .with(PebbleBlock.COUNT,
                                                     1
+                                              )
+                                              .with(PebbleBlock.FACING,
+                                                    context.getHorizontalPlayerFacing()
                                               ),
                                     Block.NOTIFY_ALL
                 );
