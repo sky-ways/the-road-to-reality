@@ -24,8 +24,8 @@ import java.util.List;
 public class ItemFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("ItemFramework");
     private final ItemDataGenFramework dataGen = new ItemDataGenFramework(this);
-    private final List<Item> items = ApricotCollectionFactor.newArrayList();
-    private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.newArrayList();
+    private final List<Item> items = ApricotCollectionFactor.arrayList();
+    private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.arrayList();
 
     public void work() {
         // Working stream...
@@ -111,7 +111,7 @@ public class ItemFramework extends ReflectionFramework {
      * @since 1.0.0
      */
     private boolean verify(Class<Item> block) {
-        final List<String> missing = ApricotCollectionFactor.newArrayList();
+        final List<String> missing = ApricotCollectionFactor.arrayList();
 
         // Check indispensable fields, cannot register if missing.
         if (! IdentifierAccessor.ACCESSOR.has(block)) {
@@ -215,6 +215,6 @@ public class ItemFramework extends ReflectionFramework {
     }
 
     public List<Item> dumpItems() {
-        return ApricotCollectionFactor.newArrayList(this.items);
+        return ApricotCollectionFactor.arrayList(this.items);
     }
 }

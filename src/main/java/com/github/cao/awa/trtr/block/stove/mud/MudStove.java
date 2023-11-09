@@ -6,8 +6,9 @@ import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
+import com.github.cao.awa.trtr.block.stove.mud.entity.MudStoveBlockEntity;
 import com.github.cao.awa.trtr.block.stove.mud.model.MudStoveModelProvider;
-import com.github.cao.awa.trtr.block.stove.mud.render.MudStoveRender;
+import com.github.cao.awa.trtr.block.stove.mud.renderer.MudStoveRenderer;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -60,7 +61,7 @@ public class MudStove extends TrtrBlockWithEntity {
     public static MudStoveModelProvider MODEL;
 
     @Auto
-    public static MudStoveRender RENDER;
+    public static MudStoveRenderer RENDER;
 
     @Auto
     @AutoProperty

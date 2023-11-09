@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 
 public class TrtrItems {
-    public static final Map<Identifier, Item> ITEMS = ApricotCollectionFactor.newHashMap();
+    public static final Map<Identifier, Item> ITEMS = ApricotCollectionFactor.hashMap();
 
     public static void register(Identifier identifier, Item item) {
         ITEMS.put(identifier,

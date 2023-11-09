@@ -25,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 public class BlockTagDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("BlockTagDataGenFramework");
     private final BlockFramework blockFramework;
-    private final List<TrtrTagFactory> factories = ApricotCollectionFactor.newArrayList();
+    private final List<TrtrTagFactory> factories = ApricotCollectionFactor.arrayList();
 
     public BlockTagDataGenFramework(BlockFramework blockFramework) {
         this.blockFramework = blockFramework;

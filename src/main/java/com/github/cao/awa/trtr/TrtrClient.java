@@ -7,6 +7,6 @@ import net.fabricmc.api.ClientModInitializer;
 public class TrtrClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        TrtrMod.BLOCK_FRAMEWORK.renders();
+        TrtrMod.BLOCK_FRAMEWORK.renderers();
     }
 }

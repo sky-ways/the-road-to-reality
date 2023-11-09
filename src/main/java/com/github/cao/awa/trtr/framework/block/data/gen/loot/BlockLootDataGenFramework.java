@@ -5,7 +5,6 @@ import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.data.gen.loot.DestroyToItemLootProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.loot.LootFactory;
-import com.github.cao.awa.trtr.framework.accessor.item.ItemSettingAccessor;
 import com.github.cao.awa.trtr.framework.accessor.item.LootItemConvertibleAccessor;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
@@ -27,7 +26,7 @@ import java.util.Objects;
 public class BlockLootDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("BlockLootDataGenFramework");
     private final BlockFramework blockFramework;
-    private final List<LootFactory<?>> factories = ApricotCollectionFactor.newArrayList();
+    private final List<LootFactory<?>> factories = ApricotCollectionFactor.arrayList();
 
     public BlockLootDataGenFramework(BlockFramework blockFramework) {
         this.blockFramework = blockFramework;
@@ -102,7 +101,7 @@ public class BlockLootDataGenFramework extends ReflectionFramework {
     }
 
     private boolean verify(Block block) {
-        final List<String> missing = ApricotCollectionFactor.newArrayList();
+        final List<String> missing = ApricotCollectionFactor.arrayList();
 
         // Check indispensable fields, cannot register if missing.
         if (! LootDataGeneratorAccessor.ACCESSOR.has(block)) {

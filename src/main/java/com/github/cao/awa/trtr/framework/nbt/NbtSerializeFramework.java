@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class NbtSerializeFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("NbtSerializeFramework");
-    private final Map<Class<?>, NbtSerializer<?>> nbtSerializers = ApricotCollectionFactor.newHashMap();
+    private final Map<Class<?>, NbtSerializer<?>> nbtSerializers = ApricotCollectionFactor.hashMap();
     private final BlockFramework framework;
 
     public NbtSerializeFramework(BlockFramework framework) {

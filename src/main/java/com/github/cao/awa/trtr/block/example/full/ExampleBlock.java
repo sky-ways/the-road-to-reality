@@ -18,7 +18,6 @@ import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.MapColor;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 @Auto
@@ -86,10 +85,12 @@ public class ExampleBlock extends TrtrBlockWithEntity {
     public static final Class<ExampleBlockTag> TYPE_ENTITY = ExampleBlockTag.class;
 
     // Auto properties to state builder
+    @Auto
     @AutoProperty
     public static final DirectionProperty DIRECTION = Properties.FACING;
 
     // This property will not append to state builder, will auto ignored because field type is not 'net.minecraft.state.property.Property'.
+    @Auto
     @AutoProperty
     public static final String WRONG_PROPERTY = "Test wrong property";
 

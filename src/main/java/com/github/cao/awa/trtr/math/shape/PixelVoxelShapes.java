@@ -14,25 +14,25 @@ public class PixelVoxelShapes {
     /**
      * Build the rectangle shape.
      *
-     * @param px1 First point of x
-     * @param py1 First point of y
-     * @param pz1 First point of z
-     * @param px2 Second point of x
-     * @param py2 Second point of y
-     * @param pz2 Second point of z
+     * @param x1 First point of x
+     * @param y1 First point of y
+     * @param z1 First point of z
+     * @param x2 Second point of x
+     * @param y2 Second point of y
+     * @param z2 Second point of z
      * @return Rectangle shape
      * @author cao_awa
      * @see net.minecraft.util.shape.VoxelShape
      * @see net.minecraft.util.shape.VoxelShapes
      */
-    public static VoxelShape cuboid(int px1, int py1, int pz1, int px2, int py2, int pz2) {
+    public static VoxelShape cuboid(int x1, int y1, int z1, int x2, int y2, int z2) {
         return VoxelShapes.cuboid(
-                px1 / 16D,
-                py1 / 16D,
-                pz1 / 16D,
-                px2 / 16D,
-                py2 / 16D,
-                pz2 / 16D
+                x1 / 16D,
+                y1 / 16D,
+                z1 / 16D,
+                x2 / 16D,
+                y2 / 16D,
+                z2 / 16D
         );
     }
 

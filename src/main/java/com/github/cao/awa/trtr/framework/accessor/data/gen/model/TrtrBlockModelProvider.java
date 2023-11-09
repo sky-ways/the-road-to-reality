@@ -13,7 +13,7 @@ import net.minecraft.state.property.Property;
 import java.util.Map;
 
 public abstract class TrtrBlockModelProvider extends FabricModelProvider {
-    private final Map<VariantSetting<?>, ?> variants = ApricotCollectionFactor.newHashMap();
+    private final Map<VariantSetting<?>, ?> variants = ApricotCollectionFactor.hashMap();
 
     public TrtrBlockModelProvider(FabricDataOutput output) {
         super(output);

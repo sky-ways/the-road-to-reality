@@ -4,7 +4,7 @@ import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
-import com.github.cao.awa.trtr.data.gen.model.no.BlockNoModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.no.BlockStatedNoModelProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.ModelDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
@@ -22,7 +22,7 @@ import java.util.List;
 public class BlockModelDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("BlockModelDataGenFramework");
     private final BlockFramework blockFramework;
-    private final List<TrtrModelFactory> factories = ApricotCollectionFactor.newArrayList();
+    private final List<TrtrModelFactory> factories = ApricotCollectionFactor.arrayList();
 
     public BlockModelDataGenFramework(BlockFramework blockFramework) {
         this.blockFramework = blockFramework;
@@ -109,6 +109,10 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                                 .getConstructor(FabricDataOutput.class)
                                 .newInstance(output)));
                     } else {
+                        LOGGER.info("Model generator of '{}' will use generic provider",
+                                    block.getClass()
+                                         .getName()
+                        );
                         return output -> new GenericBlockModelProvider(output,
                                                                        block
                         );
@@ -120,11 +124,15 @@ public class BlockModelDataGenFramework extends ReflectionFramework {
                             block.getClass()
                                  .getName()
                 );
-                return output -> new BlockNoModelProvider(output,
-                                                          block
+                return output -> new BlockStatedNoModelProvider(output,
+                                                                block
                 );
             }
         } catch (Exception e) {
+            LOGGER.info("Model generator of '{}' will use generic provider",
+                        block.getClass()
+                             .getName()
+            );
             return output -> new GenericBlockModelProvider(output,
                                                            block
             );

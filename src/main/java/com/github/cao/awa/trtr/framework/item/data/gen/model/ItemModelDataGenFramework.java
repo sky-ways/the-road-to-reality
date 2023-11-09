@@ -20,7 +20,7 @@ import java.util.List;
 public class ItemModelDataGenFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("ItemModelDataGenFramework");
     private final ItemFramework itemFramework;
-    private final List<TrtrModelFactory> factories = ApricotCollectionFactor.newArrayList();
+    private final List<TrtrModelFactory> factories = ApricotCollectionFactor.arrayList();
 
     public ItemModelDataGenFramework(ItemFramework itemFramework) {
         this.itemFramework = itemFramework;

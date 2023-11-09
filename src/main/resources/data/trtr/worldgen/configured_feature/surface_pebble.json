@@ -1,0 +1,11 @@
+{
+    "type": "trtr:surface_pebble",
+    "config": {
+        "surface_placeable": [
+            "minecraft:grass_block",
+            "minecraft:sand",
+            "minecraft:red_sand",
+            "minecraft:stone"
+        ]
+    }
+}
