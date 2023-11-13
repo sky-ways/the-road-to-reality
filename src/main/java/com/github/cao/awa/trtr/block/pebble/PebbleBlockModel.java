@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.block.pebble;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
+import com.github.cao.awa.trtr.block.state.BlockStates;
 import com.github.cao.awa.trtr.block.state.supplier.StepBlockStateSupplier;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrBlockModelProvider;
 import com.github.cao.awa.trtr.identifier.namespane.Namespace;
@@ -34,21 +35,10 @@ public class PebbleBlockModel extends TrtrBlockModelProvider {
                 .property(PebbleBlock.TYPE);
 
         supplier.changer(map -> {
-            switch ((Direction) map.get(PebbleBlock.FACING)
-                                   .value()) {
-                case NORTH -> supplier.variant(VariantSettings.Y,
-                                               VariantSettings.Rotation.R0
-                );
-                case EAST -> supplier.variant(VariantSettings.Y,
-                                              VariantSettings.Rotation.R90
-                );
-                case SOUTH -> supplier.variant(VariantSettings.Y,
-                                               VariantSettings.Rotation.R180
-                );
-                case WEST -> supplier.variant(VariantSettings.Y,
-                                              VariantSettings.Rotation.R270
-                );
-            }
+            BlockStates.horizontalFacing(supplier,
+                                         (Direction) map.get(PebbleBlock.FACING)
+                                                        .value()
+            );
 
             int type = EntrustEnvironment.cast(map.get(PebbleBlock.TYPE)
                                                   .value());

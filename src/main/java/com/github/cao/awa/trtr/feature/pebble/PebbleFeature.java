@@ -52,6 +52,10 @@ public class PebbleFeature extends Feature<PebbleFeatureConfig> {
                                                  4
                 );
 
+                pebbleCount = pebbleType == 1 ? Math.min(2,
+                                                         pebbleCount
+                ) : pebbleCount;
+
                 blockState = blockState.with(PebbleBlock.FACING,
                                              EntrustEnvironment.select(DIRECTIONS,
                                                                        RANDOM
@@ -61,9 +65,7 @@ public class PebbleFeature extends Feature<PebbleFeatureConfig> {
                                              pebbleType
                                        )
                                        .with(PebbleBlock.COUNT,
-                                             pebbleType == 1 ? Math.min(2,
-                                                                        pebbleCount
-                                             ) : pebbleCount
+                                             pebbleCount
                                        );
             }
             world.setBlockState(blockPos,

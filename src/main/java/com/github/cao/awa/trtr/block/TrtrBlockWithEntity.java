@@ -41,12 +41,13 @@ public abstract class TrtrBlockWithEntity extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return validateTicker(type,
-                              TrtrMod.BLOCK_FRAMEWORK.entityType(this.getClass()),
+                              TrtrMod.BLOCK_FRAMEWORK.entityType(getClass()),
                               TrtrMod.BLOCK_FRAMEWORK :: entityTick
         );
     }
 
     // Append properties to state builder.
+    @Auto
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         TrtrMod.BLOCK_FRAMEWORK.properties(this,
