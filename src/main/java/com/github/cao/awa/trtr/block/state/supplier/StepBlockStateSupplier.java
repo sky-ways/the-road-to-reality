@@ -52,8 +52,6 @@ public class StepBlockStateSupplier implements BlockStateSupplier {
 
         List<Map<Property<?>, Property.Value<?>>> variants = ApricotCollectionFactor.arrayList();
 
-        List<Map<Property<?>, Property.Value<?>>> tempVariants = ApricotCollectionFactor.arrayList();
-
         // Create first level.
         Property<?> firstProperty = this.properties.get(0);
         firstProperty.stream()

@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.mixin.block.campfire;
 
 import com.github.cao.awa.trtr.constant.campfire.CampfireConstants;
 import com.github.cao.awa.trtr.share.SharedObjectData;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.CampfireBlock;
@@ -22,15 +23,18 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Random;
 
 @Mixin(CampfireBlock.class)
 public abstract class CampfireBlockMixin extends BlockWithEntity {
+    private static final Random RANDOM = new Random();
     @Shadow
     @Final
     public static BooleanProperty LIT;
@@ -79,19 +83,78 @@ public abstract class CampfireBlockMixin extends BlockWithEntity {
                               ));
     }
 
-    @Inject(method = "onUse", at = @At("RETURN"))
+    @Inject(method = "onUse", at = @At("RETURN"), cancellable = true)
     public void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (world.isClient()) {
             return;
         }
 
+        ItemStack mainStack = player.getStackInHand(Hand.MAIN_HAND);
+        ItemStack offStack = player.getStackInHand(Hand.MAIN_HAND);
+
+        if (mainStack.getItem() == Items.FLINT && offStack.getItem() == Items.FLINT) {
+            fire(world,
+                 pos
+            );
+
+            cir.setReturnValue(ActionResult.SUCCESS);
+        } else {
+            if (addFuel(world,
+                        pos,
+                        player,
+                        hand
+            )) {
+                cir.setReturnValue(ActionResult.SUCCESS);
+            }
+        }
+    }
+
+    @Unique
+    private void fire(World world, BlockPos pos) {
+        if (RANDOM.nextInt(0,
+                           10
+        ) == 9) {
+            BlockEntity entity = world.getBlockEntity(pos);
+            BlockState state = world.getBlockState(pos);
+
+            List<ItemStack> list = SharedObjectData.get(entity,
+                                                        "FuelList"
+            );
+
+            if (list == null) {
+                return;
+            }
+
+            if (list.size() == 0) {
+                ItemStack fuelStack = new ItemStack(Items.AIR);
+                fuelStack.setCount(1);
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putInt("CampfireFuelTimeLeft",
+                                   200
+                );
+                fuelStack.setNbt(nbtCompound);
+
+                list.add(fuelStack);
+            }
+
+            world.setBlockState(pos,
+                                state.with(LIT,
+                                           true
+                                ),
+                                Block.NOTIFY_ALL
+            );
+        }
+    }
+
+    @Unique
+    private boolean addFuel(World world, BlockPos pos, PlayerEntity player, Hand hand) {
         BlockEntity entity = world.getBlockEntity(pos);
         List<ItemStack> list = SharedObjectData.get(entity,
                                                     "FuelList"
         );
 
         if (list == null || list.size() == 16) {
-            return;
+            return false;
         }
 
         ItemStack stack = player.getStackInHand(hand);
@@ -111,6 +174,9 @@ public abstract class CampfireBlockMixin extends BlockWithEntity {
             list.add(fuelStack);
 
             stack.decrement(1);
+
+            return true;
         }
+        return false;
     }
 }
