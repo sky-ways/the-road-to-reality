@@ -11,6 +11,8 @@ import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.item.ItemFramework;
 import com.github.cao.awa.trtr.framework.model.provider.ModelFramework;
 import com.github.cao.awa.trtr.framework.scanner.AnnotationScannerFramework;
+import com.github.cao.awa.trtr.recipe.serializer.TrtrRecipeSerializer;
+import com.github.cao.awa.trtr.recipe.type.TrtrRecipeType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -58,6 +60,9 @@ public class TrtrMod implements ModInitializer {
 
         // Register mineable annotations for data generator.
         MineableAnnotations.register();
+
+        TrtrRecipeType.initialize();
+        TrtrRecipeSerializer.initialize();
 
         // Scan the annotations.
         SCANNER_FRAMEWORK.work();

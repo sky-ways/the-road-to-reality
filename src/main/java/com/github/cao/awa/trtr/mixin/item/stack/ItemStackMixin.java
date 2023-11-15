@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.mixin.item;
+package com.github.cao.awa.trtr.mixin.item.stack;
 
 import com.github.cao.awa.trtr.item.craft.CraftingItem;
 import net.minecraft.entity.LivingEntity;
@@ -44,7 +44,8 @@ public abstract class ItemStackMixin {
                         world,
                         player,
                         offItem,
-                        mainItem
+                        mainItem,
+                        0
                 );
             }
         }

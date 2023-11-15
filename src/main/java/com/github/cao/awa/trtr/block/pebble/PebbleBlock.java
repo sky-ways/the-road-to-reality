@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 @Auto
-//@NoModel
 public class PebbleBlock extends TrtrBlock {
     public static final Map<Integer, Integer> TYPE_MAX_COUNT = EntrustEnvironment.operation(ApricotCollectionFactor.hashMap(),
                                                                                             map -> {

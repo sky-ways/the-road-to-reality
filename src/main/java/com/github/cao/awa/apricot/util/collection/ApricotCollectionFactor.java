@@ -40,6 +40,18 @@ public class ApricotCollectionFactor {
         return new ConcurrentHashMap<>();
     }
 
+    public static <V> List<V> syncList() {
+        return Collections.synchronizedList(arrayList());
+    }
+
+    public static <V> List<V> syncList(int capacity) {
+        return Collections.synchronizedList(arrayList(capacity));
+    }
+
+    public static <V> List<V> syncList(List<V> delegate) {
+        return Collections.synchronizedList(arrayList(delegate));
+    }
+
     public static <V> ArrayList<V> arrayList() {
         return new ArrayList<>();
         //        return new ObjectArrayList<>();
