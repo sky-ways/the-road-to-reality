@@ -36,15 +36,6 @@ public class HandCraftingRecipe implements Recipe<HandCraftingInventory> {
 
     @Override
     public boolean matches(HandCraftingInventory inventory, World world) {
-        System.out.println(inventory.mainStack()
-                                    .getItem() + ":" + this.input.main()
-                                                                 .getItem());
-        System.out.println(inventory.offStack()
-                                    .getItem() + ":" + this.input.off()
-                                                                 .getItem());
-        System.out.println(inventory.usedTicks() + ":" + Mathematics.inRange(inventory.usedTicks(),
-                                                                             this.range
-        ));
         if (inventory.remainingTicks() == 0 && ! stopOnUsage()) {
             return false;
         }
@@ -66,7 +57,6 @@ public class HandCraftingRecipe implements Recipe<HandCraftingInventory> {
 
     @Override
     public boolean fits(int width, int height) {
-        System.out.println(width + ":" + height);
         return false;
     }
 
