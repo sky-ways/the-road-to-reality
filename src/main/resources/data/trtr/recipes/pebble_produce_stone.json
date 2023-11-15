@@ -1,0 +1,23 @@
+{
+    "type": "trtr:hand_crafting",
+    "input": {
+        "main": {
+            "item": "trtr:pebble"
+        },
+        "off": {
+            "item": "trtr:pebble"
+        }
+    },
+    "result": {
+        "item": "minecraft:stone"
+    },
+    "range": {
+        "min": 170,
+        "max": 170
+    },
+    "do_consume": {
+        "main": true,
+        "off": false
+    },
+    "stop_on_usage": true
+}

@@ -111,11 +111,16 @@ public abstract class CampfireBlockMixin extends BlockWithEntity {
 
     @Unique
     private void fire(World world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
+
+        if (state.get(WATERLOGGED)) {
+            return;
+        }
+
         if (RANDOM.nextInt(0,
                            10
         ) == 9) {
             BlockEntity entity = world.getBlockEntity(pos);
-            BlockState state = world.getBlockState(pos);
 
             List<ItemStack> list = SharedObjectData.get(entity,
                                                         "FuelList"

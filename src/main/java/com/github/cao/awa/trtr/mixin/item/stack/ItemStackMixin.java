@@ -44,7 +44,8 @@ public abstract class ItemStackMixin {
                         world,
                         player,
                         offItem,
-                        mainItem
+                        mainItem,
+                        0
                 );
             }
         }

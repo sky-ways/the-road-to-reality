@@ -40,4 +40,8 @@ public class SharedObjectData {
                                     )
                                     .remove(name));
     }
+
+    public static boolean has(Object object) {
+        return data.containsKey(object);
+    }
 }

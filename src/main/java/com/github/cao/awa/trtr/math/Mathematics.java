@@ -1,5 +1,6 @@
 package com.github.cao.awa.trtr.math;
 
+import com.github.cao.awa.trtr.math.range.IntegerRange;
 import net.minecraft.util.math.MathHelper;
 
 import java.math.BigDecimal;
@@ -12,6 +13,13 @@ public class Mathematics extends MathHelper {
                         current
         ) == Math.min(current,
                       max
+        );
+    }
+
+    public static boolean inRange(int current, IntegerRange range) {
+        return inRange(current,
+                       range.min(),
+                       range.max()
         );
     }
 
@@ -31,11 +39,11 @@ public class Mathematics extends MathHelper {
      */
     static int stringSize(long x) {
         int d = 1;
-        if (x > -1) {
+        if (x > - 1) {
             d = 0;
-            x = -x;
+            x = - x;
         }
-        long p = -10;
+        long p = - 10;
         for (int i = 1; i < 19; i++) {
             if (x > p)
                 return i + d;

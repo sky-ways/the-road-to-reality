@@ -23,13 +23,13 @@ import java.util.List;
 @Mixin(CampfireBlockEntity.class)
 public abstract class CampfireBlockEntityMixin {
     @Unique
-    private final List<ItemStack> fuels = ApricotCollectionFactor.arrayList();
+    private final List<ItemStack> fuelTimes = ApricotCollectionFactor.syncList();
 
     @Inject(method = "litServerTick", at = @At("RETURN"))
     private static void tick(World world, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CallbackInfo ci) {
         CampfireBlockEntityMixin mixin = castToMixin(campfire);
 
-        if (mixin.fuels.size() == 0) {
+        if (mixin.fuelTimes.size() == 0) {
             world.setBlockState(pos,
                                 state.with(CampfireBlock.LIT,
                                            false
@@ -39,7 +39,7 @@ public abstract class CampfireBlockEntityMixin {
         } else {
             List<ItemStack> removes = ApricotCollectionFactor.arrayList();
 
-            for (ItemStack fuel : mixin.fuels) {
+            for (ItemStack fuel : mixin.fuelTimes) {
                 NbtCompound stackCompound = fuel.getOrCreateNbt();
                 int leftTime = stackCompound.getInt("CampfireFuelTimeLeft");
 
@@ -53,9 +53,21 @@ public abstract class CampfireBlockEntityMixin {
                 }
             }
 
-            mixin.fuels.removeAll(removes);
+            mixin.fuelTimes.removeAll(removes);
 
             campfire.markDirty();
+        }
+    }
+
+    @Inject(method = "unlitServerTick", at = @At("HEAD"))
+    private static void unlitServerTick(World world, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CallbackInfo ci) {
+        CampfireBlockEntityMixin mixin = castToMixin(campfire);
+
+        if (! SharedObjectData.has(mixin)) {
+            SharedObjectData.set(mixin,
+                                 "FuelList",
+                                 mixin.fuelTimes
+            );
         }
     }
 
@@ -66,20 +78,15 @@ public abstract class CampfireBlockEntityMixin {
         )) {
             NbtCompound compound = (NbtCompound) element;
 
-            this.fuels.add(ItemStack.fromNbt(compound));
+            this.fuelTimes.add(ItemStack.fromNbt(compound));
         }
-
-        SharedObjectData.set(this,
-                             "FuelList",
-                             this.fuels
-        );
     }
 
     @Inject(method = "writeNbt", at = @At("RETURN"))
     private void writeNbt(NbtCompound nbt, CallbackInfo ci) {
         NbtList list = new NbtList();
 
-        for (ItemStack stack : this.fuels) {
+        for (ItemStack stack : this.fuelTimes) {
             NbtCompound stackCompound = new NbtCompound();
             stack.writeNbt(stackCompound);
             list.add(stackCompound);

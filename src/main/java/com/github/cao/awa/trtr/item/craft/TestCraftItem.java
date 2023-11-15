@@ -19,7 +19,7 @@ public class TestCraftItem extends CraftingItem {
     }
 
     @Override
-    public TypedActionResult<ItemStack> craft(World world, PlayerEntity user, ItemStack craftingStack, ItemStack targetStack) {
+    public TypedActionResult<ItemStack> craft(World world, PlayerEntity user, ItemStack craftingStack, ItemStack targetStack, int remainingUseTicks) {
         System.out.println("Crafting: " + craftingStack + "/" + targetStack);
         user.giveItemStack(new ItemStack(Items.BEDROCK,
                                          1
