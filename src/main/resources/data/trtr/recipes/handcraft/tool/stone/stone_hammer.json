@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "trtr:stick"
+        },
+        "off": {
+            "item": "trtr:stone_hammer_part"
+        }
+    },
+    "result": [
+        {
+            "item": "minecraft:stone_hammer"
+        }
+    ],
+    "range": {
+        "min": 100,
+        "max": 100
+    },
+    "do_consume": {
+        "off": 1
+    },
+    "stop_on_usage": true
+}

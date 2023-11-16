@@ -32,10 +32,12 @@ public class HandcraftedItemCriterionConditions extends AbstractCriterionConditi
             match &= this.offStackPredicate.test(offStack);
         }
 
-        for (ItemStack stack : resultStacks) {
-            for (ItemPredicate resultPredicate : this.resultStacksPredicate) {
-                match &= resultPredicate.test(stack);
+        for (ItemPredicate resultPredicate : this.resultStacksPredicate) {
+            boolean mm = false;
+            for (ItemStack stack : resultStacks) {
+                mm |= resultPredicate.test(stack);
             }
+            match &= mm;
         }
 
         return match;

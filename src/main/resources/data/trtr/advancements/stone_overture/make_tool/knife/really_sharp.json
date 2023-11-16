@@ -1,0 +1,37 @@
+{
+    "parent": "trtr:stone_overture/flint/be_careful_to_scratch",
+    "criteria": {
+        "craft_flint_knife": {
+            "conditions": {
+                "results": [
+                    {
+                        "items": [
+                            "trtr:flint_knife"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.really_sharp.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:flint_knife"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.really_sharp.title"
+        }
+    },
+    "requirements": [
+        [
+            "craft_flint_knife"
+        ]
+    ]
+}

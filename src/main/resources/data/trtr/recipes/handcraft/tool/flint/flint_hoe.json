@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "trtr:stick"
+        },
+        "off": {
+            "item": "minecraft:sharp_flint"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:flint_spear"
+        }
+    ],
+    "range": {
+        "min": 160,
+        "max": 160
+    },
+    "do_consume": {
+        "off": 1
+    },
+    "stop_on_usage": true
+}

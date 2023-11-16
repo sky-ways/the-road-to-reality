@@ -1,0 +1,37 @@
+{
+    "parent": "trtr:stone_overture/stone_overture",
+    "criteria": {
+        "craft_stick": {
+            "conditions": {
+                "results": [
+                    {
+                        "items": [
+                            "minecraft:stick"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.stick.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:branch"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.stick.title"
+        }
+    },
+    "requirements": [
+        [
+            "craft_stick"
+        ]
+    ]
+}

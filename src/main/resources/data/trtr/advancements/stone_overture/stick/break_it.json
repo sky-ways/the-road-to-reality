@@ -1,0 +1,37 @@
+{
+    "parent": "trtr:stone_overture/stick/stick",
+    "criteria": {
+        "craft_stick": {
+            "conditions": {
+                "results": [
+                    {
+                        "items": [
+                            "trtr:short_stick"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.break_it.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:short_stick"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.break_it.title"
+        }
+    },
+    "requirements": [
+        [
+            "craft_stick"
+        ]
+    ]
+}
