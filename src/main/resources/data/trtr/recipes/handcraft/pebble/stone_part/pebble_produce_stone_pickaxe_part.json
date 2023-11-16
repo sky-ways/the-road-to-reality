@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "tag": "trtr:pebbles"
+        },
+        "off": {
+            "tag": "trtr:pebbles"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:stone_pickaxe_part"
+        }
+    ],
+    "range": {
+        "min": 40,
+        "max": 60
+    },
+    "do_consume": {
+        "main": 1
+    },
+    "stop_on_usage": false
+}

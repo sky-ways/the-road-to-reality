@@ -8,6 +8,7 @@ import com.github.cao.awa.trtr.item.handcraft.CraftingItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,16 +21,16 @@ import net.minecraft.world.event.GameEvent;
 import java.util.function.Function;
 
 @Auto
-public class PebbleItem extends CraftingItem {
+public class GranitePebbleItem extends CraftingItem {
     public static final int MAX_CRAFT_TIME =
             // 8.5s used to craft.
             (170);
 
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:pebble");
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:granite_pebble");
 
     @Auto
-    public PebbleItem(Settings settings) {
+    public GranitePebbleItem(Item.Settings settings) {
         super(settings);
     }
 

@@ -1,0 +1,25 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "trtr:plant_fibre"
+        },
+        "off": {
+            "item": "trtr:plant_fibre"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:fibre_rope"
+        }
+    ],
+    "range": {
+        "min": 160,
+        "max": 160
+    },
+    "do_consume": {
+        "main": 2,
+        "off": 2
+    },
+    "stop_on_usage": true
+}

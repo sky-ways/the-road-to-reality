@@ -1,0 +1,16 @@
+package com.github.cao.awa.trtr.item.hammer;
+
+import com.github.cao.awa.apricot.anntation.Auto;
+import com.github.cao.awa.trtr.item.TrtrItem;
+import net.minecraft.util.Identifier;
+
+@Auto
+public class StoneHammerItem extends TrtrItem {
+    @Auto
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:stone_hammer");
+
+    @Auto
+    public StoneHammerItem(Settings settings) {
+        super(settings);
+    }
+}

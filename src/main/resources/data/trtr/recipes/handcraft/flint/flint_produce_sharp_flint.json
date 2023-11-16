@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "minecraft:flint"
+        },
+        "off": {
+            "item": "minecraft:flint"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:sharp_flint"
+        }
+    ],
+    "range": {
+        "min": 80,
+        "max": 100
+    },
+    "do_consume": {
+        "main": 1
+    },
+    "stop_on_usage": false
+}

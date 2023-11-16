@@ -6,6 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class InventoryUtil {
     public static void insertOrDrop(PlayerEntity player, World world, ItemStack stack) {
         if (! player.getInventory()
@@ -19,6 +21,15 @@ public class InventoryUtil {
                                              Randoms.d(0.05),
                                              Randoms.d(0.1)
             ));
+        }
+    }
+
+    public static void insertOrDrop(PlayerEntity player, World world, List<ItemStack> stacks) {
+        for (ItemStack stack : stacks) {
+            insertOrDrop(player,
+                         world,
+                         stack
+            );
         }
     }
 }

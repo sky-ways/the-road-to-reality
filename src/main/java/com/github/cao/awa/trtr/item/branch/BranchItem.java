@@ -4,7 +4,7 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.branch.BranchBlock;
-import com.github.cao.awa.trtr.item.TrtrItem;
+import com.github.cao.awa.trtr.item.handcraft.CraftingItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ import net.minecraft.world.event.GameEvent;
 import java.util.function.Function;
 
 @Auto
-public class BranchItem extends TrtrItem {
+public class BranchItem extends CraftingItem {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:branch");
 

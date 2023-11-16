@@ -8,6 +8,7 @@
         "block.BlockEntityMixin",
         "block.campfire.CampfireBlockEntityMixin",
         "block.campfire.CampfireBlockMixin",
+        "item.ItemsMixin",
         "item.stack.ItemStackMixin"
     ],
     "client": [

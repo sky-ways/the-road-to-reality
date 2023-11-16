@@ -1,0 +1,35 @@
+{
+    "criteria": {
+        "getting_pebble": {
+            "conditions": {
+                "items": [
+                    {
+                        "tag": "trtr:pebbles"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+        "description": {
+            "translate": "advancements.stone_overture.stone_overture.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:pebble"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.stone_overture.title"
+        }
+    },
+    "requirements": [
+        [
+            "getting_pebble"
+        ]
+    ]
+}
