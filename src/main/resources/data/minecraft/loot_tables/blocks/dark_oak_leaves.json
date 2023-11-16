@@ -1,0 +1,80 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "bonus_rolls": 0.0,
+            "entries": [
+                {
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                            "type": "minecraft:item",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:survives_explosion"
+                                },
+                                {
+                                    "chances": [
+                                        0.05,
+                                        0.0625,
+                                        0.083333336,
+                                        0.1
+                                    ],
+                                    "condition": "minecraft:table_bonus",
+                                    "enchantment": "minecraft:fortune"
+                                }
+                            ],
+                            "name": "minecraft:dark_oak_sapling"
+                        }
+                    ]
+                }
+            ],
+            "rolls": 1.0
+        },
+        {
+            "bonus_rolls": 0.0,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "conditions": [
+                        {
+                            "chances": [
+                                0.19,
+                                0.27,
+                                0.43,
+                                0.55
+                            ],
+                            "condition": "minecraft:table_bonus",
+                            "enchantment": "minecraft:fortune"
+                        }
+                    ],
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "max": 2.0,
+                                "min": 1.0
+                            },
+                            "function": "minecraft:set_count"
+                        },
+                        {
+                            "function": "minecraft:explosion_decay"
+                        },
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "max": 2.0,
+                                "min": 1.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "trtr:branch"
+                }
+            ],
+            "rolls": 1.0
+        }
+    ]
+}
