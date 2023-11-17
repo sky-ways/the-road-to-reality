@@ -90,7 +90,7 @@ public abstract class CampfireBlockMixin extends BlockWithEntity {
         }
 
         ItemStack mainStack = player.getStackInHand(Hand.MAIN_HAND);
-        ItemStack offStack = player.getStackInHand(Hand.MAIN_HAND);
+        ItemStack offStack = player.getStackInHand(Hand.OFF_HAND);
 
         if (mainStack.getItem() == Items.FLINT && offStack.getItem() == Items.FLINT) {
             fire(world,
@@ -135,7 +135,7 @@ public abstract class CampfireBlockMixin extends BlockWithEntity {
                 fuelStack.setCount(1);
                 NbtCompound nbtCompound = new NbtCompound();
                 nbtCompound.putInt("CampfireFuelTimeLeft",
-                                   200
+                                   100
                 );
                 fuelStack.setNbt(nbtCompound);
 
