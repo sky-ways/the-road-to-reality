@@ -2,7 +2,7 @@
     "type": "trtr:handcrafting",
     "input": {
         "main": {
-            "item": "trtr:stick"
+            "item": "minecraft:stick"
         },
         "off": {
             "item": "trtr:stone_hammer_part"
