@@ -1,0 +1,37 @@
+{
+    "parent": "trtr:stone_overture/stone_overture",
+    "criteria": {
+        "getting_plant_fibre": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "trtr:plant_fibre"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.one_of_plants_marrow.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:plant_fibre"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.one_of_plants_marrow.title"
+        }
+    },
+    "requirements": [
+        [
+            "getting_plant_fibre"
+        ]
+    ]
+}

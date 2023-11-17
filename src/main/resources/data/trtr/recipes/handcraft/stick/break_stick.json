@@ -1,0 +1,21 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "off": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:short_stick"
+        }
+    ],
+    "range": {
+        "min": 100,
+        "max": 100
+    },
+    "do_consume": {
+        "off": 1
+    },
+    "stop_on_usage": true
+}

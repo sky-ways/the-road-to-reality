@@ -4,7 +4,7 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.pebble.PebbleBlock;
-import com.github.cao.awa.trtr.item.craft.CraftingItem;
+import com.github.cao.awa.trtr.item.handcraft.CraftingItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,11 +31,6 @@ public class PebbleItem extends CraftingItem {
     @Auto
     public PebbleItem(Settings settings) {
         super(settings);
-    }
-
-    @Override
-    public int maxCraftTime() {
-        return MAX_CRAFT_TIME;
     }
 
     @Override

@@ -1,0 +1,35 @@
+{
+    "parent": "trtr:stone_overture/make_tool/be_careful_to_hands",
+    "criteria": {
+        "craft_stone_tool": {
+            "conditions": {
+                "results": [
+                    {
+                        "tag": "trtr:stone_tools"
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.new_stone_age.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "minecraft:stone_pickaxe"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.new_stone_age.title"
+        }
+    },
+    "requirements": [
+        [
+            "craft_stone_tool"
+        ]
+    ]
+}

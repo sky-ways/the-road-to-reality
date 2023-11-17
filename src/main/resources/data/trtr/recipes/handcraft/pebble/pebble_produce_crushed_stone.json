@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "tag": "trtr:pebbles"
+        },
+        "off": {
+            "tag": "trtr:pebbles"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:crushed_stone"
+        }
+    ],
+    "range": {
+        "min": 171,
+        "max": 171
+    },
+    "do_consume": {
+        "main": 1
+    },
+    "stop_on_usage": true
+}

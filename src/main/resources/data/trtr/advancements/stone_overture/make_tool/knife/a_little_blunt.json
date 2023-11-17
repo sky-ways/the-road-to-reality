@@ -1,0 +1,37 @@
+{
+    "parent": "trtr:stone_overture/make_tool/be_careful_to_hands",
+    "criteria": {
+        "craft_stone_knife": {
+            "conditions": {
+                "results": [
+                    {
+                        "items": [
+                            "trtr:stone_knife"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.a_little_blunt.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:stone_knife"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.a_little_blunt.title"
+        }
+    },
+    "requirements": [
+        [
+            "craft_stone_knife"
+        ]
+    ]
+}

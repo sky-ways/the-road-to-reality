@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "trtr:branch"
+        },
+        "off": {
+            "item": "trtr:sharp_flint"
+        }
+    },
+    "result": [
+        {
+            "item": "minecraft:stick"
+        }
+    ],
+    "range": {
+        "min": 76,
+        "max": 76
+    },
+    "do_consume": {
+        "main": 1
+    },
+    "stop_on_usage": true
+}

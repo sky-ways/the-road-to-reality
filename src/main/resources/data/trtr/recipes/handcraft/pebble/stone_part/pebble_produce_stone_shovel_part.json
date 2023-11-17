@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "tag": "trtr:pebbles"
+        },
+        "off": {
+            "tag": "trtr:pebbles"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:stone_shovel_part"
+        }
+    ],
+    "range": {
+        "min": 100,
+        "max": 120
+    },
+    "do_consume": {
+        "main": 1
+    },
+    "stop_on_usage": false
+}

@@ -4,6 +4,7 @@ import com.github.cao.awa.modmdo.annotation.platform.Client;
 import com.github.cao.awa.modmdo.annotation.platform.Server;
 import com.github.cao.awa.trtr.annotation.mine.repo.MineableAnnotations;
 import com.github.cao.awa.trtr.command.GetAllTrtrBlockCommand;
+import com.github.cao.awa.trtr.criteria.TrtrCriteria;
 import com.github.cao.awa.trtr.feature.pebble.PebbleFeature;
 import com.github.cao.awa.trtr.feature.pebble.PebbleFeatureConfig;
 import com.github.cao.awa.trtr.fluid.awa.AwaFluid;
@@ -13,6 +14,7 @@ import com.github.cao.awa.trtr.framework.model.provider.ModelFramework;
 import com.github.cao.awa.trtr.framework.scanner.AnnotationScannerFramework;
 import com.github.cao.awa.trtr.recipe.serializer.TrtrRecipeSerializer;
 import com.github.cao.awa.trtr.recipe.type.TrtrRecipeType;
+import com.github.cao.awa.trtr.tag.item.TrtrItemTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -63,6 +65,10 @@ public class TrtrMod implements ModInitializer {
 
         TrtrRecipeType.initialize();
         TrtrRecipeSerializer.initialize();
+
+        TrtrItemTags.initialize();
+
+        TrtrCriteria.initialize();
 
         // Scan the annotations.
         SCANNER_FRAMEWORK.work();

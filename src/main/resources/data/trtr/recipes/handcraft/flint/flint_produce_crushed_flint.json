@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "minecraft:flint"
+        },
+        "off": {
+            "item": "minecraft:flint"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:crushed_flint"
+        }
+    ],
+    "range": {
+        "min": 101,
+        "max": 101
+    },
+    "do_consume": {
+        "main": 1
+    },
+    "stop_on_usage": true
+}

@@ -1,0 +1,43 @@
+{
+    "parent": "trtr:stone_overture/stone_overture",
+    "criteria": {
+        "broken_stone": {
+            "conditions": {
+                "main": {
+                    "tag": "trtr:pebbles"
+                },
+                "off": {
+                    "tag": "trtr:pebbles"
+                },
+                "results": [
+                    {
+                        "items": [
+                            "trtr:crushed_stone"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.broken_miss.description"
+        },
+        "frame": "task",
+        "hidden": true,
+        "icon": {
+            "item": "trtr:crushed_stone"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.broken_miss.title"
+        }
+    },
+    "requirements": [
+        [
+            "broken_stone"
+        ]
+    ]
+}

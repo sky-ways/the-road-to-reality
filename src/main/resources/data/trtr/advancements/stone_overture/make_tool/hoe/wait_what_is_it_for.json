@@ -1,0 +1,37 @@
+{
+    "parent": "trtr:stone_overture/flint/be_careful_to_scratch",
+    "criteria": {
+        "craft_flint_hoe": {
+            "conditions": {
+                "results": [
+                    {
+                        "items": [
+                            "trtr:flint_hoe"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "trtr:handcrafted"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "description": {
+            "translate": "advancements.stone_overture.wait_what_is_it_for.description"
+        },
+        "frame": "task",
+        "hidden": false,
+        "icon": {
+            "item": "trtr:flint_hoe"
+        },
+        "show_toast": true,
+        "title": {
+            "translate": "advancements.stone_overture.wait_what_is_it_for.title"
+        }
+    },
+    "requirements": [
+        [
+            "craft_flint_hoe"
+        ]
+    ]
+}

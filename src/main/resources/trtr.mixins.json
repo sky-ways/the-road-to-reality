@@ -5,9 +5,11 @@
     "compatibilityLevel": "JAVA_17",
     "mixins": [
         "WorldMixin",
+        "advancement.AdvancementMixin",
         "block.BlockEntityMixin",
         "block.campfire.CampfireBlockEntityMixin",
         "block.campfire.CampfireBlockMixin",
+        "item.ItemsMixin",
         "item.stack.ItemStackMixin"
     ],
     "client": [

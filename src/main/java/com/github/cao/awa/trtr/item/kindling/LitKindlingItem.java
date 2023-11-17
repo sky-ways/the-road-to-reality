@@ -4,17 +4,18 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import com.github.cao.awa.trtr.item.TrtrItems;
+import com.github.cao.awa.trtr.share.SharedObjectData;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeveledCauldronBlock;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -27,6 +28,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import java.util.List;
 
 @Auto
 public class LitKindlingItem extends TrtrItem {
@@ -66,6 +69,39 @@ public class LitKindlingItem extends TrtrItem {
             );
 
             return ActionResult.SUCCESS;
+        } else if (sourceState.getBlock() == Blocks.CAMPFIRE && ! sourceState.get(CampfireBlock.LIT)) {
+            BlockEntity entity = world.getBlockEntity(sourcePos);
+
+            List<ItemStack> list = SharedObjectData.get(entity,
+                                                        "FuelList"
+            );
+
+            if (list == null) {
+                return ActionResult.PASS;
+            }
+
+            if (list.size() == 0) {
+                ItemStack fuelStack = new ItemStack(Items.AIR);
+                fuelStack.setCount(1);
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putInt("CampfireFuelTimeLeft",
+                                   100
+                );
+                fuelStack.setNbt(nbtCompound);
+
+                list.add(fuelStack);
+            }
+
+            world.setBlockState(sourcePos,
+                                sourceState.with(CampfireBlock.LIT,
+                                                 true
+                                ),
+                                Block.NOTIFY_ALL
+            );
+
+            litKindlingStack.decrement(1);
+
+            return ActionResult.success(world.isClient());
         } else {
             BlockPos firePos = sourcePos.offset(context.getSide());
 

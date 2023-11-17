@@ -1,0 +1,24 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "trtr:short_stick"
+        },
+        "off": {
+            "item": "trtr:sharp_flint"
+        }
+    },
+    "result": [
+        {
+            "item": "trtr:flint_knife"
+        }
+    ],
+    "range": {
+        "min": 100,
+        "max": 100
+    },
+    "do_consume": {
+        "off": 1
+    },
+    "stop_on_usage": true
+}
