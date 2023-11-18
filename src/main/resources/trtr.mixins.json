@@ -12,6 +12,7 @@
         "entity.xp.ExperienceOrbEntityMixin",
         "item.ItemsMixin",
         "item.stack.ItemStackMixin",
+        "recipe.RecipeManagerInvoker",
         "recipe.RecipeManagerMixin"
     ],
     "client": [

@@ -6,6 +6,7 @@ import com.github.cao.awa.trtr.framework.side.LoadingSide;
 
 public class TrtrConstants {
     public static boolean isServer = false;
+    public static final boolean isDev = true;
 
     public static LoadingSide getLoadingSide(Class<?> clazz) {
         boolean isServer = clazz.isAnnotationPresent(Server.class);

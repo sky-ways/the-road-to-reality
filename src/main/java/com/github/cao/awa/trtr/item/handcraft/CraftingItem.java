@@ -84,8 +84,6 @@ public abstract class CraftingItem extends TrtrItem {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (user instanceof PlayerEntity player) {
-            assert world.getServer() != null;
-
             HandcraftingInventory inventory = HandcraftingInventory.create(player,
                                                                            usedTime(remainingUseTicks),
                                                                            remainingUseTicks
@@ -109,6 +107,8 @@ public abstract class CraftingItem extends TrtrItem {
                                  });
                 }
             } else {
+                assert world.getServer() != null;
+
                 world.getServer()
                      .getRecipeManager()
                      .getFirstMatch(TrtrRecipeType.HAND_CRAFTING,
