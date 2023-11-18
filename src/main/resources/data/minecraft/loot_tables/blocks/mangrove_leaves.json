@@ -2,7 +2,7 @@
     "type": "minecraft:block",
     "pools": [
         {
-            "bonus_rolls": 0.0,
+            "bonus_rolls": 0,
             "entries": [
                 {
                     "type": "minecraft:item",
@@ -23,28 +23,19 @@
                             "add": false,
                             "count": {
                                 "type": "minecraft:uniform",
-                                "max": 2.0,
-                                "min": 1.0
+                                "max": 2,
+                                "min": 1
                             },
                             "function": "minecraft:set_count"
                         },
                         {
                             "function": "minecraft:explosion_decay"
-                        },
-                        {
-                            "add": false,
-                            "count": {
-                                "type": "minecraft:uniform",
-                                "max": 2.0,
-                                "min": 1.0
-                            },
-                            "function": "minecraft:set_count"
                         }
                     ],
                     "name": "trtr:branch"
                 }
             ],
-            "rolls": 1.0
+            "rolls": 1
         }
     ]
 }

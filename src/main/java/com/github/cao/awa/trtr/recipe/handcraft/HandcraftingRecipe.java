@@ -58,6 +58,18 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
         );
     }
 
+    public boolean ingredientMatches(HandcraftingInventory inventory, World world) {
+        return this.input.main()
+                         .test(inventory.mainStack())
+                && this.input.off()
+                             .test(inventory.offStack())
+                && (inventory.mainStack()
+                             .getCount() >= this.doConsume.main()
+                && inventory.offStack()
+                            .getCount() >= this.doConsume.off()
+        );
+    }
+
     @Override
     @DoNotCall
     public ItemStack craft(HandcraftingInventory inventory, DynamicRegistryManager registryManager) {

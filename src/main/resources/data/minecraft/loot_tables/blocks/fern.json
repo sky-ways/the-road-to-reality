@@ -1,0 +1,66 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "bonus_rolls": 0,
+            "entries": [
+                {
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                            "type": "minecraft:item",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:match_tool",
+                                    "predicate": {
+                                        "tag": "trtr:knifes"
+                                    }
+                                },
+                                {
+                                    "condition": "minecraft:random_chance",
+                                    "chance": 0.33334
+                                }
+                            ],
+                            "functions": [
+                                {
+                                    "function": "minecraft:set_count",
+                                    "add": false,
+                                    "count": {
+                                        "type": "minecraft:uniform",
+                                        "max": 2,
+                                        "min": 1
+                                    }
+                                }
+                            ],
+                            "name": "trtr:plant_fibre"
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "conditions": [
+                                {
+                                    "chance": 0.125,
+                                    "condition": "minecraft:random_chance"
+                                }
+                            ],
+                            "functions": [
+                                {
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:uniform_bonus_count",
+                                    "function": "minecraft:apply_bonus",
+                                    "parameters": {
+                                        "bonusMultiplier": 2
+                                    }
+                                },
+                                {
+                                    "function": "minecraft:explosion_decay"
+                                }
+                            ],
+                            "name": "minecraft:wheat_seeds"
+                        }
+                    ]
+                }
+            ],
+            "rolls": 1
+        }
+    ]
+}

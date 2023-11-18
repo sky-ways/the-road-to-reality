@@ -1,6 +1,8 @@
 {
     "values": [
-        "trtr:pebble",
-        "trtr:granite_pebble"
+        "trtr:stone_pebble",
+        "trtr:granite_pebble",
+        "trtr:diorite_pebble",
+        "trtr:andesite_pebble"
     ]
 }

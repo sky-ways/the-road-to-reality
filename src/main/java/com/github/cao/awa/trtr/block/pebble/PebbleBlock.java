@@ -7,7 +7,7 @@ import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlock;
 import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItems;
-import com.github.cao.awa.trtr.item.pebble.PebbleItem;
+import com.github.cao.awa.trtr.item.pebble.StonePebbleItem;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -77,7 +77,7 @@ public class PebbleBlock extends TrtrBlock {
     );
 
     @Auto
-    public static final ItemConvertible LOOT = TrtrItems.get(PebbleItem.class);
+    public static final ItemConvertible LOOT = TrtrItems.get(StonePebbleItem.class);
 
     @Auto
     public static final Class<PebbleBlockModel> MODEL = PebbleBlockModel.class;
@@ -119,7 +119,7 @@ public class PebbleBlock extends TrtrBlock {
         int currentLeftCount = state.get(COUNT) - 1;
 
         if (currentLeftCount > 0) {
-            stacks.add(new ItemStack(TrtrItems.get(PebbleItem.class),
+            stacks.add(new ItemStack(TrtrItems.get(StonePebbleItem.class),
                                      currentLeftCount
             ));
         }
@@ -147,7 +147,7 @@ public class PebbleBlock extends TrtrBlock {
 
         InventoryUtil.insertOrDrop(player,
                                    world,
-                                   new ItemStack(TrtrItems.get(PebbleItem.class))
+                                   new ItemStack(TrtrItems.get(StonePebbleItem.class))
         );
 
         return ActionResult.SUCCESS;

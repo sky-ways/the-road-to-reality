@@ -38,7 +38,7 @@ public class AdvancementMixin {
     private static Logger LOGGER;
 
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("HEAD"), cancellable = true)
-    private void fromJSON(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
+    private void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         ImmutableMap.Builder<Identifier, AdvancementEntry> builder = ImmutableMap.builder();
         map.forEach((id, json) -> {
             try {

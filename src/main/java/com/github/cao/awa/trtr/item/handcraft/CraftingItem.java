@@ -5,6 +5,7 @@ import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import com.github.cao.awa.trtr.recipe.handcraft.HandcraftingRecipe;
 import com.github.cao.awa.trtr.recipe.handcraft.inventory.HandcraftingInventory;
+import com.github.cao.awa.trtr.recipe.handcraft.util.HandcraftUtil;
 import com.github.cao.awa.trtr.recipe.type.TrtrRecipeType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -87,12 +88,29 @@ public abstract class CraftingItem extends TrtrItem {
         }
 
         if (user instanceof PlayerEntity player) {
+            assert world.getServer() != null;
+
             HandcraftingInventory inventory = HandcraftingInventory.create(player,
                                                                            usedTime(remainingUseTicks),
                                                                            remainingUseTicks
             );
 
-            assert world.getServer() != null;
+            if (usedTime(remainingUseTicks) > 0) {
+                HandcraftUtil.getMaxCrafting(world.getServer()
+                                                  .getRecipeManager(),
+                                             inventory,
+                                             world
+                             )
+                             .ifPresent(entry -> {
+                                 float maxCraftTime = entry.value()
+                                                           .range()
+                                                           .max();
+
+                                 player.addExperience(Integer.MIN_VALUE);
+                                 player.addExperienceLevels(100);
+                                 player.addExperience((int) (player.getNextLevelExperience() * (usedTime(remainingUseTicks) / maxCraftTime)));
+                             });
+            }
 
             world.getServer()
                  .getRecipeManager()
@@ -122,6 +140,8 @@ public abstract class CraftingItem extends TrtrItem {
                       remainingUseTicks
                 );
             }
+
+            player.addExperience(Integer.MIN_VALUE);
         }
     }
 

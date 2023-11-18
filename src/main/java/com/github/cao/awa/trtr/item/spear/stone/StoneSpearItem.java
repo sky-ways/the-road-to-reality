@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.item.spear;
+package com.github.cao.awa.trtr.item.spear.stone;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.item.TrtrItem;

@@ -9,8 +9,10 @@
         "block.BlockEntityMixin",
         "block.campfire.CampfireBlockEntityMixin",
         "block.campfire.CampfireBlockMixin",
+        "entity.xp.ExperienceOrbEntityMixin",
         "item.ItemsMixin",
-        "item.stack.ItemStackMixin"
+        "item.stack.ItemStackMixin",
+        "recipe.RecipeManagerMixin"
     ],
     "client": [
     ],
