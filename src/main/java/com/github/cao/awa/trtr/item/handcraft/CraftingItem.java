@@ -83,10 +83,6 @@ public abstract class CraftingItem extends TrtrItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (world.isClient()) {
-            return;
-        }
-
         if (user instanceof PlayerEntity player) {
             assert world.getServer() != null;
 
@@ -95,35 +91,37 @@ public abstract class CraftingItem extends TrtrItem {
                                                                            remainingUseTicks
             );
 
-            if (usedTime(remainingUseTicks) > 0) {
-                HandcraftUtil.getMaxCrafting(world.getServer()
-                                                  .getRecipeManager(),
-                                             inventory,
-                                             world
-                             )
-                             .ifPresent(entry -> {
-                                 float maxCraftTime = entry.value()
-                                                           .range()
-                                                           .max();
+            if (world.isClient()) {
+                if (usedTime(remainingUseTicks) > 0) {
+                    HandcraftUtil.getMaxCrafting(world
+                                                         .getRecipeManager(),
+                                                 inventory,
+                                                 world
+                                 )
+                                 .ifPresent(entry -> {
+                                     float maxCraftTime = entry.value()
+                                                               .range()
+                                                               .max();
 
-                                 player.addExperience(Integer.MIN_VALUE);
-                                 player.addExperienceLevels(100);
-                                 player.addExperience((int) (player.getNextLevelExperience() * (usedTime(remainingUseTicks) / maxCraftTime)));
-                             });
+                                     player.addExperience(Integer.MIN_VALUE);
+                                     player.addExperienceLevels(100);
+                                     player.addExperience((int) (player.getNextLevelExperience() * (usedTime(remainingUseTicks) / maxCraftTime)));
+                                 });
+                }
+            } else {
+                world.getServer()
+                     .getRecipeManager()
+                     .getFirstMatch(TrtrRecipeType.HAND_CRAFTING,
+                                    inventory,
+                                    world
+                     )
+                     .ifPresent(entry -> {
+                         if (entry.value()
+                                  .stopOnUsage()) {
+                             user.stopUsingItem();
+                         }
+                     });
             }
-
-            world.getServer()
-                 .getRecipeManager()
-                 .getFirstMatch(TrtrRecipeType.HAND_CRAFTING,
-                                inventory,
-                                world
-                 )
-                 .ifPresent(entry -> {
-                     if (entry.value()
-                              .stopOnUsage()) {
-                         user.stopUsingItem();
-                     }
-                 });
         }
     }
 
