@@ -3,9 +3,11 @@ package com.github.cao.awa.trtr.framework.reflection;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
+import com.github.cao.awa.trtr.constant.trtr.TrtrConstants;
 import com.github.cao.awa.trtr.framework.accessor.method.MethodAccess;
 import com.github.cao.awa.trtr.framework.exception.NoAutoAnnotationException;
 import com.github.cao.awa.trtr.framework.loader.JarSearchLoader;
+import com.github.cao.awa.trtr.framework.side.LoadingSide;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -108,5 +110,13 @@ public abstract class ReflectionFramework {
 
     public static boolean autoAnnotated(AccessibleObject object) {
         return object.isAnnotationPresent(Auto.class);
+    }
+
+    public static boolean shouldLoad(LoadingSide side) {
+        return switch (side) {
+            case SERVER -> TrtrConstants.isServer;
+            case CLIENT -> ! TrtrConstants.isServer;
+            case BOTH -> true;
+        };
     }
 }

@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.block.stove.mud.renderer;
 
 import com.github.cao.awa.apricot.anntation.Planning;
 import com.github.cao.awa.apricot.anntation.Unsupported;
+import com.github.cao.awa.modmdo.annotation.platform.Client;
 import com.github.cao.awa.trtr.block.stove.mud.entity.MudStoveBlockEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -13,6 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import java.util.Random;
 
 // TODO Waiting for plan 'Smelting Process'
+@Client
 @Planning
 @Unsupported
 public class MudStoveRenderer implements BlockEntityRenderer<MudStoveBlockEntity> {

@@ -4,6 +4,7 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
+import com.github.cao.awa.trtr.constant.trtr.TrtrConstants;
 import com.github.cao.awa.trtr.framework.exception.NotPreparedException;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import org.apache.logging.log4j.LogManager;
@@ -57,7 +58,8 @@ public class AnnotationScannerFramework extends ReflectionFramework {
                         // Unsupported class will not be proxy.
                         ! unsupported &&
                         // Abstract class will not be proxy.
-                        ! abs;
+                        ! abs &&
+                        shouldLoad(TrtrConstants.getLoadingSide(clazz));
     }
 
     private boolean verify(Class<?> block) {

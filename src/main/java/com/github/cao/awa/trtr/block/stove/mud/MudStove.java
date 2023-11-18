@@ -11,9 +11,12 @@ import com.github.cao.awa.trtr.block.stove.mud.model.MudStoveModelProvider;
 import com.github.cao.awa.trtr.block.stove.mud.renderer.MudStoveRenderer;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
+import com.github.cao.awa.trtr.renderer.block.BlockRendererProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -31,11 +34,13 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import java.util.function.Function;
+
 // TODO Waiting for plan 'Smelting Process'
 @Auto
 @DevOnly
 @Unsupported
-public class MudStove extends TrtrBlockWithEntity {
+public class MudStove extends TrtrBlockWithEntity implements BlockRendererProvider<MudStoveBlockEntity> {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:mud_stove");
 
@@ -59,9 +64,6 @@ public class MudStove extends TrtrBlockWithEntity {
     @Auto
     @DataGen
     public static MudStoveModelProvider MODEL;
-
-    @Auto
-    public static MudStoveRenderer RENDER;
 
     @Auto
     @AutoProperty
@@ -146,5 +148,10 @@ public class MudStove extends TrtrBlockWithEntity {
     @Auto
     protected MudStove(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public Function<BlockEntityRendererFactory.Context, BlockEntityRenderer<MudStoveBlockEntity>> renderer() {
+        return MudStoveRenderer :: new;
     }
 }

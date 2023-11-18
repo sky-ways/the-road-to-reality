@@ -7,18 +7,17 @@ import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.block.pan.frying.entity.FryingPanBlockEntity;
 import com.github.cao.awa.trtr.block.pan.frying.model.FryingPanModelProvider;
 import com.github.cao.awa.trtr.block.pan.frying.renderer.FryingPanRenderer;
-import com.github.cao.awa.trtr.block.stove.mud.entity.MudStoveBlockEntity;
 import com.github.cao.awa.trtr.data.gen.loot.GenericBlockLootProvider;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
+import com.github.cao.awa.trtr.renderer.block.BlockRendererProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -30,8 +29,10 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import java.util.function.Function;
+
 @Auto
-public class FryingPan extends TrtrBlockWithEntity {
+public class FryingPan extends TrtrBlockWithEntity implements BlockRendererProvider<FryingPanBlockEntity> {
     @Auto
     public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:frying_pan");
 
@@ -56,12 +57,17 @@ public class FryingPan extends TrtrBlockWithEntity {
     @DataGen
     public static FryingPanModelProvider MODEL;
 
-    @Auto
-    public static FryingPanRenderer RENDER;
+//    @Auto
+//    public static FryingPanRenderer RENDER;
 
     @Auto
     @AutoProperty
     public static final DirectionProperty FACING = Properties.FACING;
+
+    @Auto
+    protected FryingPan(Settings settings) {
+        super(settings);
+    }
 
     @Override
     public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
@@ -94,8 +100,8 @@ public class FryingPan extends TrtrBlockWithEntity {
         return ActionResult.PASS;
     }
 
-    @Auto
-    protected FryingPan(Settings settings) {
-        super(settings);
+    @Override
+    public Function<BlockEntityRendererFactory.Context, BlockEntityRenderer<FryingPanBlockEntity>> renderer() {
+        return FryingPanRenderer :: new;
     }
 }
