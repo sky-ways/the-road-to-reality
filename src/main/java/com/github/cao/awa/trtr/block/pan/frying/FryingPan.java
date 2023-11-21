@@ -3,7 +3,7 @@ package com.github.cao.awa.trtr.block.pan.frying;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
-import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
+import com.github.cao.awa.trtr.block.entity.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.block.pan.frying.entity.FryingPanBlockEntity;
 import com.github.cao.awa.trtr.block.pan.frying.model.FryingPanModelProvider;
 import com.github.cao.awa.trtr.block.pan.frying.renderer.FryingPanRenderer;

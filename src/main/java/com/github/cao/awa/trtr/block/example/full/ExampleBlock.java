@@ -6,7 +6,7 @@ import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.mine.AxeMining;
 import com.github.cao.awa.trtr.annotation.mine.PickaxeMining;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
-import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
+import com.github.cao.awa.trtr.block.entity.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.block.example.full.entity.ExampleBlockEntity;
 import com.github.cao.awa.trtr.block.example.full.item.ExampleBlockItem;
 import com.github.cao.awa.trtr.block.example.full.loot.ExampleLoot;

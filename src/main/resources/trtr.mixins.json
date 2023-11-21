@@ -16,6 +16,8 @@
         "recipe.RecipeManagerMixin"
     ],
     "client": [
+        "item.renderer.BuiltinModelItemRendererMixin",
+        "item.renderer.ItemRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1

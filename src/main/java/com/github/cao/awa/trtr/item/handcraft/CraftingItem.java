@@ -144,6 +144,24 @@ public abstract class CraftingItem extends TrtrItem {
     }
 
     @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        if (user instanceof PlayerEntity player) {
+            ItemStack mainItem = user.getMainHandStack();
+            ItemStack offItem = user.getOffHandStack();
+            if (stack.getItem() instanceof CraftingItem craftingItem && offItem.getItem() == stack.getItem()) {
+                craftingItem.craft(
+                        world,
+                        player,
+                        offItem,
+                        mainItem,
+                        0
+                );
+            }
+        }
+        return stack;
+    }
+
+    @Override
     public int getMaxUseTime(ItemStack stack) {
         return ANTI_ACCIDENTAL_TOUCH_TIME + maxCraftTime();
     }

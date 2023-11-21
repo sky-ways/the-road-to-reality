@@ -57,7 +57,13 @@ public class Randoms {
     }
 
     public static long l(long origin, long bound) {
-        return RANDOM.l(origin, bound);
+        return RANDOM.l(origin,
+                        bound
+        );
+    }
+
+    public static boolean b() {
+        return RANDOM.b();
     }
 
     public static RandomDelegate s() {

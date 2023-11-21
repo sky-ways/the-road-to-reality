@@ -5,7 +5,7 @@ import com.github.cao.awa.apricot.anntation.Unsupported;
 import com.github.cao.awa.trtr.annotation.data.gen.DataGen;
 import com.github.cao.awa.trtr.annotation.dev.DevOnly;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
-import com.github.cao.awa.trtr.block.TrtrBlockWithEntity;
+import com.github.cao.awa.trtr.block.entity.TrtrBlockWithEntity;
 import com.github.cao.awa.trtr.block.stove.mud.entity.MudStoveBlockEntity;
 import com.github.cao.awa.trtr.block.stove.mud.model.MudStoveModelProvider;
 import com.github.cao.awa.trtr.block.stove.mud.renderer.MudStoveRenderer;

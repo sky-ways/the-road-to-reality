@@ -41,6 +41,8 @@ public class PebbleFeature extends Feature<PebbleFeatureConfig> {
                                        .getBlock()
                           )
                   )
+                && world.getBlockState(blockPos)
+                        .isAir()
         ) {
             BlockState blockState = PEBBLE_BLOCK.getDefaultState();
 

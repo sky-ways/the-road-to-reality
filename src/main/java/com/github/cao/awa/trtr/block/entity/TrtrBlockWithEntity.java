@@ -1,4 +1,4 @@
-package com.github.cao.awa.trtr.block;
+package com.github.cao.awa.trtr.block.entity;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.TrtrMod;

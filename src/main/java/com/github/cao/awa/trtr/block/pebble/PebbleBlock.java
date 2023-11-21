@@ -153,7 +153,6 @@ public class PebbleBlock extends TrtrBlock {
         return ActionResult.SUCCESS;
     }
 
-
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return NoFloatingBlock.canPlace(state,
                                         world,

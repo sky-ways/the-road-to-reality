@@ -75,7 +75,7 @@ public abstract class ReflectionFramework {
         if (clazz.isAnnotationPresent(Auto.class)) {
             return MethodAccess.ensureAccessible(clazz);
         }
-        throw new NoAutoAnnotationException();
+        throw new NoAutoAnnotationException("Missing auto annotation");
     }
 
     @NotNull
@@ -85,7 +85,7 @@ public abstract class ReflectionFramework {
                                                  object
             );
         }
-        throw new NoAutoAnnotationException();
+        throw new NoAutoAnnotationException("Missing auto annotation");
     }
 
     public static Field accessible(@NotNull Field field) {
@@ -94,7 +94,7 @@ public abstract class ReflectionFramework {
                               null
             );
         }
-        throw new NoAutoAnnotationException();
+        throw new NoAutoAnnotationException("Missing auto annotation");
     }
 
     public static Field accessible(@NotNull Field field, @Nullable Object obj) {
@@ -105,7 +105,7 @@ public abstract class ReflectionFramework {
             field.trySetAccessible();
             return field;
         }
-        throw new NoAutoAnnotationException();
+        throw new NoAutoAnnotationException("Missing auto annotation");
     }
 
     public static boolean autoAnnotated(AccessibleObject object) {

@@ -3,7 +3,7 @@ package com.github.cao.awa.trtr.framework.block.data.gen.model;
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
-import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.generic.GenericBlockModelProvider;
 import com.github.cao.awa.trtr.data.gen.model.no.BlockStatedNoModelProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.ModelDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;

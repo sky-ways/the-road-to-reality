@@ -58,6 +58,12 @@ public class RandomDelegate {
     }
 
     public long l(long origin, long bound) {
-        return this.delegate.nextLong(origin, bound);
+        return this.delegate.nextLong(origin,
+                                      bound
+        );
+    }
+
+    public boolean b() {
+        return this.delegate.nextBoolean();
     }
 }

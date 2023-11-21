@@ -10,6 +10,7 @@ import net.minecraft.nbt.NbtElement;
 @Auto
 @Unsupported
 public class MudStoveFuelLayer implements NbtSerializable {
+    @Auto
     @AutoNbt
     private int count;
 
