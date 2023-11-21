@@ -12,6 +12,7 @@ import com.github.cao.awa.trtr.recipe.serializer.TrtrRecipeSerializer;
 import com.github.cao.awa.trtr.recipe.type.TrtrRecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
@@ -22,6 +23,7 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
 public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
     private final boolean stopOnUsage;
@@ -29,13 +31,16 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
     private final IngredientPair input;
     private final IntegerRange range;
     private final IntegerPair doConsume;
+    private final boolean anyHand;
+    private final Map<Item, Integer> consumeMap = ApricotCollectionFactor.hashMap();
 
-    public HandcraftingRecipe(IngredientPair input, List<ItemStack> result, boolean stopOnUsage, IntegerRange range, IntegerPair doConsume) {
+    public HandcraftingRecipe(IngredientPair input, List<ItemStack> result, boolean stopOnUsage, IntegerRange range, IntegerPair doConsume, boolean anyHand) {
         this.input = input;
         this.result = result;
         this.stopOnUsage = stopOnUsage;
         this.range = range;
         this.doConsume = doConsume;
+        this.anyHand = anyHand;
     }
 
     @Override
@@ -44,30 +49,103 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
             return false;
         }
 
-        return this.input.main()
-                         .test(inventory.mainStack())
-                && this.input.off()
-                             .test(inventory.offStack())
-                && Mathematics.inRange(inventory.usedTicks(),
-                                       this.range
-        )
-                && (inventory.mainStack()
-                             .getCount() >= this.doConsume.main()
-                && inventory.offStack()
-                            .getCount() >= this.doConsume.off()
+        boolean match = Mathematics.inRange(inventory.usedTicks(),
+                                            this.range
         );
+
+        if (anyHand()) {
+            boolean isMainMatch = this.input.main()
+                                            .test(inventory.mainStack());
+            isMainMatch &= inventory.mainStack()
+                                    .getCount() >= doMainConsume();
+            if (isMainMatch) {
+                match &= this.input.off()
+                                   .test(inventory.offStack());
+                match &= inventory.offStack()
+                                  .getCount() >= doOffConsume();
+            } else {
+                match &= this.input.main()
+                                   .test(inventory.offStack());
+                match &= inventory.mainStack()
+                                  .getCount() >= doOffConsume();
+
+                match &= this.input.off()
+                                   .test(inventory.mainStack());
+                match &= inventory.offStack()
+                                  .getCount() >= doMainConsume();
+
+            }
+        } else {
+            match &= this.input.main()
+                               .test(inventory.mainStack());
+            match &= this.input.off()
+                               .test(inventory.offStack());
+            match &= inventory.mainStack()
+                              .getCount() >= doMainConsume();
+            match &= inventory.offStack()
+                              .getCount() >= doOffConsume();
+        }
+
+        return match;
+    }
+
+    public void consume(ItemStack mainStack, ItemStack offStack) {
+        if (this.input.main()
+                      .test(mainStack)) {
+            if (this.input.off()
+                          .test(offStack)) {
+                mainStack.decrement(doMainConsume());
+                offStack.decrement(doOffConsume());
+            }
+        } else {
+            if (this.input.main()
+                          .test(offStack)) {
+                if (this.input.off()
+                              .test(mainStack)) {
+                    mainStack.decrement(doOffConsume());
+                    offStack.decrement(doMainConsume());
+                }
+            }
+        }
     }
 
     public boolean ingredientMatches(HandcraftingInventory inventory, World world) {
-        return this.input.main()
-                         .test(inventory.mainStack())
-                && this.input.off()
-                             .test(inventory.offStack())
-                && (inventory.mainStack()
-                             .getCount() >= this.doConsume.main()
-                && inventory.offStack()
-                            .getCount() >= this.doConsume.off()
-        );
+        if (anyHand()) {
+            boolean match;
+            boolean isMainMatch = this.input.main()
+                                            .test(inventory.mainStack());
+            isMainMatch &= inventory.mainStack()
+                                    .getCount() >= doMainConsume();
+            if (isMainMatch) {
+                match = this.input.off()
+                                  .test(inventory.offStack());
+                match &= inventory.offStack()
+                                  .getCount() >= doOffConsume();
+            } else {
+                match = this.input.main()
+                                  .test(inventory.offStack());
+                match &= inventory.mainStack()
+                                  .getCount() >= doOffConsume();
+
+                match &= this.input.off()
+                                   .test(inventory.mainStack());
+                match &= inventory.offStack()
+                                  .getCount() >= doMainConsume();
+
+            }
+
+            return match;
+        } else {
+            return this.input.main()
+                             .test(inventory.mainStack())
+                    && this.input.off()
+                                 .test(inventory.offStack())
+                    && (inventory.mainStack()
+                                 .getCount() >= this.doConsume.main()
+                    && inventory.offStack()
+                                .getCount() >= this.doConsume.off()
+            );
+        }
     }
 
     @Override
@@ -127,6 +205,10 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
         return this.doConsume.off();
     }
 
+    public boolean anyHand() {
+        return this.anyHand;
+    }
+
     @Override
     public RecipeType<?> getType() {
         return TrtrRecipeType.HAND_CRAFTING;
@@ -145,7 +227,10 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
                                    TrtrCodecs.INTEGER_RANGE.fieldOf("range")
                                                            .forGetter(HandcraftingRecipe :: range),
                                    TrtrCodecs.INTEGER_PAIR.fieldOf("do_consume")
-                                                          .forGetter(HandcraftingRecipe :: doConsume)
+                                                          .forGetter(HandcraftingRecipe :: doConsume),
+                                   Codec.BOOL.fieldOf("any_hand")
+                                             .orElse(false)
+                                             .forGetter(HandcraftingRecipe :: anyHand)
                            )
                            .apply(instance,
                                   HandcraftingRecipe :: new
@@ -179,12 +264,16 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
             // Read item do consume.
             IntegerPair doConsume = IntegerPair.create(buf);
 
+            // Read any hand flag.
+            boolean anyHand = buf.readBoolean();
+
             // Create recipe.
             return new HandcraftingRecipe(input,
                                           result,
                                           stopOnUsage,
                                           range,
-                                          doConsume
+                                          doConsume,
+                                          anyHand
             );
         }
 
@@ -211,6 +300,9 @@ public class HandcraftingRecipe implements Recipe<HandcraftingInventory> {
             // Write item do consume.
             recipe.doConsume()
                   .write(buf);
+
+            // Write any hand flag.
+            buf.writeBoolean(recipe.anyHand());
         }
     }
 }

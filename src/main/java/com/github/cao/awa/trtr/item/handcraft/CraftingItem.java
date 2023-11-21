@@ -66,8 +66,10 @@ public abstract class CraftingItem extends TrtrItem {
                     resultStacks
             );
 
-            targetStack.decrement(recipe.doMainConsume());
-            craftingStack.decrement(recipe.doOffConsume());
+            recipe.consume(
+                    targetStack,
+                    craftingStack
+            );
 
             if (recipe.doMainConsume() != 0 && recipe.doOffConsume() != 0) {
                 return TypedActionResult.success(craftingStack);
@@ -157,6 +159,8 @@ public abstract class CraftingItem extends TrtrItem {
                         0
                 );
             }
+
+            player.addExperience(Integer.MIN_VALUE);
         }
         return stack;
     }

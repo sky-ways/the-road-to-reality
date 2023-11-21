@@ -1,0 +1,26 @@
+{
+    "type": "trtr:handcrafting",
+    "input": {
+        "main": {
+            "item": "minecraft:stick"
+        },
+        "off": {
+            "tag": "trtr:planks"
+        }
+    },
+    "result": [
+        {
+            "item": "minecraft:campfire"
+        }
+    ],
+    "range": {
+        "min": 100,
+        "max": 100
+    },
+    "do_consume": {
+        "main": 3,
+        "off": 4
+    },
+    "stop_on_usage": true,
+    "any_hand": true
+}
