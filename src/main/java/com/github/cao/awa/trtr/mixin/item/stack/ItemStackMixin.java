@@ -1,7 +1,6 @@
 package com.github.cao.awa.trtr.mixin.item.stack;
 
 import com.github.cao.awa.trtr.item.handcraft.CraftingItem;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,23 +29,6 @@ public abstract class ItemStackMixin {
             if (offItem.getItem() instanceof CraftingItem craftingItem) {
                 user.setCurrentHand(Hand.OFF_HAND);
                 cir.setReturnValue(TypedActionResult.consume(offItem));
-            }
-        }
-    }
-
-    @Inject(method = "finishUsing", at = @At("HEAD"), cancellable = true)
-    public void finishUsing(World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
-        if (user instanceof PlayerEntity player) {
-            ItemStack mainItem = user.getMainHandStack();
-            ItemStack offItem = user.getOffHandStack();
-            if (getItem() instanceof CraftingItem craftingItem && offItem.getItem() == getItem()) {
-                craftingItem.craft(
-                        world,
-                        player,
-                        offItem,
-                        mainItem,
-                        0
-                );
             }
         }
     }

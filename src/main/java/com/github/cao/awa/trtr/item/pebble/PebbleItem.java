@@ -1,6 +1,5 @@
 package com.github.cao.awa.trtr.item.pebble;
 
-import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.pebble.PebbleBlock;
@@ -12,23 +11,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.function.Function;
 
-@Auto
-public class PebbleItem extends CraftingItem {
-    public static final int MAX_CRAFT_TIME =
-            // 8.5s used to craft.
-            (170);
-
-    @Auto
-    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:pebble");
-
-    @Auto
+public abstract class PebbleItem extends CraftingItem {
     public PebbleItem(Settings settings) {
         super(settings);
     }
@@ -95,5 +84,10 @@ public class PebbleItem extends CraftingItem {
         }
 
         return ActionResult.PASS;
+    }
+
+    @Override
+    public int maxCraftTime() {
+        return 171;
     }
 }

@@ -5,22 +5,30 @@ import com.github.cao.awa.trtr.annotation.data.gen.NoModel;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlock;
+import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.item.branch.BranchItem;
 import com.github.cao.awa.trtr.math.shape.PixelVoxelShapes;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
@@ -69,6 +77,21 @@ public class BranchBlock extends TrtrBlock {
                                         world,
                                         pos
         );
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        world.setBlockState(pos,
+                            Blocks.AIR.getDefaultState(),
+                            Block.NOTIFY_ALL
+        );
+
+        InventoryUtil.insertOrDrop(player,
+                                   world,
+                                   new ItemStack(TrtrItems.get(BranchItem.class))
+        );
+
+        return ActionResult.SUCCESS;
     }
 
     @Override

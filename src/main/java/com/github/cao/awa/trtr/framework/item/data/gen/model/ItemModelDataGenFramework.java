@@ -2,7 +2,7 @@ package com.github.cao.awa.trtr.framework.item.data.gen.model;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.TrtrMod;
-import com.github.cao.awa.trtr.data.gen.model.GenericItemModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.generic.GenericItemModelProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.ModelDataGeneratorAccessor;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.item.ItemFramework;
@@ -101,9 +101,19 @@ public class ItemModelDataGenFramework extends ReflectionFramework {
             if (EntrustEnvironment.trys(() -> provider.apply(null)) == null) {
                 Class<? extends FabricModelProvider> type = ModelDataGeneratorAccessor.ACCESSOR.getType(item);
                 if (FabricModelProvider.class.isAssignableFrom(type)) {
-                    return output -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> type
-                            .getConstructor(FabricDataOutput.class)
-                            .newInstance(output)));
+                    return output -> EntrustEnvironment.cast(EntrustEnvironment.trys(
+                            () -> type
+                                    .getConstructor(FabricDataOutput.class)
+                                    .newInstance(output),
+                            () -> EntrustEnvironment.trys(
+                                    () -> type
+                                            .getConstructor(FabricDataOutput.class,
+                                                            Item.class
+                                            )
+                                            .newInstance(output,
+                                                         item
+                                            ))
+                    ));
                 } else {
                     return output -> new GenericItemModelProvider(output,
                                                                   item

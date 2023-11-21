@@ -6,9 +6,9 @@ import com.github.cao.awa.trtr.TrtrMod;
 import com.github.cao.awa.trtr.annotation.property.AutoProperty;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.item.TrtrBlockItems;
+import com.github.cao.awa.trtr.constant.trtr.TrtrConstants;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.BlockEntityAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.entity.TrtrBlockEntityFactory;
-import com.github.cao.awa.trtr.framework.accessor.block.entity.render.BlockEntityRenderAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.item.BlockItemAccessor;
 import com.github.cao.awa.trtr.framework.accessor.block.setting.BlockSettingAccessor;
 import com.github.cao.awa.trtr.framework.accessor.identifier.IdentifierAccessor;
@@ -19,9 +19,9 @@ import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
 import com.github.cao.awa.trtr.framework.nbt.NbtSerializeFramework;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.cao.awa.trtr.item.TrtrItems;
+import com.github.cao.awa.trtr.renderer.block.BlockRendererProvider;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.ExceptionEnvironment;
-import com.github.zhuaidadaya.rikaishinikui.handler.universal.receptacle.Receptacle;
 import com.mojang.datafixers.types.Type;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -46,13 +46,13 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -125,7 +125,8 @@ public class BlockFramework extends ReflectionFramework {
                         // Unsupported class will not be proxy.
                         ! unsupported &&
                         // Abstract class will not be proxy.
-                        ! abs;
+                        ! abs &&
+                        shouldLoad(TrtrConstants.getLoadingSide(clazz));
     }
 
     /**
@@ -311,33 +312,33 @@ public class BlockFramework extends ReflectionFramework {
         EntrustEnvironment.trys(() -> {
                                     Identifier identifier = IdentifierAccessor.ACCESSOR.get(block);
 
-            // Do not build null identifier block.
-            // Null identifier means something was wrong.
-            if (identifier == null) {
-                LOGGER.error("Got null identifier, cancel building block '{}'",
-                             block.getClass()
-                                  .getName()
-                );
-                return;
-            }
+                                    // Do not build null identifier block.
+                                    // Null identifier means something was wrong.
+                                    if (identifier == null) {
+                                        LOGGER.error("Got null identifier, cancel building block '{}'",
+                                                     block.getClass()
+                                                          .getName()
+                                        );
+                                        return;
+                                    }
 
-            // Do not register the duplicate identifier.
-            if (this.alreadyRegistered.contains(identifier)) {
-                LOGGER.error("The identifier '{}' already registered, duplicate identifier will not be register successful",
-                             identifier
-                );
-                return;
-            }
+                                    // Do not register the duplicate identifier.
+                                    if (this.alreadyRegistered.contains(identifier)) {
+                                        LOGGER.error("The identifier '{}' already registered, duplicate identifier will not be register successful",
+                                                     identifier
+                                        );
+                                        return;
+                                    }
 
-            // Register this block to vanilla.
-            Registry.register(Registries.BLOCK,
-                              identifier,
-                              block
-            );
+                                    // Register this block to vanilla.
+                                    Registry.register(Registries.BLOCK,
+                                                      identifier,
+                                                      block
+                                    );
 
-            // Register this block to trtr.
-            TrtrBlocks.register(identifier,
-                                block
+                                    // Register this block to trtr.
+                                    TrtrBlocks.register(identifier,
+                                                        block
                                     );
 
                                     // Register block item.
@@ -348,9 +349,9 @@ public class BlockFramework extends ReflectionFramework {
                                                identifier.toString()
                                     );
 
-            // Add to lists.
-            this.blocks.add(block);
-            this.alreadyRegistered.add(identifier);
+                                    // Add to lists.
+                                    this.blocks.add(block);
+                                    this.alreadyRegistered.add(identifier);
 
                                     // Call done method for custom action when done building.
                                     // Method automatic call need @Auto annotation always.
@@ -505,7 +506,7 @@ public class BlockFramework extends ReflectionFramework {
     }
 
     public void renderer(Block block) {
-        if (BlockEntityRenderAccessor.ACCESSOR.has(block)) {
+        if (block instanceof BlockRendererProvider<?> provider) {
             BlockEntityType<BlockEntity> type = TrtrMod.BLOCK_FRAMEWORK.entityType(block.getClass());
 
             if (type == null) {
@@ -516,44 +517,17 @@ public class BlockFramework extends ReflectionFramework {
                 return;
             }
 
-            Class<? extends BlockEntityRenderer<?>> render = BlockEntityRenderAccessor.ACCESSOR.getType(block);
+            Function<BlockEntityRendererFactory.Context, BlockEntityRenderer<?>> render = EntrustEnvironment.cast(provider.renderer());
 
-            LOGGER.info("Building block entity render '{}' for block '{}'",
-                        render.getName(),
+            LOGGER.info("Building block entity render for block '{}'",
                         block.getClass()
                              .getName()
             );
 
-            Receptacle<Boolean> hasCtx = Receptacle.of(true);
 
-            Constructor<BlockEntityRenderer<?>> constructor = EntrustEnvironment.cast(EntrustEnvironment.trys(() -> render
-                                                                                                                      .getConstructor(BlockEntityRendererFactory.Context.class),
-                                                                                                              () -> {
-                                                                                                                  hasCtx.set(false);
-                                                                                                                  return block.getClass()
-                                                                                                                              .getConstructor();
-                                                                                                              }
-            ));
-
-            if (constructor == null) {
-                LOGGER.warn("Block entity render '{}' of block '{}' is unable to construct, missing constructors: arg of (BlockEntityRendererFactory.Context.class) or no arg constructor",
-                            render.getName(),
-                            block.getClass()
-                                 .getName()
-                );
-                return;
-            }
-
-            accessible(constructor);
-
-            BlockEntityRendererFactories.register(type,
-                                                  ctx -> EntrustEnvironment.cast(EntrustEnvironment.trys(() -> {
-                                                      if (hasCtx.get()) {
-                                                          return constructor.newInstance(ctx);
-                                                      } else {
-                                                          return constructor.newInstance();
-                                                      }
-                                                  }))
+            BlockEntityRendererFactories.register(
+                    type,
+                    ctx -> EntrustEnvironment.cast(render.apply(ctx))
             );
         }
     }

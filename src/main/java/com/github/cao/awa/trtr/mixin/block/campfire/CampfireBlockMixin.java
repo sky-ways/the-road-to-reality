@@ -135,7 +135,7 @@ public abstract class CampfireBlockMixin extends BlockWithEntity {
                 fuelStack.setCount(1);
                 NbtCompound nbtCompound = new NbtCompound();
                 nbtCompound.putInt("CampfireFuelTimeLeft",
-                                   100
+                                   20
                 );
                 fuelStack.setNbt(nbtCompound);
 

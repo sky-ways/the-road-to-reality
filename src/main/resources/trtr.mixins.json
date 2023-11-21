@@ -9,10 +9,15 @@
         "block.BlockEntityMixin",
         "block.campfire.CampfireBlockEntityMixin",
         "block.campfire.CampfireBlockMixin",
+        "entity.xp.ExperienceOrbEntityMixin",
         "item.ItemsMixin",
-        "item.stack.ItemStackMixin"
+        "item.stack.ItemStackMixin",
+        "recipe.RecipeManagerInvoker",
+        "recipe.RecipeManagerMixin"
     ],
     "client": [
+        "item.renderer.BuiltinModelItemRendererMixin",
+        "item.renderer.ItemRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1

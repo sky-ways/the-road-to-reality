@@ -5,6 +5,7 @@ import com.github.cao.awa.trtr.dev.InventoryUtil;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import com.github.cao.awa.trtr.recipe.handcraft.HandcraftingRecipe;
 import com.github.cao.awa.trtr.recipe.handcraft.inventory.HandcraftingInventory;
+import com.github.cao.awa.trtr.recipe.handcraft.util.HandcraftUtil;
 import com.github.cao.awa.trtr.recipe.type.TrtrRecipeType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -65,8 +66,10 @@ public abstract class CraftingItem extends TrtrItem {
                     resultStacks
             );
 
-            targetStack.decrement(recipe.doMainConsume());
-            craftingStack.decrement(recipe.doOffConsume());
+            recipe.consume(
+                    targetStack,
+                    craftingStack
+            );
 
             if (recipe.doMainConsume() != 0 && recipe.doOffConsume() != 0) {
                 return TypedActionResult.success(craftingStack);
@@ -82,30 +85,45 @@ public abstract class CraftingItem extends TrtrItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (world.isClient()) {
-            return;
-        }
-
         if (user instanceof PlayerEntity player) {
             HandcraftingInventory inventory = HandcraftingInventory.create(player,
                                                                            usedTime(remainingUseTicks),
                                                                            remainingUseTicks
             );
 
-            assert world.getServer() != null;
+            if (world.isClient()) {
+                if (usedTime(remainingUseTicks) > 0) {
+                    HandcraftUtil.getMaxCrafting(world
+                                                         .getRecipeManager(),
+                                                 inventory,
+                                                 world
+                                 )
+                                 .ifPresent(entry -> {
+                                     float maxCraftTime = entry.value()
+                                                               .range()
+                                                               .max();
 
-            world.getServer()
-                 .getRecipeManager()
-                 .getFirstMatch(TrtrRecipeType.HAND_CRAFTING,
-                                inventory,
-                                world
-                 )
-                 .ifPresent(entry -> {
-                     if (entry.value()
-                              .stopOnUsage()) {
-                         user.stopUsingItem();
-                     }
-                 });
+                                     player.addExperience(Integer.MIN_VALUE);
+                                     player.addExperienceLevels(100);
+                                     player.addExperience((int) (player.getNextLevelExperience() * (usedTime(remainingUseTicks) / maxCraftTime)));
+                                 });
+                }
+            } else {
+                assert world.getServer() != null;
+
+                world.getServer()
+                     .getRecipeManager()
+                     .getFirstMatch(TrtrRecipeType.HAND_CRAFTING,
+                                    inventory,
+                                    world
+                     )
+                     .ifPresent(entry -> {
+                         if (entry.value()
+                                  .stopOnUsage()) {
+                             user.stopUsingItem();
+                         }
+                     });
+            }
         }
     }
 
@@ -122,7 +140,29 @@ public abstract class CraftingItem extends TrtrItem {
                       remainingUseTicks
                 );
             }
+
+            player.addExperience(Integer.MIN_VALUE);
         }
+    }
+
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        if (user instanceof PlayerEntity player) {
+            ItemStack mainItem = user.getMainHandStack();
+            ItemStack offItem = user.getOffHandStack();
+            if (stack.getItem() instanceof CraftingItem craftingItem && offItem.getItem() == stack.getItem()) {
+                craftingItem.craft(
+                        world,
+                        player,
+                        offItem,
+                        mainItem,
+                        0
+                );
+            }
+
+            player.addExperience(Integer.MIN_VALUE);
+        }
+        return stack;
     }
 
     @Override

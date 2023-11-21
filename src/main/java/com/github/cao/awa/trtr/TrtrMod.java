@@ -7,7 +7,6 @@ import com.github.cao.awa.trtr.command.GetAllTrtrBlockCommand;
 import com.github.cao.awa.trtr.criteria.TrtrCriteria;
 import com.github.cao.awa.trtr.feature.pebble.PebbleFeature;
 import com.github.cao.awa.trtr.feature.pebble.PebbleFeatureConfig;
-import com.github.cao.awa.trtr.fluid.awa.AwaFluid;
 import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.item.ItemFramework;
 import com.github.cao.awa.trtr.framework.model.provider.ModelFramework;
@@ -19,8 +18,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -37,24 +34,6 @@ public class TrtrMod implements ModInitializer {
     public static final ItemFramework ITEM_FRAMEWORK = new ItemFramework();
     public static final ModelFramework MODEL_FRAMEWORK = new ModelFramework();
     public static final boolean DEV_MODE = true;
-
-    //TODO
-    // THIS IS TEST WILL BE DELETE
-    public static final FlowableFluid FLOWING_AWA = register("flowing_awa",
-                                                             new AwaFluid.Flowing()
-    );
-
-    public static final FlowableFluid AWA = register("awa",
-                                                     new AwaFluid.Still()
-    );
-
-    private static <T extends Fluid> T register(String id, T value) {
-        return Registry.register(Registries.FLUID,
-                                 id,
-                                 value
-        );
-    }
-    //TODO END
 
     @Override
     public void onInitialize() {

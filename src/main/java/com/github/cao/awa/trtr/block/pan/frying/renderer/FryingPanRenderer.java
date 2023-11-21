@@ -3,9 +3,8 @@ package com.github.cao.awa.trtr.block.pan.frying.renderer;
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.apricot.anntation.Planning;
 import com.github.cao.awa.apricot.anntation.Unsupported;
+import com.github.cao.awa.modmdo.annotation.platform.Client;
 import com.github.cao.awa.trtr.block.pan.frying.entity.FryingPanBlockEntity;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -14,6 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import java.util.Random;
 
 @Auto
+@Client
 @Planning
 @Unsupported
 public class FryingPanRenderer implements BlockEntityRenderer<FryingPanBlockEntity> {

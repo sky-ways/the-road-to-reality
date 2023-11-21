@@ -1,8 +1,8 @@
 package com.github.cao.awa.trtr.framework.model.provider;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
-import com.github.cao.awa.trtr.data.gen.model.GenericBlockModelProvider;
-import com.github.cao.awa.trtr.data.gen.model.GenericItemModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.generic.GenericBlockModelProvider;
+import com.github.cao.awa.trtr.data.gen.model.generic.GenericItemModelProvider;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelFactory;
 import com.github.cao.awa.trtr.framework.accessor.data.gen.model.TrtrModelProvider;
 import com.github.cao.awa.trtr.framework.block.data.gen.model.BlockModelDataGenFramework;
