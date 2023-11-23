@@ -38,6 +38,7 @@ dependencies {
     shadow "de.javagl:obj:0.3.0"
 
 //    shadow 'io.github.pcmind:leveldb:1.2'
+    shadow 'com.sleepycat:je:18.3.12'
 
     shadow 'bot.inker.acj:runtime:1.3'
     shadow 'org.reflections:reflections:0.10.2'
