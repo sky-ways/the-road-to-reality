@@ -4,16 +4,19 @@
     "package": "com.github.cao.awa.trtr.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "WorldMixin",
         "advancement.AdvancementMixin",
         "block.BlockEntityMixin",
         "block.campfire.CampfireBlockEntityMixin",
         "block.campfire.CampfireBlockMixin",
+        "chunk.ThreadedAnvilChunkStorageInvoker",
+        "chunk.ThreadedAnvilChunkStorageMixin",
         "entity.xp.ExperienceOrbEntityMixin",
         "item.ItemsMixin",
         "item.stack.ItemStackMixin",
         "recipe.RecipeManagerInvoker",
-        "recipe.RecipeManagerMixin"
+        "recipe.RecipeManagerMixin",
+        "server.MinecraftServerSessionAccessor",
+        "server.ServerWorldMixin"
     ],
     "client": [
         "item.renderer.BuiltinModelItemRendererMixin",

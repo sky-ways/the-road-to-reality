@@ -1,13 +1,31 @@
 package com.github.cao.awa.trtr.database;
 
-public interface KeyValueDatabase {
-    void put(byte[] key, byte[] value);
+import com.github.cao.awa.trtr.database.cache.KeyValueCache;
 
-    byte[] get(byte[] key);
+import java.util.Map;
+import java.util.function.Supplier;
 
-    void remove(byte[] key);
+public abstract class KeyValueDatabase<K, V> {
+    private final KeyValueCache<K, V> cache;
 
-    default boolean close() {
+    public KeyValueDatabase(Supplier<Map<K, V>> cacheDelegate) {
+        this.cache = new KeyValueCache<>(
+                cacheDelegate.get(),
+                this
+        );
+    }
+
+    public KeyValueCache<K, V> cache() {
+        return this.cache;
+    }
+
+    public abstract void put(K key, V value);
+
+    public abstract V get(K key);
+
+    public abstract void remove(K key);
+
+    public boolean close() {
         return true;
     }
 }

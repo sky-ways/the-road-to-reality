@@ -1,49 +1,62 @@
 package com.github.cao.awa.trtr.database.provider.leveldb;
 
-import com.github.cao.awa.trtr.database.KeyValueDatabase;
-import com.github.cao.awa.trtr.database.provider.KeyValueDatabaseProvider;
+import com.github.cao.awa.trtr.database.KeyValueBytesDatabase;
+import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
+import org.iq80.leveldb.CompressionType;
+import org.iq80.leveldb.DB;
+import org.iq80.leveldb.Options;
+import org.iq80.leveldb.impl.Iq80DBFactory;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+import java.util.function.Supplier;
 
-@Deprecated
-public class LevelDbProvider extends KeyValueDatabaseProvider implements KeyValueDatabase {
-//    private final DB db;
+public class LevelDbProvider extends KeyValueBytesDatabase {
+    private final DB db;
 
-    public LevelDbProvider(String path) throws IOException {
-        super(path);
-//        this.db = new Iq80DBFactory().open(new File(path),
-//                                           new Options().createIfMissing(true)
-//                                                        .writeBufferSize(1048560 * 16)
-//                                                        .compressionType(CompressionType.SNAPPY)
-//        );
+    public LevelDbProvider(Supplier<Map<byte[], byte[]>> cacheDelegate, String path) throws IOException {
+        super(cacheDelegate);
+        this.db = new Iq80DBFactory().open(new File(path),
+                                           new Options().createIfMissing(true)
+                                                        .writeBufferSize(1048560 * 16)
+                                                        .compressionType(CompressionType.SNAPPY)
+        );
     }
 
     @Override
     public void put(byte[] key, byte[] value) {
-//        this.db.put(key,
-//                    value
-//        );
+        cache().update(
+                key,
+                value,
+                this.db :: put
+        );
     }
 
     @Override
     public byte[] get(byte[] key) {
-//        return this.db.get(key);
-        return null;
+        return cache().get(
+                key,
+                this.db :: get
+        );
     }
 
     @Override
     public void remove(byte[] key) {
-//        this.db.delete(key);
+        cache().delete(
+                key,
+                this.db :: delete
+        );
     }
 
     public boolean close() {
-//        return EntrustEnvironment.trys(
-//                () -> {
-//                    this.db.close();
-//                    return true;
-//                },
-//                () -> false
-//        );
-        return false;
+        return EntrustEnvironment.trys(
+                () -> {
+                    this.db.close();
+                    cache().clear();
+                    return true;
+                },
+                () -> false
+        );
     }
 }

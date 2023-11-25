@@ -33,8 +33,8 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
         if (o instanceof NbtSerializable) {
             return null;
         } else {
-            NbtSerializer<?> serializer = TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
-                                                                 .getNbtSerializer(o.getClass());
+            NbtSerializer<?> serializer = TrtrMod.NBT_SERIALIZE_FRAMEWORK
+                    .getNbtSerializer(o.getClass());
             if (serializer == null) {
                 throw new IllegalArgumentException(StringConcat.concat("The type '",
                                                                        o.getClass()
@@ -63,8 +63,8 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                 if (o instanceof NbtSerializable serializable) {
                     element = serializable.toNbt();
                 } else {
-                    NbtSerializer<?> serializer = TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
-                                                                         .getNbtSerializer(o.getClass());
+                    NbtSerializer<?> serializer = TrtrMod.NBT_SERIALIZE_FRAMEWORK
+                            .getNbtSerializer(o.getClass());
                     if (serializer != null) {
                         element = serializer.serialize(EntrustEnvironment.cast(o));
                     } else {
@@ -155,8 +155,8 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                                                                                                  serializable.fromNbt(data.get("e"));
                                                                                                  return serializable;
                                                                                              } else {
-                                                                                                 NbtSerializer<?> serializer = TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
-                                                                                                                                                      .getNbtSerializer(typeOf);
+                                                                                                 NbtSerializer<?> serializer = TrtrMod.NBT_SERIALIZE_FRAMEWORK
+                                                                                                         .getNbtSerializer(typeOf);
 
                                                                                                  return serializer.deserialize(data.get("e"));
                                                                                              }
@@ -192,8 +192,8 @@ public class NbtListSerializer implements NbtSerializer<List<?>> {
                                                     arrayList.add(EntrustEnvironment.cast(serializable));
                                                 }
                                             } else {
-                                                NbtSerializer<?> serializer = TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
-                                                                                                     .getNbtSerializer(typeOf);
+                                                NbtSerializer<?> serializer = TrtrMod.NBT_SERIALIZE_FRAMEWORK
+                                                        .getNbtSerializer(typeOf);
                                                 for (NbtElement nbtElement : list) {
                                                     arrayList.add(EntrustEnvironment.cast(serializer.deserialize(nbtElement)));
                                                 }

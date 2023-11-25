@@ -1,11 +1,9 @@
-package com.github.cao.awa.trtr.block.gas;
+package com.github.cao.awa.trtr.gas;
 
 import com.github.cao.awa.apricot.anntation.Auto;
-import com.github.cao.awa.trtr.block.TrtrBlocks;
-import com.github.cao.awa.trtr.block.gas.entity.GasBlockEntity;
+import com.github.cao.awa.trtr.constant.pressure.PressureConstants;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
@@ -36,15 +34,23 @@ public class TestGasBucket extends TrtrItem {
         BlockState placeState = world.getBlockState(placePos);
 
         if (placeState.isAir()) {
-            world.setBlockState(placePos,
-                                TrtrBlocks.get(GasBlock.class)
-                                          .getDefaultState(),
-                                Block.NOTIFY_ALL
-            );
+            BlockGas gas = WorldGasManager.GAS_MANAGER.getGas(placePos);
+            if (gas != null) {
+                System.out.println("Current pressure of " + placePos + " is: " + gas.pressure.value());
 
-            GasBlockEntity entity = (GasBlockEntity) world.getBlockEntity(placePos);
-            if (entity != null) {
-                entity.pressure.value(entity.pressure.value() + 1000);
+                gas.pressure.value(gas.pressure.value() + 1000);
+
+                WorldGasManager.GAS_MANAGER.updateGas(placePos,
+                                                      gas
+                );
+            } else {
+                gas = new BlockGas();
+
+                gas.pressure = PressureConstants.STANDARD_ATMOSPHERIC_PRESSURE.copy();
+
+                WorldGasManager.GAS_MANAGER.updateGas(placePos,
+                                                      gas
+                );
             }
 
             return ActionResult.SUCCESS;
