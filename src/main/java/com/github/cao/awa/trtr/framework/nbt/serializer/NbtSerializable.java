@@ -25,20 +25,20 @@ public interface NbtSerializable {
 
     @Auto
     default NbtElement toNbt() {
-        return compound(compound -> TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
-                                                           .writeNbt(this,
-                                                                     compound
-                                                           ));
+        return compound(compound -> TrtrMod.NBT_SERIALIZE_FRAMEWORK
+                .writeNbt(this,
+                          compound
+                ));
     }
 
     @Auto
     default void fromNbt(NbtElement element) {
         as(element,
            NbtCompound.class,
-           compound -> TrtrMod.BLOCK_FRAMEWORK.nbtSerializeFramework()
-                                              .readNbt(this,
-                                                       compound
-                                              )
+           compound -> TrtrMod.NBT_SERIALIZE_FRAMEWORK
+                   .readNbt(this,
+                            compound
+                   )
         );
     }
 }

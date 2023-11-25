@@ -1,6 +1,7 @@
 package com.github.cao.awa.apricot.util.collection;
 
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Sets;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -74,5 +75,9 @@ public class ApricotCollectionFactor {
     public static <V> HashSet<V> hashSet() {
         return new HashSet<>();
         //         return new ObjectOpenHashSet<>();
+    }
+
+    public static <V> Set<V> concurrentHashSet() {
+        return Sets.newConcurrentHashSet();
     }
 }

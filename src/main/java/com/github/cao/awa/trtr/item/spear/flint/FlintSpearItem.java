@@ -4,7 +4,6 @@ import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.constant.flint.FlintConstants;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -29,23 +28,6 @@ public class FlintSpearItem extends TrtrItem {
     @Override
     public int getMaxUseTime(ItemStack stack) {
         return 100;
-    }
-
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        System.out.println("???");
-    }
-
-    @Override
-    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        System.out.println("WTF?");
-    }
-
-    @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        System.out.println("?????????????");
-
-        return stack;
     }
 
     @Override

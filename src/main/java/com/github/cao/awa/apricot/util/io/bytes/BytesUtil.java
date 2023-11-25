@@ -1,6 +1,8 @@
-package com.github.cao.awa.apricot.util.bytes;
+package com.github.cao.awa.apricot.util.io.bytes;
 
 public class BytesUtil {
+    public static final byte[] EMPTY = new byte[0];
+
     public static void xor(byte[] target, byte[] xor) {
         for (int i = 0; i < target.length; i++) {
             target[i] ^= xor[i];
@@ -53,5 +55,40 @@ public class BytesUtil {
                 }
             }
         }
+    }
+
+    public static byte[] concat(byte[]... arrays) {
+        int length = 0;
+        for (byte[] array : arrays) {
+            length += array.length;
+        }
+        byte[] result = new byte[length];
+        int cur = 0;
+        for (byte[] array : arrays) {
+            if (array.length == 0) {
+                continue;
+            }
+            System.arraycopy(array,
+                             0,
+                             result,
+                             cur,
+                             array.length
+            );
+            cur += array.length;
+        }
+        return result;
+    }
+
+    public static byte[] arrau(byte... bytes) {
+        return bytes;
+    }
+
+    public static byte[] arrau(int... bytes) {
+        byte[] result = new byte[bytes.length];
+        int index = 0;
+        for (int i : bytes) {
+            result[index++] = (byte) i;
+        }
+        return result;
     }
 }

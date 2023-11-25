@@ -16,7 +16,6 @@ import com.github.cao.awa.trtr.framework.accessor.item.ItemSettingAccessor;
 import com.github.cao.awa.trtr.framework.block.data.gen.BlockDataGenFramework;
 import com.github.cao.awa.trtr.framework.exception.InvertOfControlException;
 import com.github.cao.awa.trtr.framework.exception.NotStaticFieldException;
-import com.github.cao.awa.trtr.framework.nbt.NbtSerializeFramework;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.cao.awa.trtr.item.TrtrItems;
 import com.github.cao.awa.trtr.renderer.block.BlockRendererProvider;
@@ -72,7 +71,6 @@ public class BlockFramework extends ReflectionFramework {
     private final Map<Class<? extends Block>, BlockEntityType<?>> blockEntities = ApricotCollectionFactor.hashMap();
     private final List<Identifier> alreadyRegistered = ApricotCollectionFactor.arrayList();
     private final BlockDataGenFramework dataGen = new BlockDataGenFramework(this);
-    private final NbtSerializeFramework nbtSerializeFramework = new NbtSerializeFramework(this);
 
     public void work() {
         // Working stream...
@@ -83,10 +81,6 @@ public class BlockFramework extends ReflectionFramework {
                     .filter(this :: verify)
                     .map(this :: instance)
                     .forEach(this :: build);
-    }
-
-    public NbtSerializeFramework nbtSerializeFramework() {
-        return this.nbtSerializeFramework;
     }
 
     private boolean match(Class<?> clazz) {
@@ -185,8 +179,8 @@ public class BlockFramework extends ReflectionFramework {
      * @since 1.0.0
      */
     public void writeNbt(BlockEntity entity, NbtCompound nbt) {
-        this.nbtSerializeFramework.writeNbt(entity,
-                                            nbt
+        TrtrMod.NBT_SERIALIZE_FRAMEWORK.writeNbt(entity,
+                                                 nbt
         );
     }
 
@@ -201,8 +195,8 @@ public class BlockFramework extends ReflectionFramework {
      * @since 1.0.0
      */
     public void readNbt(BlockEntity entity, NbtCompound nbt) {
-        this.nbtSerializeFramework.readNbt(entity,
-                                           nbt
+        TrtrMod.NBT_SERIALIZE_FRAMEWORK.readNbt(entity,
+                                                nbt
         );
     }
 
@@ -216,7 +210,7 @@ public class BlockFramework extends ReflectionFramework {
      * @since 1.0.0
      */
     public void initEntity(BlockEntity entity) {
-        this.nbtSerializeFramework.init(entity);
+        TrtrMod.NBT_SERIALIZE_FRAMEWORK.init(entity);
     }
 
     /**

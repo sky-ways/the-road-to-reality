@@ -71,21 +71,21 @@ public abstract class ReflectionFramework {
     }
 
     @NotNull
-    public static Method accessible(Method clazz) {
-        if (clazz.isAnnotationPresent(Auto.class)) {
-            return MethodAccess.ensureAccessible(clazz);
+    public static Method accessible(Method method) {
+        if (method.isAnnotationPresent(Auto.class)) {
+            return MethodAccess.ensureAccessible(method);
         }
-        throw new NoAutoAnnotationException("Missing auto annotation");
+        throw new NoAutoAnnotationException("Missing auto annotation for method: " + method.getName());
     }
 
     @NotNull
-    public static Method accessible(Method clazz, Object object) {
-        if (autoAnnotated(clazz)) {
-            return MethodAccess.ensureAccessible(clazz,
+    public static Method accessible(Method method, Object object) {
+        if (autoAnnotated(method)) {
+            return MethodAccess.ensureAccessible(method,
                                                  object
             );
         }
-        throw new NoAutoAnnotationException("Missing auto annotation");
+        throw new NoAutoAnnotationException("Missing auto annotation for method: " + method.getName());
     }
 
     public static Field accessible(@NotNull Field field) {
@@ -94,7 +94,7 @@ public abstract class ReflectionFramework {
                               null
             );
         }
-        throw new NoAutoAnnotationException("Missing auto annotation");
+        throw new NoAutoAnnotationException("Missing auto annotation for field: " + field.getName());
     }
 
     public static Field accessible(@NotNull Field field, @Nullable Object obj) {
@@ -105,7 +105,7 @@ public abstract class ReflectionFramework {
             field.trySetAccessible();
             return field;
         }
-        throw new NoAutoAnnotationException("Missing auto annotation");
+        throw new NoAutoAnnotationException("Missing auto annotation for field: " + field.getName());
     }
 
     public static boolean autoAnnotated(AccessibleObject object) {

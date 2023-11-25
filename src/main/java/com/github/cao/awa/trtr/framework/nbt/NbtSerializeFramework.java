@@ -2,7 +2,6 @@ package com.github.cao.awa.trtr.framework.nbt;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
-import com.github.cao.awa.trtr.framework.block.BlockFramework;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializable;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializer;
 import com.github.cao.awa.trtr.framework.nbt.serializer.type.item.NbtItemStackSerializer;
@@ -11,12 +10,16 @@ import com.github.cao.awa.trtr.framework.nbt.serializer.type.raw.*;
 import com.github.cao.awa.trtr.framework.reflection.ReflectionFramework;
 import com.github.cao.awa.trtr.util.string.StringConcat;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.StringNbtReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
@@ -24,15 +27,13 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class NbtSerializeFramework extends ReflectionFramework {
     private static final Logger LOGGER = LogManager.getLogger("NbtSerializeFramework");
     private final Map<Class<?>, NbtSerializer<?>> nbtSerializers = ApricotCollectionFactor.hashMap();
-    private final BlockFramework framework;
 
-    public NbtSerializeFramework(BlockFramework framework) {
-        this.framework = framework;
-
+    public NbtSerializeFramework() {
         initNbtSerializers();
     }
 
@@ -132,12 +133,18 @@ public class NbtSerializeFramework extends ReflectionFramework {
     private void readNbt(Object target, NbtCompound nbt, String callsName) {
         Arrays.stream(target.getClass()
                             .getDeclaredFields())
-              // Ensure accessible.
-              .peek(f -> ReflectionFramework.accessible(f,
-                                                        target
-              ))
               // Ensure annotation present.
               .filter(f -> f.isAnnotationPresent(AutoNbt.class))
+              // Ensure accessible.
+              .filter(f -> EntrustEnvironment.trys(
+                      () -> {
+                          ReflectionFramework.accessible(f,
+                                                         target
+                          );
+                          return true;
+                      },
+                      () -> false
+              ))
               // Do deserialize.
               .forEach(field -> EntrustEnvironment.trys(() -> {
                   // Get annotated name, if not declare serialize name, then use the field name.
@@ -160,7 +167,7 @@ public class NbtSerializeFramework extends ReflectionFramework {
                           // Do deserialize and set to field.
                           serializable.fromNbt(element);
                           field.set(target,
-                                    serializable
+                                    Objects.requireNonNull(serializable)
                           );
 
                           // DEBUG: print 'callsName' and nbt details and field name.
@@ -176,7 +183,7 @@ public class NbtSerializeFramework extends ReflectionFramework {
                           if (nbtSerializer != null) {
                               // Do deserialize and set to field.
                               field.set(target,
-                                        nbtSerializer.deserialize(element)
+                                        Objects.requireNonNull(nbtSerializer.deserialize(element))
                               );
 
                               // DEBUG: print 'callsName' and nbt details and field name.
@@ -217,11 +224,11 @@ public class NbtSerializeFramework extends ReflectionFramework {
         );
     }
 
-    public void readNbt(Object entity, NbtCompound nbt) {
-        readNbt(entity,
+    public void readNbt(Object object, NbtCompound nbt) {
+        readNbt(object,
                 nbt,
                 StringConcat.concat("object '",
-                                    entity.getClass(),
+                                    object.getClass(),
                                     "'"
                 )
         );
@@ -249,13 +256,19 @@ public class NbtSerializeFramework extends ReflectionFramework {
         );
     }
 
-    public void writeNbt(Object entity, NbtCompound nbt, String callsName) {
-        Arrays.stream(entity.getClass()
+    public void writeNbt(Object object, NbtCompound nbt, String callsName) {
+        Arrays.stream(object.getClass()
                             .getDeclaredFields())
-              .peek(f -> ReflectionFramework.accessible(f,
-                                                        entity
-              ))
               .filter(f -> f.isAnnotationPresent(AutoNbt.class))
+              .filter(f -> EntrustEnvironment.trys(
+                      () -> {
+                          ReflectionFramework.accessible(f,
+                                                         object
+                          );
+                          return true;
+                      },
+                      () -> false
+              ))
               .forEach(field -> {
                   String name = field.getAnnotation(AutoNbt.class)
                                      .value();
@@ -266,7 +279,7 @@ public class NbtSerializeFramework extends ReflectionFramework {
                   String failedCause = null;
 
                   try {
-                      Object f = field.get(entity);
+                      Object f = field.get(object);
 
                       if (f instanceof NbtSerializable serializable) {
                           element = serializable.toNbt();
@@ -321,32 +334,53 @@ public class NbtSerializeFramework extends ReflectionFramework {
               });
     }
 
-    public void init(BlockEntity entity) {
-        Arrays.stream(entity.getClass()
+    public void init(BlockEntity blockEntity) {
+        init(blockEntity,
+             StringConcat.concat("Block entity '",
+                                 blockEntity.getClass()
+                                            .getName(),
+                                 "' at ",
+                                 blockEntity.getPos()
+             )
+        );
+    }
+
+    public void init(Object object) {
+        init(object,
+             "Object"
+        );
+    }
+
+    public void init(Object object, String callsName) {
+        Arrays.stream(object.getClass()
                             .getDeclaredFields())
-              .peek(f -> ReflectionFramework.accessible(f,
-                                                        entity
-              ))
               .filter(f -> f.isAnnotationPresent(AutoNbt.class))
+              .filter(f -> EntrustEnvironment.trys(
+                      () -> {
+                          ReflectionFramework.accessible(f,
+                                                         object
+                          );
+                          return true;
+                      },
+                      () -> false
+              ))
               .forEach(field -> {
                   EntrustEnvironment.trys(() -> {
                       try {
                           NbtSerializer<?> serializer = getNbtSerializer(field.getType());
                           if (serializer != null) {
-                              field.set(entity,
+                              field.set(object,
                                         serializer.initializer()
                               );
                           } else {
                               Object o = accessible(field.getType()
                                                          .getConstructor()).newInstance();
                               if (o instanceof NbtSerializable serializable) {
-                                  field.set(entity,
+                                  field.set(object,
                                             serializable
                                   );
-                                  LOGGER.debug("Block entity '{}' at {} initialized @AutoNbt field '{}' as type '{}'",
-                                               entity.getClass()
-                                                     .getName(),
-                                               entity.getPos(),
+                                  LOGGER.debug("{} initialized @AutoNbt field '{}' as type '{}'",
+                                               callsName,
                                                field.getName(),
                                                serializable.getClass()
                                                            .getName()
@@ -354,10 +388,8 @@ public class NbtSerializeFramework extends ReflectionFramework {
                               }
                           }
                       } catch (Exception e) {
-                          LOGGER.warn("Block entity '{}' at {} unable to initialize @AutoNbt field '{}' with type '{}'",
-                                      entity.getClass()
-                                            .getName(),
-                                      entity.getPos(),
+                          LOGGER.warn("{} unable to initialize @AutoNbt field '{}' with type '{}'",
+                                      callsName,
                                       field.getName(),
                                       field.getType()
                                            .getName()
@@ -365,5 +397,14 @@ public class NbtSerializeFramework extends ReflectionFramework {
                       }
                   });
               });
+    }
+
+    @Nullable
+    public NbtCompound createCompound(@NotNull String nbtString) {
+        try {
+            return new StringNbtReader(new StringReader(nbtString)).parseCompound();
+        } catch (CommandSyntaxException e) {
+            return null;
+        }
     }
 }
