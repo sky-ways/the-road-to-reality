@@ -1,7 +1,7 @@
 package com.github.cao.awa.trtr.command;
 
 import com.github.cao.awa.trtr.gas.BlockGas;
-import com.github.cao.awa.trtr.gas.WorldGasManager;
+import com.github.cao.awa.trtr.gas.manager.WorldGasManager;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
@@ -25,20 +25,29 @@ public class GasCommand {
                                                                                               );
                                                                                               context.getSource()
                                                                                                      .sendFeedback(() -> {
+                                                                                                                       BlockPos pos = new BlockPos(
+                                                                                                                               (int) vec.x,
+                                                                                                                               (int) vec.y,
+                                                                                                                               (int) vec.z
+                                                                                                                       );
                                                                                                                        BlockGas gas = WorldGasManager.GAS_MANAGER.getGas(
-                                                                                                                               new BlockPos(
-                                                                                                                                       (int) vec.x,
-                                                                                                                                       (int) vec.y,
-                                                                                                                                       (int) vec.z
-                                                                                                                               )
+                                                                                                                               pos
                                                                                                                        );
 
-                                                                                                                       return Text.of(String.format("The gas pressure of (%s, %s, %s) is %s Pa",
-                                                                                                                                                    vec.x,
-                                                                                                                                                    vec.y,
-                                                                                                                                                    vec.z,
-                                                                                                                                                    gas.pressure.value()
-                                                                                                                       ));
+                                                                                                                       if (gas != null) {
+                                                                                                                           return Text.of(String.format("The gas pressure of (%s, %s, %s) is %s Pa",
+                                                                                                                                                        pos.getX(),
+                                                                                                                                                        pos.getY(),
+                                                                                                                                                        pos.getZ(),
+                                                                                                                                                        gas.pressure.value()
+                                                                                                                           ));
+                                                                                                                       } else {
+                                                                                                                           return Text.of(String.format("The gas data of (%s, %s, %s) is not present",
+                                                                                                                                                        pos.getX(),
+                                                                                                                                                        pos.getY(),
+                                                                                                                                                        pos.getZ()
+                                                                                                                           ));
+                                                                                                                       }
                                                                                                                    },
                                                                                                                    false
                                                                                                      );

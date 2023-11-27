@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.mixin.chunk;
 
-import com.github.cao.awa.trtr.gas.WorldGasManager;
+import com.github.cao.awa.trtr.gas.manager.WorldGasManager;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
 import org.spongepowered.asm.mixin.Mixin;

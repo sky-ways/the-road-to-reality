@@ -1,6 +1,6 @@
 package com.github.cao.awa.trtr.mixin.server;
 
-import com.github.cao.awa.trtr.gas.WorldGasManager;
+import com.github.cao.awa.trtr.gas.manager.WorldGasManager;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
