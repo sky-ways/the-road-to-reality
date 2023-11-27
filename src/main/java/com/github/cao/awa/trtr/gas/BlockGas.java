@@ -5,8 +5,11 @@ import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.annotation.serializer.AutoNbt;
 import com.github.cao.awa.trtr.constant.pressure.PressureConstants;
 import com.github.cao.awa.trtr.framework.nbt.serializer.NbtSerializable;
+import com.github.cao.awa.trtr.gas.manager.WorldGasManager;
 import com.github.cao.awa.trtr.pressure.pa.PaPressure;
 import com.github.cao.awa.trtr.random.Randoms;
+import net.minecraft.block.BlockState;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -20,10 +23,10 @@ public class BlockGas implements NbtSerializable {
     @AutoNbt
     public PaPressure pressure;
 
-    public boolean tryFlow(BlockPos pos, boolean force) {
+    public boolean tryFlow(ServerWorld world, BlockPos pos, boolean force) {
         boolean flowResult = flowToSide(Direction.UP,
+                                        world,
                                         pos,
-                                        2,
                                         force
         );
 
@@ -31,7 +34,7 @@ public class BlockGas implements NbtSerializable {
         List<Direction> flowToDirections = ApricotCollectionFactor.arrayList();
 
         for (Direction direction : HORIZONTAL) {
-            if (canFlow(
+            if (WorldGasManager.GAS_MANAGER.canFlow(
                     pos,
                     direction
             )) {
@@ -52,8 +55,8 @@ public class BlockGas implements NbtSerializable {
 //            } else {
         for (Direction direction : flowToDirections) {
             sideFlowed |= flowToSide(direction,
+                                     world,
                                      pos,
-                                     2,
                                      force
             );
 
@@ -63,8 +66,8 @@ public class BlockGas implements NbtSerializable {
 
         if (! sideFlowed || Randoms.b()) {
             flowResult = flowToSide(Direction.DOWN,
+                                    world,
                                     pos,
-                                    2,
                                     force
             );
         }
@@ -72,19 +75,23 @@ public class BlockGas implements NbtSerializable {
         return flowResult;
     }
 
-    public static boolean canFlow(BlockPos pos, Direction direction) {
-        BlockPos targetPos = pos.offset(direction);
-
-        return WorldGasManager.GAS_MANAGER.isValidGas(targetPos);
-    }
-
-    public boolean flowToSide(Direction side, BlockPos selfPos, int divider, boolean force) {
+    public boolean flowToSide(Direction side, ServerWorld world, BlockPos selfPos, boolean force) {
         BlockPos targetPos = selfPos.offset(side);
 
         PaPressure selfPressure = getPressure(selfPos);
         PaPressure targetPressure = getPressure(targetPos);
 
-        long transferPressure = (selfPressure.value() - targetPressure.value()) / divider;
+        if ((! force && ! shouldTransfer(
+                selfPressure,
+                targetPressure
+        )) || ! WorldGasManager.GAS_MANAGER.canFlow(
+                selfPos,
+                side
+        )) {
+            return false;
+        }
+
+        long transferPressure = (selfPressure.value() - targetPressure.value()) / 2;
 
         if (force) {
             transferPressure = Math.max(
@@ -94,13 +101,6 @@ public class BlockGas implements NbtSerializable {
         }
 
         if (transferPressure > 0) {
-            if (! canFlow(
-                    selfPos,
-                    side
-            )) {
-                return false;
-            }
-
             setPressure(
                     targetPos,
                     targetPressure.value(targetPressure.value() + transferPressure)
@@ -110,6 +110,17 @@ public class BlockGas implements NbtSerializable {
                     selfPos,
                     selfPressure.value(selfPressure.value() - transferPressure)
             );
+
+            BlockState selfState = world.getBlockState(selfPos);
+
+            if (selfState.getBlock() instanceof GasPassable passable) {
+                passable.onGasPass(
+                        world,
+                        selfPos,
+                        selfState,
+                        side.getOpposite()
+                );
+            }
 
             return true;
         }
@@ -131,6 +142,10 @@ public class BlockGas implements NbtSerializable {
         );
     }
 
+    public static boolean shouldTransfer(PaPressure selfPressure, PaPressure targetPressure) {
+        return selfPressure.value() > targetPressure.value();
+    }
+
     public static PaPressure getPressure(BlockPos pos) {
         BlockGas gas = WorldGasManager.GAS_MANAGER.getGas(pos);
         if (gas == null) {
@@ -139,19 +154,17 @@ public class BlockGas implements NbtSerializable {
         return gas.pressure;
     }
 
-    public boolean softTick(BlockPos pos) {
-        if (! WorldGasManager.GAS_MANAGER.shouldFlowToAny(pos)) {
-            return false;
-        } else {
-            return tryFlow(
-                    pos,
-                    false
-            );
-        }
+    public boolean softTick(ServerWorld world, BlockPos pos) {
+        return tryFlow(
+                world,
+                pos,
+                false
+        );
     }
 
-    public boolean forceTick(BlockPos pos) {
+    public boolean forceTick(ServerWorld world, BlockPos pos) {
         return tryFlow(
+                world,
                 pos,
                 true
         );

@@ -1,8 +1,10 @@
-package com.github.cao.awa.trtr.gas;
+package com.github.cao.awa.trtr.gas.manager;
 
 import com.github.cao.awa.apricot.util.collection.ApricotCollectionFactor;
 import com.github.cao.awa.trtr.constant.pressure.PressureConstants;
 import com.github.cao.awa.trtr.database.KeyValueBytesDatabase;
+import com.github.cao.awa.trtr.gas.BlockGas;
+import com.github.cao.awa.trtr.gas.GasPassable;
 import com.github.cao.awa.trtr.gas.database.GasDatabase;
 import com.github.cao.awa.trtr.pressure.pa.PaPressure;
 import com.github.zhuaidadaya.rikaishinikui.handler.universal.entrust.EntrustEnvironment;
@@ -62,13 +64,12 @@ public class WorldGasManager {
     }
 
     public void requestTicket(WorldChunk chunk) {
-        // Prepare tickets.
         chunk.forEachBlockMatchingPredicate(
                 AbstractBlock.AbstractBlockState :: isAir,
                 (pos, state) -> {
                     pos = new BlockPos(pos);
 
-                    BlockGas gas = this.database.get(pos);
+                    BlockGas gas = getGas(pos);
                     if (gas == null) {
                         gas = new BlockGas();
                         gas.pressure = PressureConstants.STANDARD_ATMOSPHERIC_PRESSURE.copy();
@@ -100,10 +101,18 @@ public class WorldGasManager {
         );
     }
 
-    public boolean isValidGas(BlockPos pos) {
+    public boolean canFlow(BlockPos pos, Direction direction) {
+        BlockState targetState = this.world.getBlockState(pos.offset(direction));
+
+        return targetState.isAir() || (targetState.getBlock() instanceof GasPassable passable && passable.canGasPass(targetState,
+                                                                                                                     direction.getOpposite()
+        ));
+    }
+
+    public boolean canFlow(BlockPos pos) {
         BlockState targetState = this.world.getBlockState(pos);
 
-        return targetState.isAir() || targetState.isOf(Blocks.BEDROCK) || targetState.isOf(Blocks.ORANGE_WOOL);
+        return targetState.isAir() || targetState.getBlock() instanceof GasPassable;
     }
 
     public void requestTicket(BlockPos pos) {
@@ -119,7 +128,7 @@ public class WorldGasManager {
     }
 
     public void requestTicket(BlockPos pos, @NotNull Set<BlockPos> tickets) {
-        BlockGas gas = this.database.get(pos);
+        BlockGas gas = getGas(pos);
 
         if (shouldTransfer(
                 gas.pressure,
@@ -179,32 +188,43 @@ public class WorldGasManager {
 
         this.requiredTickets.forEach((chunkPos, tickets) -> {
             tickets.forEach((ticket) -> {
-                if (! isValidGas(ticket)) {
+                if (! canFlow(ticket)) {
                     needRemoves.add(ticket);
                     expireTicket(ticket);
 
                     return;
                 }
 
-                BlockGas gas = this.database.get(ticket);
+                BlockGas gas = getGas(ticket);
 
-                if (! gas.softTick(ticket)) {
-                    if (! shouldFlowToAny(ticket)) {
-                        if (! shouldKeepTick(gas.pressure)) {
-                            needRemoves.add(ticket);
-                        } else {
-                            gas.forceTick(ticket);
-                            this.world.setBlockState(ticket,
-                                                     Blocks.ORANGE_WOOL.getDefaultState(),
-                                                     Block.NOTIFY_ALL
-                            );
-                        }
+                boolean shouldTickRemoves = true;
+
+                if (shouldFlowToAny(ticket)) {
+                    if (gas.softTick(
+                            this.world,
+                            ticket
+                    )) {
+//                        this.world.setBlockState(ticket,
+//                                                 Blocks.BEDROCK.getDefaultState(),
+//                                                 Block.NOTIFY_ALL
+//                        );
+                        shouldTickRemoves = false;
                     }
-                } else {
-                    this.world.setBlockState(ticket,
-                                             Blocks.BEDROCK.getDefaultState(),
-                                             Block.NOTIFY_ALL
-                    );
+                }
+
+                if (shouldTickRemoves) {
+                    if (shouldKeepTick(gas.pressure)) {
+                        gas.forceTick(
+                                this.world,
+                                ticket
+                        );
+//                        this.world.setBlockState(ticket,
+//                                                 Blocks.ORANGE_WOOL.getDefaultState(),
+//                                                 Block.NOTIFY_ALL
+//                        );
+                    } else {
+                        needRemoves.add(ticket);
+                    }
                 }
             });
         });
@@ -222,10 +242,10 @@ public class WorldGasManager {
     }
 
     public boolean isTicking(BlockPos pos) {
-        return EntrustEnvironment.trys(
+        return EntrustEnvironment.get(
                 () -> this.requiredTickets.get(new ChunkPos(pos))
                                           .contains(pos),
-                () -> false
+                false
         );
     }
 
@@ -243,15 +263,15 @@ public class WorldGasManager {
         boolean should = false;
 
         for (Direction direction : Direction.values()) {
-            boolean canFlowToThisSide = BlockGas.canFlow(
+            boolean canFlowToThisSide = canFlow(
                     selfPos,
                     direction
             );
             if (canFlowToThisSide) {
                 should |= shouldTransfer(
-                        this.database.get(selfPos).pressure,
+                        getGas(selfPos).pressure,
                         EntrustEnvironment.nonnull(
-                                this.database.get(selfPos.offset(direction)),
+                                getGas(selfPos.offset(direction)),
                                 DEFAULT_GAS
                         ).pressure
                 );

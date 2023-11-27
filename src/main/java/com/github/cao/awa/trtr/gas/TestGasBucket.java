@@ -2,6 +2,7 @@ package com.github.cao.awa.trtr.gas;
 
 import com.github.cao.awa.apricot.anntation.Auto;
 import com.github.cao.awa.trtr.constant.pressure.PressureConstants;
+import com.github.cao.awa.trtr.gas.manager.WorldGasManager;
 import com.github.cao.awa.trtr.item.TrtrItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
@@ -28,6 +29,10 @@ public class TestGasBucket extends TrtrItem {
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
 
+        if (world.isClient()) {
+            return ActionResult.PASS;
+        }
+
         BlockPos pos = context.getBlockPos();
         BlockPos placePos = pos.offset(context.getSide());
 
@@ -36,8 +41,6 @@ public class TestGasBucket extends TrtrItem {
         if (placeState.isAir()) {
             BlockGas gas = WorldGasManager.GAS_MANAGER.getGas(placePos);
             if (gas != null) {
-                System.out.println("Current pressure of " + placePos + " is: " + gas.pressure.value());
-
                 gas.pressure.value(gas.pressure.value() + 1000);
 
                 WorldGasManager.GAS_MANAGER.updateGas(placePos,

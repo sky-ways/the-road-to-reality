@@ -14,7 +14,7 @@ import com.github.cao.awa.trtr.framework.item.ItemFramework;
 import com.github.cao.awa.trtr.framework.model.provider.ModelFramework;
 import com.github.cao.awa.trtr.framework.nbt.NbtSerializeFramework;
 import com.github.cao.awa.trtr.framework.scanner.AnnotationScannerFramework;
-import com.github.cao.awa.trtr.gas.WorldGasManager;
+import com.github.cao.awa.trtr.gas.manager.WorldGasManager;
 import com.github.cao.awa.trtr.mixin.server.MinecraftServerSessionAccessor;
 import com.github.cao.awa.trtr.recipe.serializer.TrtrRecipeSerializer;
 import com.github.cao.awa.trtr.recipe.type.TrtrRecipeType;
