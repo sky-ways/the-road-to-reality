@@ -143,8 +143,10 @@ public class WorldGasManager {
     }
 
     public void expireTicket(BlockPos pos) {
-        this.requiredTickets.get(new ChunkPos(pos))
-                            .remove(pos);
+        Set<BlockPos> tickets = this.requiredTickets.get(new ChunkPos(pos));
+        if (tickets != null) {
+            tickets.remove(pos);
+        }
     }
 
     public void updateGas(BlockPos pos, BlockGas gas) {
@@ -168,6 +170,12 @@ public class WorldGasManager {
 
     public BlockGas getGas(BlockPos pos) {
         return this.database.get(pos);
+    }
+
+    public void removeGas(BlockPos pos) {
+        expireTicket(pos);
+
+        this.database.remove(pos);
     }
 
     public void tick() {
