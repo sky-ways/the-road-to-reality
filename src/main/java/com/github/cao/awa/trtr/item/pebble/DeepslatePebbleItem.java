@@ -6,17 +6,17 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
 
 @Auto
-public class StonePebbleItem extends PebbleItem {
+public class DeepslatePebbleItem extends PebbleItem {
     @Auto
-    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:stone_pebble");
+    public static final Identifier IDENTIFIER = Identifier.tryParse("trtr:deepslate_pebble");
 
     @Auto
-    public StonePebbleItem(Settings settings) {
+    public DeepslatePebbleItem(Settings settings) {
         super(settings);
     }
 
     @Override
     public Block getPlacingBlock() {
-        return Blocks.COBBLESTONE;
+        return Blocks.COBBLED_DEEPSLATE;
     }
 }

@@ -16,7 +16,7 @@
         "recipe.RecipeManagerInvoker",
         "recipe.RecipeManagerMixin",
         "server.MinecraftServerSessionAccessor",
-        "server.ServerWorldMixin"
+        "server.world.ServerWorldMixin"
     ],
     "client": [
         "item.renderer.BuiltinModelItemRendererMixin",

@@ -3,6 +3,7 @@ package com.github.cao.awa.trtr.item.pebble;
 import com.github.cao.awa.trtr.block.NoFloatingBlock;
 import com.github.cao.awa.trtr.block.TrtrBlocks;
 import com.github.cao.awa.trtr.block.pebble.PebbleBlock;
+import com.github.cao.awa.trtr.item.SneakingPlaceBlock;
 import com.github.cao.awa.trtr.item.handcraft.CraftingItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,6 +25,15 @@ public abstract class PebbleItem extends CraftingItem {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
+        ActionResult result = SneakingPlaceBlock.place(context,
+                                                       4,
+                                                       getPlacingBlock()
+        );
+
+        if (result == ActionResult.SUCCESS) {
+            return result;
+        }
+
         PlayerEntity playerEntity = context.getPlayer();
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
@@ -85,6 +95,8 @@ public abstract class PebbleItem extends CraftingItem {
 
         return ActionResult.PASS;
     }
+
+    public abstract Block getPlacingBlock();
 
     @Override
     public int maxCraftTime() {
